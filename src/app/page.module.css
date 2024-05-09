@@ -1,10 +1,59 @@
+
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
+  box-sizing: border-box;
+}
+.cardbody {
+  width: 420px;
+  background-color: #f8f7fc;
+  padding: 1rem;
+  padding-top: 7rem;
+
+}
+.forms{
+  display: flex;
+  width: 100%;
+  margin: px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0.5rem 0;
+}
+.buttonlog {
+  display: flex;
+  width: 100%;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 50px;
+  
+}
+.check{
+  display: flex;
+  width: 100%;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 3px;
+  font-size: 10px;
+}
+.button{
+  background-color: #153075;
+}
+.endline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-top: 6rem;
+  font-size: 12px;
 }
 
 .description {
@@ -78,7 +127,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 4rem 0;
+  padding: 2rem 0;
 }
 
 .center::before {
