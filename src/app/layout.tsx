@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import localFont from 'next/font/local'
 
-const inter = Inter({ subsets: ["latin"] });
+const satoshi = localFont({ src: './assets/fonts/Satoshi_Complete/Fonts/Satoshi-Variable.ttf' })
+
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "App BDC",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={satoshi.className}>{children}</body>
     </html>
   );
 }

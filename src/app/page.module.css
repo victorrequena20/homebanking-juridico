@@ -1,19 +1,101 @@
 
-.main {
+.body{
+	margin: 0px;
+	padding: 0px;
+}
+.main{
+  height: 100vh;
+  border-radius: 16px;
+  overflow: hidden;
+  border-top-left-radius: 1px solid #000000;
+  border-top-right-radius: 1px solid #000000;
+}
+.headerBlu{
+  background-color: #153075;
+  width: 100%;
+  height: 50px;
+  
+}
+.principalConteiner {
+  background-color: #F8F7FB;
+  width: 100%;
+  height: auto;
+}
+
+/*Css de button */
+.button {
+  width: 214px;
+  padding: 10px 50px 10px 50px;
+  gap: 10px;
+  
+}
+/*Css de Aith form */
+.forms {
   display: flex;
   flex-direction: column;
+  gap: 11px;
+}
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  max-height: 40px !important;
+}
+.textfield {
+  width: 288px;
+  border-radius: 8px;
+  border: 1px;
+}
+
+/*Css de mainLayout */
+.mainLayout {
+  display: flex;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+/**/
+/*Css de navBar */
+.navContainer {
+  display: flex;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 350px;
+  background-color: white;
+  padding-left: 18px;
+  padding-right: 36px;
+}
+.welcome {
+  width: 275px;
+  height: 44px;
+  margin-top: 112px;
+  margin-bottom: 58px;
+  border: 1px solid #E4E4E7;
+  border-radius: 8px;
+}
+.navSpans {
+  width: 48px;
+  height: 10px;
+  opacity: 50%;
+}
+.listItem {
+  margin: 50px;
+}
+/**/
+
+
+.authContainer{
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+
 }
 .cardbody {
-  width: 420px;
-  background-color: #f8f7fc;
+  width: 80%;
+  max-width: 640px;
+  height: 640px;
+  background-color: white;
   padding: 1rem;
   padding-top: 7rem;
-
+  border-radius: 16px;
 }
 .forms{
   display: flex;

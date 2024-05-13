@@ -1,0 +1,10 @@
+.navContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    max-width: 335px;
+    width: 335px;
+    height: 100%;
+    border-right: 1px;
+
+}
