@@ -13,7 +13,7 @@ export default function Auth() {
               <span>Nombre de usuario</span>
               <TextField className={styles.textfield}  id="outlined-basic" label="" variant="outlined" />
               <span>Contraseña</span>
-              <TextField className={styles.textfield}  id="outlined-basic" label="" variant="outlined" />
+              <TextField className={styles.textfield}  id="outlined-password" type="password" label="" variant="outlined" />
             </div>
             <div className={styles.buttonlog}>
                 <Button variant="contained" className={styles.button}>Iniciar Sesión</Button>
