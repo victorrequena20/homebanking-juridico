@@ -11,14 +11,80 @@
   background-color: #153075;
   width: 100%;
   height: 50px;
-  
 }
 .principalConteiner {
   background-color: #F8F7FB;
   width: 100%;
   height: auto;
 }
-
+/* Css para formulario Clients */
+.clientsFormContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1080px;
+  height: 750px;
+  background-color: white;
+  padding: 3rem;
+  padding-top: 3rem;
+  border-radius: 16px;
+  margin: 10rem;
+}
+.wrapperFormConteiner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 875px;
+}
+.iconContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #72707087;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-bottom: 36px;
+}
+.wraperClient {
+  display: flex;
+  overflow: hidden;
+}
+.wraperClientInput{
+  display: flex;
+  flex-direction: column;
+}
+.imputsConteiner{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+.labelClient {
+  float: left;
+  font-size: 14px;
+  color: #606060;
+  padding: 6px;
+}
+.inputClient {
+  width: 360px;
+  height: 52px;
+  background-color: #F5F6FA;
+  border: 1px;
+}
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+.buttonClient {
+  width: 214px;
+  margin: 20px;
+  padding: 10px 50px 10px 50px;
+  gap: 10px;
+  background-color: #153075;
+  color: #E4E4E7;
+}
 /*Css de button */
 .button {
   width: 214px;
@@ -40,40 +106,82 @@
   border-radius: 8px;
   border: 1px;
 }
-
 /*Css de mainLayout */
 .mainLayout {
   display: flex;
   justify-content: flex-start;
   min-height: 100vh;
 }
-/**/
+/* Css de barra Search*/
+.searchContainer{
+  display: flex;
+  border: 1px solid #D5D5D5;
+  width: -webkit-fill-available;
+  height: 90px;
+  background-color: white;
+  padding: 25px 25px 20px 25px;
+}
+.searchInput{
+  width: 388px;
+  height: 38px;
+  border: 0.6px solid #D5D5D5;
+  border-radius: 30px;
+  background-color: #F5F6FA;
+}
+.searchInput::placeholder {
+  color: #202224;
+  font-size: 14px;
+  font-style: italic;
+  font-style: unset;
+  padding: 30px;
+  opacity: 50%;
+}
+.userConteiner {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+  box-sizing: border-box;
+  position: inherit;
+  gap: 12px;
+}
 /*Css de navBar */
 .navContainer {
   display: flex;
   justify-content: flex-start;
+  border: 1px solid #D5D5D5;
   min-height: 100vh;
   width: 350px;
   background-color: white;
   padding-left: 18px;
   padding-right: 36px;
+  font-size: 14px;
 }
-
-
-
-
 .welcome {
-  width: 275px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 285px;
   height: 44px;
   margin-top: 112px;
   margin-bottom: 58px;
   border: 1px solid #E4E4E7;
   border-radius: 8px;
 }
+.gradient{
+  background-image: linear-gradient(45deg,#0B845C 50%,#0B845C 50%,#153075 50%,#153075 50%);
+  -webkit-text-fill-color: transparent;
+	background-clip: text;
+}
 .navSpans {
   width: 48px;
   height: 10px;
   opacity: 50%;
+}
+.blockNav{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
 }
 .listItem {
   margin: 50px;
@@ -135,6 +243,7 @@
   padding-top: 6rem;
   font-size: 12px;
 }
+/* */
 
 
 
