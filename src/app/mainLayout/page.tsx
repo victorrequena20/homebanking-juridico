@@ -8,13 +8,11 @@ export default function MainLayout() {
   return (
     <div className={styles.mainLayout}>
         <Navbar />
-        <Searchbar />
-
-        
-
-        {/* <Formulario /> */}
-        {/* <Auth /> */}
-
+        <div className={styles.conteinerBlock}>
+          <Searchbar />
+          <Formulario />
+          {/* <Auth /> */}
+        </div>
     </div>
   );
 }
