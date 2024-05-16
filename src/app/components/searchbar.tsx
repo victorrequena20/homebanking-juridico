@@ -1,4 +1,5 @@
 import styles from "../page.module.css";
+import { ArrowDes, BellIcon, SettingBold } from "../assets/icons";
 
 export default function Searchbar() {
     return (
@@ -8,13 +9,13 @@ export default function Searchbar() {
             </div>
             <div className={styles.userConteiner}>
                 <div>
-                    <span>Ico</span> 
+                    <SettingBold className={styles.iconsNavbar} />
                 </div>
                 <div>
-                    <span>Ico</span> 
+                    <BellIcon className={styles.iconsNavbar} />
                 </div>
                 <div>
-                    <span>Juan Salazar</span>
+                    <span>Juan Salazar </span><ArrowDes style={{fontSize: 8}} />
                 </div>
             </div>
         </div>

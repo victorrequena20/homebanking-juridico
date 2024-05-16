@@ -1,5 +1,5 @@
-import Auth from "./auth/page";
-import MainLayout from "./mainLayout/page";
+import Auth from "./pages/auth/page";
+import MainLayout from "./pages/mainLayout/page";
 import styles from "./page.module.css";
 
 export default function Home() {

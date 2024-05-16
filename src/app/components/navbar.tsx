@@ -6,6 +6,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { Avatar, Divider, ListItemAvatar } from "@mui/material";
 import FolderIcon from '@mui/icons-material/Folder';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { MessageMail, EventCalendar, Analisis, BussinesProduct, Recruitment, MultiFolder, Flag, Share, Privacy, SettingGear, QuestionMark, Chat } from "../assets/icons";
+
 
 export default function Navbar() {
   return (
@@ -23,7 +25,7 @@ export default function Navbar() {
                     //   }
                     >
                     <ListItemIcon>
-                        <FolderIcon />
+                        <MessageMail className={styles.iconsNavbar} />
                     </ListItemIcon>
                     <ListItemText
                         primary="Solicitudes"
@@ -31,7 +33,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                        <EventCalendar className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Agendar"
@@ -39,7 +41,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Analisis className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Analisis"
@@ -47,7 +49,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <BussinesProduct className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                         primary="Crear productos financieros"
@@ -55,7 +57,7 @@ export default function Navbar() {
                     </ListItem >
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Recruitment className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                         primary="Reclutamiento"
@@ -63,7 +65,7 @@ export default function Navbar() {
                     </ListItem >
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <MultiFolder className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                         primary="Projecto"
@@ -80,7 +82,7 @@ export default function Navbar() {
                     //   }
                     >
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Flag className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Actividad"
@@ -88,7 +90,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Share className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Compartido"
@@ -96,7 +98,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Privacy className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Privacidad"
@@ -113,7 +115,7 @@ export default function Navbar() {
                     //   }
                     >
                         <ListItemIcon>
-                            <FolderIcon />
+                            <SettingGear className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Ajustes"
@@ -121,7 +123,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <QuestionMark className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Ayuda"
@@ -129,7 +131,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <FolderIcon />
+                            <Chat className={styles.iconsNavbar} />
                         </ListItemIcon>
                         <ListItemText
                             primary="Chat"

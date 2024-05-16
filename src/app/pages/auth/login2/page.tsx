@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from "../page.module.css";
+import styles from "../../page.module.css";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';

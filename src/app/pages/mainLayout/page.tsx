@@ -1,8 +1,9 @@
 import Auth from "../auth/page";
 import Formulario from "../clients/page";
-import Navbar from "../components/navbar";
-import Searchbar from "../components/searchbar";
-import styles from "../page.module.css";
+import Navbar from "../../components/navbar";
+import Searchbar from "../../components/searchbar";
+import styles from "../../page.module.css";
+import NavClient from "../createClients/page";
 
 export default function MainLayout() {
   return (
@@ -11,6 +12,7 @@ export default function MainLayout() {
         <div className={styles.conteinerBlock}>
           <Searchbar />
           <Formulario />
+          <NavClient />
           {/* <Auth /> */}
         </div>
     </div>
