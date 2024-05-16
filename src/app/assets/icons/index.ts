@@ -16,6 +16,17 @@ export {default as Chat} from "./Chat.svg"
 export {default as SettingBold} from "./SettingBold.svg"
 export {default as BellIcon} from "./BellIcon.svg"
 export {default as ArrowDes} from "./ArrowDes.svg"
+export {default as RatingStar} from "./RatingStar.svg"
+export {default as MessagesBubbleSettings} from "./MessagesBubbleSettings.svg"
+export {default as Bin} from "./Bin.svg"
+export {default as PlusIcon} from "./PlusIcon.svg"
+
+
+
+
+
+
+
 
 
 

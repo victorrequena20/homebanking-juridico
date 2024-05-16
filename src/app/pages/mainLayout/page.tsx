@@ -11,8 +11,11 @@ export default function MainLayout() {
         <Navbar />
         <div className={styles.conteinerBlock}>
           <Searchbar />
-          <Formulario />
           <NavClient />
+
+
+          {/* <Formulario /> */}
+          
           {/* <Auth /> */}
         </div>
     </div>
