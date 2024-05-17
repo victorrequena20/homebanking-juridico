@@ -20,6 +20,15 @@ export {default as RatingStar} from "./RatingStar.svg"
 export {default as MessagesBubbleSettings} from "./MessagesBubbleSettings.svg"
 export {default as Bin} from "./Bin.svg"
 export {default as PlusIcon} from "./PlusIcon.svg"
+export {default as ShapeUser} from "./ShapeUser.svg"
+export {default as InformationBold} from "./InformationBold.svg"
+export {default as BinBold} from "./BinBold.svg"
+
+
+
+
+
+
 
 
 

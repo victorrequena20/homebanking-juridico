@@ -1,21 +1,26 @@
-import Auth from "../auth/page";
-import Formulario from "../clients/page";
+import Auth from "../auth/loginWebAdmin/page";
+import Formulario from "../clients/createClientForm/page";
 import Navbar from "../../components/navbar";
 import Searchbar from "../../components/searchbar";
 import styles from "../../page.module.css";
-import NavClient from "../createClients/page";
+import NavClient from "../clients/createClientsNav/page";
+import ClientList from "../clients/clientList/page";
 
 export default function MainLayout() {
   return (
     <div className={styles.mainLayout}>
         <Navbar />
+        
         <div className={styles.conteinerBlock}>
           <Searchbar />
-          <NavClient />
+          <div className={styles.conteinerBlockSide}>
+            <NavClient />
+            <ClientList />
+          </div>
+          
 
 
           {/* <Formulario /> */}
-          
           {/* <Auth /> */}
         </div>
     </div>

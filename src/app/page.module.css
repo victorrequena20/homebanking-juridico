@@ -7,6 +7,12 @@
   height: 100vh;
   overflow: hidden;
 }
+/*Css de mainLayout */
+.mainLayout {
+  display: flex;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
 .headerBlu{
   background-color: #153075;
   width: 100%;
@@ -17,12 +23,64 @@
   width: 100%;
   height: auto;
 }
-/* Contenedor de contenido */
+/* Contenedor de modulos Columna */
 .conteinerBlock {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
+/* Contenedor de modulos dobles */
+.conteinerBlockSide {
+  display: flex;
+  width: 100%;
+}
+/* Estilos para client List  */
+.clientsListContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 834px;
+  height: 777px;
+  background-color: white;
+  padding: 3rem;
+  padding-top: 3rem;
+  border-radius: 16px;
+  margin-top: 80px;
+  margin-left: 86px;
+}
+.clientSearchConteiner {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  position: inherit;
+  gap: 180px;
+  
+}
+.searchUserInput{
+  width: 332px;
+  height: 40px;
+  border: 0.6px solid #D5D5D5;
+  border-radius: 30px;
+  background-color: #F5F6FA;
+}
+.searchUserInput::placeholder {
+  color: #202224;
+  font-size: 14px;
+  font-style: italic;
+  font-style: unset;
+  padding: 30px;
+  opacity: 50%;
+}
+.iconsUserListConteiner{
+  display: flex;
+  align-items: center;
+  background-color: #F5F6FA;
+  border-radius: 16px;
+  gap: 14px;
+  border: 1px solid #D5D5D5;
+  padding: 10px;
+}
+
+
 
 /* Css para formulario Clients */
 .clientsFormContainer {
@@ -142,12 +200,6 @@
   width: 288px;
   border-radius: 8px;
   border: 1px;
-}
-/*Css de mainLayout */
-.mainLayout {
-  display: flex;
-  justify-content: flex-start;
-  min-height: 100vh;
 }
 /* Css de barra Search*/
 .searchContainer{

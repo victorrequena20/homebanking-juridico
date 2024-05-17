@@ -1,5 +1,5 @@
 import Divider from "@mui/material/Divider";
-import styles from "../../page.module.css";
+import styles from "../../../page.module.css";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { MessageMail, EventCalendar, Analisis, BussinesProduct, Recruitment, MultiFolder, Flag, Share, Privacy, SettingGear, QuestionMark, Chat, RatingStar, MessagesBubbleSettings, Bin, PlusIcon } from "../../assets/icons";
+import { MessageMail, EventCalendar, Analisis, BussinesProduct, Recruitment, MultiFolder, Flag, Share, Privacy, SettingGear, QuestionMark, Chat, RatingStar, MessagesBubbleSettings, Bin, PlusIcon } from "../../../assets/icons";
 
 export default function NavClient () {
     return (

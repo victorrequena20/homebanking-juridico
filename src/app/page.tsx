@@ -1,4 +1,4 @@
-import Auth from "./pages/auth/page";
+import Auth from "./pages/auth/loginWebAdmin/page";
 import MainLayout from "./pages/mainLayout/page";
 import styles from "./page.module.css";
 
