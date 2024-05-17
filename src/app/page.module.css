@@ -119,6 +119,9 @@
   opacity: 50%;
   
 }
+.createLabelButton span {
+  margin-left: 12px;
+}
 
 
 /*Css de button */
