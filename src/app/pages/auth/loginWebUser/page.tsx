@@ -1,36 +1,32 @@
-import * as React from 'react';
+import * as React from "react";
 import styles from "../../page.module.css";
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Card from "@mui/material/Card";
 
 export default function SignIn() {
   return (
-    
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Card variant="outlined" className={styles.cardbody}>
+    <Container component="main" maxWidth="xs">
+      <Card variant="outlined" className={styles.cardbody}>
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          
           <Typography component="h1" variant="h5">
             BCD
           </Typography>
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -85,10 +81,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-
-
-        </Card>
-       
-      </Container>
+      </Card>
+    </Container>
   );
 }

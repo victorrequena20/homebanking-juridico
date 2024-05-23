@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
+import ThemeProvider from "./theme";
 
-const satoshi = localFont({ src: './assets/fonts/Satoshi_Complete/Fonts/Satoshi-Variable.ttf' })
+const satoshi = localFont({
+  src: "./assets/fonts/Satoshi_Complete/Fonts/Satoshi-Variable.ttf",
+});
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={satoshi.className}>{children}</body>
+      <body className={satoshi.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
