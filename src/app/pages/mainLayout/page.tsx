@@ -14,7 +14,7 @@ export default function MainLayout() {
         <Searchbar />
         <div className={styles.conteinerBlockSide}>
           <NavClient />
-          <ClientList />
+          {/* <ClientList /> */}
         </div>
         {/* <Formulario /> */} {/* <Auth /> */}
       </div>
