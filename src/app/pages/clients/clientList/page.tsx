@@ -12,9 +12,6 @@ export default function ClientList () {
                     <BinBold />
                 </div>
             </div>
-            
-            
-
         </div>
     )
 }

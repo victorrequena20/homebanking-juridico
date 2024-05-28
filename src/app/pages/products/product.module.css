@@ -1,0 +1,59 @@
+.productsConteiner {
+    display: flex;
+    flex-direction: column;
+    width: 1250px;
+    height: 840px;
+    background-color: white;
+    padding: 3rem;
+    padding-top: 3rem;
+    border-radius: 16px;
+    margin-top: 80px;
+    margin-left: 86px;
+  }
+  .headerProduct{
+    align-items: center;
+    font-size: 35px;
+  }
+  .productsHeaderConteiner {
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  .productsSearchConteiner {
+    display: flex;
+    flex-direction: column;
+    justify-content:end;
+    align-items: center;
+  }
+  .searchProductsInput {
+    width: 253px;
+    height: 40px;
+    border: 0.6px solid #d5d5d5;
+    border-radius: 30px;
+    background-color: #f5f6fa;
+  }
+  .searchProductsInput::placeholder {
+    font-size: 14px;
+    padding: 30px;
+    opacity: 50%;
+  }
+  .iconsProductsConteiner {
+    display: flex;
+    align-items: center;
+    background-color: #f5f6fa;
+    border-radius: 16px;
+    gap: 14px;
+    border: 1px solid #d5d5d5;
+    padding: 10px;
+  }
+  .buttonCreateProducts {
+    width: 312px;
+    height: 40px;
+    margin: 20px;
+    padding: 10px 50px 10px 50px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px;
+    background-color: #153075;
+    color: #ffffff;
+  }
