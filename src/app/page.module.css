@@ -1,22 +1,19 @@
-
 .main {
-  height: 100vh; 
+  height: 100vh;
 }
 /*Css de mainLayout */
 .mainLayout {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   min-height: 100vh;
+  background-color: #f8f7fb;
+  width: 100%;
 }
 .headerBlu {
   background-color: #153075;
   width: 100%;
   height: 50px;
-}
-.principalConteiner {
-  background-color: #f8f7fb;
-  width: 100%;
-  height: auto;
 }
 /* Contenedor de modulos Columna */
 .conteinerBlock {

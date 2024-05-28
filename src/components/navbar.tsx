@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "../app/page.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
