@@ -2,9 +2,9 @@ import styles from "../app/page.module.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import { Avatar, Box, Divider, ListItemAvatar, Stack } from "@mui/material";
-import FolderIcon from "@mui/icons-material/Folder";
+import { Avatar, Box, Divider, Stack } from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Link from '@mui/material/Link';
 import {
   MessageMail,
   EventCalendar,
@@ -44,7 +44,7 @@ export default function Navbar() {
                 <ListItemIcon>
                   <MessageMail className={styles.iconsNavbar} />
                 </ListItemIcon>
-                <ListItemText primary="Solicitudes" />
+                <Link href="/clientes/createClientForm"><ListItemText primary="Solicitudes" /></Link>
               </ListItem>
               <ListItem>
                 <ListItemIcon>
@@ -62,7 +62,7 @@ export default function Navbar() {
                 <ListItemIcon>
                   <BussinesProduct className={styles.iconsNavbar} />
                 </ListItemIcon>
-                <ListItemText primary="Crear productos financieros" />
+                <Link href="/productos" ><ListItemText primary="Productos financieros"/></Link>
               </ListItem>
               <ListItem>
                 <ListItemIcon>

@@ -269,6 +269,9 @@
   position: relative;
   margin-top: 50px;
 }
+.button {
+  background-color: #153075;
+}
 .check {
   display: flex;
   width: 100%;
@@ -278,9 +281,6 @@
   position: relative;
   margin: 3px;
   font-size: 10px;
-}
-.button {
-  background-color: #153075;
 }
 .endline {
   display: flex;

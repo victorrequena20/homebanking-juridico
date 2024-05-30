@@ -6,7 +6,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.headerBlu} />
       <div className={styles.principalConteiner}>
-        <Auth />
+        {/* <Auth /> */}
       </div>
     </main>
   );

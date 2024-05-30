@@ -1,23 +1,35 @@
 .productsConteiner {
     display: flex;
     flex-direction: column;
-    width: 1250px;
-    height: 840px;
+    width: 950px;
+    height: 750px;
     background-color: white;
-    padding: 3rem;
-    padding-top: 3rem;
     border-radius: 16px;
+    padding: 1rem;
     margin-top: 80px;
     margin-left: 86px;
   }
-  .headerProduct{
-    align-items: center;
-    font-size: 35px;
-  }
-  .productsHeaderConteiner {
+  .productsHeaderConteinerTable{
     display: flex;
     justify-content: space-between;
-    
+    padding-left: 15px;
+    font-size: 25px;
+    gap: 10px;
+  }
+  .productsHeader{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  .linkProduct {
+    background-color: #F8F7FB;
+    color: black;
+    width: 220px;
+  }
+  .headerProductTable {
+    align-self: center;
+    font-size: 22px;
   }
   .productsSearchConteiner {
     display: flex;
@@ -26,8 +38,8 @@
     align-items: center;
   }
   .searchProductsInput {
-    width: 253px;
-    height: 40px;
+    width: 240px;
+    height: 30px;
     border: 0.6px solid #d5d5d5;
     border-radius: 30px;
     background-color: #f5f6fa;
@@ -57,3 +69,27 @@
     background-color: #153075;
     color: #ffffff;
   }
+  .productsList {
+    align-self: center;
+    /* background-color: #E6E6E6; */
+    width: 900px;
+  }
+  .financialProductsTable {
+    width: 100%;
+  }
+  .gridConteiner {
+    margin: 100px;
+  }
+  .gridComponentsHeader {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  .productsEditHeaderConteiner{
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 80px 0px 90px;
+
+    font-size: 25px;
+  }
+
+

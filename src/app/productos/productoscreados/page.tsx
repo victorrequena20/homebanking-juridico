@@ -1,11 +1,14 @@
+
 import styles from "../product.module.css";
 import { BinBold, InformationBold, ShapeUser } from "../../../assets/icons";
+import { Box } from '@mui/material';
+import DataTable from "./table";
 
-export default function CreatedProducts() {
+export default async function CreatedProducts() {
   return (
     <div className={styles.productsConteiner}>
-      <div className={styles.productsHeaderConteiner}>
-        <h4 className={styles.headerProduct}>Productos financieros creados</h4>
+      <div className={styles.productsHeaderConteinerTable}>
+        <h4 className={styles.headerProductTable}>Productos financieros creados</h4>
         <div className={styles.productsSearchConteiner}>
           <input
             className={styles.searchProductsInput}
@@ -17,7 +20,9 @@ export default function CreatedProducts() {
           </button>
         </div>
       </div>
-      <div className={styles.productsList}></div>
+      <div className={styles.productsList}>
+        <DataTable />
+      </div>
     </div>
   );
 }
