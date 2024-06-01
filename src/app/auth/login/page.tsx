@@ -1,4 +1,4 @@
-import styles from "../../page.module.css";
+import styles from "./auth.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";

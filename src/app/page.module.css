@@ -7,7 +7,7 @@
   background-color: #f8f7fb;
   width: 100%;
 }
-.headerBlu {
+.headerBlue {
   background-color: #153075;
   width: 100%;
   height: 50px;
@@ -139,139 +139,17 @@
   background-color: #153075;
   color: #ffffff;
 }
-/* Estilos para Nav de crear Cliente */
-.navClientConteiner {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border: 1px solid #d5d5d5;
-  height: 840px;
-  width: 286px;
-  margin-top: 80px;
-  margin-left: 70px;
-  padding-left: 18px;
-  padding-right: 36px;
-  font-size: 14px;
-  border-radius: 16px;
-}
-.createLabelButton {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  margin: 20px;
-  font-size: 14px;
-  opacity: 50%;
-}
-.createLabelButton span {
-  margin-left: 12px;
-}
-
 /*Css de button */
 .button {
   width: 214px;
   padding: 10px 50px 10px 50px;
   gap: 10px;
 }
-/*Css de Aith form */
-.forms {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-  max-height: 40px !important;
-}
-.textfield {
-  width: 288px;
-  border-radius: 8px;
-  border: 1px;
-}
-/*Css de navBar */
-.navContainer {
-  display: flex;
-  border: 1px solid #d5d5d5;
-  height: auto;
-  overflow-y: auto;
-  min-width: 340px;
-  background-color: white;
-  padding-left: 18px;
-  font-size: 16px;
-}
-.iconsNavbar {
-  font-size: 24px;
-}
-.welcome {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 285px;
-  height: 44px;
-  margin: 112px auto 58px auto;
-  border: 1px solid #e4e4e7;
-  border-radius: 8px;
-}
-.gradient {
-  background-image: linear-gradient(
-    45deg,
-    #0b845c 50%,
-    #0b845c 50%,
-    #153075 50%,
-    #153075 50%
-  );
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.navSpans {
-  width: 48px;
-  height: 10px;
-  opacity: 50%;
-}
-.blockNav {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-.listItem {
-  margin: 50px;
-}
-/**/
-.authContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-}
-.cardbody {
-  width: 80%;
-  max-width: 640px;
-  height: 640px;
-  background-color: white;
-  padding: 1rem;
-  padding-top: 7rem;
-  border-radius: 16px;
-}
-.forms {
-  display: flex;
-  width: 100%;
-  margin: px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 0.5rem 0;
-}
-.buttonlog {
-  display: flex;
-  width: 100%;
-  margin: 5px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-top: 50px;
-}
 .button {
   background-color: #153075;
 }
+/*Css de Auth form */
+
 .check {
   display: flex;
   width: 100%;
@@ -291,6 +169,9 @@
   font-size: 12px;
 }
 /**/
+
+
+
 
 /* Base Css que trae el proyecto*/
 .description {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import Navbar from "@/components/navbar";
+import NavBar from "@/components/NavBar";
 import SearchBar from "@/components/SearchBar";
 import styles from "./page.module.css";
 
@@ -23,9 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={satoshi.className}>
         <div className={styles.mainLayout}>
-          <div className={styles.headerBlu} />
+          <div className={styles.headerBlue} />
           <div style={{ display: "flex" }}>
-            <Navbar />
+            <NavBar />
             <div className={styles.conteinerBlock}>
               <SearchBar />
               <div className={styles.conteinerBlockSide}>{children}</div>
