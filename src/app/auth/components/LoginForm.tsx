@@ -1,5 +1,4 @@
 "use client";
-
 import styles from "../login/auth.module.css";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
@@ -11,13 +10,15 @@ import { Box, Typography } from "@mui/material";
 import Input from "@/components/Input";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   // States
   const [username, setUsername] = useState("litecore");
   const [password, setPassword] = useState("password");
   const [error, setError] = useState("");
-  // Instances
+  // Hooks
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
@@ -60,28 +61,13 @@ const LoginForm = () => {
             bottom: "-10px",
           }}
         >
-          <Image
-            width={580}
-            height={600}
-            src="/assets/images/auth-login-img.png"
-            alt="Image"
-          />
+          <Image width={580} height={600} src="/assets/images/auth-login-img.png" alt="Image" />
         </Box>
         <Grid md={11} sx={{ px: 3, mx: "auto" }}>
-          <Typography
-            variant="h4"
-            fontWeight="500"
-            textAlign="start"
-            color="#12141a"
-          >
+          <Typography variant="h4" fontWeight="500" textAlign="start" color="#12141a">
             Banco Digital de Caracas
           </Typography>
-          <Typography
-            variant="body2"
-            fontWeight="300"
-            color="#606778"
-            maxWidth="40ch"
-          >
+          <Typography variant="body2" fontWeight="300" color="#606778" maxWidth="40ch">
             Más que un banco, somos tu aliado digital en cada paso de tu vida.
           </Typography>
           <Typography sx={{ mt: 1.5, cursor: "pointer" }} variant="body2">
@@ -97,13 +83,16 @@ const LoginForm = () => {
               maxWidth: "392px",
             }}
           >
-            <Input
-              label="Usuario"
-              placeholder="ejemplo@gmail.com"
-              type="text"
-            />
+            <Input label="Usuario" placeholder="ejemplo@gmail.com" type="text" />
             <Input label="Contraseña" type="password" />
-            <Button variant="primary" size="small" text="Entrar" />
+            <Button
+              variant="primary"
+              size="small"
+              text="Entrar"
+              onClick={() => {
+                router.push("/institucion/clientes");
+              }}
+            />
           </Box>
         </Grid>
       </Grid>
