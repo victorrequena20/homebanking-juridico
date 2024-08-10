@@ -1,14 +1,19 @@
 import React from "react";
 import localFont from "next/font/local";
-
-const satoshi = localFont({
-  src: "../assets/fonts/Satoshi-Variable.ttf",
-});
+import "./globals.css";
 
 export default function RootLayout({ children }: any) {
   return (
     <html lang="es">
-      <body className={satoshi.className}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
         <main>{children}</main>
       </body>
     </html>

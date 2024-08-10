@@ -1,6 +1,6 @@
-import { ButtonProps } from "@mui/material";
-
-export interface IButtonProps extends ButtonProps {
-  text: string;
+export interface IButtonProps {
+  text?: string;
   onClick?: () => void;
+  variant?: "primary" | "secondary";
+  size?: "small" | "medium" | "large";
 }
