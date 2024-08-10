@@ -97,7 +97,11 @@ const LoginForm = () => {
               maxWidth: "392px",
             }}
           >
-            <Input label="Usuario" type="text" />
+            <Input
+              label="Usuario"
+              placeholder="ejemplo@gmail.com"
+              type="text"
+            />
             <Input label="Contraseña" type="password" />
             <Button variant="primary" size="small" text="Entrar" />
           </Box>
