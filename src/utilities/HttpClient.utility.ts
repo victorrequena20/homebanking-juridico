@@ -17,23 +17,24 @@ const HttpClient = axios.create({
 });
 
 HttpClient.interceptors.request.use(
-  (config) => {
+  config => {
     // const state = store.getState();
     // const token = state.user?.token;
     // console.log("🚀 ~ token from interceptors:", token);
     // if (token) {
+    config.headers.Authorization = `Basic bGl0ZWNvcmU6cGFzc3dvcmQ=`;
     //   config.headers.Authorization = `Basic ${token}`;
     // }
     return config;
   },
-  (error) => {
+  error => {
     return Promise.reject(error);
   }
 );
 
 HttpClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     return Promise.reject(error);
   }
 );
