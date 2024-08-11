@@ -5,6 +5,7 @@ import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getUsers } from "@/services/Users.service";
+import Wrapper from "@/components/Wrapper";
 
 export default function AdministrationUsersPage() {
   const [users, setUsers] = React.useState<any>([{ id: 1 }]);
@@ -80,46 +81,45 @@ export default function AdministrationUsersPage() {
     })();
   }, []);
   return (
-    <Grid
-      md={10}
-      sx={{ bgcolor: "#FAFAFA", borderRadius: 8, px: 24, pt: 6, maxHeight: "100%", overflow: "auto", pb: 4 }}
-    >
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Usuarios</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Autoservicio</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Usuarios</Typography>
-            </Link>
-          </Breadcrumbs>
+    <Grid md={10} sx={{ bgcolor: "#FAFAFA", borderRadius: 8, pt: 6, maxHeight: "100%", overflow: "auto", pb: 4 }}>
+      <Wrapper>
+        <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <Stack>
+            <Typography variant="h4">Usuarios</Typography>
+            <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
+              <Link underline="hover" color="inherit" href="/auth/login">
+                <Typography variant="body2">BDC</Typography>
+              </Link>
+              <Typography variant="body2">Autoservicio</Typography>
+              <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
+                <Typography variant="body2">Usuarios</Typography>
+              </Link>
+            </Breadcrumbs>
+          </Stack>
+          <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
+            <Button size="small" variant="primary" text="Crear usuario" />
+          </Stack>
         </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button size="small" variant="primary" text="Crear usuario" />
-        </Stack>
-      </Stack>
 
-      <Stack sx={{ mt: 5 }}>
-        <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
-          rows={users}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+        <Stack sx={{ mt: 5 }}>
+          <DataGrid
+            sx={{ borderRadius: "16px", overflow: "hidden" }}
+            rows={users}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-        />
-      </Stack>
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Stack>
+      </Wrapper>
     </Grid>
   );
 }

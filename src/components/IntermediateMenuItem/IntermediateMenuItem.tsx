@@ -8,11 +8,16 @@ import { IntermediateMenuItemProps } from "./IntermediateMenuItemProps";
 
 export default function IntermediateMenuItem({ title, subtitle, path, icon }: IntermediateMenuItemProps) {
   return (
-    <Grid
-      md={5}
+    <Box
       sx={{
+        display: "flex",
+        flex: 1,
         backgroundColor: "#fff",
-        height: "120px",
+        width: "100%",
+        minWidth: "340px",
+        maxWidth: "340px",
+        height: "80px",
+        maxHeight: "80px",
         borderRadius: 2,
         px: 2,
         py: 3,
@@ -26,6 +31,7 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon }: In
       <Stack
         sx={{
           flexDirection: "row",
+          width: "100%",
           height: "100%",
           alignItems: "center",
           justifyContent: "space-between",
@@ -35,10 +41,10 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon }: In
         <Stack sx={{ height: "100%", flexDirection: "row", justifyContent: "center" }}>
           <Stack sx={{ flexDirection: "row", columnGap: 1, alignItems: "center" }}>{icon}</Stack>
           <Stack sx={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "center", ml: 2 }}>
-            <Typography variant="body1" fontWeight="500" color="#12141a">
+            <Typography variant="body2" fontWeight="500" color="#12141a">
               {title}
             </Typography>
-            <Typography variant="body2" color="#606778" maxWidth="38ch" sx={{ mt: 0.5 }}>
+            <Typography variant="caption" color="#606778" maxWidth="34ch" sx={{ mt: 0.5 }}>
               {subtitle}
             </Typography>
           </Stack>
@@ -59,6 +65,6 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon }: In
           <ArrowRightIcon size={18} color="#000" />
         </Box>
       </Stack>
-    </Grid>
+    </Box>
   );
 }

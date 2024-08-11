@@ -21,6 +21,7 @@ export default function AuthenticatedLayout({ children }: any) {
     accounting: pathname === "/contabilidad",
     reports: pathname === "/reportes",
     administrationUsers: pathname === "/administracion/usuarios",
+    administrationOrganization: pathname === "/administracion/organizacion",
   };
   return (
     <Grid
@@ -152,7 +153,15 @@ export default function AuthenticatedLayout({ children }: any) {
                   Usuarios
                 </Typography>
               </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  py: 1,
+                  px: 2,
+                  bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
+                }}
+                onClick={() => router.push("/administracion/organizacion")}
+              >
                 <Typography variant="body2" fontWeight="200" color="#fff">
                   Organización
                 </Typography>
