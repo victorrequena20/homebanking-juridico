@@ -221,16 +221,6 @@ export default function AuthenticatedLayout({ children }: any) {
                   Gestión de usuarios
                 </Typography>
               </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Configuración de la aplicación
-                </Typography>
-              </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Administración de tareas
-                </Typography>
-              </Box>
             </Stack>
           </Stack>
         </Stack>

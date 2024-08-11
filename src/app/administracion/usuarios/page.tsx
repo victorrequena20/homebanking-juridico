@@ -8,6 +8,7 @@ import { getUsers } from "@/services/Users.service";
 import Wrapper from "@/components/Wrapper";
 
 export default function AdministrationUsersPage() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [users, setUsers] = React.useState<any>([{ id: 1 }]);
 
   const columns: GridColDef<(typeof users)[number]>[] = [
@@ -66,6 +67,7 @@ export default function AdministrationUsersPage() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getUsers();
       const clientsData = response?.data.map((el: any) => {
         return {
@@ -78,6 +80,7 @@ export default function AdministrationUsersPage() {
         };
       });
       setUsers(clientsData?.reverse());
+      setIsLoading(false);
     })();
   }, []);
   return (
@@ -106,6 +109,7 @@ export default function AdministrationUsersPage() {
             sx={{ borderRadius: "16px", overflow: "hidden" }}
             rows={users}
             columns={columns}
+            loading={isLoading}
             initialState={{
               pagination: {
                 paginationModel: {

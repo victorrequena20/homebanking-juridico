@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
+import { alpha, Box, Breadcrumbs, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
 import Wrapper from "@/components/Wrapper";
 
 export default function ReportsAllPage() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [reports, setReports] = React.useState<any>([{ id: 1 }]);
 
   const columns: GridColDef<(typeof reports)[number]>[] = [
@@ -31,8 +32,36 @@ export default function ReportsAllPage() {
     },
   ];
 
+  const ODD_OPACITY = 0.2;
+
+  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.grey[200],
+      "&:hover": {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+        "@media (hover: none)": {
+          backgroundColor: "transparent",
+        },
+      },
+      "&.Mui-selected": {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
+        "&:hover": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity
+          ),
+          // Reset on touch devices, it doesn't add specificity
+          "@media (hover: none)": {
+            backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
+          },
+        },
+      },
+    },
+  }));
+
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getReports();
       const reportsData = response?.data?.map((el: any) => {
         return {
@@ -43,6 +72,7 @@ export default function ReportsAllPage() {
         };
       });
       setReports(reportsData);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -64,9 +94,10 @@ export default function ReportsAllPage() {
         </Stack>
 
         <Stack sx={{ mt: 5 }}>
-          <DataGrid
+          <StripedDataGrid
             sx={{ borderRadius: "16px", overflow: "hidden" }}
             rows={reports}
+            loading={isLoading}
             columns={columns}
             initialState={{
               pagination: {
@@ -78,6 +109,7 @@ export default function ReportsAllPage() {
             }}
             disableRowSelectionOnClick
             rowSelection
+            getRowClassName={params => (params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd")}
             pageSizeOptions={[10, 25, 50]}
           />
         </Stack>

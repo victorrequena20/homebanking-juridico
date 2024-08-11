@@ -8,6 +8,7 @@ import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
 
 export default function Clients() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [clients, setClients] = React.useState<any>([{ id: 1 }]);
 
   const columns: GridColDef<(typeof clients)[number]>[] = [
@@ -66,6 +67,7 @@ export default function Clients() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getClients();
       const data = response?.data?.pageItems;
       const clientsData = data.map((el: any) => {
@@ -79,6 +81,7 @@ export default function Clients() {
         };
       });
       setClients(clientsData?.reverse());
+      setIsLoading(false);
     })();
   }, []);
   return (
