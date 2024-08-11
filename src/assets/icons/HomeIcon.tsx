@@ -13,7 +13,6 @@ const HomeIcon = ({ size, color }: Props) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      ;
     </svg>
   );
 };

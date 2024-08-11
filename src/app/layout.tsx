@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import localFont from "next/font/local";
 import "./globals.css";
 
 export default function RootLayout({ children }: any) {
@@ -13,9 +13,7 @@ export default function RootLayout({ children }: any) {
           rel="stylesheet"
         />
       </head>
-      <body>
-        <main>{children}</main>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
