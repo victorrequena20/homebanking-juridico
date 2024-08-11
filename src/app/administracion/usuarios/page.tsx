@@ -90,7 +90,7 @@ export default function AdministrationUsersPage() {
               <Link underline="hover" color="inherit" href="/auth/login">
                 <Typography variant="body2">BDC</Typography>
               </Link>
-              <Typography variant="body2">Autoservicio</Typography>
+              <Typography variant="body2">Administración</Typography>
               <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
                 <Typography variant="body2">Usuarios</Typography>
               </Link>

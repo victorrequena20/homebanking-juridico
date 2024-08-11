@@ -22,6 +22,8 @@ export default function AuthenticatedLayout({ children }: any) {
     reports: pathname === "/reportes",
     administrationUsers: pathname === "/administracion/usuarios",
     administrationOrganization: pathname === "/administracion/organizacion",
+    administrationSystem: pathname === "/administracion/sistema",
+    administrationProducts: pathname === "/administracion/productos",
   };
   return (
     <Grid
@@ -136,7 +138,7 @@ export default function AuthenticatedLayout({ children }: any) {
             <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
               <PersonHexagonalIcon size={24} />
               <Typography variant="body2" color="#fff">
-                Administrador
+                Administración
               </Typography>
             </Box>
             <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
@@ -166,12 +168,29 @@ export default function AuthenticatedLayout({ children }: any) {
                   Organización
                 </Typography>
               </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  py: 1,
+                  px: 2,
+                  bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
+                }}
+                onClick={() => router.push("/administracion/sistema")}
+              >
                 <Typography variant="body2" fontWeight="200" color="#fff">
                   Sistema
                 </Typography>
               </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  py: 1,
+                  px: 2,
+                  bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
+                }}
+                onClick={() => router.push("/administracion/productos")}
+              >
                 <Typography variant="body2" fontWeight="200" color="#fff">
                   Productos
                 </Typography>

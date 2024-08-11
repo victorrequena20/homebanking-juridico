@@ -3,15 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
-import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
-import HierarchyIcon from "@/assets/icons/HierarchyIcon";
-import PlusIcon from "@/assets/icons/PlusIcon";
-import ArchiveIcon from "@/assets/icons/ArchiveIcon";
-import SearchIcon from "@/assets/icons/SearchIcon";
 import BillIcon from "@/assets/icons/BillIcon";
-import LinkIcon from "@/assets/icons/LinkIcon";
-import CalendarIcon from "@/assets/icons/CalendarIcon";
-import ToggleOnIcon from "@/assets/icons/ToggleIcon";
 import CashIcon from "@/assets/icons/CashIcon";
 import Wrapper from "@/components/Wrapper";
 import OfficesIcon from "@/assets/icons/OfficesIcon";
@@ -27,11 +19,8 @@ import WalletAddIcon from "@/assets/icons/WalletAddIcon";
 import KeySquareIcon from "@/assets/icons/KeySquareIcon";
 import MessagesSendIcon from "@/assets/icons/MessagesSendIcon";
 import FilterIcon from "@/assets/icons/FilterIcon";
-import MirroringScreenIcon from "@/assets/icons/MirroringScreenIcon";
-import TaskListIcon from "@/assets/icons/TaskListIcon";
-import MessagesReceivedIcon from "@/assets/icons/MessagesReceivedIcon";
 
-export default function AdministrationOrganizationPage() {
+export default function AdministrationSystemPage() {
   return (
     <Grid
       md={10}
@@ -47,14 +36,14 @@ export default function AdministrationOrganizationPage() {
       <Wrapper>
         <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <Stack>
-            <Typography variant="h4">Organización</Typography>
+            <Typography variant="h4">Sistema</Typography>
             <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
               <Link underline="hover" color="inherit" href="/auth/login">
                 <Typography variant="body2">BDC</Typography>
               </Link>
               <Typography variant="body2">Administración</Typography>
               <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-                <Typography variant="body2">Organización</Typography>
+                <Typography variant="body2">Sistema</Typography>
               </Link>
             </Breadcrumbs>
           </Stack>
@@ -76,112 +65,94 @@ export default function AdministrationOrganizationPage() {
           }}
         >
           <IntermediateMenuItem
-            title="Administrar oficinas"
-            subtitle="Agregar nueva oficina o modificar o desactivar oficina o modificar jerarquía."
+            title="Administrar tablas de datos"
+            subtitle="Agregue nuevos campos adicionales a cualquier entidad en forma de tabla de datos."
             path=""
             icon={<OfficesIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Configuración de moneda"
-            subtitle="Monedas disponibles en toda la organización para diferentes productos."
+            title="Pistas de auditoría"
+            subtitle="Registros de auditoría de todas las actividades, como crear clientes, desembolsar créditos, etc."
             path=""
             icon={<SettingsIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Administrar festivos"
-            subtitle="Definir días festivos para la oficina."
+            title="Administrar códigos"
+            subtitle="Los códigos se utilizan para definir valores desplegables."
             path=""
             icon={<CalendarEditIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Administrar fondos"
-            subtitle="Los fondos están asociados con créditos."
+            title="Administrar reportes"
+            subtitle="Agregar nuevo reporte y clasificar reportes."
             path=""
             icon={<PercentageSquareIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Administrar empleados"
-            subtitle="Un empleado representa a agentes de crédito sin acceso a los sistemas."
+            title="Administrar roles y permisos"
+            subtitle="Definir o modificar roles y permisos asociados."
             path=""
             icon={<PeopleIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Reasignación de créditos másiva"
-            subtitle="Manera fácil de reasignar todo el crédito de un LO a otro LO."
+            title="Administrar procesos"
+            subtitle="Administre calendarización de procesos y sus flujos, modifique procesos o vea el historial."
             path=""
             icon={<WalletReloadIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Historial de instrucciones permanentes"
-            subtitle="Ver el historial registrado de instrucciones permanentes."
+            title="Configurar tareas de realizador aprobador"
+            subtitle="Definir o modificar tareas de realizador aprobador."
             path=""
             icon={<BillIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Gestión de ventanillas y cajeros"
-            subtitle="Gestionar cajeros/cajeros y asignación y liquidación de efectivo."
+            title="Configuraciones"
+            subtitle="Configuraciones globales, configuración de caché y fecha del sistema."
             path=""
             icon={<CashIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Inversores"
-            subtitle="Ver los detalles de la cuenta de crédito asociados con los inversores."
+            title="Administrar ganchos"
+            subtitle="Definir ganchos."
             path=""
             icon={<PersonPlusIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Días laborables"
-            subtitle="Defina días laborables y configure el comportamiento de los pagos vencidos en días festivos."
+            title="Preferencias de número de cuenta"
+            subtitle="Preferencias para generar números de cuenta para cuentas de clientes, créditos y ahorros."
             path=""
             icon={<Calendar2Icon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Mapeo de fondos"
-            subtitle="Pantalla de entrada masiva para asignar fuentes de fondos a créditos."
+            title="Mapeo de entidad a entidad"
+            subtitle="Definir o modificar asignaciones de entidad a entidad"
             path=""
             icon={<MoneyCheckIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Tipo de pago"
-            subtitle="Administrar tipos de pago"
+            title="Servicios externos"
+            subtitle="Configuración de servicios externos."
             path=""
             icon={<WalletAddIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Preferencias de contraseña"
-            subtitle="Definir estándares para hacer cumplir el uso de contraseñas más seguras."
+            title="Administrar encuestas"
+            subtitle="Gestiona tus servicios."
             path=""
             icon={<KeySquareIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Campañas de SMS"
-            subtitle="Definir campañas de SMS para la organización"
+            title="Configuración de dos factores"
+            subtitle="Ajustes de configuración de autenticación de dos factores."
             path=""
             icon={<MessagesSendIcon size={28} color="#153075" />}
           />
           <IntermediateMenuItem
-            title="Criterios de concesión de créditos"
-            subtitle="Definir criterios de concesión de créditos para la organización"
+            title="Gestionar eventos externos"
+            subtitle="Configuración de eventos externos, para habilitar o deshabilitar la publicación de eventos."
             path=""
             icon={<FilterIcon size={28} color="#153075" />}
-          />
-          <IntermediateMenuItem
-            title="Consulta ad hoc"
-            subtitle="Definir AdHocQuery para la organización"
-            path=""
-            icon={<MirroringScreenIcon size={28} color="#153075" />}
-          />
-          <IntermediateMenuItem
-            title="Verificaciones de la tabla de datos de la entidad"
-            subtitle="Definir comprobaciones de la tabla de datos de la entidad para la organización"
-            path=""
-            icon={<TaskListIcon size={28} color="#153075" />}
-          />
-          <IntermediateMenuItem
-            title="Importación masiva"
-            subtitle="Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, oficinas, etc."
-            path=""
-            icon={<MessagesReceivedIcon size={28} color="#153075" />}
           />
         </Stack>
       </Wrapper>
