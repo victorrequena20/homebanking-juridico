@@ -19,6 +19,8 @@ export default function AuthenticatedLayout({ children }: any) {
   const routeValidations = {
     institutionClients: pathname === "/institucion/clientes",
     accounting: pathname === "/contabilidad",
+    reports: pathname === "/reportes",
+    administrationUsers: pathname === "/administracion/usuarios",
   };
   return (
     <Grid
@@ -102,8 +104,27 @@ export default function AuthenticatedLayout({ children }: any) {
               </Typography>
             </Box>
           </Stack>
-          <Stack sx={{ mt: 1.5 }}>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Stack
+            sx={{
+              mt: 1.5,
+            }}
+            onClick={() => router.push("/reportes")}
+          >
+            <Box
+              sx={{
+                borderRadius: "8px",
+                py: 1,
+                px: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                cursor: "pointer",
+                bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
+                "&:hover": {
+                  bgcolor: "hsl(0, 0%, 12%)",
+                },
+              }}
+            >
               <ReportIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Reportes
@@ -117,6 +138,41 @@ export default function AuthenticatedLayout({ children }: any) {
                 Administrador
               </Typography>
             </Box>
+            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  py: 1,
+                  px: 2,
+                  bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
+                }}
+                onClick={() => router.push("/administracion/usuarios")}
+              >
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Usuarios
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Organización
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Sistema
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Productos
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Plantillas
+                </Typography>
+              </Box>
+            </Stack>
           </Stack>
           <Stack sx={{ mt: 1.5 }}>
             <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -125,6 +181,29 @@ export default function AuthenticatedLayout({ children }: any) {
                 Autoservicio
               </Typography>
             </Box>
+            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  py: 1,
+                  px: 2,
+                }}
+              >
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Gestión de usuarios
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Configuración de la aplicación
+                </Typography>
+              </Box>
+              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                <Typography variant="body2" fontWeight="200" color="#fff">
+                  Administración de tareas
+                </Typography>
+              </Box>
+            </Stack>
           </Stack>
         </Stack>
       </Grid>

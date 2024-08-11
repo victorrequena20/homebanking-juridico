@@ -4,29 +4,29 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
-import { getClients } from "@/services/Clients.service";
+import { getUsers } from "@/services/Users.service";
 
-export default function Clients() {
-  const [clients, setClients] = React.useState<any>([{ id: 1 }]);
+export default function AdministrationUsersPage() {
+  const [users, setUsers] = React.useState<any>([{ id: 1 }]);
 
-  const columns: GridColDef<(typeof clients)[number]>[] = [
+  const columns: GridColDef<(typeof users)[number]>[] = [
     {
-      field: "name",
-      headerName: "Nombre",
+      field: "username",
+      headerName: "Nombre de usuario",
       flex: 1,
-      valueGetter: (value, row) => `${row.name || ""}`,
+      valueGetter: (value, row) => `${row.username || ""}`,
     },
     {
-      field: "accountNumber",
-      headerName: "Número de cuenta",
+      field: "userId",
+      headerName: "Id de usuario",
       flex: 1,
-      valueGetter: (value, row) => `${row.accountNumber || ""} `,
+      valueGetter: (value, row) => `${row.id || ""} `,
     },
     {
-      field: "externalId",
-      headerName: "Id externo",
+      field: "email",
+      headerName: "Correo eléctronico",
       flex: 1,
-      valueGetter: (value, row) => `${row.externalId || ""} `,
+      valueGetter: (value, row) => `${row.email || ""} `,
     },
     {
       field: "status",
@@ -65,19 +65,18 @@ export default function Clients() {
 
   React.useEffect(() => {
     (async () => {
-      const response = await getClients();
-      const data = response?.data?.pageItems;
-      const clientsData = data.map((el: any) => {
+      const response = await getUsers();
+      const clientsData = response?.data.map((el: any) => {
         return {
           id: el?.id,
-          name: `${el?.firstname} ${el?.lastname}`,
-          accountNumber: el?.accountNo,
-          externalId: el?.externalId,
-          status: el?.active,
+          username: el?.username,
+          userId: el?.id,
+          email: el?.email,
+          status: el?.isSelfServiceUser,
           office: el?.officeName,
         };
       });
-      setClients(clientsData?.reverse());
+      setUsers(clientsData?.reverse());
     })();
   }, []);
   return (
@@ -87,25 +86,26 @@ export default function Clients() {
     >
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
-          <Typography variant="h4">Clientes</Typography>
+          <Typography variant="h4">Usuarios</Typography>
           <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
             <Link underline="hover" color="inherit" href="/auth/login">
               <Typography variant="body2">BDC</Typography>
             </Link>
+            <Typography variant="body2">Autoservicio</Typography>
             <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Clientes</Typography>
+              <Typography variant="body2">Usuarios</Typography>
             </Link>
           </Breadcrumbs>
         </Stack>
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
+        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
+          <Button size="small" variant="primary" text="Crear usuario" />
         </Stack>
       </Stack>
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
           sx={{ borderRadius: "16px", overflow: "hidden" }}
-          rows={clients}
+          rows={users}
           columns={columns}
           initialState={{
             pagination: {

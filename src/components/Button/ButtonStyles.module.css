@@ -12,6 +12,16 @@
   background-color: #153075;
 }
 
+.btn-warning-red {
+  background-color: #ea3647;
+  color: #f3f3f3;
+}
+
+.btn-success {
+  background-color: #0b845c;
+  color: #f3f3f3;
+}
+
 .small {
   width: auto;
   padding: 8px 16px;

@@ -47,7 +47,7 @@ export default function AccountingPage() {
       <Grid
         container
         md={12}
-        sx={{ border: "1px solid transparent", gap: 2, mt: 3, alignItems: "center", justifyContent: "flex-start" }}
+        sx={{ border: "1px solid transparent", gap: 2, mt: 5, alignItems: "center", justifyContent: "flex-start" }}
       >
         <IntermediateMenuItem
           title="Publicaciones frecuentes"
