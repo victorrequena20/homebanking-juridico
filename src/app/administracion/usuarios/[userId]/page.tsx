@@ -49,8 +49,8 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               <Typography variant="body2">BDC</Typography>
             </Link>
             <Typography variant="body2">Autoservicio</Typography>
-            <Link underline="hover" color="text.primary" href="/autoservicio/gestion-de-usuarios">
-              <Typography variant="body2">Gestión de usuarios</Typography>
+            <Link underline="hover" color="text.primary" href="/administracion/usuarios">
+              <Typography variant="body2">Administración</Typography>
             </Link>
             <Typography variant="body2">{userData?.username}</Typography>
           </Breadcrumbs>

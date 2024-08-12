@@ -9,12 +9,10 @@ import BankIcon from "@/assets/icons/BankIcon";
 import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
 import ReportIcon from "@/assets/icons/ReportIcon";
 import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
 // Utils
 import { usePathname, useRouter } from "next/navigation";
 
 export default function AuthenticatedLayout({ children }: any) {
-  const [showSelfServiceLinks, setShowSelfServiceLinks] = React.useState<boolean>(false);
   const [showInstitutionLinks, setShowInstitutionLinks] = React.useState<boolean>(false);
   const [showAdministrationLinks, setShowAdministrationLinks] = React.useState<boolean>(false);
   const router = useRouter();
@@ -35,7 +33,6 @@ export default function AuthenticatedLayout({ children }: any) {
   React.useEffect(() => {
     setShowInstitutionLinks(pathname.includes("/institucion"));
     setShowAdministrationLinks(pathname.includes("/administracion"));
-    setShowSelfServiceLinks(pathname.includes("/autoservicio"));
   }, [pathname]);
 
   return (
@@ -274,7 +271,7 @@ export default function AuthenticatedLayout({ children }: any) {
             )}
           </Stack>
           {/* Autoservicio */}
-          <Stack sx={{ mt: 2 }}>
+          {/* <Stack sx={{ mt: 2 }}>
             <Box
               sx={{
                 borderRadius: "8px",
@@ -309,7 +306,7 @@ export default function AuthenticatedLayout({ children }: any) {
                 </Box>
               </Stack>
             )}
-          </Stack>
+          </Stack> */}
         </Stack>
       </Grid>
       {children}

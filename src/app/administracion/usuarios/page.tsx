@@ -5,10 +5,13 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getUsers } from "@/services/Users.service";
 import Wrapper from "@/components/Wrapper";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import { useRouter } from "next/navigation";
 
 export default function AdministrationUsersPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [users, setUsers] = React.useState<any>([{ id: 1 }]);
+  const router = useRouter();
 
   const columns: GridColDef<(typeof users)[number]>[] = [
     {
@@ -82,6 +85,7 @@ export default function AdministrationUsersPage() {
       setIsLoading(false);
     })();
   }, []);
+
   return (
     <Wrapper>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
@@ -98,7 +102,13 @@ export default function AdministrationUsersPage() {
           </Breadcrumbs>
         </Stack>
         <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button size="small" variant="primary" text="Crear usuario" />
+          <Button
+            size="small"
+            variant="primary"
+            text="Crear usuario"
+            iconLeft
+            icon={<PlusIcon size={20} color="#fff" />}
+          />
         </Stack>
       </Stack>
 
@@ -119,6 +129,9 @@ export default function AdministrationUsersPage() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={(params, event, details) => {
+            router.push(`/administracion/usuarios/${params.row.userId}`);
+          }}
         />
       </Stack>
     </Wrapper>
