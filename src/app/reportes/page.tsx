@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { alpha, Box, Breadcrumbs, Stack, styled, Typography } from "@mui/material";
+import { alpha, Breadcrumbs, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@mui/material";
 import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
@@ -77,43 +76,41 @@ export default function ReportsAllPage() {
   }, []);
 
   return (
-    <Grid md={10} sx={{ bgcolor: "#FAFAFA", borderRadius: 8, pt: 6, maxHeight: "100%", overflow: "auto", pb: 4 }}>
-      <Wrapper>
-        <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Stack>
-            <Typography variant="h4">Reportes</Typography>
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-              <Link underline="hover" color="inherit" href="/auth/login">
-                <Typography variant="body2">BDC</Typography>
-              </Link>
-              <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-                <Typography variant="body2">Reportes</Typography>
-              </Link>
-            </Breadcrumbs>
-          </Stack>
+    <Wrapper>
+      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <Stack>
+          <Typography variant="h4">Reportes</Typography>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
+            <Link underline="hover" color="inherit" href="/auth/login">
+              <Typography variant="body2">BDC</Typography>
+            </Link>
+            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
+              <Typography variant="body2">Reportes</Typography>
+            </Link>
+          </Breadcrumbs>
         </Stack>
+      </Stack>
 
-        <Stack sx={{ mt: 5 }}>
-          <StripedDataGrid
-            sx={{ borderRadius: "16px", overflow: "hidden" }}
-            rows={reports}
-            loading={isLoading}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
-                },
+      <Stack sx={{ mt: 5 }}>
+        <StripedDataGrid
+          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          rows={reports}
+          loading={isLoading}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                page: 0,
               },
-            }}
-            disableRowSelectionOnClick
-            rowSelection
-            getRowClassName={params => (params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd")}
-            pageSizeOptions={[10, 25, 50]}
-          />
-        </Stack>
-      </Wrapper>
-    </Grid>
+            },
+          }}
+          disableRowSelectionOnClick
+          rowSelection
+          getRowClassName={params => (params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd")}
+          pageSizeOptions={[10, 25, 50]}
+        />
+      </Stack>
+    </Wrapper>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
@@ -85,44 +84,42 @@ export default function Clients() {
     })();
   }, []);
   return (
-    <Grid md={10} sx={{ bgcolor: "#FAFAFA", borderRadius: 8, pt: 6, maxHeight: "100%", overflow: "auto", pb: 4 }}>
-      <Wrapper>
-        <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Stack>
-            <Typography variant="h4">Clientes</Typography>
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-              <Link underline="hover" color="inherit" href="/auth/login">
-                <Typography variant="body2">BDC</Typography>
-              </Link>
-              <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-                <Typography variant="body2">Clientes</Typography>
-              </Link>
-            </Breadcrumbs>
-          </Stack>
-          <Stack sx={{ alignItems: "flex-end" }}>
-            <Button size="small" variant="primary" text="Crear cliente" />
-          </Stack>
+    <Wrapper>
+      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <Stack>
+          <Typography variant="h4">Clientes</Typography>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
+            <Link underline="hover" color="inherit" href="/auth/login">
+              <Typography variant="body2">BDC</Typography>
+            </Link>
+            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
+              <Typography variant="body2">Clientes</Typography>
+            </Link>
+          </Breadcrumbs>
         </Stack>
+        <Stack sx={{ alignItems: "flex-end" }}>
+          <Button size="small" variant="primary" text="Crear cliente" />
+        </Stack>
+      </Stack>
 
-        <Stack sx={{ mt: 5 }}>
-          <DataGrid
-            sx={{ borderRadius: "16px", overflow: "hidden" }}
-            rows={clients}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
-                },
+      <Stack sx={{ mt: 5 }}>
+        <DataGrid
+          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          rows={clients}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                page: 0,
               },
-            }}
-            disableRowSelectionOnClick
-            rowSelection
-            pageSizeOptions={[10, 25, 50]}
-          />
-        </Stack>
-      </Wrapper>
-    </Grid>
+            },
+          }}
+          disableRowSelectionOnClick
+          rowSelection
+          pageSizeOptions={[10, 25, 50]}
+        />
+      </Stack>
+    </Wrapper>
   );
 }

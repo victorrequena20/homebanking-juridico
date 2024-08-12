@@ -90,52 +90,50 @@ export default function SelfManagementUserManagementPage() {
     })();
   }, []);
   return (
-    <Grid md={10} sx={{ bgcolor: "#FAFAFA", borderRadius: 8, pt: 6, maxHeight: "100%", overflow: "auto", pb: 4 }}>
-      <Wrapper>
-        <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Stack>
-            <Typography variant="h4">Gestión de usuarios</Typography>
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-              <Link underline="hover" color="inherit" href="/auth/login">
-                <Typography variant="body2">BDC</Typography>
-              </Link>
-              <Typography variant="body2">Autoservicio</Typography>
-              <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-                <Typography variant="body2">Gestión de usuarios</Typography>
-              </Link>
-            </Breadcrumbs>
-          </Stack>
-          <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-            <Button size="small" variant="success" text="Activar" icon={<VerifyIcon size={20} color="#fff" />} />
-            <Button size="small" variant="warning-red" text="Desactivar" icon={<LockIcon size={20} color="#fff" />} />
-            <Button size="small" variant="primary" text="Crear usuario" icon={<PlusIcon size={24} color="#fff" />} />
-          </Stack>
+    <Wrapper>
+      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        <Stack>
+          <Typography variant="h4">Gestión de usuarios</Typography>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
+            <Link underline="hover" color="inherit" href="/auth/login">
+              <Typography variant="body2">BDC</Typography>
+            </Link>
+            <Typography variant="body2">Autoservicio</Typography>
+            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
+              <Typography variant="body2">Gestión de usuarios</Typography>
+            </Link>
+          </Breadcrumbs>
         </Stack>
+        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
+          <Button size="small" variant="success" text="Activar" icon={<VerifyIcon size={20} color="#fff" />} />
+          <Button size="small" variant="warning-red" text="Desactivar" icon={<LockIcon size={20} color="#fff" />} />
+          <Button size="small" variant="primary" text="Crear usuario" icon={<PlusIcon size={24} color="#fff" />} />
+        </Stack>
+      </Stack>
 
-        <Stack sx={{ mt: 5 }}>
-          <DataGrid
-            sx={{ borderRadius: "16px", overflow: "hidden" }}
-            rows={users}
-            columns={columns}
-            loading={isLoading}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
-                },
+      <Stack sx={{ mt: 5 }}>
+        <DataGrid
+          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          rows={users}
+          columns={columns}
+          loading={isLoading}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                page: 0,
               },
-            }}
-            disableRowSelectionOnClick
-            checkboxSelection
-            rowSelection
-            onRowClick={(params, event, details) => {
-              router.push(`/autoservicio/gestion-de-usuarios/${params.row.username}`);
-            }}
-            pageSizeOptions={[10, 25, 50]}
-          />
-        </Stack>
-      </Wrapper>
-    </Grid>
+            },
+          }}
+          disableRowSelectionOnClick
+          checkboxSelection
+          rowSelection
+          onRowClick={(params, event, details) => {
+            router.push(`/autoservicio/gestion-de-usuarios/${params.row.userId}`);
+          }}
+          pageSizeOptions={[10, 25, 50]}
+        />
+      </Stack>
+    </Wrapper>
   );
 }

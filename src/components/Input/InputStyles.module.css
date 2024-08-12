@@ -35,3 +35,8 @@
   margin-right: 8px;
   margin-top: 10px;
 }
+
+.inputError {
+  background-color: hsl(12, 70%, 96%);
+  outline: 1px solid #ea3647;
+}

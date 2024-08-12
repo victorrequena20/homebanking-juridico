@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  position: relative;
 }
 
 .btn-primary {
@@ -55,4 +56,20 @@
   &:hover {
     filter: brightness(97%);
   }
+}
+
+.loaderBox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-laoding {
+  color: transparent;
 }

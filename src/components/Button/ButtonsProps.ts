@@ -6,4 +6,6 @@ export interface IButtonProps {
   icon?: React.ReactNode;
   disabled?: boolean;
   iconLeft?: boolean;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  isLoading?: boolean;
 }

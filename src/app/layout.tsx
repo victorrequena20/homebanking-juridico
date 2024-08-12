@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 export default function RootLayout({ children }: any) {
   return (
@@ -13,7 +14,10 @@ export default function RootLayout({ children }: any) {
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster richColors />
+      </body>
     </html>
   );
 }
