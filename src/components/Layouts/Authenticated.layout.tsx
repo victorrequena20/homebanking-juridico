@@ -67,7 +67,7 @@ export default function AuthenticatedLayout({ children }: any) {
             </Box>
           </Stack>
           {/* Navegacion */}
-          <Stack
+          {/* <Stack
             sx={{
               mt: 2,
             }}
@@ -88,7 +88,7 @@ export default function AuthenticatedLayout({ children }: any) {
                 Navegación
               </Typography>
             </Box>
-          </Stack>
+          </Stack> */}
           {/* Institucion */}
           <Stack
             sx={{
