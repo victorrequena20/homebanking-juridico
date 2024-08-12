@@ -30,7 +30,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
           <Loader size="40" color="#484848" />
         </Box>
       ) : (
-        <Stack sx={{ maxWidth: "1200px", mx: "auto" }}>{children}</Stack>
+        <Stack sx={{ maxWidth: "1200px", mx: "auto", pl: 10 }}>{children}</Stack>
       )}
     </Grid>
   );

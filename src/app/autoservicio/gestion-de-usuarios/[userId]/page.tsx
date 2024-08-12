@@ -11,7 +11,7 @@ import ChangeUserPasswordForm from "@/modules/autoservicio/gestion-de-usuarios/c
 import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 
-export default function UserDetails({ params }: { params: { username: string } }) {
+export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isActiveUser, setIsActiveUser] = React.useState<boolean>(false);
@@ -25,7 +25,7 @@ export default function UserDetails({ params }: { params: { username: string } }
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await getUserById(params.username);
+      const response = await getUserById(params.userId);
       if (response?.status) {
         setUserData(response?.data);
         setIsActiveUser(response?.data?.isSelfServiceUser);
@@ -165,7 +165,7 @@ export default function UserDetails({ params }: { params: { username: string } }
                 </Stack>
 
                 {/* Form */}
-                <ChangeUserPasswordForm />
+                <ChangeUserPasswordForm userId={userData?.id?.toString()} />
               </Stack>
 
               {/* Activación / desactivación */}

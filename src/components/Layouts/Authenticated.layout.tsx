@@ -17,6 +17,7 @@ export default function AuthenticatedLayout({ children }: any) {
   const router = useRouter();
   const pathname = usePathname();
   const routeValidations = {
+    dashboard: pathname === "/dashboard",
     institutionClients: pathname === "/institucion/clientes",
     accounting: pathname === "/contabilidad",
     reports: pathname === "/reportes",
@@ -37,7 +38,19 @@ export default function AuthenticatedLayout({ children }: any) {
         </Typography>
         <Stack sx={{ mt: 4 }}>
           <Stack>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+            <Box
+              sx={{
+                borderRadius: "8px",
+                py: 1,
+                px: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                cursor: "pointer",
+                bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
+              }}
+              onClick={() => router.push("/dashboard")}
+            >
               <HomeIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Dashboard

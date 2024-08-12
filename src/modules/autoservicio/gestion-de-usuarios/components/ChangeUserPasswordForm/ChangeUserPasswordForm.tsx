@@ -9,8 +9,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { updateUserPassword } from "@/services/Users.service";
 import { schema } from "./yup";
 import { toast } from "sonner";
+import { IChangeUserPasswordFormProps } from "./ChangeUserPasswordFormProps";
 
-export default function ChangeUserPasswordForm() {
+export default function ChangeUserPasswordForm({ userId }: IChangeUserPasswordFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
@@ -25,7 +26,7 @@ export default function ChangeUserPasswordForm() {
   const onSubmit = async (data: IChangeUserPasswordForm) => {
     const { newPassword, confirmPassword } = data;
     setIsLoading(true);
-    const response = await updateUserPassword({ password: newPassword, repeatPassword: confirmPassword }, "1");
+    const response = await updateUserPassword({ password: newPassword, repeatPassword: confirmPassword }, userId || "");
     if (response.status) {
       toast.success("Contraseña cambiada con exito!", {
         cancel: true,
