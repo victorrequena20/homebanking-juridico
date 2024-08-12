@@ -78,7 +78,7 @@ export default function AdministrationUsersPage() {
           office: el?.officeName,
         };
       });
-      setUsers(clientsData?.reverse());
+      setUsers(clientsData);
       setIsLoading(false);
     })();
   }, []);

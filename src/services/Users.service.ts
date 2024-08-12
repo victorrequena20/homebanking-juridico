@@ -1,5 +1,5 @@
-import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
+import { ApiResponse } from "@/types/common";
 
 export const getUsers = async (): Promise<ApiResponse> => {
   try {

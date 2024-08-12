@@ -14,19 +14,30 @@ import PeopleIcon from "@/assets/icons/PeopleIcon";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function AuthenticatedLayout({ children }: any) {
+  const [showSelfServiceLinks, setShowSelfServiceLinks] = React.useState<boolean>(false);
+  const [showInstitutionLinks, setShowInstitutionLinks] = React.useState<boolean>(false);
+  const [showAdministrationLinks, setShowAdministrationLinks] = React.useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
   const routeValidations = {
     dashboard: pathname === "/dashboard",
-    institutionClients: pathname === "/institucion/clientes",
+    institutionClients: pathname.includes("/institucion/clientes"),
     accounting: pathname === "/contabilidad",
     reports: pathname === "/reportes",
+    administrationTab: pathname.includes("/administracion"),
     administrationUsers: pathname === "/administracion/usuarios",
     administrationOrganization: pathname === "/administracion/organizacion",
     administrationSystem: pathname === "/administracion/sistema",
     administrationProducts: pathname === "/administracion/productos",
-    selfManagementUserManagement: pathname === "/autoservicio/gestion-de-usuarios",
+    selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),
   };
+
+  React.useEffect(() => {
+    setShowInstitutionLinks(pathname.includes("/institucion"));
+    setShowAdministrationLinks(pathname.includes("/administracion"));
+    setShowSelfServiceLinks(pathname.includes("/autoservicio"));
+  }, [pathname]);
+
   return (
     <Grid
       container
@@ -37,6 +48,7 @@ export default function AuthenticatedLayout({ children }: any) {
           Banco Digital de Caracas
         </Typography>
         <Stack sx={{ mt: 4 }}>
+          {/* Dashboard */}
           <Stack>
             <Box
               sx={{
@@ -56,46 +68,84 @@ export default function AuthenticatedLayout({ children }: any) {
                 Dashboard
               </Typography>
             </Box>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+          </Stack>
+          {/* Navegacion */}
+          <Stack
+            sx={{
+              mt: 2,
+            }}
+          >
+            <Box
+              sx={{
+                borderRadius: "8px",
+                py: 1,
+                px: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                cursor: "pointer",
+              }}
+            >
               <SendIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Navegación
               </Typography>
             </Box>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+          </Stack>
+          {/* Institucion */}
+          <Stack
+            sx={{
+              mt: 2,
+            }}
+          >
+            <Box
+              sx={{
+                borderRadius: "8px",
+                py: 1,
+                px: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
+            >
               <BankIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Institución
               </Typography>
             </Box>
-            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }} onClick={() => router.push("/institucion/clientes")}>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Clientes
-                </Typography>
-              </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Grupos
-                </Typography>
-              </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Centros
-                </Typography>
-              </Box>
-            </Stack>
+            {showInstitutionLinks && (
+              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }} onClick={() => router.push("/institucion/clientes")}>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Clientes
+                  </Typography>
+                </Box>
+                <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Grupos
+                  </Typography>
+                </Box>
+                <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Centros
+                  </Typography>
+                </Box>
+              </Stack>
+            )}
           </Stack>
+          {/* Contabilidad */}
           <Stack
             sx={{
-              mt: 1.5,
+              mt: 2,
               cursor: "pointer",
               borderRadius: "8px",
               "&:hover": {
@@ -121,9 +171,10 @@ export default function AuthenticatedLayout({ children }: any) {
               </Typography>
             </Box>
           </Stack>
+          {/* Reportes */}
           <Stack
             sx={{
-              mt: 1.5,
+              mt: 2,
             }}
             onClick={() => router.push("/reportes")}
           >
@@ -148,96 +199,116 @@ export default function AuthenticatedLayout({ children }: any) {
               </Typography>
             </Box>
           </Stack>
-          <Stack sx={{ mt: 1.5 }}>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+          {/* administracion */}
+          <Stack sx={{ mt: 2, cursor: "pointer" }}>
+            <Box
+              sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}
+              onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
+            >
               <PersonHexagonalIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Administración
               </Typography>
             </Box>
-            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/administracion/usuarios")}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Usuarios
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/administracion/organizacion")}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Organización
-                </Typography>
-              </Box>
+            {showAdministrationLinks && (
+              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                  onClick={() => router.push("/administracion/usuarios")}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Usuarios
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                  onClick={() => router.push("/administracion/organizacion")}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Organización
+                  </Typography>
+                </Box>
 
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/administracion/sistema")}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Sistema
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/administracion/productos")}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Productos
-                </Typography>
-              </Box>
-              <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Plantillas
-                </Typography>
-              </Box>
-            </Stack>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                  onClick={() => router.push("/administracion/sistema")}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Sistema
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                  onClick={() => router.push("/administracion/productos")}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Productos
+                  </Typography>
+                </Box>
+                <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Plantillas
+                  </Typography>
+                </Box>
+              </Stack>
+            )}
           </Stack>
-          <Stack sx={{ mt: 1.5 }}>
-            <Box sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}>
+          {/* Autoservicio */}
+          <Stack sx={{ mt: 2 }}>
+            <Box
+              sx={{
+                borderRadius: "8px",
+                py: 1,
+                px: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowSelfServiceLinks(!showSelfServiceLinks)}
+            >
               <PeopleIcon size={24} />
               <Typography variant="body2" color="#fff">
                 Autoservicio
               </Typography>
             </Box>
-            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  bgcolor: routeValidations.selfManagementUserManagement ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/autoservicio/gestion-de-usuarios")}
-              >
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Gestión de usuarios
-                </Typography>
-              </Box>
-            </Stack>
+            {showSelfServiceLinks && (
+              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.selfManagementUserManagement ? "hsl(0, 0%, 12%)" : "transparent",
+                  }}
+                  onClick={() => router.push("/autoservicio/gestion-de-usuarios")}
+                >
+                  <Typography variant="body2" fontWeight="200" color="#fff">
+                    Gestión de usuarios
+                  </Typography>
+                </Box>
+              </Stack>
+            )}
           </Stack>
         </Stack>
       </Grid>
