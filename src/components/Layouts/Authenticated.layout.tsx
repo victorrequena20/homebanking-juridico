@@ -24,6 +24,7 @@ export default function AuthenticatedLayout({ children }: any) {
     administrationOrganization: pathname === "/administracion/organizacion",
     administrationSystem: pathname === "/administracion/sistema",
     administrationProducts: pathname === "/administracion/productos",
+    selfManagementUserManagement: pathname === "/autoservicio/gestion-de-usuarios",
   };
   return (
     <Grid
@@ -215,7 +216,9 @@ export default function AuthenticatedLayout({ children }: any) {
                   borderRadius: "8px",
                   py: 1,
                   px: 2,
+                  bgcolor: routeValidations.selfManagementUserManagement ? "hsl(0, 0%, 12%)" : "transparent",
                 }}
+                onClick={() => router.push("/autoservicio/gestion-de-usuarios")}
               >
                 <Typography variant="body2" fontWeight="200" color="#fff">
                   Gestión de usuarios

@@ -7,21 +7,15 @@ import EyeCloseIcon from "@/assets/icons/EyeCloseIcon";
 
 export default function Input({ label, type, placeholder }: InputProps) {
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
-  const [showPassword, setShowPassword] = React.useState<boolean>(
-    !(type === "password")
-  );
+  const [showPassword, setShowPassword] = React.useState<boolean>(!(type === "password"));
   return (
     <Box sx={{ maxWidth: "392px" }}>
-      <Typography variant="body2" color="#344054">
+      <Typography variant="body2" color="#606778">
         {label}
       </Typography>
-      <div
-        className={`${styles.container} ${isFocused && styles.focusedInput}`}
-      >
+      <div className={`${styles.container} ${isFocused && styles.focusedInput}`}>
         <input
-          type={
-            type === "password" ? (showPassword ? "text" : "password") : type
-          }
+          type={type === "password" ? (showPassword ? "text" : "password") : type}
           placeholder={placeholder}
           className={styles.input}
           onFocus={() => setIsFocused(true)}
