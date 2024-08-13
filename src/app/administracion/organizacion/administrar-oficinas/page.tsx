@@ -75,7 +75,7 @@ export default function AdministrarOficinas() {
             text="Crear oficina"
             iconLeft
             icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-fondos/create")}
+            onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
           />
         </Stack>
       </Stack>
