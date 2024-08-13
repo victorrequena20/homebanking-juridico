@@ -7,9 +7,10 @@ import Button from "@/components/Button";
 import Toggle from "@/components/Toggle";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
-import ChangeUserPasswordForm from "@/modules/autoservicio/gestion-de-usuarios/components/ChangeUserPasswordForm";
+import ChangeUserPasswordForm from "@/modules/administracion/usuarios/components/ChangeUserPasswordForm";
 import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
+import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -48,16 +49,16 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
             <Link underline="hover" color="inherit" href="/auth/login">
               <Typography variant="body2">BDC</Typography>
             </Link>
-            <Typography variant="body2">Autoservicio</Typography>
+            <Typography variant="body2">Administración</Typography>
             <Link underline="hover" color="text.primary" href="/administracion/usuarios">
-              <Typography variant="body2">Administración</Typography>
+              <Typography variant="body2">Usuarios</Typography>
             </Link>
             <Typography variant="body2">{userData?.username}</Typography>
           </Breadcrumbs>
         </Stack>
       </Stack>
       {showEditView ? (
-        <Stack sx={{ mt: 5 }}>
+        <Stack sx={{ mt: 5, width: "100%" }}>
           <Box>
             <Button
               icon={<ArrowLeftIcon size={18} color="#484848" />}
@@ -67,6 +68,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               onClick={() => setShowEditView(false)}
             />
           </Box>
+          <CreateEditUserForm user={userData} />
         </Stack>
       ) : (
         <Stack>
@@ -169,7 +171,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               </Stack>
 
               {/* Activación / desactivación */}
-              <Stack>
+              {/* <Stack>
                 <Stack
                   sx={{
                     flexDirection: "row",
@@ -186,7 +188,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                   </Typography>
                   <Toggle size="small" isChecked={isActiveUser} setIsChecked={setIsActiveUser} />
                 </Stack>
-              </Stack>
+              </Stack> */}
             </Stack>
           </Stack>
         </Stack>

@@ -1,6 +1,6 @@
 import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
 
-export interface InputProps {
+export interface IInputSelectProps {
   label?: string;
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
@@ -8,5 +8,6 @@ export interface InputProps {
   hint?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
-  defaultValue?: string;
+  options?: { label: string; value: string }[];
+  withCheckbox?: boolean;
 }

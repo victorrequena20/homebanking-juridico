@@ -15,16 +15,16 @@ export default function AdministrationUsersPage() {
 
   const columns: GridColDef<(typeof users)[number]>[] = [
     {
-      field: "username",
-      headerName: "Nombre de usuario",
+      field: "firstname",
+      headerName: "Nombre",
       flex: 1,
-      valueGetter: (value, row) => `${row.username || ""}`,
+      valueGetter: (value, row) => `${row.firstname || ""}`,
     },
     {
-      field: "userId",
-      headerName: "Id de usuario",
+      field: "lastname",
+      headerName: "Apellido",
       flex: 1,
-      valueGetter: (value, row) => `${row.id || ""} `,
+      valueGetter: (value, row) => `${row.lastname || ""} `,
     },
     {
       field: "email",
@@ -32,31 +32,31 @@ export default function AdministrationUsersPage() {
       flex: 1,
       valueGetter: (value, row) => `${row.email || ""} `,
     },
-    {
-      field: "status",
-      headerName: "Estado",
-      flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: "#E6F0E2",
-              width: "120px",
-              py: 0.5,
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              borderRadius: "16px",
-            }}
-          >
-            <Typography variant="body2" fontWeight="600" color="#76BF66">
-              {params.row.status ? "Activo" : "Inactivo"}
-            </Typography>
-          </Box>
-        </Box>
-      ),
-      align: "center",
-    },
+    // {
+    //   field: "status",
+    //   headerName: "Estado",
+    //   flex: 1,
+    //   renderCell: params => (
+    //     <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
+    //       <Box
+    //         sx={{
+    //           bgcolor: params?.row?.status ? "#E6F0E2" : "#FF8080",
+    //           width: "120px",
+    //           py: 0.5,
+    //           alignItems: "center",
+    //           justifyContent: "center",
+    //           display: "flex",
+    //           borderRadius: "16px",
+    //         }}
+    //       >
+    //         <Typography variant="body2" fontWeight="600" color={params?.row?.status ? "#76BF66" : "#A02334"}>
+    //           {params.row.status ? "Activo" : "Inactivo"}
+    //         </Typography>
+    //       </Box>
+    //     </Box>
+    //   ),
+    //   align: "center",
+    // },
     {
       field: "office",
       headerName: "Oficina",
@@ -74,7 +74,8 @@ export default function AdministrationUsersPage() {
       const clientsData = response?.data.map((el: any) => {
         return {
           id: el?.id,
-          username: el?.username,
+          firstname: el?.firstname,
+          lastname: el?.lastname,
           userId: el?.id,
           email: el?.email,
           status: el?.isSelfServiceUser,

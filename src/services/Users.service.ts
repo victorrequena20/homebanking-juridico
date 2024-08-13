@@ -47,3 +47,16 @@ export const updateUserPassword = async (data: UpdatePasswordRequestData, userId
     throw error;
   }
 };
+
+export const getUsersTemplate = async (): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.get("/users/template");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getUsersTemplate ~ error:", error);
+    throw error;
+  }
+};

@@ -1,0 +1,45 @@
+.input {
+  border: none;
+  outline: none;
+  max-height: 40px;
+  width: 360px;
+  max-width: 360px;
+  text-indent: 16px;
+  background-color: transparent;
+}
+
+.container {
+  width: 392px;
+  max-width: 392px;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #fafafa;
+  margin-top: 4px;
+  &:hover {
+    background-color: #f3f3f3;
+  }
+}
+
+.focusedInput {
+  outline: 1px solid hsl(230, 68%, 55%);
+  outline-offset: 1px;
+  background-color: #fafafa !important;
+  border: 1px solid #d0d5dd40;
+}
+
+.container svg {
+}
+
+.inputError {
+  background-color: hsl(12, 70%, 96%);
+  outline: 1px solid #ea3647;
+}
+
+.list {
+}
+.listItem {
+}
