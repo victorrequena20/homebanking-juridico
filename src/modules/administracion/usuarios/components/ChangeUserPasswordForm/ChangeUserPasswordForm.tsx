@@ -27,7 +27,7 @@ export default function ChangeUserPasswordForm({ userId }: IChangeUserPasswordFo
     const { newPassword, confirmPassword } = data;
     setIsLoading(true);
     const response = await updateUserPassword({ password: newPassword, repeatPassword: confirmPassword }, userId || "");
-    if (response.status) {
+    if (response.status === 200) {
       toast.success("Contraseña cambiada con exito!", {
         cancel: true,
       });

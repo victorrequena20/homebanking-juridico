@@ -58,7 +58,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Administrar oficinas"
           subtitle="Agregar nueva oficina o modificar o desactivar oficina o modificar jerarquía."
-          path=""
+          path="/administracion/organizacion/administrar-oficinas"
           icon={<OfficesIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -82,7 +82,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Administrar empleados"
           subtitle="Un empleado representa a agentes de crédito sin acceso a los sistemas."
-          path=""
+          path="/administracion/organizacion/administrar-empleados"
           icon={<PeopleIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

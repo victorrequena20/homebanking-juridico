@@ -1,9 +1,6 @@
 "use client";
 import styles from "../login/auth.module.css";
-import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
 import React, { useState } from "react";
-import axios from "axios";
 import HttpClient from "@/utilities/HttpClient.utility";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Typography } from "@mui/material";
@@ -11,33 +8,39 @@ import Input from "@/components/Input";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
+
+interface ILoginForm {
+  username: string;
+  password: string;
+}
 
 const LoginForm = () => {
-  // States
-  const [username, setUsername] = useState("litecore");
-  const [password, setPassword] = useState("password");
-  const [error, setError] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid, dirtyFields },
+  } = useForm<ILoginForm>();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   // Hooks
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleLogin = async (data: any) => {
+    const { username, password } = data;
+    setIsLoading(true);
     try {
       const response = await HttpClient.post(`/authentication`, {
         username,
         password,
       });
       const token = response.data.base64EncodedAuthenticationKey;
-      console.log("🚀 ~ handleLogin ~ token:", token);
-      localStorage.setItem("fineractAuthToken", token);
-      setError("");
+      localStorage.setItem("litecoreAuthToken", token);
+      router.push("/institucion/clientes");
     } catch (err) {
-      setError("Clave o usuario invalido");
+      console.log("🚀 ~ handleLogin ~ err:", err);
     }
+    setIsLoading(false);
   };
-
-  React.useEffect(() => {
-    handleLogin();
-  }, []);
 
   return (
     <div className={styles.authContainer}>
@@ -74,6 +77,8 @@ const LoginForm = () => {
             ¿Olvidaste tu contraseña?
           </Typography>
           <Box
+            component="form"
+            onSubmit={handleSubmit(handleLogin)}
             sx={{
               mt: 3,
               display: "flex",
@@ -83,15 +88,27 @@ const LoginForm = () => {
               maxWidth: "392px",
             }}
           >
-            <Input label="Usuario" type="text" />
-            <Input label="Contraseña" type="password" />
+            <Controller
+              control={control}
+              name="username"
+              render={({ field: { onChange, value } }) => (
+                <Input label="Usuario" type="text" value={value} onChange={onChange} />
+              )}
+            />
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, value } }) => (
+                <Input label="Contraseña" type="password" value={value} onChange={onChange} />
+              )}
+            />
             <Button
               variant="primary"
               size="small"
               text="Entrar"
-              onClick={() => {
-                router.push("/institucion/clientes");
-              }}
+              type="submit"
+              isLoading={isLoading}
+              disabled={!isValid || Object.keys(dirtyFields).length < 2}
             />
           </Box>
         </Grid>

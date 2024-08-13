@@ -4,7 +4,6 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack, Typography } from "@mui/material";
 // Assets
 import HomeIcon from "@/assets/icons/HomeIcon";
-import SendIcon from "@/assets/icons/SendIcon";
 import BankIcon from "@/assets/icons/BankIcon";
 import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
 import ReportIcon from "@/assets/icons/ReportIcon";
@@ -23,8 +22,8 @@ export default function AuthenticatedLayout({ children }: any) {
     accounting: pathname === "/contabilidad",
     reports: pathname === "/reportes",
     administrationTab: pathname.includes("/administracion"),
-    administrationUsers: pathname === "/administracion/usuarios",
-    administrationOrganization: pathname === "/administracion/organizacion",
+    administrationUsers: pathname.includes("/administracion/usuarios"),
+    administrationOrganization: pathname.includes("/administracion/organizacion"),
     administrationSystem: pathname === "/administracion/sistema",
     administrationProducts: pathname === "/administracion/productos",
     selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),

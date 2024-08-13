@@ -5,10 +5,14 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import { useRouter } from "next/navigation";
 
 export default function Clients() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [clients, setClients] = React.useState<any>([{ id: 1 }]);
+
+  const router = useRouter();
 
   const columns: GridColDef<(typeof clients)[number]>[] = [
     {
@@ -98,7 +102,14 @@ export default function Clients() {
           </Breadcrumbs>
         </Stack>
         <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
+          <Button
+            iconLeft
+            icon={<PlusIcon size={20} color="#fff" />}
+            size="small"
+            variant="primary"
+            text="Crear cliente"
+            onClick={() => router.push("/institucion/clientes/crear")}
+          />
         </Stack>
       </Stack>
 
