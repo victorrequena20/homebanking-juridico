@@ -1,27 +1,71 @@
-
-.body{
-	margin: 0px;
-	padding: 0px;
+/*Css de mainLayout */
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: #f8f7fb;
+  width: 100%;
 }
-.main{
-  height: 100vh;
-  overflow: hidden;
-}
-.headerBlu{
+.headerBlue {
   background-color: #153075;
   width: 100%;
   height: 50px;
 }
-.principalConteiner {
-  background-color: #F8F7FB;
-  width: 100%;
-  height: auto;
-}
-/* Contenedor de contenido */
+/* Contenedor de modulos Columna */
 .conteinerBlock {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+/* Contenedor de modulos dobles */
+.conteinerBlockSide {
+  display: flex;
+  width: 100%;
+}
+/* Estilos para client List  */
+.clientsListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 777px;
+  background-color: white;
+  padding: 3rem;
+  padding-top: 3rem;
+  border-radius: 16px;
+  margin-top: 80px;
+  margin-left: 86px;
+}
+.clientSearchConteiner {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  position: inherit;
+  gap: 100px;
+}
+.searchUserInput {
+  width: 332px;
+  height: 40px;
+  border: 0.6px solid #d5d5d5;
+  border-radius: 30px;
+  background-color: #f5f6fa;
+}
+.searchUserInput::placeholder {
+  color: #202224;
+  font-size: 14px;
+  font-style: italic;
+  font-style: unset;
+  padding: 30px;
+  opacity: 50%;
+}
+.iconsUserListConteiner {
+  display: flex;
+  align-items: center;
+  background-color: #f5f6fa;
+  border-radius: 16px;
+  gap: 14px;
+  border: 1px solid #d5d5d5;
+  padding: 10px;
 }
 
 /* Css para formulario Clients */
@@ -44,7 +88,7 @@
   align-items: center;
   width: 875px;
 }
-.iconContainer{
+.iconContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,11 +103,11 @@
   display: flex;
   overflow: hidden;
 }
-.wraperClientInput{
+.wraperClientInput {
   display: flex;
   flex-direction: column;
 }
-.imputsConteiner{
+.imputsConteiner {
   display: flex;
   flex-direction: column;
   margin: 20px;
@@ -77,8 +121,9 @@
 .inputClient {
   width: 360px;
   height: 52px;
-  background-color: #F5F6FA;
+  background-color: #f5f6fa;
   border: 1px;
+  border-radius: 8px;
 }
 .buttonWrapper {
   display: flex;
@@ -89,147 +134,23 @@
   margin: 20px;
   padding: 10px 50px 10px 50px;
   gap: 10px;
+  border-radius: 8px;
+  border: 1px;
   background-color: #153075;
-  color: #E4E4E7;
+  color: #ffffff;
 }
 /*Css de button */
 .button {
   width: 214px;
   padding: 10px 50px 10px 50px;
   gap: 10px;
+}
+.button {
+  background-color: #153075;
+}
+/*Css de Auth form */
 
-}
-/*Css de Aith form */
-.forms {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-}
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-  max-height: 40px !important;
-}
-.textfield {
-  width: 288px;
-  border-radius: 8px;
-  border: 1px;
-}
-/*Css de mainLayout */
-.mainLayout {
-  display: flex;
-  justify-content: flex-start;
-  min-height: 100vh;
-}
-/* Css de barra Search*/
-.searchContainer{
-  display: flex;
-  border: 1px solid #D5D5D5;
-  width: -webkit-fill-available;
-  height: 90px;
-  background-color: white;
-  padding: 25px 25px 20px 25px;
-}
-.searchInput{
-  width: 388px;
-  height: 38px;
-  border: 0.6px solid #D5D5D5;
-  border-radius: 30px;
-  background-color: #F5F6FA;
-}
-.searchInput::placeholder {
-  color: #202224;
-  font-size: 14px;
-  font-style: italic;
-  font-style: unset;
-  padding: 30px;
-  opacity: 50%;
-}
-.userConteiner {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  width: 100%;
-  box-sizing: border-box;
-  position: inherit;
-  gap: 12px;
-}
-/*Css de navBar */
-.navContainer {
-  display: flex;
-  justify-content: flex-start;
-  border: 1px solid #D5D5D5;
-  min-height: 100vh;
-  width: 350px;
-  background-color: white;
-  padding-left: 18px;
-  padding-right: 36px;
-  font-size: 14px;
-}
-.welcome {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 285px;
-  height: 44px;
-  margin-top: 112px;
-  margin-bottom: 58px;
-  border: 1px solid #E4E4E7;
-  border-radius: 8px;
-}
-.gradient{
-  background-image: linear-gradient(45deg,#0B845C 50%,#0B845C 50%,#153075 50%,#153075 50%);
-  -webkit-text-fill-color: transparent;
-	background-clip: text;
-}
-.navSpans {
-  width: 48px;
-  height: 10px;
-  opacity: 50%;
-}
-.blockNav{
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-.listItem {
-  margin: 50px;
-}
-/**/
-.authContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-}
-.cardbody {
-  width: 80%;
-  max-width: 640px;
-  height: 640px;
-  background-color: white;
-  padding: 1rem;
-  padding-top: 7rem;
-  border-radius: 16px;
-}
-.forms{
-  display: flex;
-  width: 100%;
-  margin: px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 0.5rem 0;
-}
-.buttonlog {
-  display: flex;
-  width: 100%;
-  margin: 5px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-top: 50px;
-  
-}
-.check{
+.check {
   display: flex;
   width: 100%;
   margin: 5px;
@@ -238,9 +159,6 @@
   position: relative;
   margin: 3px;
   font-size: 10px;
-}
-.button{
-  background-color: #153075;
 }
 .endline {
   display: flex;
@@ -251,6 +169,7 @@
   font-size: 12px;
 }
 /**/
+
 
 
 

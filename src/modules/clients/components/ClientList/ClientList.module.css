@@ -1,0 +1,43 @@
+.clientsListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 777px;
+  background-color: white;
+  padding: 3rem;
+  padding-top: 3rem;
+  border-radius: 16px;
+  margin-top: 80px;
+  margin-left: 86px;
+}
+.clientSearchContainer {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  position: inherit;
+  gap: 100px;
+}
+.searchUserInput {
+  width: 332px;
+  height: 40px;
+  border: 0.6px solid #d5d5d5;
+  border-radius: 30px;
+  background-color: #f5f6fa;
+}
+.searchUserInput::placeholder {
+  color: #202224;
+  font-size: 14px;
+  font-style: italic;
+  font-style: unset;
+  padding: 30px;
+  opacity: 50%;
+}
+.iconsUserListContainer {
+  display: flex;
+  align-items: center;
+  background-color: #f5f6fa;
+  border-radius: 16px;
+  gap: 14px;
+  border: 1px solid #d5d5d5;
+  padding: 10px;
+}

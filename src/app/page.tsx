@@ -1,15 +1,11 @@
-import Auth from "./auth/page";
-import MainLayout from "./mainLayout/page";
+import Auth from "./auth/login/page";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.headerBlu}></div>
-      <div className={styles.principalConteiner}>
-        {/* <Auth /> */}
-        <MainLayout />
-      </div>
-    </main>
+    <div className={styles.main}>
+      <div className={styles.headerBlu} />
+      <div className={styles.principalConteiner}>{/* <Auth /> */}</div>
+    </div>
   );
 }
