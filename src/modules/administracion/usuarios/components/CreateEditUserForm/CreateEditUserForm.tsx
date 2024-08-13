@@ -10,33 +10,78 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { getUsersTemplate } from "@/services/Users.service";
+import { getUsersTemplate, updateUser } from "@/services/Users.service";
+import { getStaffs } from "@/services/Core.service";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
+export default function CreateEditUserForm({ user, close }: ICreateEditUserFormProps) {
+  //   console.log("🚀 ~ CreateEditUserForm ~ user:", user);
+  const [asesoresByOffice, setAsesoresByOffice] = React.useState<any[]>();
   const [allowedOffices, setAllowedOffices] = React.useState<any[] | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const resolver: any = yupResolver(schema);
+  const router = useRouter();
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors, isValid, dirtyFields },
-  } = useForm<ICreateEditUserForm>({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+  } = useForm<ICreateEditUserForm>({ resolver, mode: "onChange" });
+
+  const onSubmit = async (data: any) => {
+    setIsLoading(true);
+    const response = await updateUser(data, user?.id?.toString() || "");
+    if (response.status === 200) {
+      toast.success("Usuario actualizado con exito!");
+      close && close();
+    }
+    setIsLoading(false);
+  };
 
   React.useEffect(() => {
     (async () => {
       const response = await getUsersTemplate();
-      console.log("🚀 ~ response:", response);
       if (response.status === 200) {
         setAllowedOffices(response?.data?.allowedOffices);
       }
+
+      const responseStaffs = await getStaffs({ officeId: user?.officeId, status: "all" });
+      if (responseStaffs?.status === 200) {
+        setAsesoresByOffice(responseStaffs?.data);
+      }
+      //   console.log("🚀 ~ responseStaffs:", responseStaffs);
     })();
   }, []);
 
+  //   Update fields
+  React.useEffect(() => {
+    if (user) {
+      reset({
+        username: user?.username,
+        email: user?.email,
+        firstname: user?.firstname,
+        lastname: user?.lastname,
+        officeId: user?.officeId,
+        staffId: user?.staff?.id,
+        roles: user?.selectedRoles.map((role: any) => role.id),
+      });
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    console.log("🚀 ~ CreateEditUserForm ~ errors:", errors);
+  }, [errors]);
+
   return (
-    <Grid component="form" md={12} sx={{ gap: 3, maxWidth: "1000px" }} container mt={4}>
+    <Grid
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      md={12}
+      sx={{ gap: 3, maxWidth: "1000px" }}
+      container
+      mt={4}
+    >
       {/* Username */}
       <Grid>
         <Stack>
@@ -87,8 +132,8 @@ export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
               <Input
                 label="Nombre*"
                 type="text"
-                isValidField={!errors.username}
-                hint={errors.username?.message}
+                isValidField={!errors.firstname}
+                hint={errors.firstname?.message}
                 value={value}
                 onChange={onChange}
                 defaultValue={user?.firstname}
@@ -106,9 +151,9 @@ export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
             render={({ field: { value, onChange } }) => (
               <Input
                 label="Apellido*"
-                type="email"
-                isValidField={!errors.email}
-                hint={errors.email?.message}
+                type="text"
+                isValidField={!errors.lastname}
+                hint={errors.lastname?.message}
                 value={value}
                 onChange={onChange}
                 defaultValue={user?.lastname}
@@ -122,7 +167,7 @@ export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
         <Stack>
           <Controller
             control={control}
-            name="office"
+            name="officeId"
             render={({ field: { value, onChange } }) => (
               <InputSelect
                 label="Oficina*"
@@ -139,15 +184,13 @@ export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
         <Stack>
           <Controller
             control={control}
-            name="asesor"
+            name="staffId"
             render={({ field: { value, onChange } }) => (
-              <Input
-                label="Asesor*"
-                type="email"
-                isValidField={!errors.email}
-                hint={errors.email?.message}
-                value={value}
+              <InputSelect
+                label="Asesor"
+                options={keyValueAdapter(asesoresByOffice, "displayName", "id")}
                 onChange={onChange}
+                defaultValue={user?.staff?.id}
               />
             )}
           />
@@ -175,8 +218,16 @@ export default function CreateEditUserForm({ user }: ICreateEditUserFormProps) {
       {/* Buttons */}
       <Grid md={10}>
         <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "flex-start", columnGap: 2 }}>
-          <Button size="small" text="cancelar" variant="navigation" />
-          <Button size="small" text="Aceptar" variant="primary" />
+          <Button
+            type="button"
+            size="small"
+            text="cancelar"
+            variant="navigation"
+            onClick={() => {
+              close && close();
+            }}
+          />
+          <Button size="small" text="Aceptar" variant="primary" type="submit" isLoading={isLoading} />
         </Stack>
       </Grid>
     </Grid>

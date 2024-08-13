@@ -68,7 +68,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               onClick={() => setShowEditView(false)}
             />
           </Box>
-          <CreateEditUserForm user={userData} />
+          <CreateEditUserForm user={userData} close={() => setShowEditView(false)} />
         </Stack>
       ) : (
         <Stack>

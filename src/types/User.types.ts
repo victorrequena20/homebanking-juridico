@@ -11,4 +11,5 @@ export type User = {
   passwordNeverExpires: string;
   selectedRoles: any[];
   username: string;
+  staff?: any;
 };

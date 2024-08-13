@@ -3,7 +3,7 @@ export interface ICreateEditUserForm {
   email: string;
   firstname: string;
   lastname: string;
-  office: number;
+  officeId: number;
   roles: number[];
-  asesor: number;
+  staffId?: number;
 }
