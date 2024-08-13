@@ -15,11 +15,17 @@
 .btn-primary {
   color: #f3f3f3;
   background-color: #153075;
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .btn-warning-red {
   background-color: #ea3647;
   color: #f3f3f3;
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .btn-success {

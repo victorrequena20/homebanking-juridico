@@ -1,17 +1,8 @@
 import React from "react";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
-import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
-import HierarchyIcon from "@/assets/icons/HierarchyIcon";
-import PlusIcon from "@/assets/icons/PlusIcon";
-import ArchiveIcon from "@/assets/icons/ArchiveIcon";
-import SearchIcon from "@/assets/icons/SearchIcon";
 import BillIcon from "@/assets/icons/BillIcon";
-import LinkIcon from "@/assets/icons/LinkIcon";
-import CalendarIcon from "@/assets/icons/CalendarIcon";
-import ToggleOnIcon from "@/assets/icons/ToggleIcon";
 import CashIcon from "@/assets/icons/CashIcon";
 import Wrapper from "@/components/Wrapper";
 import OfficesIcon from "@/assets/icons/OfficesIcon";
@@ -85,7 +76,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Administrar fondos"
           subtitle="Los fondos están asociados con créditos."
-          path=""
+          path="/administracion/organizacion/administrar-fondos"
           icon={<PercentageSquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

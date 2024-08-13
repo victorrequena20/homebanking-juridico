@@ -11,6 +11,7 @@ import ChangeUserPasswordForm from "@/modules/administracion/usuarios/components
 import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
+import TrashIcon from "@/assets/icons/TrashIcon";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -37,28 +38,30 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack
-        sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Stack>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/administracion/usuarios">
-              <Typography variant="body2">Usuarios</Typography>
-            </Link>
-            <Typography variant="body2">{userData?.username}</Typography>
-          </Breadcrumbs>
+      {!showEditView && (
+        <Stack
+          sx={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Stack>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="inherit" href="/auth/login">
+                <Typography variant="body2">BDC</Typography>
+              </Link>
+              <Typography variant="body2">Administración</Typography>
+              <Link underline="hover" color="text.primary" href="/administracion/usuarios">
+                <Typography variant="body2">Usuarios</Typography>
+              </Link>
+              <Typography variant="body2">{userData?.username}</Typography>
+            </Breadcrumbs>
+          </Stack>
         </Stack>
-      </Stack>
+      )}
       {showEditView ? (
-        <Stack sx={{ mt: 5, width: "100%" }}>
+        <Stack sx={{ width: "100%" }}>
           <Box>
             <Button
               icon={<ArrowLeftIcon size={18} color="#484848" />}
@@ -171,7 +174,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               </Stack>
 
               {/* Activación / desactivación */}
-              {/* <Stack>
+              <Stack>
                 <Stack
                   sx={{
                     flexDirection: "row",
@@ -184,11 +187,17 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                   }}
                 >
                   <Typography variant="body2" fontWeight="400" color="#12141a">
-                    Activar / Desactivar usuario
+                    Eliminar usuario
                   </Typography>
-                  <Toggle size="small" isChecked={isActiveUser} setIsChecked={setIsActiveUser} />
+                  <Button
+                    iconLeft
+                    icon={<TrashIcon size={20} color="#fff" />}
+                    size="small"
+                    text="Borrar"
+                    variant="warning-red"
+                  />
                 </Stack>
-              </Stack> */}
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
