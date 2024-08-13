@@ -55,8 +55,8 @@ export default function AccountingPage() {
         />
         <IntermediateMenuItem
           title="Catálogo de cuentas"
-          subtitle="Lista de cuentas utilizadas por una organización."
-          path=""
+          subtitle="Lista de cuentas utilizadas por la organización."
+          path="/contabilidad/catalogo-de-cuentas"
           icon={<HierarchyIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -80,7 +80,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Reglas de contabilidad"
           subtitle="Lista de todas las reglas contables."
-          path=""
+          path="/contabilidad/reglas-de-contabilidad"
           icon={<BillIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
