@@ -173,6 +173,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
                 label="Oficina*"
                 options={keyValueAdapter(allowedOffices, "name", "id")}
                 onChange={onChange}
+                setItem={item => onChange(item?.value)}
                 defaultValue={user?.officeId}
               />
             )}
@@ -189,7 +190,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
               <InputSelect
                 label="Asesor"
                 options={keyValueAdapter(asesoresByOffice, "displayName", "id")}
-                onChange={onChange}
+                setItem={item => onChange(item?.value)}
                 defaultValue={user?.staff?.id}
               />
             )}
@@ -207,7 +208,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
                 label="Roles*"
                 options={keyValueAdapter(user?.selectedRoles.concat(user?.availableRoles), "name", "id")}
                 withCheckbox
-                onChange={onChange}
+                setItem={item => onChange(item?.value)}
                 defaultValue={user?.selectedRoles?.map((item: any) => item?.id)}
               />
             )}

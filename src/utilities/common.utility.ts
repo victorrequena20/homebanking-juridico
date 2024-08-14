@@ -22,5 +22,31 @@ export function formatSpanishDate(dateArray: [number, number, number]): string {
   return `${formattedDay} de ${formattedMonth} del ${year}`;
 }
 
-// Ejemplo de uso
-const fecha = [2024, 8, 13];
+export function formatDateEsddMMMMyyyy(dateString: any): string {
+  // Convertir la cadena de fecha a un objeto Date
+  const date = new Date(dateString);
+
+  // Definir los nombres de los meses en español
+  const months = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
+  // Extraer el día, mes y año del objeto Date
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Formatear la fecha como "DD MMMM YYYY"
+  return `${day} ${month} ${year}`;
+}

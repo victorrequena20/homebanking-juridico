@@ -3,19 +3,16 @@ import { Box, Stack, Typography, Checkbox } from "@mui/material";
 import styles from "./InputSelectStyles.module.css";
 import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
 import ArrowUpIcon from "@/assets/icons/ArrowUpIcon";
-
-interface Option {
-  label: string;
-  value: string | number;
-}
+import { IKeyValue } from "@/types/common";
 
 interface IInputSelectProps {
   label: string;
   placeholder?: string;
   isValidField?: boolean;
   hint?: string;
-  onChange: (value: string | number | (string | number)[]) => void;
-  options: Option[];
+  onChange?: (value: string | number | (string | number)[]) => void;
+  setItem: (value: IKeyValue) => void;
+  options: IKeyValue[];
   withCheckbox?: boolean;
   defaultValue?: string | number | (string | number)[];
 }
@@ -29,8 +26,9 @@ export default function InputSelect({
   options,
   withCheckbox = false,
   defaultValue,
+  setItem,
 }: IInputSelectProps) {
-  const [valueSelected, setValueSelected] = React.useState<Option | null>({ label: "", value: "" });
+  const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -69,7 +67,7 @@ export default function InputSelect({
     };
   }, []);
 
-  const handleCheckboxChange = (item: Option) => {
+  const handleCheckboxChange = (item: IKeyValue) => {
     setSelectedValues(prevValues => {
       if (prevValues.includes(item.value)) {
         return prevValues.filter(value => value !== item.value);
@@ -170,6 +168,7 @@ export default function InputSelect({
                 }}
                 onClick={() => {
                   if (!withCheckbox) {
+                    setItem && setItem(item);
                     setValueSelected(item);
                     setIsOpen(false);
                   }
