@@ -74,3 +74,16 @@ export const getUsersTemplate = async (): Promise<ApiResponse> => {
     throw error;
   }
 };
+
+export const deleteUser = async (userId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/users/${userId}`);
+    console.log("🚀 ~ deleteUser ~ response:", response);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ deleteUser ~ error:", error);
+    throw error;
+  }
+};

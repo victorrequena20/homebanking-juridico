@@ -11,7 +11,9 @@ import ChangeUserPasswordForm from "@/modules/administracion/usuarios/components
 import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
-import TrashIcon from "@/assets/icons/TrashIcon";
+
+import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import { deleteUser } from "@/services/Users.service";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -189,13 +191,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                   <Typography variant="body2" fontWeight="400" color="#12141a">
                     Eliminar usuario
                   </Typography>
-                  <Button
-                    iconLeft
-                    icon={<TrashIcon size={20} color="#fff" />}
-                    size="small"
-                    text="Borrar"
-                    variant="warning-red"
-                  />
+                  <ConfirmDeleteModal userId={userData?.id?.toString()} />
                 </Stack>
               </Stack>
             </Stack>
