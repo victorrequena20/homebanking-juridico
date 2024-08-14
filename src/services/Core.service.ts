@@ -38,3 +38,16 @@ export const runAccruals = async (data: any) => {
     console.log("🚀 ~ runAccruals ~ error:", error);
   }
 };
+
+export const getWorkDays = async () => {
+  try {
+    const response = await HttpClient.get("/workingdays");
+    console.log("🚀 ~ getWorkDays ~ response:", response);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getWorkDays ~ error:", error);
+  }
+};

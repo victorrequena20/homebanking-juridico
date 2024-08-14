@@ -64,7 +64,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Configuración de moneda"
           subtitle="Monedas disponibles en toda la organización para diferentes productos."
-          path=""
+          path="/administracion/organizacion/configuracion-de-moneda"
           icon={<SettingsIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -112,7 +112,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Días laborables"
           subtitle="Defina días laborables y configure el comportamiento de los pagos vencidos en días festivos."
-          path=""
+          path="/administracion/organizacion/dias-laborables"
           icon={<Calendar2Icon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

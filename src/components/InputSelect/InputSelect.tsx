@@ -11,7 +11,8 @@ interface IInputSelectProps {
   isValidField?: boolean;
   hint?: string;
   onChange?: (value: string | number | (string | number)[]) => void;
-  setItem: (value: IKeyValue) => void;
+  setItem?: (value: IKeyValue) => void;
+  setItems?: (value: any[]) => void;
   options: IKeyValue[];
   withCheckbox?: boolean;
   defaultValue?: string | number | (string | number)[];
@@ -27,6 +28,7 @@ export default function InputSelect({
   withCheckbox = false,
   defaultValue,
   setItem,
+  setItems,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -177,7 +179,10 @@ export default function InputSelect({
                   <Checkbox
                     checked={selectedValues.includes(item.value)}
                     onChange={() => handleCheckboxChange(item)}
-                    onClick={e => e.stopPropagation()}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setItems && setItems(selectedValues);
+                    }}
                     sx={{ width: "24px", height: "24px" }}
                   />
                 )}
