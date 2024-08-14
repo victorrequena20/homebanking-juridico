@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 import { Box, Stack, Typography, Checkbox } from "@mui/material";
 import styles from "./InputSelectStyles.module.css";
@@ -16,6 +17,7 @@ interface IInputSelectProps {
   options: IKeyValue[];
   withCheckbox?: boolean;
   defaultValue?: string | number | (string | number)[];
+  value?: any;
 }
 
 export default function InputSelect({
@@ -29,6 +31,7 @@ export default function InputSelect({
   defaultValue,
   setItem,
   setItems,
+  value,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -67,6 +70,11 @@ export default function InputSelect({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    console.log("🚀 ~ useEffect ~ value:", value);
+    setValueSelected(value);
+  }, [value]);
 
   const handleCheckboxChange = (item: IKeyValue) => {
     setSelectedValues(prevValues => {
@@ -170,7 +178,7 @@ export default function InputSelect({
                 onClick={() => {
                   if (!withCheckbox) {
                     setItem && setItem(item);
-                    setValueSelected(item);
+                    // setValueSelected(item);
                     setIsOpen(false);
                   }
                 }}

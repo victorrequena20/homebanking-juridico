@@ -12,3 +12,16 @@ export const getClients = async () => {
     console.log("🚀 ~ constgetClients ~ error:", error);
   }
 };
+
+export const getTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/clients/template");
+    console.log("🚀 ~ getTemplate ~ response:", response);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplate ~ error:", error);
+  }
+};

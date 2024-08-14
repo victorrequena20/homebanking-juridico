@@ -16,8 +16,10 @@ export default function RootLayout({ children }: any) {
         />
       </head>
       <body>
-        {children}
-        <Toaster richColors />
+        <div>
+          {children}
+          <Toaster richColors />
+        </div>
       </body>
     </html>
   );
