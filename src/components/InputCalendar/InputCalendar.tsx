@@ -92,7 +92,7 @@ export default function InputCalendar({
       )}
 
       {isOpen && (
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2, position: "absolute", zIndex: 9999 }}>
           <Calendar
             value={date}
             onChange={calendarProps => {

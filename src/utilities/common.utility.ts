@@ -1,4 +1,5 @@
 export function formatSpanishDate(dateArray: [number, number, number]): string {
+  !dateArray && (dateArray = [0, 0, 0]);
   const [year, month, day] = dateArray;
 
   const months = [
@@ -16,7 +17,7 @@ export function formatSpanishDate(dateArray: [number, number, number]): string {
     "diciembre",
   ];
 
-  const formattedDay = day.toString().padStart(2, "0");
+  const formattedDay = day?.toString()?.padStart(2, "0");
   const formattedMonth = months[month - 1]; // Restamos 1 porque los meses en el array empiezan en 0
 
   return `${formattedDay} de ${formattedMonth} del ${year}`;

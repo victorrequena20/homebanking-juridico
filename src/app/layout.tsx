@@ -2,6 +2,7 @@
 import React from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
+import "react-calendar/dist/Calendar.css";
 
 export default function RootLayout({ children }: any) {
   return (

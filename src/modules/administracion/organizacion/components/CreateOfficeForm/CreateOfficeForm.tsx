@@ -12,7 +12,6 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { createOffice, getOffices } from "@/services/Office.service";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import "react-calendar/dist/Calendar.css";
 import InputCalendar from "@/components/InputCalendar";
 import { schema } from "./yup";
 import { IKeyValue } from "@/types/common";

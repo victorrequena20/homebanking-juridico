@@ -92,7 +92,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Devengos"
           subtitle="Devenga ingresos, gastos y pasivos a la fecha proporcionada."
-          path=""
+          path="/contabilidad/devengos"
           icon={<CalendarIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

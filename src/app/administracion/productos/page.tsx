@@ -51,7 +51,7 @@ export default function AdministrationProductsPage() {
         <IntermediateMenuItem
           title="Productos de crédito"
           subtitle="Agregar un nuevo producto de crédito o modificar o desactivar un producto de crédito."
-          path=""
+          path="/administracion/productos/productos-de-credito"
           icon={<OfficesIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

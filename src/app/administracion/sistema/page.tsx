@@ -67,7 +67,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar códigos"
           subtitle="Los códigos se utilizan para definir valores desplegables."
-          path=""
+          path="/administracion/sistema/codigos"
           icon={<CalendarEditIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
