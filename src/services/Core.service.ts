@@ -84,3 +84,15 @@ export const updatePasswordPreferences = async (data: any) => {
     console.log("🚀 ~ updatePasswordPreferences ~ error:", error);
   }
 };
+
+export const getSmsCampaignsTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/smscampaigns/template");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getSmsCampaignsTemplate ~ error:", error);
+  }
+};

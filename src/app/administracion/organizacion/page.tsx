@@ -136,7 +136,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Campañas de SMS"
           subtitle="Definir campañas de SMS para la organización"
-          path=""
+          path="/administracion/organizacion/campana-sms"
           icon={<MessagesSendIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
