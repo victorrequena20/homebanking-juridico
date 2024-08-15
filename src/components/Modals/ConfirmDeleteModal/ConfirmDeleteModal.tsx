@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import TrashIcon from "@/assets/icons/TrashIcon";
 import { deleteUser } from "@/services/Users.service";
 import { useRouter } from "next/navigation";
+import { ConfirmDeleteModalProps } from "./ConfirmDeleteModalProps";
 
 const style = {
   position: "absolute",
@@ -22,31 +23,26 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: "12px",
   boxShadow: 24,
-  p: 4,
+  p: 6,
 };
 
-export default function ConfirmDeleteModal(userId: any) {
+export default function ConfirmDeleteModal({ title, actionCallback }: ConfirmDeleteModalProps) {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const router = useRouter();
-  const handleDeleteUser = async () => {
-    try {
-      const response = await deleteUser(userId?.userId?.toString());
-      if (response.status === 200) {
-        handleClose();
-        router.push("/administracion/usuarios");
-      } else {
-        console.error("Error al eliminar el usuario:", response);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud de eliminación:", error);
-    }
+
+  const handleAction = async () => {
+    setIsLoading(true);
+    actionCallback && (await actionCallback());
+    setIsLoading(false);
+    handleClose();
   };
 
   return (
-    <div>
+    <>
       <Button
         iconLeft
         icon={<TrashIcon size={20} color="#fff" />}
@@ -62,24 +58,30 @@ export default function ConfirmDeleteModal(userId: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Esta seguro que desea eliminar al usuario?
+          <Typography id="modal-modal-title" variant="h6" component="p" textAlign="center">
+            {title}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
 
           <Box
-            style={{
+            sx={{
               display: "flex",
-              justifyContent: "space-between",
-              width: "50%",
+              justifyContent: "center",
+              gap: "16px",
+              mt: 2,
             }}
           >
             <Button iconLeft size="small" text="Cancelar" variant="primary" onClick={handleClose} />
-
-            <Button iconLeft size="small" text="Eliminar" variant="warning-red" onClick={handleDeleteUser} />
+            <Button
+              iconLeft
+              size="small"
+              text="Eliminar"
+              variant="warning-red"
+              onClick={handleAction}
+              isLoading={isLoading}
+            />
           </Box>
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }

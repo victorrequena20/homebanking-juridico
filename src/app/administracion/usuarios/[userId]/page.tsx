@@ -10,9 +10,10 @@ import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 
-import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal/ConfirmDeleteModal";
 import { deleteUser } from "@/services/Users.service";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -24,6 +25,20 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
   function handleShowEditView() {
     setShowEditView(!showEditView);
   }
+
+  const handleDeleteUser = async () => {
+    try {
+      const response = await deleteUser(params?.userId);
+      if (response.status === 200) {
+        router.push("/administracion/usuarios");
+        toast.success("Usuario eliminado correctamente.");
+      } else {
+        console.error("Error al eliminar el usuario:", response);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de eliminación:", error);
+    }
+  };
 
   React.useEffect(() => {
     (async () => {
@@ -190,7 +205,10 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                   <Typography variant="body2" fontWeight="400" color="#12141a">
                     Eliminar usuario
                   </Typography>
-                  <ConfirmDeleteModal userId={userData?.id?.toString()} />
+                  <ConfirmDeleteModal
+                    title="¿Estás seguro de que deseas eliminar este usuario?"
+                    actionCallback={handleDeleteUser}
+                  />
                 </Stack>
               </Stack>
             </Stack>

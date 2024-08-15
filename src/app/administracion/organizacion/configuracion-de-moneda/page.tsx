@@ -1,14 +1,11 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Breadcrumbs, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
-import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
-import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
-import { getFinancialActivityAccounts, getGlclosures } from "@/services/Accounting.service";
 import Link from "next/link";
 import { getCurrencies } from "@/services/Core.service";
 
@@ -77,7 +74,7 @@ export default function ConfiguracionDeMonedaPage() {
             size="small"
             variant="primary"
             text="Agregar/Editar"
-            onClick={() => router.push("/contabilidad/entradas-de-cierre/crear")}
+            onClick={() => router.push("/administracion/organizacion/configuracion-de-moneda/manejo")}
           />
         </Stack>
       </Stack>
