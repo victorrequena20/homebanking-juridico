@@ -12,18 +12,6 @@ export const getStaffs = async (params: any) => {
   }
 };
 
-export const getCodes = async () => {
-  try {
-    const response = await HttpClient.get("/codes");
-    return {
-      data: response.data,
-      status: response.status,
-    };
-  } catch (error) {
-    console.log("🚀 ~ getCodes ~ error:", error);
-  }
-};
-
 export const runAccruals = async (data: any) => {
   try {
     const response = await HttpClient.post("/runaccruals", data);
@@ -112,3 +100,31 @@ export const getSmsCampaignsTemplate = async () => {
     console.error("🚀 ~ getSmsCampaignsTemplate ~ error:", error);
   }
 };
+
+// ----- Codes start -----
+
+export const getCodes = async () => {
+  try {
+    const response = await HttpClient.get("/codes");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getCodes ~ error:", error);
+  }
+};
+
+export const createCode = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/codes", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ createCode ~ error:", error);
+  }
+};
+
+// ----- Codes end -----

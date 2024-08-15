@@ -79,7 +79,7 @@ export default function SystemCodes() {
             text="Crear código"
             iconLeft
             icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+            onClick={() => router.push("/administracion/sistema/codigos/crear")}
           />
         </Stack>
       </Stack>
