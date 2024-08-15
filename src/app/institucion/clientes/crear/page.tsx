@@ -1,85 +1,36 @@
+"use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import ButtonBack from "@/components/ButtonBack";
 import { Box, Stack, Typography } from "@mui/material";
 import CreateClientForm from "@/modules/institucion/clients/components/CreateClientForm";
+import StepBox from "@/components/Stepper/StepBox";
 
 export default function CreateClient() {
+  const [step, setStep] = React.useState<number>(1);
+  const [clientData, setClientData] = React.useState<any>();
+
+  function handleActionStep1(data: any) {
+    setClientData(data);
+    setStep(2);
+  }
+
+  React.useEffect(() => {
+    console.log("CLIENT DATA____", clientData);
+  }, [clientData]);
+
   return (
     <Wrapper>
       <ButtonBack />
 
       {/* Stepper */}
       <Stack sx={{ mt: 5, flexDirection: "row" }}>
-        <Box
-          sx={{
-            width: "120px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Box
-            sx={{
-              minWidth: "48px",
-              width: "48px",
-              height: "48px",
-              minHeight: "48px",
-              backgroundColor: "#153075",
-              borderRadius: "42px",
-              outline: "1px solid #153075",
-              outlineOffset: "3px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box sx={{ width: "16px", height: "16px", borderRadius: "10px", bgcolor: "#fff" }} />
-          </Box>
-          <Typography variant="body2" color="#484848" sx={{ mt: 1 }}>
-            General
-          </Typography>
-        </Box>
+        <StepBox text="General" isActive={step === 1} onClick={() => setStep(1)} />
         <Box sx={{ width: "100%", height: "2px", bgcolor: "#ccc", mt: 3 }} />
-        <Box
-          sx={{
-            width: "120px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <Box
-            sx={{
-              minWidth: "48px",
-              width: "48px",
-              height: "48px",
-              minHeight: "48px",
-              backgroundColor: "#cccccc80",
-              borderRadius: "42px",
-              outlineOffset: "3px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box sx={{ width: "16px", height: "16px", borderRadius: "10px", bgcolor: "#fff" }} />
-          </Box>
-          <Typography variant="body2" color="#484848" sx={{ mt: 1, textAlign: "center" }}>
-            Miembros de la familia
-          </Typography>
-        </Box>
+        <StepBox text="Miembros de la familia" isActive={step === 2} onClick={() => setStep(2)} />
       </Stack>
 
-      <Stack sx={{ mt: 3, px: 4 }}>
-        <CreateClientForm />
-      </Stack>
+      <Stack sx={{ mt: 3, px: 4 }}>{step === 1 && <CreateClientForm action={handleActionStep1} />}</Stack>
     </Wrapper>
   );
 }

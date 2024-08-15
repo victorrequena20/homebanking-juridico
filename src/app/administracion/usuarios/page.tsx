@@ -109,13 +109,14 @@ export default function AdministrationUsersPage() {
             text="Crear usuario"
             iconLeft
             icon={<PlusIcon size={20} color="#fff" />}
+            onClick={() => router.push("/administracion/usuarios/crear")}
           />
         </Stack>
       </Stack>
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "16px", overflow: "hidden", cursor: "pointer" }}
           rows={users}
           columns={columns}
           loading={isLoading}

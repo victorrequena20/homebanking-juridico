@@ -43,7 +43,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
         sx={{ backgroundColor: "hsl(0, 0%, 10%)", width: "100%", height: "100vh", maxHeight: "100vh", py: 1, pr: 1 }}
       >
         <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2 }}>
-          <Typography variant="body1" color="#fff">
+          <Typography variant="body1" color="#fff" sx={{ ml: 2 }}>
             Banco Digital de Caracas
           </Typography>
           <Stack sx={{ mt: 4 }}>

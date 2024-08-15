@@ -62,6 +62,19 @@ export const updateUser = async (data: any, userId: string): Promise<ApiResponse
   }
 };
 
+export const createUser = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/users`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ createUser ~ error:", error);
+    throw error;
+  }
+};
+
 export const getUsersTemplate = async (): Promise<ApiResponse> => {
   try {
     const response = await HttpClient.get("/users/template");

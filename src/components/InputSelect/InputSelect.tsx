@@ -10,7 +10,7 @@ interface IInputSelectProps {
   label: string;
   placeholder?: string;
   isValidField?: boolean;
-  hint?: string;
+  hint?: string | any;
   onChange?: (value: string | number | (string | number)[]) => void;
   setItem?: (value: IKeyValue) => void;
   setItems?: (value: any[]) => void;
@@ -57,8 +57,8 @@ export default function InputSelect({
     }
   }, [defaultValue, options]);
 
+  // Cerrar form cuando se hace click a fuera
   useEffect(() => {
-    console.log("o");
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -76,6 +76,12 @@ export default function InputSelect({
     setValueSelected(value);
   }, [value]);
 
+  useEffect(() => {
+    if (withCheckbox) {
+      setItems && setItems(selectedValues);
+    }
+  }, [selectedValues]);
+
   const handleCheckboxChange = (item: IKeyValue) => {
     setSelectedValues(prevValues => {
       if (prevValues.includes(item.value)) {
@@ -85,12 +91,6 @@ export default function InputSelect({
       }
     });
   };
-
-  //   useEffect(() => {
-  //     if (onChange) {
-  //       onChange(withCheckbox ? selectedValues : valueSelected?.value);
-  //     }
-  //   }, [selectedValues, valueSelected, withCheckbox]);
 
   const getSelectedLabels = () => {
     return options
@@ -116,7 +116,7 @@ export default function InputSelect({
               ? selectedValues.length > 0
                 ? getSelectedLabels()
                 : "Seleccione opciones"
-              : valueSelected?.label || "Seleccione una opción"
+              : value?.label || valueSelected?.label || "Seleccione una opción"
           }
           readOnly
         />
@@ -178,7 +178,7 @@ export default function InputSelect({
                 onClick={() => {
                   if (!withCheckbox) {
                     setItem && setItem(item);
-                    // setValueSelected(item);
+                    setValueSelected(item);
                     setIsOpen(false);
                   }
                 }}
@@ -189,7 +189,6 @@ export default function InputSelect({
                     onChange={() => handleCheckboxChange(item)}
                     onClick={e => {
                       e.stopPropagation();
-                      setItems && setItems(selectedValues);
                     }}
                     sx={{ width: "24px", height: "24px" }}
                   />

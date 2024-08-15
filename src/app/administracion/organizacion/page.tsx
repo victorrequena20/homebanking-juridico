@@ -70,7 +70,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Administrar festivos"
           subtitle="Definir días festivos para la oficina."
-          path=""
+          path="/administracion/organizacion/administrar-festivos"
           icon={<CalendarEditIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

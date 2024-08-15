@@ -1,1 +1,3 @@
-export interface ICreateClientFormProps {}
+export interface ICreateClientFormProps {
+  action: (data: any) => void;
+}

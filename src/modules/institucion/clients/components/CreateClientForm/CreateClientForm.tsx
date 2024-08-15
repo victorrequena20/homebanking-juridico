@@ -13,8 +13,11 @@ import { getTemplate } from "@/services/Clients.service";
 import InputCalendar from "@/components/InputCalendar";
 import { Box } from "@mui/material";
 import Toggle from "@/components/Toggle";
+import Button from "@/components/Button";
+import schema from "./yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-export default function CreateClientForm({}: ICreateClientFormProps) {
+export default function CreateClientForm({ action }: ICreateClientFormProps) {
   const [openSavingAccount, setOpenSavingAccount] = React.useState<boolean>(false);
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isPersonal, setIsPersonal] = React.useState<boolean>(false);
@@ -23,15 +26,18 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
   const {
     control,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors, isValid, dirtyFields },
+    watch,
   } = useForm<ICreateClientForm>({
-    //   resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
     mode: "onChange",
   });
 
-  const onSubmit = async (data: ICreateClientForm) => {
+  const onSubmit = async (data: any) => {
     console.log("🚀 ~ onSubmit ~ data:", data);
+    action(data);
   };
 
   React.useEffect(() => {
@@ -44,9 +50,27 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
     })();
   }, []);
 
+  React.useEffect(() => {
+    console.log("��� ~ watch:", watch());
+    console.log("��� ~ isvalid:", isValid, errors);
+  }, [
+    watch("officeId"),
+    // watch("legalFormId"),
+    watch("firstname"),
+    watch("middlename"),
+    watch("lastname"),
+    watch("externalId"),
+    watch("dateOfBirth"),
+    // watch("staffId"),
+    watch("mobileNo"),
+    watch("emailAddress"),
+    isValid,
+  ]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ gap: 3, maxWidth: "900px", mx: "auto", alignItems: "center" }}>
+        {/* Oficina y forma juridica */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -56,9 +80,12 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
                 <InputSelect
                   label="Oficina*"
                   options={keyValueAdapter(templateData?.officeOptions, "name", "id")}
-                  setItem={(item: IKeyValue) => onChange(item?.value.toString())}
-                  hint={errors.officeId?.message}
-                  isValidField={!errors.officeId}
+                  setItem={(item: IKeyValue) => {
+                    onChange(item);
+                  }}
+                  hint={errors?.officeId?.message}
+                  value={value}
+                  isValidField={!errors?.officeId}
                 />
               )}
             />
@@ -71,15 +98,16 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
                 <InputSelect
                   label="Forma jurídica*"
                   options={keyValueAdapter(templateData?.clientLegalFormOptions, "value", "id")}
-                  setItem={(item: IKeyValue) => onChange(item?.value.toString())}
+                  setItem={(item: IKeyValue) => onChange(item)}
                   hint={errors.officeId?.message}
                   isValidField={!errors.officeId}
+                  value={value}
                 />
               )}
             />
           </Stack>
         </Stack>
-
+        {/* Nombre y segundo nombre */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -114,7 +142,7 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
             />
           </Stack>
         </Stack>
-
+        {/* Apellido e ID externo */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -149,7 +177,7 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
             />
           </Stack>
         </Stack>
-
+        {/* Fecha de nacimiento y asesor */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -174,15 +202,16 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
                 <InputSelect
                   label="Asesor"
                   options={keyValueAdapter(templateData?.staffOptions, "displayName", "id")}
-                  setItem={(item: IKeyValue) => onChange(item?.value.toString())}
+                  setItem={(item: IKeyValue) => onChange(item)}
                   hint={errors.officeId?.message}
                   isValidField={!errors.officeId}
+                  value={value}
                 />
               )}
             />
           </Stack>
         </Stack>
-
+        {/* Teléfono y email */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -217,7 +246,7 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
             />
           </Stack>
         </Stack>
-
+        {/* Personal y activo */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack
             sx={{
@@ -256,7 +285,7 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
             </Box>
           </Stack>
         </Stack>
-
+        {/* Abrir cuenta de ahorros */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack
             sx={{
@@ -264,13 +293,13 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
               width: "392px",
               maxWidth: "392px",
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: "flex-end",
               borderBottom: "1px solid #cccccc80",
               pb: 2,
             }}
           >
             <Typography variant="body2" fontWeight="400" color="#12141a">
-              Abrir Cuenta de Ahorros?
+              Abrir cuenta de Ahorros?
             </Typography>
             <Toggle isChecked={openSavingAccount} size="small" setIsChecked={setOpenSavingAccount} />
           </Stack>
@@ -283,7 +312,8 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
                   <InputSelect
                     label="Producto de ahorro*"
                     options={keyValueAdapter(templateData?.savingProductOptions, "name", "id")}
-                    setItem={(item: IKeyValue) => onChange(item?.value.toString())}
+                    setItem={(item: IKeyValue) => onChange(item)}
+                    value={value}
                     hint={errors.savingsProductId?.message}
                     isValidField={!errors.savingsProductId}
                   />
@@ -294,6 +324,18 @@ export default function CreateClientForm({}: ICreateClientFormProps) {
             )}
           </Stack>
         </Stack>
+      </Stack>
+
+      <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "center", mt: 3 }}>
+        <Button variant="navigation" size="small" text="Cancelar" />
+        <Button
+          variant="primary"
+          size="small"
+          text="Siguiente"
+          disabled={!isValid}
+          type="submit"
+          onClick={() => handleSubmit(onSubmit)}
+        />
       </Stack>
     </form>
   );
