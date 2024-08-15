@@ -48,6 +48,8 @@ export const getWorkDays = async () => {
   }
 };
 
+// ----- Currencies start -----
+
 export const getCurrencies = async () => {
   try {
     const response = await HttpClient.get("/currencies");
@@ -59,6 +61,20 @@ export const getCurrencies = async () => {
     console.error("🚀 ~ getCurrencies ~ error:", error);
   }
 };
+
+export const updateCurrencies = async (data: any) => {
+  try {
+    const response = await HttpClient.put("/currencies", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ updateCurrencies ~ error:", error);
+  }
+};
+
+// ----- End currencies -----
 
 export const getPasswordPreferences = async () => {
   try {

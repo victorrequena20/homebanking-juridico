@@ -26,10 +26,13 @@ const style = {
   p: 6,
 };
 
-export default function ConfirmDeleteModal({ title, actionCallback }: ConfirmDeleteModalProps) {
+export default function ConfirmDeleteModal({ title, actionCallback, buttonActionCallback }: ConfirmDeleteModalProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    buttonActionCallback && buttonActionCallback();
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
   const router = useRouter();
