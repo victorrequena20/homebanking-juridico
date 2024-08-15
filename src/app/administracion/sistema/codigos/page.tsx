@@ -86,7 +86,7 @@ export default function SystemCodes() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "16px", overflow: "hidden", cursor: "pointer" }}
           rows={codes}
           columns={columns}
           initialState={{
@@ -100,6 +100,9 @@ export default function SystemCodes() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={(params, event, details) => {
+            router.push(`/administracion/sistema/codigos/${params.row.id}`);
+          }}
         />
       </Stack>
     </Wrapper>

@@ -1,3 +1,4 @@
+import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
 export const getStaffs = async (params: any) => {
@@ -115,6 +116,34 @@ export const getCodes = async () => {
   }
 };
 
+export const getCodeById = async (codeId: string): Promise<ApiResponse> => {
+  if (!codeId) throw new Error("codeId es requerido");
+  try {
+    const response = await HttpClient.get(`/codes/${codeId}`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getCodeById ~ error:", error);
+    throw error;
+  }
+};
+
+export const getCodeValuesById = async (codeValueId: string): Promise<ApiResponse> => {
+  if (!codeValueId) throw new Error("codeValueId es requerido");
+  try {
+    const response = await HttpClient.get(`/codes/${codeValueId}/codevalues`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getCodeValuesById ~ error:", error);
+    throw error;
+  }
+};
+
 export const createCode = async (data: any) => {
   try {
     const response = await HttpClient.post("/codes", data);
@@ -124,6 +153,42 @@ export const createCode = async (data: any) => {
     };
   } catch (error) {
     console.error("🚀 ~ createCode ~ error:", error);
+  }
+};
+
+export const updateCode = async (data: any, codeId: string) => {
+  try {
+    const response = await HttpClient.put(`/codes/${codeId}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateCode ~ error:", error);
+  }
+};
+
+export const updateCodeValue = async (data: any, codeId: string, codeValueId: string) => {
+  try {
+    const response = await HttpClient.put(`/codes/${codeId}/codevalues/${codeValueId}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateCodeValue ~ error:", error);
+  }
+};
+
+export const deleteCode = async (codeId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/codes/${codeId}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteCode ~ error:", error);
+    throw error;
   }
 };
 

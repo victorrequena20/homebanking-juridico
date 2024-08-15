@@ -31,12 +31,7 @@ export default function CreateCodePage() {
   });
   const router = useRouter();
 
-  const handleChange = (e: any) => {
-    console.log(e.target.value);
-    setKeyName(e.target.value);
-  };
   const onSubmit = async (data: any) => {
-    console.log(data);
     setIsLoading(true);
     const response = await createCode({ name: data?.keyName });
     if (response?.status === 200) {
@@ -79,7 +74,13 @@ export default function CreateCodePage() {
           />
         </Stack>
         <Stack sx={{ flexDirection: "row", gap: 3, mt: 3 }}>
-          <Button size="small" text="Cancelar" variant="navigation" />
+          <Button
+            size="small"
+            text="Cancelar"
+            variant="navigation"
+            type="button"
+            onClick={() => router.push("/administracion/sistema/codigos")}
+          />
           <Button
             size="small"
             text="Aceptar"
