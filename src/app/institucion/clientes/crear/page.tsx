@@ -2,7 +2,7 @@ import React from "react";
 import Wrapper from "@/components/Wrapper";
 import ButtonBack from "@/components/ButtonBack";
 import { Box, Stack, Typography } from "@mui/material";
-import CreateClientForm from "@/modules/clients/components/CreateClientForm";
+import CreateClientForm from "@/modules/institucion/clients/components/CreateClientForm";
 
 export default function CreateClient() {
   return (

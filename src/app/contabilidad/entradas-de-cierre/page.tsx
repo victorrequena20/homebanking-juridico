@@ -8,45 +8,50 @@ import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
-import { getFinancialActivityAccounts, getGlclosures } from "@/services/Accounting.service";
+import { getGlclosures } from "@/services/Accounting.service";
 import Link from "next/link";
-import { getCurrencies } from "@/services/Core.service";
 
-export default function ConfiguracionDeMonedaPage() {
+export default function EntradasDeCierrePage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [currencies, setCurrencies] = React.useState<any>([{ id: 1 }]);
+  const [closures, setClosures] = React.useState<any>([{ id: 1 }]);
 
   const router = useRouter();
 
-  const columns: GridColDef<(typeof currencies)[number]>[] = [
+  const columns: GridColDef<(typeof closures)[number]>[] = [
     {
-      field: "name",
-      headerName: "Nombre de la moneda",
+      field: "officeId",
+      headerName: "Oficina",
       flex: 1,
-      valueGetter: (value, row) => `${row.name || ""}`,
+      valueGetter: (value, row) => `${row.officeName || ""}`,
     },
     {
-      field: "code",
-      headerName: "Código de moneda",
+      field: "closingDate",
+      headerName: "Fecha de cierre",
       flex: 1,
-      valueGetter: (value, row) => `${row?.code || ""} `,
+      valueGetter: (value, row) => `${formatDateEsddMMMMyyyy(row?.closingDate) || ""} `,
+    },
+    {
+      field: "comments",
+      headerName: "Comentarios",
+      flex: 1,
+      valueGetter: (value, row) => `${row.comments || ""} `,
+    },
+    {
+      field: "createdByUsername",
+      headerName: "Creado por",
+      // description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      flex: 1,
+      valueGetter: (value, row) => `${row.createdByUsername || ""} `,
     },
   ];
 
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await getCurrencies();
+      const response = await getGlclosures();
       if (response?.status === 200) {
-        setCurrencies(
-          response?.data?.selectedCurrencyOptions?.map((item: any) => {
-            return {
-              name: item?.name,
-              code: item?.code,
-              id: item?.name,
-            };
-          })
-        );
+        setClosures(response?.data);
       }
 
       setIsLoading(false);
@@ -56,17 +61,16 @@ export default function ConfiguracionDeMonedaPage() {
     <Wrapper isLoading={isLoading}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
-          <Typography variant="h4">Configuración de moneda</Typography>
+          <Typography variant="h4">Entradas de cierre</Typography>
           <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
             <Link color="inherit" href="/auth/login">
               <Typography variant="body2">Inicio</Typography>
             </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
+            <Link color="inherit" href="/contabilidad">
+              <Typography variant="body2">Contabilidad</Typography>
             </Link>
             <Link color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Configuración de moneda</Typography>
+              <Typography variant="body2">Entradas de cierre</Typography>
             </Link>
           </Breadcrumbs>
         </Stack>
@@ -76,7 +80,7 @@ export default function ConfiguracionDeMonedaPage() {
             icon={<PlusIcon size={20} color="#fff" />}
             size="small"
             variant="primary"
-            text="Agregar/Editar"
+            text="Crear cierre"
             onClick={() => router.push("/contabilidad/entradas-de-cierre/crear")}
           />
         </Stack>
@@ -85,7 +89,7 @@ export default function ConfiguracionDeMonedaPage() {
       <Stack sx={{ mt: 5 }}>
         <DataGrid
           sx={{ borderRadius: "8px", overflow: "hidden" }}
-          rows={currencies}
+          rows={closures}
           columns={columns}
           initialState={{
             pagination: {

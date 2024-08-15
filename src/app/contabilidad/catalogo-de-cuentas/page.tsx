@@ -96,6 +96,7 @@ export default function CatalogoCuentasPage() {
     <Wrapper>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
+          <Typography variant="h4">Catálogo de cuentas</Typography>
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="inherit" href="/auth/login">
               <Typography variant="body2">BDC</Typography>
@@ -103,7 +104,7 @@ export default function CatalogoCuentasPage() {
             <Link underline="hover" color="text.primary" href="/contabilidad" aria-current="page">
               <Typography variant="body2">Contabilidad</Typography>
             </Link>
-            <Typography variant="body2">Catalogo de cuentas</Typography>
+            <Typography variant="body2">Catálogo de cuentas</Typography>
           </Breadcrumbs>
         </Stack>
       </Stack>

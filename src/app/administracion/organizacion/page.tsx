@@ -88,7 +88,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Reasignación de créditos másiva"
           subtitle="Manera fácil de reasignar todo el crédito de un LO a otro LO."
-          path=""
+          path="/administracion/organizacion/reasignacion-de-creditos-masiva"
           icon={<WalletReloadIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -130,7 +130,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Preferencias de contraseña"
           subtitle="Definir estándares para hacer cumplir el uso de contraseñas más seguras."
-          path=""
+          path="/administracion/organizacion/preferencias-contrasena"
           icon={<KeySquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
