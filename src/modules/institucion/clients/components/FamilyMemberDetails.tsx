@@ -20,7 +20,6 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
           {isOpen ? <ArrowDownIcon color="var(--text)" size={16} /> : <ArrowUpIcon color="var(--text)" size={16} />}
         </Box>
       </Stack>
-
       {isOpen && (
         <Stack>
           <Stack sx={detailRowStyles}>
