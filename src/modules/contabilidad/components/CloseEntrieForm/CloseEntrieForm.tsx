@@ -125,7 +125,7 @@ export const CloseEntrieForm: React.FC = () => {
             text="Cancelar"
             variant="navigation"
             type="button"
-            // onClick={() => router.push("/administracion/productos/comisiones")}
+            onClick={() => router.push("/contabilidad/entradas-de-cierre")}
           />
           <Button
             size="small"
