@@ -88,7 +88,7 @@ export default function EntradasDeCierrePage() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "8px", overflow: "hidden" }}
+          sx={{ borderRadius: "8px", overflow: "hidden", cursor: "pointer" }}
           rows={closures}
           columns={columns}
           initialState={{
@@ -101,6 +101,7 @@ export default function EntradasDeCierrePage() {
           }}
           disableRowSelectionOnClick
           rowSelection
+          onRowClick={params => router.push(`/contabilidad/entradas-de-cierre/${params?.row?.id}`)}
           pageSizeOptions={[10, 25, 50]}
         />
       </Stack>
