@@ -67,7 +67,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar roles y permisos"
           subtitle="Definir o modificar roles y permisos asociados."
-          path=""
+          path="/administracion/sistema/roles-permisos"
           icon={<PeopleIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
