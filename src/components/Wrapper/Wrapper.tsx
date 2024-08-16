@@ -35,7 +35,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
             maxWidth: {
               md: "700px",
               lg: "900px",
-              xl: "1200px",
+              xl: "1300px",
             },
             mx: "auto",
             px: { md: 4, lg: 6, xl: 10 },

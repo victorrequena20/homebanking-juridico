@@ -101,6 +101,9 @@ export default function Clients() {
             </Link>
           </Breadcrumbs>
         </Stack>
+      </Stack>
+
+      <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
         <Stack sx={{ alignItems: "flex-end" }}>
           <Button
             iconLeft
@@ -112,10 +115,9 @@ export default function Clients() {
           />
         </Stack>
       </Stack>
-
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "8px", overflow: "hidden" }}
           rows={clients}
           columns={columns}
           initialState={{

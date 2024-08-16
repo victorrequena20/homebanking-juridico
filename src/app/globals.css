@@ -4,6 +4,8 @@
   margin: 0;
   font-family: "Nunito Sans", sans-serif !important;
   text-decoration: none;
+  scrollbar-width: auto;
+  scrollbar-color: #bac3d4;
 }
 
 a:link,
@@ -14,4 +16,13 @@ a:visited {
 
 a {
   cursor: pointer;
+}
+:root {
+  --text: #12141a;
+  --secondaryText: #606778;
+  --secondaryBg: #f2f4f7;
+}
+
+p {
+  color: var(--text);
 }

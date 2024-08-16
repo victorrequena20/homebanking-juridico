@@ -86,7 +86,10 @@ export default function CreditProducts() {
             <Typography variant="body2">Productos de crédito</Typography>
           </Breadcrumbs>
         </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
+      </Stack>
+
+      <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
+        <Stack sx={{ alignItems: "flex-end" }}>
           <Button
             size="small"
             variant="primary"
@@ -97,10 +100,9 @@ export default function CreditProducts() {
           />
         </Stack>
       </Stack>
-
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "8px", overflow: "hidden" }}
           rows={loanProducts}
           columns={columns}
           initialState={{

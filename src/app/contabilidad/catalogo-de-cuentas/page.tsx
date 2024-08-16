@@ -5,9 +5,13 @@ import Wrapper from "@/components/Wrapper";
 import { getGlAccounts } from "@/services/Accounting.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
+import { useRouter } from "next/navigation";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import Button from "@/components/Button";
 
 export default function CatalogoCuentasPage() {
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
+  const router = useRouter();
 
   const columns: GridColDef<(typeof glAccounts)[number]>[] = [
     {
@@ -26,7 +30,7 @@ export default function CatalogoCuentasPage() {
       field: "type",
       headerName: "Tipo",
       flex: 1,
-      valueGetter: (value, row) => `ACTIVO`,
+      valueGetter: (value, row) => `${row?.type?.value}`,
     },
     {
       field: "status",
@@ -51,14 +55,14 @@ export default function CatalogoCuentasPage() {
       ),
     },
     {
-      field: "letManualentries",
+      field: "manualEntriesAllowes",
       headerName: "Permitir entradas manuales",
       flex: 1,
       renderCell: params => (
         <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
           <Box
             sx={{
-              bgcolor: "#0B845C",
+              bgcolor: params?.row?.manualEntriesAllowed ? "#0B845C" : "#EA3647",
               width: "30px",
               height: "30px",
               display: "flex",
@@ -67,11 +71,10 @@ export default function CatalogoCuentasPage() {
               borderRadius: "30px",
             }}
           >
-            <CheckIcon size={13} />
+            {params?.row?.manualEntriesAllowed ? <CheckIcon size={13} /> : null}
           </Box>
         </Box>
       ),
-      align: "center",
     },
     {
       field: "usedHow",
@@ -109,9 +112,21 @@ export default function CatalogoCuentasPage() {
         </Stack>
       </Stack>
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
+        <Stack sx={{ alignItems: "flex-end" }}>
+          <Button
+            iconLeft
+            icon={<PlusIcon size={20} color="#fff" />}
+            size="small"
+            variant="primary"
+            text="Añadir cuenta"
+            onClick={() => router.push("/contabilidad/catalogo-de-cuentas/crear")}
+          />
+        </Stack>
+      </Stack>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "8px", overflow: "hidden", curspor: "pointer" }}
           rows={glAccounts}
           columns={columns}
           initialState={{
@@ -122,6 +137,7 @@ export default function CatalogoCuentasPage() {
               },
             },
           }}
+          onRowClick={params => router.push(`/contabilidad/catalogo-de-cuentas/${params?.row?.id}`)}
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}

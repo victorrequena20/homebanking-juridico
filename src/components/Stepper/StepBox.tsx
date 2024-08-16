@@ -12,7 +12,8 @@ export default function StepBox({ text, isActive, onClick }: Props) {
   return (
     <Box
       sx={{
-        width: "120px",
+        width: "260px",
+        maxWidth: "260px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

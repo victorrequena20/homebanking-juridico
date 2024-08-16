@@ -3,4 +3,5 @@ export interface ConfirmDeleteModalProps {
   actionCallback?: () => void;
   buttonActionCallback?: () => void;
   buttonType?: "normal" | "action";
+  buttonText?: string;
 }
