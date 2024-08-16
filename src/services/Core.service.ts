@@ -217,3 +217,32 @@ export const deleteValueCode = async (codeId: string, codeValueId: string): Prom
 };
 
 // ----- Codes end -----
+
+// ----- Permissions start -----
+
+export const getPermissions = async (params?: any) => {
+  console.log("🚀 ~ getPermissions ~ params:", params);
+  try {
+    const response = await HttpClient.get("/permissions", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getPermissions ~ error:", error);
+  }
+};
+
+export const updatePermissions = async (data: any) => {
+  try {
+    const response = await HttpClient.put(`/permissions`, data, { params: { makerCheckerable: true } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updatePermission ~ error:", error);
+  }
+};
+
+// ----- Permissions end -----

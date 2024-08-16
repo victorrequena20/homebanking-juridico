@@ -5,7 +5,7 @@ import PlusIcon from "@/assets/icons/PlusIcon";
 import Loader from "../Loader";
 
 export default function Button(props: IButtonProps) {
-  const { text, variant, size, icon, disabled, iconLeft, type } = props;
+  const { text, variant = "primary", size = "small", icon, disabled, iconLeft, type } = props;
   return (
     <button
       disabled={disabled}

@@ -79,7 +79,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Configurar tareas de realizador aprobador"
           subtitle="Definir o modificar tareas de realizador aprobador."
-          path=""
+          path="/administracion/sistema/config-tareas-realizador-aprobador"
           icon={<BillIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
