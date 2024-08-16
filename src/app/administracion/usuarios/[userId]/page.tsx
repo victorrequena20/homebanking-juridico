@@ -13,7 +13,6 @@ import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
-import { deleteUser } from "@/services/Users.service";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
