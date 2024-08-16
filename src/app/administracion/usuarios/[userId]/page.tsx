@@ -12,6 +12,8 @@ import CreateEditUserForm from "@/modules/administracion/usuarios/components/Cre
 
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
 import { deleteUser } from "@/services/Users.service";
+import { toast } from "sonner";
+import Link from "next/link";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);

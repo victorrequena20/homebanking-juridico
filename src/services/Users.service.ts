@@ -100,3 +100,4 @@ export const deleteUser = async (userId: string): Promise<ApiResponse> => {
     throw error;
   }
 };
+
