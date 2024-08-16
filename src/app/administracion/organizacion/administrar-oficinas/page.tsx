@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Link, Stack } from "@mui/material";
+import { Breadcrumbs, Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { getFunds } from "@/services/Funds.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -10,18 +10,22 @@ import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
 import { formatSpanishDate } from "@/utilities/common.utility";
+import Link from "next/link";
 
 export default function AdministrarOficinas() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [offices, setOffices] = React.useState<any | null>([]);
   const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getOffices();
       console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setOffices(response?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
@@ -53,16 +57,16 @@ export default function AdministrarOficinas() {
   ];
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
           <Typography variant="h4">Administrar oficinas</Typography>
           <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
+            <Link color="inherit" href="/auth/login">
               <Typography variant="body2">BDC</Typography>
             </Link>
             <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="inherit" href="/administracion/organizacion">
+            <Link color="inherit" href="/administracion/organizacion">
               <Typography variant="body2">Organización</Typography>
             </Link>
             <Typography variant="body2">Administrar oficinas</Typography>

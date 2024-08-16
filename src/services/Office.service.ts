@@ -1,8 +1,8 @@
 import HttpClient from "@/utilities/HttpClient.utility";
 
-export const getOffices = async () => {
+export const getOffices = async (params?: any) => {
   try {
-    const response = await HttpClient.get("/offices");
+    const response = await HttpClient.get("/offices", params);
     return {
       data: response.data,
       status: response.status,

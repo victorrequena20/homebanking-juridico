@@ -8,8 +8,10 @@ import CheckIcon from "@/assets/icons/Checkicon";
 import Link from "next/link";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
+import { set } from "react-hook-form";
 
 export default function CatalogoCuentasPage() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
 
   const columns: GridColDef<(typeof glAccounts)[number]>[] = [
@@ -59,15 +61,17 @@ export default function CatalogoCuentasPage() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getAccountingRules();
       if (response?.status === 200) {
         setGlAccounts(response?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
           <Typography variant="h4">Reglas de contabilidad</Typography>

@@ -79,14 +79,14 @@ export default function SystemCodes() {
             text="Crear código"
             iconLeft
             icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+            onClick={() => router.push("/administracion/sistema/codigos/crear")}
           />
         </Stack>
       </Stack>
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+          sx={{ borderRadius: "16px", overflow: "hidden", cursor: "pointer" }}
           rows={codes}
           columns={columns}
           initialState={{
@@ -100,6 +100,9 @@ export default function SystemCodes() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={(params, event, details) => {
+            router.push(`/administracion/sistema/codigos/${params.row.id}`);
+          }}
         />
       </Stack>
     </Wrapper>

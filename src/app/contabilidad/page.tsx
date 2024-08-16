@@ -23,7 +23,7 @@ export default function AccountingPage() {
           <Typography variant="h4">Contabilidad</Typography>
           <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
             <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
+              <Typography variant="body2">Inicio</Typography>
             </Link>
             <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
               <Typography variant="body2">Contabilidad</Typography>
@@ -68,7 +68,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Entradas de cierre"
           subtitle="Asientos de diario realizados al final del período contable."
-          path=""
+          path="/contabilidad/entradas-de-cierre"
           icon={<ArchiveIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -86,7 +86,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Cuentas vinculadas a actividades financieras"
           subtitle="Lista de actividades financieras y asignaciones de cuentas del libro mayor."
-          path=""
+          path="/contabilidad/cuentas-vinculadas-actividades-financieras"
           icon={<LinkIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

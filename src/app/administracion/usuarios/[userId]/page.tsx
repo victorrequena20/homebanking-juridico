@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import Wrapper from "@/components/Wrapper";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
 import Button from "@/components/Button";
-import Toggle from "@/components/Toggle";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 import ChangeUserPasswordForm from "@/modules/administracion/usuarios/components/ChangeUserPasswordForm";
@@ -13,6 +11,7 @@ import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import { deleteUser } from "@/services/Users.service";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -25,6 +24,20 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
     setShowEditView(!showEditView);
   }
 
+  const handleDeleteUser = async () => {
+    try {
+      const response = await deleteUser(params?.userId);
+      if (response.status === 200) {
+        router.push("/administracion/usuarios");
+        toast.success("Usuario eliminado correctamente.");
+      } else {
+        console.error("Error al eliminar el usuario:", response);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de eliminación:", error);
+    }
+  };
+
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -35,7 +48,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
       }
       setIsLoading(false);
     })();
-  }, []);
+  }, [showEditView]);
 
   return (
     <Wrapper isLoading={isLoading}>
@@ -49,11 +62,11 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
         >
           <Stack>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" href="/auth/login">
+              <Link color="inherit" href="/auth/login">
                 <Typography variant="body2">BDC</Typography>
               </Link>
               <Typography variant="body2">Administración</Typography>
-              <Link underline="hover" color="text.primary" href="/administracion/usuarios">
+              <Link color="text.primary" href="/administracion/usuarios">
                 <Typography variant="body2">Usuarios</Typography>
               </Link>
               <Typography variant="body2">{userData?.username}</Typography>
@@ -190,7 +203,10 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                   <Typography variant="body2" fontWeight="400" color="#12141a">
                     Eliminar usuario
                   </Typography>
-                  <ConfirmDeleteModal userId={userData?.id?.toString()} />
+                  <ConfirmDeleteModal
+                    title="¿Estás seguro de que deseas eliminar este usuario?"
+                    actionCallback={handleDeleteUser}
+                  />
                 </Stack>
               </Stack>
             </Stack>

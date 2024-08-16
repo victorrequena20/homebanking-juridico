@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 import { Box, Stack, Typography, Checkbox } from "@mui/material";
 import styles from "./InputSelectStyles.module.css";
@@ -9,12 +10,14 @@ interface IInputSelectProps {
   label: string;
   placeholder?: string;
   isValidField?: boolean;
-  hint?: string;
+  hint?: string | any;
   onChange?: (value: string | number | (string | number)[]) => void;
-  setItem: (value: IKeyValue) => void;
+  setItem?: (value: IKeyValue) => void;
+  setItems?: (value: any[]) => void;
   options: IKeyValue[];
   withCheckbox?: boolean;
   defaultValue?: string | number | (string | number)[];
+  value?: any;
 }
 
 export default function InputSelect({
@@ -27,6 +30,8 @@ export default function InputSelect({
   withCheckbox = false,
   defaultValue,
   setItem,
+  setItems,
+  value,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -52,8 +57,8 @@ export default function InputSelect({
     }
   }, [defaultValue, options]);
 
+  // Cerrar form cuando se hace click a fuera
   useEffect(() => {
-    console.log("o");
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -66,6 +71,17 @@ export default function InputSelect({
     };
   }, []);
 
+  useEffect(() => {
+    console.log("🚀 ~ useEffect ~ value:", value);
+    setValueSelected(value);
+  }, [value]);
+
+  useEffect(() => {
+    if (withCheckbox) {
+      setItems && setItems(selectedValues);
+    }
+  }, [selectedValues]);
+
   const handleCheckboxChange = (item: IKeyValue) => {
     setSelectedValues(prevValues => {
       if (prevValues.includes(item.value)) {
@@ -75,12 +91,6 @@ export default function InputSelect({
       }
     });
   };
-
-  //   useEffect(() => {
-  //     if (onChange) {
-  //       onChange(withCheckbox ? selectedValues : valueSelected?.value);
-  //     }
-  //   }, [selectedValues, valueSelected, withCheckbox]);
 
   const getSelectedLabels = () => {
     return options
@@ -106,7 +116,7 @@ export default function InputSelect({
               ? selectedValues.length > 0
                 ? getSelectedLabels()
                 : "Seleccione opciones"
-              : valueSelected?.label || "Seleccione una opción"
+              : value?.label || valueSelected?.label || "Seleccione una opción"
           }
           readOnly
         />
@@ -177,7 +187,9 @@ export default function InputSelect({
                   <Checkbox
                     checked={selectedValues.includes(item.value)}
                     onChange={() => handleCheckboxChange(item)}
-                    onClick={e => e.stopPropagation()}
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
                     sx={{ width: "24px", height: "24px" }}
                   />
                 )}

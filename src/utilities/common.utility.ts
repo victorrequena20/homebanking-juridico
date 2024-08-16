@@ -51,3 +51,32 @@ export function formatDateEsddMMMMyyyy(dateString: any): string {
   // Formatear la fecha como "DD MMMM YYYY"
   return `${day} ${month} ${year}`;
 }
+
+export function parseByDayString(input: string): { label: string; value: string }[] {
+  const daysMap: { [key: string]: string } = {
+    MO: "Lunes",
+    TU: "Martes",
+    WE: "Miércoles",
+    TH: "Jueves",
+    FR: "Viernes",
+    SA: "Sábado",
+    SU: "Domingo",
+  };
+
+  // Encuentra la parte que corresponde a BYDAY
+  const byDayMatch = input.match(/BYDAY=([^;]+)/);
+  if (!byDayMatch) {
+    return [];
+  }
+
+  // Extrae los días y los separa en un array
+  const daysArray = byDayMatch[1].split(",");
+
+  // Filtra cualquier valor vacío y convierte los días a objetos con label y value
+  return daysArray
+    .filter(day => day) // Elimina posibles valores vacíos
+    .map(day => ({
+      label: daysMap[day],
+      value: day,
+    }));
+}

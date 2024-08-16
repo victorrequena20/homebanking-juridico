@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
 import BillIcon from "@/assets/icons/BillIcon";
@@ -14,27 +14,15 @@ import WalletReloadIcon from "@/assets/icons/WalletReloadIcon";
 import PersonPlusIcon from "@/assets/icons/PersonPlusIcon";
 import Calendar2Icon from "@/assets/icons/Calendar2Icon";
 import MoneyCheckIcon from "@/assets/icons/MoneyCheckIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrationProductsPage() {
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Productos</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Productos</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        {/* <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
-        </Stack> */}
-      </Stack>
+      <Breadcrumbs
+        title="Productos"
+        items={[{ title: "Inicio", href: "/auth/login" }, { title: "Administración" }, { title: "Productos" }]}
+      />
       <Stack
         sx={{
           border: "1px solid transparent",
@@ -87,7 +75,7 @@ export default function AdministrationProductsPage() {
         <IntermediateMenuItem
           title="Comisiones"
           subtitle="Definir cargos/penalizaciones para productos de crédito, ahorro y depósito."
-          path=""
+          path="/administracion/productos/comisiones"
           icon={<BillIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
