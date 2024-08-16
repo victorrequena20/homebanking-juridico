@@ -1,15 +1,13 @@
 import React from "react";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack } from "@mui/material";
 import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import { Typography } from "@mui/material";
-import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
 import { IntermediateMenuItemProps } from "./IntermediateMenuItemProps";
 import Link from "next/link";
 
 export default function IntermediateMenuItem({ title, subtitle, path, icon }: IntermediateMenuItemProps) {
   return (
-    <Link href={path} defaultChecked={false}>
+    <Link href={path} style={{ cursor: "pointer" }}>
       <Box
         sx={{
           display: "flex",
@@ -59,6 +57,7 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon }: In
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              cursor: "pointer",
               "&:hover": {
                 bgcolor: "#F6F5F2",
               },

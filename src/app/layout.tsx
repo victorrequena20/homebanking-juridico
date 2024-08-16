@@ -2,6 +2,7 @@
 import React from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
+import "react-calendar/dist/Calendar.css";
 
 export default function RootLayout({ children }: any) {
   return (
@@ -15,8 +16,10 @@ export default function RootLayout({ children }: any) {
         />
       </head>
       <body>
-        {children}
-        <Toaster richColors />
+        <div>
+          {children}
+          <Toaster richColors />
+        </div>
       </body>
     </html>
   );

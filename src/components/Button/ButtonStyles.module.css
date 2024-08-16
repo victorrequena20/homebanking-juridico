@@ -47,11 +47,6 @@
   width: 100%;
 }
 
-.disabled {
-  background-color: #cccccc80;
-  color: #484848;
-}
-
 .btn-icon-left {
   flex-direction: row-reverse;
 }
@@ -61,6 +56,14 @@
   color: #12141a;
   &:hover {
     filter: brightness(97%);
+  }
+}
+
+.disabled {
+  background-color: #cccccc80;
+  color: #484848;
+  &:hover {
+    filter: brightness(100%);
   }
 }
 

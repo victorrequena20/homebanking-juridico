@@ -88,7 +88,7 @@ export default function Clients() {
     })();
   }, []);
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
           <Typography variant="h4">Clientes</Typography>

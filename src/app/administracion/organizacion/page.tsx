@@ -64,13 +64,13 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Configuración de moneda"
           subtitle="Monedas disponibles en toda la organización para diferentes productos."
-          path=""
+          path="/administracion/organizacion/configuracion-de-moneda"
           icon={<SettingsIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Administrar festivos"
           subtitle="Definir días festivos para la oficina."
-          path=""
+          path="/administracion/organizacion/administrar-festivos"
           icon={<CalendarEditIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -88,7 +88,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Reasignación de créditos másiva"
           subtitle="Manera fácil de reasignar todo el crédito de un LO a otro LO."
-          path=""
+          path="/administracion/organizacion/reasignacion-de-creditos-masiva"
           icon={<WalletReloadIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -112,7 +112,7 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Días laborables"
           subtitle="Defina días laborables y configure el comportamiento de los pagos vencidos en días festivos."
-          path=""
+          path="/administracion/organizacion/dias-laborables"
           icon={<Calendar2Icon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -130,13 +130,13 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Preferencias de contraseña"
           subtitle="Definir estándares para hacer cumplir el uso de contraseñas más seguras."
-          path=""
+          path="/administracion/organizacion/preferencias-contrasena"
           icon={<KeySquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Campañas de SMS"
           subtitle="Definir campañas de SMS para la organización"
-          path=""
+          path="/administracion/organizacion/campana-sms"
           icon={<MessagesSendIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

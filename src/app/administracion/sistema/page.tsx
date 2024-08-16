@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
 import BillIcon from "@/assets/icons/BillIcon";
@@ -18,27 +18,15 @@ import WalletAddIcon from "@/assets/icons/WalletAddIcon";
 import KeySquareIcon from "@/assets/icons/KeySquareIcon";
 import MessagesSendIcon from "@/assets/icons/MessagesSendIcon";
 import FilterIcon from "@/assets/icons/FilterIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrationSystemPage() {
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Sistema</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Sistema</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        {/* <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
-        </Stack> */}
-      </Stack>
+      <Breadcrumbs
+        title="Sistema"
+        items={[{ title: "Inicio", href: "/auth/login" }, { title: "Administración" }, { title: "Sistema" }]}
+      />
       <Stack
         sx={{
           border: "1px solid transparent",
@@ -67,7 +55,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar códigos"
           subtitle="Los códigos se utilizan para definir valores desplegables."
-          path=""
+          path="/administracion/sistema/codigos"
           icon={<CalendarEditIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -91,7 +79,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Configurar tareas de realizador aprobador"
           subtitle="Definir o modificar tareas de realizador aprobador."
-          path=""
+          path="/administracion/sistema/config-tareas-realizador-aprobador"
           icon={<BillIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

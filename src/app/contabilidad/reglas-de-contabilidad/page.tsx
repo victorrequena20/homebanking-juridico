@@ -1,12 +1,17 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
 import Wrapper from "@/components/Wrapper";
 import { getAccountingRules, getGlAccounts } from "@/services/Accounting.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
+import Link from "next/link";
+import Button from "@/components/Button";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import { set } from "react-hook-form";
 
 export default function CatalogoCuentasPage() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
 
   const columns: GridColDef<(typeof glAccounts)[number]>[] = [
@@ -56,26 +61,39 @@ export default function CatalogoCuentasPage() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getAccountingRules();
       if (response?.status === 200) {
         setGlAccounts(response?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Stack>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/auth/login">
+          <Typography variant="h4">Reglas de contabilidad</Typography>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
+            <Link color="inherit" href="/auth/login">
               <Typography variant="body2">BDC</Typography>
             </Link>
-            <Link underline="hover" color="text.primary" href="/contabilidad" aria-current="page">
+            <Link color="inherit" href="/contabilidad">
               <Typography variant="body2">Contabilidad</Typography>
             </Link>
             <Typography variant="body2">Reglas contables</Typography>
           </Breadcrumbs>
+        </Stack>
+        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
+          <Button
+            size="small"
+            variant="primary"
+            icon={<PlusIcon size={20} color="#fff" />}
+            text="Agregar regla"
+            iconLeft
+            // onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+          />
         </Stack>
       </Stack>
 
