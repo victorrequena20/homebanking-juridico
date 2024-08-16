@@ -156,6 +156,18 @@ export const createCode = async (data: any) => {
   }
 };
 
+export const createCodeValue = async (data: any, codeId: string) => {
+  try {
+    const response = await HttpClient.post(`/codes/${codeId}/codevalues`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createCodeValue ~ error:", error);
+  }
+};
+
 export const updateCode = async (data: any, codeId: string) => {
   try {
     const response = await HttpClient.put(`/codes/${codeId}`, data);
@@ -188,6 +200,18 @@ export const deleteCode = async (codeId: string): Promise<ApiResponse> => {
     };
   } catch (error) {
     console.log("🚀 ~ deleteCode ~ error:", error);
+    throw error;
+  }
+};
+
+export const deleteValueCode = async (codeId: string, codeValueId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/codes/${codeId}/codevalues/${codeValueId}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteValueCode ~ error:", error);
     throw error;
   }
 };

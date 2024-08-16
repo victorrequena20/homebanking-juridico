@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Toggle from "@/components/Toggle";
-import { updateCodeValue } from "@/services/Core.service";
+import { createCodeValue, updateCodeValue } from "@/services/Core.service";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack } from "@mui/material";
 import { Box, Modal, SxProps, Typography } from "@mui/material";
@@ -40,13 +40,14 @@ export default function EditCodeValueModal({
   setIsOpen,
   codeValue,
   codeId,
+  callback,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  codeValue: any;
+  codeValue?: any;
   codeId: string;
+  callback?: () => void;
 }) {
-  console.log("🚀 ~ codeValue:", codeValue);
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
@@ -64,28 +65,34 @@ export default function EditCodeValueModal({
   const onSubmit = async (data: any) => {
     console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
-    const dataToSend = {
-      ...data,
-      isActive,
-    };
-    const response = await updateCodeValue(dataToSend, codeId, codeValue?.id);
-    setIsLoading(true);
-    if (response?.status === 200) {
-      setIsOpen(false);
-      reset({ name: "", description: "", position: "" });
-      setValue("name", "");
-      setValue("description", "");
-      setValue("position", "");
-      toast.success("Código actualizado con exito.");
+    const dataToSend = { ...data, isActive };
+    if (codeValue) {
+      const response = await updateCodeValue(dataToSend, codeId, codeValue?.id);
+      if (response?.status === 200) {
+        toast.success("Código actualizado con exito.");
+      }
+    } else {
+      const responseCreateCodeValue = await createCodeValue(dataToSend, codeId);
+      if (responseCreateCodeValue?.status === 200) {
+        toast.success("Código creado con exito.");
+      }
     }
+    callback?.();
+    reset({ name: "", description: "", position: "" });
+    setIsOpen(false);
+    setValue("name", "");
+    setValue("description", "");
+    setValue("position", "");
     setIsLoading(false);
   };
 
   React.useEffect(() => {
-    setIsActive(codeValue?.active);
-    setValue("name", codeValue?.name || "");
-    setValue("description", codeValue?.description || "");
-    setValue("position", codeValue?.position || "");
+    if (codeValue) {
+      setIsActive(codeValue?.active);
+      setValue("name", codeValue?.name || "");
+      setValue("description", codeValue?.description || "");
+      setValue("position", codeValue?.position || "");
+    }
   }, [codeValue]);
 
   return (
@@ -97,7 +104,7 @@ export default function EditCodeValueModal({
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="p" textAlign="center">
-          Editar {codeValue?.name}
+          {codeValue ? "Editar" : "Agregar valor de código"} {codeValue?.name}
         </Typography>
 
         <Stack component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, gap: 2 }}>

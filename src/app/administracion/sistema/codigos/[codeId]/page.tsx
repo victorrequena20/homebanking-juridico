@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import Button from "@/components/Button";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal/ConfirmDe
 import { deleteUser } from "@/services/Users.service";
 import Link from "next/link";
 import { toast } from "sonner";
-import { deleteCode, getCodeById, getCodeValuesById, updateCode } from "@/services/Core.service";
+import { deleteCode, deleteValueCode, getCodeById, getCodeValuesById, updateCode } from "@/services/Core.service";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Input from "@/components/Input";
 import { Controller, useForm } from "react-hook-form";
@@ -24,6 +24,8 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import EditCodeValueModal from "@/modules/administracion/sistema/components/EditCodeValueModal/EditCodeValueModal";
+import TrashIcon from "@/assets/icons/TrashIcon";
+import EditIcon from "@/assets/icons/EditIcon";
 
 export const schema = yup.object().shape({
   keyName: yup.string().required("El nombre clave es requerido"),
@@ -33,6 +35,7 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
   const [codeData, setCodeData] = React.useState<any | null>(null);
   const [codeValues, setCodeValues] = React.useState<any | null>([]);
   const [showEditCodeValueModal, setShowEditCodeValueModal] = React.useState<boolean>(false);
+  const [showAddCodeValueModal, setShowAddCodeValueModal] = React.useState<boolean>(false);
   const [editCodeValueSelected, setEditCodeValueSelected] = React.useState<any>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isLoadingUpdating, setIsLoadingUpdating] = React.useState<boolean>(false);
@@ -48,6 +51,27 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+
+  async function handleGetCodeValues() {
+    const responseCodeValues = await getCodeValuesById(params.codeId);
+    if (responseCodeValues?.status === 200) {
+      setCodeValues(responseCodeValues?.data);
+    }
+  }
+
+  const handleDeleteValueCode = async (valueCodeId: string) => {
+    try {
+      const response = await deleteValueCode(params?.codeId, valueCodeId);
+      if (response.status === 200) {
+        toast.success("Valor de código eliminado correctamente.");
+        handleGetCodeValues();
+      } else {
+        console.error("Error al eliminar el valor de código:", response);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de eliminación:", error);
+    }
+  };
 
   const columns: GridColDef<(typeof codeValues)[number]>[] = [
     {
@@ -87,6 +111,41 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
             {params?.row?.active ? <CheckIcon size={13} /> : null}
           </Box>
         </Box>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      flex: 1,
+      renderCell: params => (
+        <Stack sx={{ alignItems: "center", gap: 2, flexDirection: "row", height: "100%" }}>
+          <Tooltip title="Editar" placement="top">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                bgcolor: "#153075",
+                maxWidth: "36px",
+                width: "36px",
+                borderRadius: "9px",
+                height: "36px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setShowEditCodeValueModal(true);
+                setEditCodeValueSelected(params?.row);
+              }}
+            >
+              <EditIcon color="#fff" size={20} />
+            </Box>
+          </Tooltip>
+          <ConfirmDeleteModal
+            buttonType="action"
+            title="¿Estás seguro de que deseas eliminar este valor de código?"
+            actionCallback={() => handleDeleteValueCode(params?.row?.id)}
+          />
+        </Stack>
       ),
     },
   ];
@@ -131,13 +190,8 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
   }, []);
 
   React.useEffect(() => {
-    (async () => {
-      const responseCodeValues = await getCodeValuesById(params.codeId);
-      if (responseCodeValues?.status === 200) {
-        setCodeValues(responseCodeValues?.data);
-      }
-    })();
-  }, [showEditCodeValueModal]);
+    handleGetCodeValues();
+  }, []);
 
   return (
     <Wrapper isLoading={isLoading}>
@@ -179,6 +233,7 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
               size="small"
               icon={<PlusIcon color="#fff" size={20} />}
               iconLeft
+              onClick={() => setShowAddCodeValueModal(true)}
             />
           </Stack>
           <Stack sx={{ mt: 5 }}>
@@ -197,10 +252,6 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
               disableRowSelectionOnClick
               rowSelection
               pageSizeOptions={[10, 25, 50]}
-              onRowClick={(params, event, details) => {
-                setShowEditCodeValueModal(true);
-                setEditCodeValueSelected(params?.row);
-              }}
             />
           </Stack>
           <Stack>
@@ -280,10 +331,17 @@ export default function CodeDetails({ params }: { params: { codeId: string } }) 
         </Stack>
       </Stack>
       <EditCodeValueModal
+        callback={handleGetCodeValues}
         codeValue={editCodeValueSelected}
         isOpen={showEditCodeValueModal}
         codeId={params?.codeId}
         setIsOpen={setShowEditCodeValueModal}
+      />
+      <EditCodeValueModal
+        callback={handleGetCodeValues}
+        isOpen={showAddCodeValueModal}
+        codeId={params?.codeId}
+        setIsOpen={setShowAddCodeValueModal}
       />
     </Wrapper>
   );

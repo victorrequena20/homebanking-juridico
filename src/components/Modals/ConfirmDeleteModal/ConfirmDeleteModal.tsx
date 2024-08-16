@@ -7,6 +7,7 @@ import TrashIcon from "@/assets/icons/TrashIcon";
 import { deleteUser } from "@/services/Users.service";
 import { useRouter } from "next/navigation";
 import { ConfirmDeleteModalProps } from "./ConfirmDeleteModalProps";
+import { Tooltip } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -26,7 +27,12 @@ const style = {
   p: 6,
 };
 
-export default function ConfirmDeleteModal({ title, actionCallback, buttonActionCallback }: ConfirmDeleteModalProps) {
+export default function ConfirmDeleteModal({
+  title,
+  actionCallback,
+  buttonActionCallback,
+  buttonType = "normal",
+}: ConfirmDeleteModalProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -46,14 +52,35 @@ export default function ConfirmDeleteModal({ title, actionCallback, buttonAction
 
   return (
     <>
-      <Button
-        iconLeft
-        icon={<TrashIcon size={20} color="#fff" />}
-        size="small"
-        text="Borrar"
-        variant="warning-red"
-        onClick={handleOpen}
-      />
+      {buttonType === "action" ? (
+        <Tooltip title="Eliminar" placement="top">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              bgcolor: "#ea3647",
+              maxWidth: "36px",
+              width: "36px",
+              borderRadius: "8px",
+              height: "36px",
+              cursor: "pointer",
+            }}
+            onClick={handleOpen}
+          >
+            <TrashIcon size={20} color="#fff" />
+          </Box>
+        </Tooltip>
+      ) : (
+        <Button
+          iconLeft
+          icon={<TrashIcon size={20} color="#fff" />}
+          size="small"
+          text="Borrar"
+          variant="warning-red"
+          onClick={handleOpen}
+        />
+      )}
       <Modal
         open={open}
         onClose={handleClose}
