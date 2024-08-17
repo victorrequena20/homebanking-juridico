@@ -1,19 +1,18 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function Clients() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [clients, setClients] = React.useState<any>([{ id: 1 }]);
-
   const router = useRouter();
-
   const columns: GridColDef<(typeof clients)[number]>[] = [
     {
       field: "name",
@@ -68,40 +67,33 @@ export default function Clients() {
     },
   ];
 
+  async function handleGetClients() {
+    setIsLoading(true);
+    const response = await getClients();
+    const data = response?.data?.pageItems;
+    const clientsData = data.map((el: any) => {
+      return {
+        id: el?.id,
+        name: `${el?.firstname} ${el?.lastname}`,
+        accountNumber: el?.accountNo,
+        externalId: el?.externalId,
+        status: el?.active,
+        office: el?.officeName,
+      };
+    });
+    setClients(clientsData?.reverse());
+    setIsLoading(false);
+  }
+
   React.useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const response = await getClients();
-      const data = response?.data?.pageItems;
-      const clientsData = data.map((el: any) => {
-        return {
-          id: el?.id,
-          name: `${el?.firstname} ${el?.lastname}`,
-          accountNumber: el?.accountNo,
-          externalId: el?.externalId,
-          status: el?.active,
-          office: el?.officeName,
-        };
-      });
-      setClients(clientsData?.reverse());
-      setIsLoading(false);
-    })();
+    handleGetClients();
   }, []);
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Clientes</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Clientes</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Clientes"
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
+      />
 
       <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
         <Stack sx={{ alignItems: "flex-end" }}>

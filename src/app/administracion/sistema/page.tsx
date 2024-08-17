@@ -61,7 +61,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar reportes"
           subtitle="Agregar nuevo reporte y clasificar reportes."
-          path=""
+          path="/administracion/sistema/administrar-reportes"
           icon={<PercentageSquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

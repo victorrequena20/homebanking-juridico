@@ -277,4 +277,4 @@ export const getNotifications = async () => {
   }
 };
 
-// ----- Notifications start -----
+// ----- Notifications end -----

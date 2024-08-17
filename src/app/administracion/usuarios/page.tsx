@@ -32,31 +32,6 @@ export default function AdministrationUsersPage() {
       flex: 1,
       valueGetter: (value, row) => `${row.email || ""} `,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Estado",
-    //   flex: 1,
-    //   renderCell: params => (
-    //     <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-    //       <Box
-    //         sx={{
-    //           bgcolor: params?.row?.status ? "#E6F0E2" : "#FF8080",
-    //           width: "120px",
-    //           py: 0.5,
-    //           alignItems: "center",
-    //           justifyContent: "center",
-    //           display: "flex",
-    //           borderRadius: "16px",
-    //         }}
-    //       >
-    //         <Typography variant="body2" fontWeight="600" color={params?.row?.status ? "#76BF66" : "#A02334"}>
-    //           {params.row.status ? "Activo" : "Inactivo"}
-    //         </Typography>
-    //       </Box>
-    //     </Box>
-    //   ),
-    //   align: "center",
-    // },
     {
       field: "office",
       headerName: "Oficina",

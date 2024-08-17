@@ -8,6 +8,7 @@ export default function RootLayout({ children }: any) {
   return (
     <html lang="es">
       <head>
+        <title>Banco digital de caracas</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
