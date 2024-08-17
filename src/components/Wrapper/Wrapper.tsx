@@ -10,7 +10,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
       md={10}
       sx={{
         bgcolor: "#FCFCFD",
-        borderRadius: 8,
+        borderRadius: "24px",
         pt: 1,
         maxHeight: "100%",
         overflow: "auto",

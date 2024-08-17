@@ -64,7 +64,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
               >
                 <HomeIcon size={24} />
                 <Typography variant="body2" fontWeight="200" color="#fff">
-                  Dashboard
+                  Inicio
                 </Typography>
               </Box>
             </Stack>

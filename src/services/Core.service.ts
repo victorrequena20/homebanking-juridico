@@ -1,6 +1,8 @@
 import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
+// ----- Staff start -----
+
 export const getStaffs = async (params: any) => {
   try {
     const response = await HttpClient.get("/staff", { params });
@@ -12,6 +14,20 @@ export const getStaffs = async (params: any) => {
     console.error("🚀 ~ getStaffs ~ error:", error);
   }
 };
+
+export const createStaff = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/staff", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createStaff ~ error:", error);
+  }
+};
+
+// ----- Staff end -----
 
 export const runAccruals = async (data: any) => {
   try {
