@@ -86,6 +86,8 @@ export default function CreateChargePage() {
       toast.success("Cargo creado con exito!");
       reset();
       router.push("/administracion/productos/comisiones");
+    } else {
+      toast.error("Ocurrio un error al crear el cargo");
     }
     setIsLoading(false);
     console.log("🚀 ~ onSubmit ~ data:", data);

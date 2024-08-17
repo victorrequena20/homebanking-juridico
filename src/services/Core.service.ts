@@ -25,6 +25,20 @@ export const runAccruals = async (data: any) => {
   }
 };
 
+// -----Working days start -----
+
+export const updateWorkDays = async (data: any) => {
+  try {
+    const response = await HttpClient.put("/workingdays", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("��� ~ updateWorkDays ~ error:", error);
+  }
+};
+
 export const getWorkDays = async () => {
   try {
     const response = await HttpClient.get("/workingdays");
@@ -36,6 +50,8 @@ export const getWorkDays = async () => {
     console.error("🚀 ~ getWorkDays ~ error:", error);
   }
 };
+
+// -----Working days end -----
 
 // ----- Currencies start -----
 

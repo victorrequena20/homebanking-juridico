@@ -52,6 +52,11 @@ export function formatDateEsddMMMMyyyy(dateString: any): string {
   return `${day} ${month} ${year}`;
 }
 
+export function getTodayFormattedEsddMMMMyyyy(): string {
+  const today = new Date();
+  return formatDateEsddMMMMyyyy(today);
+}
+
 export function parseByDayString(input: string): { label: string; value: string }[] {
   const daysMap: { [key: string]: string } = {
     MO: "Lunes",
