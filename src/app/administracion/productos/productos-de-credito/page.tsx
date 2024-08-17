@@ -2,7 +2,6 @@
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import { Box, Stack, Typography } from "@mui/material";
-import { Breadcrumbs } from "@mui/material";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CreditProducts() {
   const [loanProducts, setLoanProducts] = React.useState<any | null>([]);
@@ -72,21 +72,14 @@ export default function CreditProducts() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Productos de crédito</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/productos">
-              <Typography variant="body2">Productos</Typography>
-            </Link>
-            <Typography variant="body2">Productos de crédito</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Productos de crédito"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Productos", href: "/administracion/productos" },
+          { title: "Productos de crédito", href: "/administracion/productos/productos-de-credito" },
+        ]}
+      />
 
       <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
         <Stack sx={{ alignItems: "flex-end" }}>

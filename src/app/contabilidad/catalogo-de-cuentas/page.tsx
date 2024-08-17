@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Wrapper from "@/components/Wrapper";
 import { getGlAccounts } from "@/services/Accounting.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
