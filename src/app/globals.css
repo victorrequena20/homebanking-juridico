@@ -2,7 +2,9 @@
   box-sizing: 0;
   padding: 0;
   margin: 0;
-  font-family: "Nunito Sans", sans-serif !important;
+  /* font-family: "Nunito Sans", sans-serif !important; */
+  /* font-family: "Work Sans", sans-serif !important; */
+  font-family: "Inter", sans-serif !important;
   text-decoration: none;
   scrollbar-width: auto;
   scrollbar-color: #bac3d4;
