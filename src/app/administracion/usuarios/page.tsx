@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getUsers } from "@/services/Users.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrationUsersPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -64,34 +65,30 @@ export default function AdministrationUsersPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Usuarios</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Usuarios</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear usuario"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/usuarios/crear")}
-          />
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Usuarios"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Usuarios" },
+        ]}
+      />
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2, mt: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear usuario"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/usuarios/crear")}
+        />
+      </Stack>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden", cursor: "pointer" }}
           rows={users}
           columns={columns}
           loading={isLoading}

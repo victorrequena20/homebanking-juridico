@@ -65,7 +65,7 @@ const LoginForm = () => {
             bottom: "-10px",
           }}
         >
-          <Image width={600} height={600} src="/assets/images/auth-login-img.png" alt="Image" />
+          <Image width={700} height={640} src="/assets/images/auth-login-img.png" alt="Image" />
         </Box>
         <Grid md={11} sx={{ px: 3, mx: "auto" }}>
           <Typography variant="h4" fontWeight="500" textAlign="start" color="#12141a">

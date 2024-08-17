@@ -43,10 +43,10 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
         sx={{ backgroundColor: "hsl(0, 0%, 10%)", width: "100%", height: "100vh", maxHeight: "100vh", py: 1, pr: 1 }}
       >
         <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2 }}>
-          <Typography variant="body1" color="#fff" sx={{ ml: 2 }}>
+          <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
             Banco Digital de Caracas
           </Typography>
-          <Stack sx={{ mt: 4 }}>
+          <Stack sx={{ mt: 5 }}>
             {/* Dashboard */}
             <Stack>
               <Box
@@ -63,40 +63,13 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 onClick={() => router.push("/dashboard")}
               >
                 <HomeIcon size={24} />
-                <Typography variant="body2" color="#fff">
+                <Typography variant="body2" fontWeight="200" color="#fff">
                   Dashboard
                 </Typography>
               </Box>
             </Stack>
-            {/* Navegacion */}
-            {/* <Stack
-            sx={{
-              mt: 2,
-            }}
-          >
-            <Box
-              sx={{
-                borderRadius: "8px",
-                py: 1,
-                px: 2,
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                cursor: "pointer",
-              }}
-            >
-              <SendIcon size={24} />
-              <Typography variant="body2" color="#fff">
-                Navegación
-              </Typography>
-            </Box>
-          </Stack> */}
             {/* Institucion */}
-            <Stack
-              sx={{
-                mt: 2,
-              }}
-            >
+            <Stack sx={{ mt: 2 }}>
               <Box
                 sx={{
                   borderRadius: "8px",
@@ -110,7 +83,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
               >
                 <BankIcon size={24} />
-                <Typography variant="body2" color="#fff">
+                <Typography variant="body2" fontWeight="200" color="#fff">
                   Institución
                 </Typography>
               </Box>
@@ -182,7 +155,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 }}
               >
                 <ChartSquareIcon size={24} />
-                <Typography variant="body2" color="#fff">
+                <Typography variant="body2" fontWeight="200" color="#fff">
                   Contabilidad
                 </Typography>
               </Box>
@@ -210,7 +183,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 }}
               >
                 <ReportIcon size={24} />
-                <Typography variant="body2" color="#fff">
+                <Typography variant="body2" fontWeight="200" color="#fff">
                   Reportes
                 </Typography>
               </Box>
@@ -222,7 +195,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                 onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
               >
                 <PersonHexagonalIcon size={24} />
-                <Typography variant="body2" color="#fff">
+                <Typography variant="body2" fontWeight="200" color="#fff">
                   Administración
                 </Typography>
               </Box>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
 import BillIcon from "@/assets/icons/BillIcon";
@@ -21,27 +21,22 @@ import FilterIcon from "@/assets/icons/FilterIcon";
 import MirroringScreenIcon from "@/assets/icons/MirroringScreenIcon";
 import TaskListIcon from "@/assets/icons/TaskListIcon";
 import MessagesReceivedIcon from "@/assets/icons/MessagesReceivedIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrationOrganizationPage() {
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Organización</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        {/* <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
-        </Stack> */}
-      </Stack>
+      <Breadcrumbs
+        title="Organización"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización" },
+        ]}
+      />
       <Stack
         sx={{
           border: "1px solid transparent",

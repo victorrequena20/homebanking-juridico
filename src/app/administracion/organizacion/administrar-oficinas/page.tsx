@@ -86,7 +86,6 @@ export default function AdministrarOficinas() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={offices}
           columns={columns}
           initialState={{

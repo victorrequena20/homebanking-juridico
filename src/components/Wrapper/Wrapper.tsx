@@ -11,7 +11,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
       sx={{
         bgcolor: "#FCFCFD",
         borderRadius: 8,
-        pt: 6,
+        pt: 1,
         maxHeight: "100%",
         overflow: "auto",
         pb: 4,
@@ -33,12 +33,12 @@ export default function Wrapper({ children, isLoading }: { children: React.React
         <Stack
           sx={{
             maxWidth: {
-              md: "700px",
+              md: "900px",
               lg: "900px",
               xl: "1900px",
             },
             mx: "auto",
-            px: { md: 4, lg: 6, xl: 10 },
+            px: { md: 6, lg: 6, xl: 6 },
           }}
         >
           {children}

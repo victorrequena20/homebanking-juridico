@@ -116,7 +116,6 @@ export default function AdministrarEmpleados() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={employees}
           columns={columns}
           initialState={{

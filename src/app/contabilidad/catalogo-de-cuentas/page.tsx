@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Wrapper from "@/components/Wrapper";
 import { getGlAccounts } from "@/services/Accounting.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -8,6 +8,7 @@ import CheckIcon from "@/assets/icons/Checkicon";
 import { useRouter } from "next/navigation";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import Button from "@/components/Button";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CatalogoCuentasPage() {
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
@@ -97,20 +98,14 @@ export default function CatalogoCuentasPage() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Catálogo de cuentas</Typography>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/contabilidad" aria-current="page">
-              <Typography variant="body2">Contabilidad</Typography>
-            </Link>
-            <Typography variant="body2">Catálogo de cuentas</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Catálogo de cuentas"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Contabilidad", href: "/contabilidad" },
+          { title: "Catálogo de cuentas", href: "/contabilidad/catalogo-de-cuentas" },
+        ]}
+      />
 
       <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
         <Stack sx={{ alignItems: "flex-end" }}>
