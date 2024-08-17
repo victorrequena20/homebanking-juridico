@@ -134,3 +134,20 @@ export const getFinancialActivityAccounts = async () => {
     console.log("🚀 ~ getFinancialActivityAccounts ~ error:", error);
   }
 };
+
+// ----- Gl accounts end -----
+
+// ----- Provisioning entries start -----
+export const createProvisioningEntries = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/provisioningentries`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createProvisioningEntries ~ error:", error);
+    throw error;
+  }
+};
+// ----- Provisioning entries end -----

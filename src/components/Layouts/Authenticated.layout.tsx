@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     institutionClients: pathname.includes("/institucion/clientes"),
     institutionGroups: pathname.includes("/institucion/grupos"),
     institutionCenters: pathname.includes("/institucion/centros"),
-    accounting: pathname === "/contabilidad",
+    accounting: pathname.includes("/contabilidad"),
     reports: pathname === "/reportes",
     administrationTab: pathname.includes("/administracion"),
     administrationUsers: pathname.includes("/administracion/usuarios"),

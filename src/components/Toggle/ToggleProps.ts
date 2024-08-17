@@ -3,4 +3,5 @@ export interface ToggleProps {
   setIsChecked?: (isChecked: boolean) => void;
   label?: string;
   size?: string;
+  toggleLeft?: boolean;
 }

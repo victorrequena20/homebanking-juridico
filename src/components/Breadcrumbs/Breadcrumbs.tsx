@@ -13,12 +13,16 @@ export default function Breadcrumbs({ title, items }: BreadcrumbsProps) {
           {items?.map((item: IBreadcrumbItem) => {
             if (item?.href) {
               return (
-                <Link color="inherit" href={item?.href}>
+                <Link key={item.href} color="inherit" href={item?.href}>
                   <Typography variant="body2">{item.title}</Typography>
                 </Link>
               );
             } else {
-              return <Typography variant="body2">{item.title}</Typography>;
+              return (
+                <Typography key={item.title} variant="body2">
+                  {item.title}
+                </Typography>
+              );
             }
           })}
         </BreadcrumbsMUI>
