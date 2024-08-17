@@ -85,3 +85,13 @@ export function parseByDayString(input: string): { label: string; value: string 
       value: day,
     }));
 }
+
+export function convertFromTimestampToSpanishDate(timestamp: string): string {
+  const date = new Date(timestamp);
+
+  const day = date.getDate();
+  const month = date.toLocaleString("es-ES", { month: "long" });
+  const year = date.getFullYear();
+
+  return `${day} de ${month.charAt(0).toUpperCase() + month.slice(1)} del ${year}`;
+}

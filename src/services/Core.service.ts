@@ -262,3 +262,19 @@ export const updatePermissions = async (data: any) => {
 };
 
 // ----- Permissions end -----
+
+// ----- Notifications start -----
+
+export const getNotifications = async () => {
+  try {
+    const response = await HttpClient.get("/notifications", { params: { isRead: true } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getNotifications ~ error:", error);
+  }
+};
+
+// ----- Notifications start -----
