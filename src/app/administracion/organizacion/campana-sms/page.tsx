@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { getSmsCampaignsTemplate } from "@/services/Core.service";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CampanaSMSPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -26,31 +27,29 @@ export default function CampanaSMSPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Campañas de SMS</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Typography variant="body2">Campañas de SMS</Typography>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear campaña de SMS"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => {
-              goToCreateCampaignSms();
-            }}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Campañas de SMS"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Campañas de SMS" },
+        ]}
+      />
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear campaña de SMS"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => {
+            goToCreateCampaignSms();
+          }}
+        />
       </Stack>
     </Wrapper>
   );

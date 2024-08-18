@@ -89,19 +89,19 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Historial de instrucciones permanentes"
           subtitle="Ver el historial registrado de instrucciones permanentes."
-          path=""
+          path="/administracion/organizacion/historial-instrucciones-permanentes"
           icon={<BillIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Gestión de ventanillas y cajeros"
           subtitle="Gestionar cajeros/cajeros y asignación y liquidación de efectivo."
-          path=""
+          path="/administracion/organizacion/gestion-ventanillas-cajeros"
           icon={<CashIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Inversores"
           subtitle="Ver los detalles de la cuenta de crédito asociados con los inversores."
-          path=""
+          path="/administracion/organizacion/inversores"
           icon={<PersonPlusIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -113,13 +113,13 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Mapeo de fondos"
           subtitle="Pantalla de entrada masiva para asignar fuentes de fondos a créditos."
-          path=""
+          path="/administracion/organizacion/mapeo-de-fondos"
           icon={<MoneyCheckIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Tipo de pago"
           subtitle="Administrar tipos de pago"
-          path=""
+          path="/administracion/organizacion/tipo-de-pago"
           icon={<WalletAddIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -137,25 +137,25 @@ export default function AdministrationOrganizationPage() {
         <IntermediateMenuItem
           title="Criterios de concesión de créditos"
           subtitle="Definir criterios de concesión de créditos para la organización"
-          path=""
+          path="/administracion/organizacion/criterios-de-concesion-de-creditos"
           icon={<FilterIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Consulta ad hoc"
           subtitle="Definir AdHocQuery para la organización"
-          path=""
+          path="/administracion/organizacion/consulta-ad-hoc"
           icon={<MirroringScreenIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Verificaciones de la tabla de datos de la entidad"
           subtitle="Definir comprobaciones de la tabla de datos de la entidad para la organización"
-          path=""
+          path="/administracion/organizacion/verificacion-de-tablas"
           icon={<TaskListIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Importación masiva"
           subtitle="Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, oficinas, etc."
-          path=""
+          path="/administracion/organizacion/importacion-masiva"
           icon={<MessagesReceivedIcon size={28} color="#153075" />}
         />
       </Stack>

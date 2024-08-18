@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getClients } from "@/services/Clients.service";
@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
 import { getGlclosures } from "@/services/Accounting.service";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function EntradasDeCierrePage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -59,32 +60,14 @@ export default function EntradasDeCierrePage() {
   }, []);
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Entradas de cierre</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Link color="inherit" href="/contabilidad">
-              <Typography variant="body2">Contabilidad</Typography>
-            </Link>
-            <Link color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Entradas de cierre</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            size="small"
-            variant="primary"
-            text="Crear cierre"
-            onClick={() => router.push("/contabilidad/entradas-de-cierre/crear")}
-          />
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Entradas de cierre"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Contabilidad", href: "/contabilidad" },
+          { title: "Entradas de cierre" },
+        ]}
+      />
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid

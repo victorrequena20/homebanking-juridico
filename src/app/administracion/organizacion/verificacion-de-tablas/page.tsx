@@ -1,20 +1,17 @@
 import React from "react";
-import Wrapper from "@/components/Wrapper";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Wrapper from "@/components/Wrapper";
 
-export default function AdministrarFestivos() {
+export default function VerificacionDeTablasPage() {
   return (
     <Wrapper>
       <Breadcrumbs
-        title="Administrar festivos"
+        title="Verificación de tablas de la entidad"
         items={[
-          {
-            title: "Inicio",
-            href: "/dashboard",
-          },
+          { title: "Inicio", href: "/dashboard" },
           { title: "Administración" },
           { title: "Organización", href: "/administracion/organizacion" },
-          { title: "Administrar festivos" },
+          { title: "Verificación de tablas de la entidad" },
         ]}
       />
     </Wrapper>

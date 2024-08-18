@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import Toggle from "@/components/Toggle";
 import { getPasswordPreferences, updatePasswordPreferences } from "@/services/Core.service";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function PreferenciasContrasenaPage() {
   const [password1, setPassword1] = useState(false);
@@ -62,20 +63,18 @@ export default function PreferenciasContrasenaPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Preferencias de contraseña</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Typography variant="body2">Preferencias de contraseña</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Preferencias de contraseña"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Preferencias de contraseña" },
+        ]}
+      />
 
       <Stack component="form" sx={{ mt: 5, gap: 3, maxWidth: "700px" }}>
         <Stack sx={{ flexDirection: "row", gap: 3, alignItems: "center" }}>

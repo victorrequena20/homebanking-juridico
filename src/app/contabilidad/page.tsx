@@ -36,7 +36,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Publicaciones frecuentes"
           subtitle="Estas son publicaciones predefinidas."
-          path=""
+          path="/contabilidad/publicaciones-frecuentes"
           icon={<ChartSquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -48,7 +48,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Crear entradas de diario."
           subtitle="Transacciones de asiento de diario manuales registradas en un diario."
-          path=""
+          path="/contabilidad/crear-entradas-de-diario"
           icon={<PlusIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -60,7 +60,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Buscar entradas de diario"
           subtitle="Opción de búsqueda avanzada para entradas de diario."
-          path=""
+          path="/contabilidad/buscar-entradas-de-diario"
           icon={<SearchIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -84,7 +84,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Migrar saldos iniciales (en la oficina)"
           subtitle="Establecer o actualizar saldos de apertura a nivel de oficina para cuentas del libro mayor."
-          path=""
+          path="/contabilidad/migrar-saldos-iniciales"
           icon={<CashIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

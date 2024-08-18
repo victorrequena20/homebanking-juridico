@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +13,7 @@ import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import Toggle from "@/components/Toggle";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const schema = Yup.object().shape({
   recurrence: Yup.string().optional(),
@@ -107,20 +108,18 @@ export default function ReasignacionDeCreditosMasivaPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Reasignación de créditos</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Typography variant="body2">Reasignación de créditos</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Reasignación de créditos masiva"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Reasignación de créditos masiva" },
+        ]}
+      />
 
       <Stack component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 5, gap: 3 }}>
         <InputSelect

@@ -1,20 +1,17 @@
 import React from "react";
-import Wrapper from "@/components/Wrapper";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Wrapper from "@/components/Wrapper";
 
-export default function AdministrarFestivos() {
+export default function CreitreiosDeConcesionDeCreditosPage() {
   return (
     <Wrapper>
       <Breadcrumbs
-        title="Administrar festivos"
+        title="Criterios de concesión de créditos"
         items={[
-          {
-            title: "Inicio",
-            href: "/dashboard",
-          },
+          { title: "Inicio", href: "/dashboard" },
           { title: "Administración" },
           { title: "Organización", href: "/administracion/organizacion" },
-          { title: "Administrar festivos" },
+          { title: "Criterios de concesión de créditos" },
         ]}
       />
     </Wrapper>
