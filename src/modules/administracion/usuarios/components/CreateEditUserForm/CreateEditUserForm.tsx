@@ -117,7 +117,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
       md={12}
       sx={{ gap: 3, maxWidth: "1000px" }}
       container
-      mt={4}
+      mt={3}
     >
       {/* Username */}
       <Grid>

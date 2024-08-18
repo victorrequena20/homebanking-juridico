@@ -21,7 +21,7 @@ export default function CrearGrupoPage() {
         <ButtonBack />
       </Stack>
 
-      <Stack sx={{ mt: 2 }}>
+      <Stack sx={{ mt: 3 }}>
         <CreateGroupForm />
       </Stack>
     </Wrapper>

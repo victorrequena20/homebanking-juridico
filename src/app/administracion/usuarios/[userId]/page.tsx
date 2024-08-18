@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Button from "@/components/Button";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
 import { deleteUser } from "@/services/Users.service";
 import { toast } from "sonner";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -55,26 +56,16 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
   return (
     <Wrapper isLoading={isLoading}>
       {!showEditView && (
-        <Stack
-          sx={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Stack>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" href="/auth/login">
-                <Typography variant="body2">BDC</Typography>
-              </Link>
-              <Typography variant="body2">Administración</Typography>
-              <Link color="text.primary" href="/administracion/usuarios">
-                <Typography variant="body2">Usuarios</Typography>
-              </Link>
-              <Typography variant="body2">{userData?.username}</Typography>
-            </Breadcrumbs>
-          </Stack>
-        </Stack>
+        <Breadcrumbs
+          items={[
+            {
+              title: "Inicio",
+              href: "/dashboard",
+            },
+            { title: "Administración" },
+            { title: "Usuarios", href: "/administracion/usuarios" },
+          ]}
+        />
       )}
       {showEditView ? (
         <Stack sx={{ width: "100%" }}>

@@ -88,7 +88,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
   }, [watch()]);
 
   return (
-    <Stack sx={{ gap: 3, mt: 3 }} component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Stack sx={{ gap: 3 }} component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack sx={{ flexDirection: "row", gap: 3 }}>
         <Stack>
           <Controller
