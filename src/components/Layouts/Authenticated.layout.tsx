@@ -75,7 +75,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     }}
                     onClick={() => router.push("/dashboard")}
                   >
-                    <HomeIcon size={24} />
+                    <HomeIcon size={24} color={routeValidations.dashboard ? "#fff" : "#9aa3b8"} />
                     <Typography variant="body2" fontWeight="200">
                       Inicio
                     </Typography>
