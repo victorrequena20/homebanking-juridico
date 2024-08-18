@@ -13,7 +13,7 @@ interface InputCalendarProps {
   label: string;
   placeholder?: string;
   isValidField?: boolean;
-  hint?: string;
+  hint?: any;
   onChange?: (date: string) => void;
   value?: string;
   defaultValue?: string;

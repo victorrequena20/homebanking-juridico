@@ -10,10 +10,19 @@ export const keyValueSchema = yup
 export const schema = yup.object().shape({
   officeId: keyValueSchema,
   legalFormId: keyValueSchema,
-  savingsProductId: yup.object({
-    label: yup.string(),
-    value: yup.mixed(),
-  }),
+  savingsProductId: yup
+    .object({
+      label: yup.string(),
+      value: yup.mixed(),
+    })
+    .when("openSavingAccount", {
+      is: true,
+      then: schema =>
+        schema.required("El producto de ahorro es obligatorio cuando se abre una cuenta de ahorro").shape({
+          label: yup.string().required("La etiqueta del producto de ahorro es obligatoria"),
+          value: yup.mixed().required("El valor del producto de ahorro es obligatorio"),
+        }),
+    }),
   staffId: yup.object({
     label: yup.string().required("La etiqueta es obligatoria"),
     value: yup.mixed().required("El valor es obligatorio"),
@@ -31,6 +40,9 @@ export const schema = yup.object().shape({
   firstname: yup.string().required("El nombre es obligatorio"),
   middlename: yup.string(),
   lastname: yup.string().required("El apellido es obligatorio"),
+  isStaff: yup.boolean().notRequired(),
+  isActive: yup.boolean().notRequired(),
+  openSavingAccount: yup.boolean().notRequired(),
 });
 
 export default schema;

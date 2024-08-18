@@ -8,6 +8,7 @@ import StepBox from "@/components/Stepper/StepBox";
 import ClientFamilyMembers from "@/modules/institucion/clients/components/ClientFamilyMembers";
 import { CreateClientContext } from "../context/CreateClient/CreateClient.context";
 import ClientResume from "../components/ClientResume";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CreateClient() {
   const { step, setStep } = useContext(CreateClientContext);
@@ -32,10 +33,21 @@ export default function CreateClient() {
 
   return (
     <Wrapper>
-      <ButtonBack />
+      <Breadcrumbs
+        title="Crear cliente"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Institución" },
+          { title: "Clientes", href: "/institucion/clientes" },
+          { title: "Crear cliente" },
+        ]}
+      />
+      <Stack sx={{ mt: 3 }}>
+        <ButtonBack />
+      </Stack>
 
       {/* Stepper */}
-      <Stack sx={{ mt: 5, flexDirection: "row" }}>
+      <Stack sx={{ mt: 3, flexDirection: "row" }}>
         <StepBox text="General" isActive={step === 1} onClick={() => setStep?.(1)} />
         <Box sx={{ width: "100%", height: "2px", bgcolor: "#ccc", mt: 3 }} />
         <StepBox text="Miembros de la familia" isActive={step === 2} onClick={() => setStep?.(2)} />
