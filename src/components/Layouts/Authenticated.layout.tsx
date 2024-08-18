@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 // Assets
 import HomeIcon from "@/assets/icons/HomeIcon";
 import BankIcon from "@/assets/icons/BankIcon";
@@ -18,6 +18,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   const pathname = usePathname();
   const routeValidations = {
     dashboard: pathname === "/dashboard",
+    institution: pathname.includes("/institucion"),
     institutionClients: pathname.includes("/institucion/clientes"),
     institutionGroups: pathname.includes("/institucion/grupos"),
     institutionCenters: pathname.includes("/institucion/centros"),
@@ -40,265 +41,338 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     <section>
       <Grid
         container
-        sx={{ backgroundColor: "hsl(0, 0%, 10%)", width: "100%", height: "100vh", maxHeight: "100vh", py: 1, pr: 1 }}
+        sx={{
+          backgroundColor: "hsl(0, 0%, 10%)",
+          width: "100%",
+          height: "100vh",
+          maxHeight: "100vh",
+          py: 1,
+          pr: 1,
+        }}
       >
-        <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2 }}>
-          <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
-            Banco Digital de Caracas
-          </Typography>
-          <Stack sx={{ mt: 5 }}>
-            {/* Dashboard */}
+        <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2, pb: 4 }}>
+          <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
             <Stack>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.5,
-                  cursor: "pointer",
-                  bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-                onClick={() => router.push("/dashboard")}
-              >
-                <HomeIcon size={24} />
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Inicio
-                </Typography>
-              </Box>
-            </Stack>
-            {/* Institucion */}
-            <Stack sx={{ mt: 2 }}>
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.5,
-                  cursor: "pointer",
-                }}
-                onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
-              >
-                <BankIcon size={24} />
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Institución
-                </Typography>
-              </Box>
-              {showInstitutionLinks && (
-                <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/institucion/clientes")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Clientes
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/institucion/grupos")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Grupos
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionCenters ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/institucion/centros")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Centros
-                    </Typography>
-                  </Box>
-                </Stack>
-              )}
-            </Stack>
-            {/* Contabilidad */}
-            <Stack
-              sx={{
-                mt: 2,
-                cursor: "pointer",
-                borderRadius: "8px",
-                "&:hover": {
-                  bgcolor: "hsl(0, 0%, 12%)",
-                },
-              }}
-              onClick={() => router.push("/contabilidad")}
-            >
-              <Box
-                sx={{
-                  py: 1,
-                  px: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "8px",
-                  gap: 1.5,
-                  bgcolor: routeValidations.accounting ? "hsl(0, 0%, 12%)" : "transparent",
-                }}
-              >
-                <ChartSquareIcon size={24} />
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Contabilidad
-                </Typography>
-              </Box>
-            </Stack>
-            {/* Reportes */}
-            <Stack
-              sx={{
-                mt: 2,
-              }}
-              onClick={() => router.push("/reportes")}
-            >
-              <Box
-                sx={{
-                  borderRadius: "8px",
-                  py: 1,
-                  px: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.5,
-                  cursor: "pointer",
-                  bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
-                  "&:hover": {
-                    bgcolor: "hsl(0, 0%, 12%)",
-                  },
-                }}
-              >
-                <ReportIcon size={24} />
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Reportes
-                </Typography>
-              </Box>
-            </Stack>
-            {/* administracion */}
-            <Stack sx={{ mt: 2, cursor: "pointer" }}>
-              <Box
-                sx={{ borderRadius: "8px", py: 1, px: 2, display: "flex", alignItems: "center", gap: 1.5 }}
-                onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
-              >
-                <PersonHexagonalIcon size={24} />
-                <Typography variant="body2" fontWeight="200" color="#fff">
-                  Administración
-                </Typography>
-              </Box>
-              {showAdministrationLinks && (
-                <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/administracion/usuarios")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Usuarios
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/administracion/organizacion")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Organización
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/administracion/sistema")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Sistema
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
-                    }}
-                    onClick={() => router.push("/administracion/productos")}
-                  >
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Productos
-                    </Typography>
-                  </Box>
-                  <Box sx={{ borderRadius: "8px", py: 1, px: 2 }}>
-                    <Typography variant="body2" fontWeight="200" color="#fff">
-                      Plantillas
-                    </Typography>
-                  </Box>
-                </Stack>
-              )}
-            </Stack>
-            {/* Autoservicio */}
-            {/* <Stack sx={{ mt: 2 }}>
-            <Box
-              sx={{
-                borderRadius: "8px",
-                py: 1,
-                px: 2,
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                cursor: "pointer",
-              }}
-              onClick={() => setShowSelfServiceLinks(!showSelfServiceLinks)}
-            >
-              <PeopleIcon size={24} />
-              <Typography variant="body2" color="#fff">
-                Autoservicio
+              <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
+                Banco Digital de Caracas
               </Typography>
-            </Box>
-            {showSelfServiceLinks && (
-              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+              <Stack sx={{ mt: 5 }}>
+                {/* Dashboard */}
+                <Stack>
+                  <Box
+                    sx={{
+                      borderRadius: "8px",
+                      py: 1,
+                      px: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      cursor: "pointer",
+                      bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
+                      "& > p": {
+                        color: routeValidations.dashboard ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    <HomeIcon size={24} />
+                    <Typography variant="body2" fontWeight="200">
+                      Inicio
+                    </Typography>
+                  </Box>
+                </Stack>
+                {/* Institucion */}
+                <Stack sx={{ mt: 2 }}>
+                  <Box
+                    sx={{
+                      borderRadius: "8px",
+                      py: 1,
+                      px: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      cursor: "pointer",
+
+                      "& > p": {
+                        color: routeValidations.institution ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                    onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
+                  >
+                    <BankIcon size={24} color={routeValidations.institution ? "#fff" : "#9aa3b8"} />
+                    <Typography variant="body2" fontWeight="200">
+                      Institución
+                    </Typography>
+                  </Box>
+                  {showInstitutionLinks && (
+                    <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.institutionClients ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/institucion/clientes")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Clientes
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.institutionGroups ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/institucion/grupos")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Grupos
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.institutionCenters ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.institutionCenters ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/institucion/centros")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Centros
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  )}
+                </Stack>
+                {/* Contabilidad */}
+                <Stack
+                  sx={{
+                    mt: 2,
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    "&:hover": {
+                      bgcolor: "hsl(0, 0%, 12%)",
+                    },
+                  }}
+                  onClick={() => router.push("/contabilidad")}
+                >
+                  <Box
+                    sx={{
+                      py: 1,
+                      px: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "8px",
+                      gap: 1.5,
+                      bgcolor: routeValidations.accounting ? "hsl(0, 0%, 12%)" : "transparent",
+                      "& > p": {
+                        color: routeValidations.accounting ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                  >
+                    <ChartSquareIcon size={24} color={routeValidations.accounting ? "#fff" : "#9aa3b8"} />
+                    <Typography variant="body2" fontWeight="200">
+                      Contabilidad
+                    </Typography>
+                  </Box>
+                </Stack>
+                {/* Reportes */}
+                <Stack
+                  sx={{
+                    mt: 2,
+                  }}
+                  onClick={() => router.push("/reportes")}
+                >
+                  <Box
+                    sx={{
+                      borderRadius: "8px",
+                      py: 1,
+                      px: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      cursor: "pointer",
+                      bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
+                      "&:hover": {
+                        bgcolor: "hsl(0, 0%, 12%)",
+                      },
+                      "& > p": {
+                        color: routeValidations.reports ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                  >
+                    <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
+                    <Typography variant="body2" fontWeight="200">
+                      Reportes
+                    </Typography>
+                  </Box>
+                </Stack>
+                {/* administracion */}
+                <Stack sx={{ mt: 2, cursor: "pointer" }}>
+                  <Box
+                    sx={{
+                      borderRadius: "8px",
+                      py: 1,
+                      px: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      "& > p": {
+                        color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                    onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
+                  >
+                    <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
+                    <Typography variant="body2" fontWeight="200">
+                      Administración
+                    </Typography>
+                  </Box>
+                  {showAdministrationLinks && (
+                    <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.administrationUsers ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/administracion/usuarios")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Usuarios
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.administrationOrganization ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/administracion/organizacion")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Organización
+                        </Typography>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.administrationSystem ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/administracion/sistema")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Sistema
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
+                          "& > p": {
+                            color: routeValidations.administrationProducts ? "#fff" : "#9aa3b8",
+                          },
+                        }}
+                        onClick={() => router.push("/administracion/productos")}
+                      >
+                        <Typography variant="body2" fontWeight="200">
+                          Productos
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          borderRadius: "8px",
+                          py: 1,
+                          px: 2,
+                          "& > p": {
+                            color: "#9aa3b8",
+                          },
+                        }}
+                      >
+                        <Typography variant="body2" fontWeight="200" color="#fff">
+                          Plantillas
+                        </Typography>
+                      </Box>
+                    </Stack>
+                  )}
+                </Stack>
+              </Stack>
+            </Stack>
+
+            <Stack>
+              <Stack>
+                <Stack>
+                  <Box
+                    sx={{
+                      py: 1,
+                      px: 1,
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1.5,
+                      cursor: "pointer",
+                      bgcolor: "transparent",
+                      "&:hover": {
+                        bgcolor: "hsl(0, 0%, 12%)",
+                      },
+                    }}
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    <Typography variant="body2" fontWeight="200" color="#9aa3b8">
+                      Configuración
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Divider sx={{ width: "94%", mx: "auto", bgcolor: "#f3f3f330", mt: 1 }} />
+              </Stack>
+              <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, mt: 2, width: "94%", mx: "auto" }}>
                 <Box
                   sx={{
-                    borderRadius: "8px",
-                    py: 1,
-                    px: 2,
-                    bgcolor: routeValidations.selfManagementUserManagement ? "hsl(0, 0%, 12%)" : "transparent",
+                    width: "42px",
+                    height: "42px",
+                    borderRadius: "40px",
+                    backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",
                   }}
-                  onClick={() => router.push("/autoservicio/gestion-de-usuarios")}
-                >
-                  <Typography variant="body2" fontWeight="200" color="#fff">
-                    Gestión de usuarios
+                />
+                <Stack sx={{ justifyContent: "center" }}>
+                  <Typography fontSize="14px" color="#9aa3b8">
+                    Litecore
                   </Typography>
-                </Box>
+                  <Typography fontSize="12px" color="#606778">
+                    Administrador
+                  </Typography>
+                </Stack>
               </Stack>
-            )}
-          </Stack> */}
+            </Stack>
           </Stack>
         </Grid>
         {children}

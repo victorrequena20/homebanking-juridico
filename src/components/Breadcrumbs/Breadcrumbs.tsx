@@ -6,7 +6,10 @@ import Link from "next/link";
 
 export default function Breadcrumbs({ title, items }: BreadcrumbsProps) {
   return (
-    <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+    <Stack
+      sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+      className="fade-in-bottom"
+    >
       <Stack>
         <BreadcrumbsMUI aria-label="breadcrumb" sx={{ mt: 1, fontSize: "12px", fontWeight: "300" }}>
           {items?.map((item: IBreadcrumbItem) => {
@@ -27,7 +30,7 @@ export default function Breadcrumbs({ title, items }: BreadcrumbsProps) {
             }
           })}
         </BreadcrumbsMUI>
-        <Typography variant="h5" fontSize="28px" sx={{ mt: 2, fontWeight: "500" }}>
+        <Typography variant="h5" fontSize="28px" sx={{ mt: 2, fontWeight: "500", lineHeight: "32px" }}>
           {title}
         </Typography>
       </Stack>

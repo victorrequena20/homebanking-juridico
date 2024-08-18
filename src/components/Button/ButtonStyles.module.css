@@ -52,7 +52,7 @@
 }
 
 .btn-navigation {
-  background-color: #f5f5f5;
+  background-color: #f2f4f7;
   color: #12141a;
   &:hover {
     filter: brightness(97%);

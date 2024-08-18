@@ -6,6 +6,7 @@ import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getNotifications } from "@/services/Core.service";
 import { convertFromTimestampToSpanishDate } from "@/utilities/common.utility";
+import ButtonBack from "@/components/ButtonBack";
 
 export default function NotificationsPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -42,6 +43,10 @@ export default function NotificationsPage() {
         title="Notificaciones"
         items={[{ title: "Inicio", href: "/dashboard" }, { title: "Notificaciones" }]}
       />
+
+      <Stack sx={{ mt: 3 }}>
+        <ButtonBack />
+      </Stack>
 
       <Stack sx={{ mt: 3 }}>
         <DataGrid
