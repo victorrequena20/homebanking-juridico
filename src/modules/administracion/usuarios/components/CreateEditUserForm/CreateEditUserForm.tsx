@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { IKeyValue } from "@/types/common";
 
 export default function CreateEditUserForm({ user, close }: ICreateEditUserFormProps) {
+  console.log("🚀 ~ CreateEditUserForm ~ user:", user);
   const [asesoresByOffice, setAsesoresByOffice] = React.useState<any[]>();
   const [allowedOffices, setAllowedOffices] = React.useState<any[] | null>(null);
   const [availableRoles, setAvailableRoles] = React.useState<any[] | null>(null);

@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getUsers } from "@/services/Users.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrationUsersPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -32,31 +33,6 @@ export default function AdministrationUsersPage() {
       flex: 1,
       valueGetter: (value, row) => `${row.email || ""} `,
     },
-    // {
-    //   field: "status",
-    //   headerName: "Estado",
-    //   flex: 1,
-    //   renderCell: params => (
-    //     <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-    //       <Box
-    //         sx={{
-    //           bgcolor: params?.row?.status ? "#E6F0E2" : "#FF8080",
-    //           width: "120px",
-    //           py: 0.5,
-    //           alignItems: "center",
-    //           justifyContent: "center",
-    //           display: "flex",
-    //           borderRadius: "16px",
-    //         }}
-    //       >
-    //         <Typography variant="body2" fontWeight="600" color={params?.row?.status ? "#76BF66" : "#A02334"}>
-    //           {params.row.status ? "Activo" : "Inactivo"}
-    //         </Typography>
-    //       </Box>
-    //     </Box>
-    //   ),
-    //   align: "center",
-    // },
     {
       field: "office",
       headerName: "Oficina",
@@ -89,34 +65,30 @@ export default function AdministrationUsersPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Usuarios</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Usuarios</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear usuario"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/usuarios/crear")}
-          />
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Usuarios"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Usuarios" },
+        ]}
+      />
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2, mt: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear usuario"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/usuarios/crear")}
+        />
+      </Stack>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden", cursor: "pointer" }}
           rows={users}
           columns={columns}
           loading={isLoading}

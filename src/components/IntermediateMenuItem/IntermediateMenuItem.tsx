@@ -41,7 +41,7 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon }: In
           <Stack sx={{ height: "100%", flexDirection: "row", justifyContent: "center" }}>
             <Stack sx={{ flexDirection: "row", columnGap: 1, alignItems: "center" }}>{icon}</Stack>
             <Stack sx={{ flexDirection: "column", alignItems: "flex-start", justifyContent: "center", ml: 2 }}>
-              <Typography variant="body2" fontWeight="500" color="#12141a">
+              <Typography variant="body2" fontWeight="400" color="var(--text)">
                 {title}
               </Typography>
               <Typography variant="caption" color="#606778" maxWidth="34ch" sx={{ mt: 0.5 }}>

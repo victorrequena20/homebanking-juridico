@@ -6,22 +6,33 @@ import Link from "next/link";
 
 export default function Breadcrumbs({ title, items }: BreadcrumbsProps) {
   return (
-    <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+    <Stack
+      sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+      className="fade-in-bottom"
+    >
       <Stack>
-        <Typography variant="h4">{title}</Typography>
-        <BreadcrumbsMUI aria-label="breadcrumb" sx={{ mt: 1 }}>
+        <BreadcrumbsMUI aria-label="breadcrumb" sx={{ mt: 1, fontSize: "12px", fontWeight: "300" }}>
           {items?.map((item: IBreadcrumbItem) => {
             if (item?.href) {
               return (
-                <Link color="inherit" href={item?.href}>
-                  <Typography variant="body2">{item.title}</Typography>
+                <Link key={item.href} color="inherit" href={item?.href}>
+                  <Typography variant="caption" fontWeight="400" color="#606778">
+                    {item.title}
+                  </Typography>
                 </Link>
               );
             } else {
-              return <Typography variant="body2">{item.title}</Typography>;
+              return (
+                <Typography key={item.title} variant="caption" fontWeight="400" color="#3d424d">
+                  {item.title}
+                </Typography>
+              );
             }
           })}
         </BreadcrumbsMUI>
+        <Typography variant="h5" fontSize="28px" sx={{ mt: 2, fontWeight: "500", lineHeight: "32px" }}>
+          {title}
+        </Typography>
       </Stack>
     </Stack>
   );

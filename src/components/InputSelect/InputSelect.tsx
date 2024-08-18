@@ -41,6 +41,7 @@ export default function InputSelect({
   useEffect(() => {
     if (defaultValue && !withCheckbox) {
       const optionDefault = options.find(option => option.value === defaultValue);
+      console.log("🚀 ~ useEffect ~ optionDefault:", optionDefault);
       setValueSelected(optionDefault || { label: "", value: "" });
       return;
     }

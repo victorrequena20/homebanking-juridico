@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { alpha, Breadcrumbs, Stack, styled, Typography } from "@mui/material";
+import { alpha, Stack, styled, Typography } from "@mui/material";
 import { Link } from "@mui/material";
 import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
 import Wrapper from "@/components/Wrapper";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ReportsAllPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -33,31 +34,6 @@ export default function ReportsAllPage() {
 
   const ODD_OPACITY = 0.2;
 
-  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-    [`& .${gridClasses.row}.even`]: {
-      backgroundColor: theme.palette.grey[200],
-      "&:hover": {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-        "@media (hover: none)": {
-          backgroundColor: "transparent",
-        },
-      },
-      "&.Mui-selected": {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-        "&:hover": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
-            backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-          },
-        },
-      },
-    },
-  }));
-
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -77,23 +53,10 @@ export default function ReportsAllPage() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Reportes</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Reportes</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
 
       <Stack sx={{ mt: 5 }}>
-        <StripedDataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
+        <DataGrid
           rows={reports}
           loading={isLoading}
           columns={columns}

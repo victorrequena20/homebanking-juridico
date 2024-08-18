@@ -1,6 +1,8 @@
 "use client";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
+import ButtonBack from "@/components/ButtonBack";
 import Wrapper from "@/components/Wrapper";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 import { Box } from "@mui/material";
@@ -13,15 +15,20 @@ export default function CreateUserPage() {
   return (
     <Wrapper>
       <Stack sx={{ width: "100%" }}>
-        <Box>
-          <Button
-            icon={<ArrowLeftIcon size={18} color="#484848" />}
-            size="small"
-            variant="navigation"
-            text="Volver"
-            onClick={() => router.push("/administracion/usuarios")}
-          />
-        </Box>
+        <Breadcrumbs
+          title="Crear usuario"
+          items={[
+            {
+              title: "Inicio",
+              href: "/dashboard",
+            },
+            { title: "Administración" },
+            { title: "Usuarios" },
+          ]}
+        />
+        <Stack sx={{ mt: 3 }}>
+          <ButtonBack />
+        </Stack>
         <CreateEditUserForm close={() => router.push("/administracion/usuarios")} />
       </Stack>
     </Wrapper>

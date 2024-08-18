@@ -3,11 +3,11 @@ import React from "react";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import { Box, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getGroups } from "@/services/Groups.service";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function GruposPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -90,31 +90,20 @@ export default function GruposPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Grupos</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Typography variant="body2">Grupos</Typography>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            size="small"
-            variant="primary"
-            text="Crear grupo"
-            onClick={() => router.push("/institucion/grupos/crear")}
-          />
-        </Stack>
+      <Breadcrumbs title="Grupos" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Grupos" }]} />
+      <Stack sx={{ alignItems: "flex-end", mt: 2 }}>
+        <Button
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          size="small"
+          variant="primary"
+          text="Crear grupo"
+          onClick={() => router.push("/institucion/grupos/crear")}
+        />
       </Stack>
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={groups}
           columns={columns}
           initialState={{

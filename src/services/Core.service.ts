@@ -1,6 +1,8 @@
 import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
+// ----- Staff start -----
+
 export const getStaffs = async (params: any) => {
   try {
     const response = await HttpClient.get("/staff", { params });
@@ -13,6 +15,20 @@ export const getStaffs = async (params: any) => {
   }
 };
 
+export const createStaff = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/staff", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createStaff ~ error:", error);
+  }
+};
+
+// ----- Staff end -----
+
 export const runAccruals = async (data: any) => {
   try {
     const response = await HttpClient.post("/runaccruals", data);
@@ -22,6 +38,20 @@ export const runAccruals = async (data: any) => {
     };
   } catch (error) {
     console.log("🚀 ~ runAccruals ~ error:", error);
+  }
+};
+
+// -----Working days start -----
+
+export const updateWorkDays = async (data: any) => {
+  try {
+    const response = await HttpClient.put("/workingdays", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("��� ~ updateWorkDays ~ error:", error);
   }
 };
 
@@ -36,6 +66,8 @@ export const getWorkDays = async () => {
     console.error("🚀 ~ getWorkDays ~ error:", error);
   }
 };
+
+// -----Working days end -----
 
 // ----- Currencies start -----
 
@@ -246,3 +278,19 @@ export const updatePermissions = async (data: any) => {
 };
 
 // ----- Permissions end -----
+
+// ----- Notifications start -----
+
+export const getNotifications = async () => {
+  try {
+    const response = await HttpClient.get("/notifications", { params: { isRead: true } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getNotifications ~ error:", error);
+  }
+};
+
+// ----- Notifications end -----

@@ -1,16 +1,12 @@
 import { IKeyValue } from "@/types/common";
 
 export interface ICreateGroupForm {
-  officeId: IKeyValue;
+  officeId: any;
   name: string;
   externalId?: string;
-  staffId?: IKeyValue | null;
-  active: boolean;
-  activationDate?: string;
-  groupMembers?: GroupMember[];
+  staffId: any;
+  groupMembers?: any;
   submittedOnDate: string;
-  dateFormat: string;
-  locale: string;
 }
 
 export interface GroupMember {

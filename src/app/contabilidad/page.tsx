@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
 import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
@@ -14,26 +14,12 @@ import CalendarIcon from "@/assets/icons/CalendarIcon";
 import ToggleOnIcon from "@/assets/icons/ToggleIcon";
 import CashIcon from "@/assets/icons/CashIcon";
 import Wrapper from "@/components/Wrapper";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AccountingPage() {
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Contabilidad</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Contabilidad</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        {/* <Stack sx={{ alignItems: "flex-end" }}>
-          <Button size="small" variant="primary" text="Crear cliente" />
-        </Stack> */}
-      </Stack>
+      <Breadcrumbs title="Contabilidad" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Contabilidad" }]} />
       <Stack
         sx={{
           border: "1px solid transparent",
@@ -104,7 +90,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Entradas de aprovisionamiento"
           subtitle="Crear entradas de aprovisionamiento."
-          path=""
+          path="/contabilidad/entradas-de-aprovisionamiento"
           icon={<ToggleOnIcon size={28} color="#153075" />}
         />
       </Stack>

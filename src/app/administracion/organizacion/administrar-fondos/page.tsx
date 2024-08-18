@@ -69,7 +69,6 @@ export default function AdministrarFondos() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={funds}
           columns={columns}
           initialState={{

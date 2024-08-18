@@ -10,10 +10,10 @@ import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
 
-import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal/ConfirmDeleteModal";
+import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
 import { deleteUser } from "@/services/Users.service";
-import Link from "next/link";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);

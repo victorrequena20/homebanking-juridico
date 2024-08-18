@@ -32,6 +32,7 @@ export default function ConfirmDeleteModal({
   actionCallback,
   buttonActionCallback,
   buttonType = "normal",
+  buttonText = "Borrar",
 }: ConfirmDeleteModalProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -76,7 +77,7 @@ export default function ConfirmDeleteModal({
           iconLeft
           icon={<TrashIcon size={20} color="#fff" />}
           size="small"
-          text="Borrar"
+          text={buttonText}
           variant="warning-red"
           onClick={handleOpen}
         />

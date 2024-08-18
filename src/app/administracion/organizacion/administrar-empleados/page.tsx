@@ -3,11 +3,12 @@ import React from "react";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { getStaffs } from "@/services/Core.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrarEmpleados() {
   const [employees, setEmployees] = React.useState<any>([{ id: 1 }]);
@@ -86,37 +87,32 @@ export default function AdministrarEmpleados() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Administrar empleados</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Administrar empleados</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear empleado"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-fondos/create")}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Administrar empleados"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Orgnización", href: "/administracion/organizacion" },
+          { title: "Administrar empleados" },
+        ]}
+      />
+
+      <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear empleado"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/organizacion/administrar-empleados/crear")}
+        />
       </Stack>
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={employees}
           columns={columns}
           initialState={{

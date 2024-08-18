@@ -3,10 +3,11 @@ import { Stack, SxProps, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { ToggleProps } from "./ToggleProps";
 
-export default function Toggle({ isChecked, setIsChecked, label, size = "big" }: ToggleProps) {
+export default function Toggle({ isChecked, setIsChecked, label, size = "big", toggleLeft }: ToggleProps) {
   const stackContainerStyles: SxProps = {
-    flexDirection: "row",
+    flexDirection: !toggleLeft ? "row-reverse" : "row",
     alignItems: "center",
+    gap: "20px",
   };
   const toggleBodyStyles: SxProps = {
     width: size === "small" ? "70px" : "89px",
@@ -41,7 +42,7 @@ export default function Toggle({ isChecked, setIsChecked, label, size = "big" }:
         <Box sx={toggleBallStyles} />
       </Box>
       {label && (
-        <Typography variant="body2" sx={{ textTransform: "none", ml: "19px" }} color="common.black" fontWeight="400">
+        <Typography variant="body2" sx={{ textTransform: "none" }} color="common.black" fontWeight="400">
           {label}
         </Typography>
       )}

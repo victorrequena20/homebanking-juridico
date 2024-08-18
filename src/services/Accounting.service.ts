@@ -27,6 +27,8 @@ export const getAccountingRules = async () => {
   }
 };
 
+// ----- Gl accounts/closures start -----
+
 export const getGlclosures = async () => {
   try {
     const response = await HttpClient.get("/glclosures");
@@ -37,6 +39,32 @@ export const getGlclosures = async () => {
     };
   } catch (error) {
     console.error("🚀 ~ getGlclosures ~ error:", error);
+  }
+};
+
+export const getGlAccountsTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/glaccounts/template");
+    console.log("🚀 ~ getGlAccountsTemplate ~ response:", response);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getGlAccountsTemplate ~ error:", error);
+  }
+};
+
+export const createGlAccount = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/glaccounts`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createGlAccount ~ error:", error);
+    throw error;
   }
 };
 
@@ -92,6 +120,8 @@ export const deleteGlClosure = async (id: string): Promise<ApiResponse> => {
   }
 };
 
+// ----- Gl accounts start -----
+
 export const getFinancialActivityAccounts = async () => {
   try {
     const response = await HttpClient.get("/financialactivityaccounts");
@@ -104,3 +134,20 @@ export const getFinancialActivityAccounts = async () => {
     console.log("🚀 ~ getFinancialActivityAccounts ~ error:", error);
   }
 };
+
+// ----- Gl accounts end -----
+
+// ----- Provisioning entries start -----
+export const createProvisioningEntries = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/provisioningentries`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createProvisioningEntries ~ error:", error);
+    throw error;
+  }
+};
+// ----- Provisioning entries end -----

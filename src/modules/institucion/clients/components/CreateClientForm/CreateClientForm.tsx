@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { ICreateClientFormProps } from "./CreateClientFormProps";
 import { Controller, useForm } from "react-hook-form";
 import { Stack, Typography } from "@mui/material";
@@ -16,12 +16,13 @@ import Toggle from "@/components/Toggle";
 import Button from "@/components/Button";
 import schema from "./yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CreateClientContext } from "../../context/CreateClient/CreateClient.context";
 
 export default function CreateClientForm({ action }: ICreateClientFormProps) {
+  const { clientGeneralData, step, setClientGeneralData, templateData } = React.useContext(CreateClientContext);
   const [openSavingAccount, setOpenSavingAccount] = React.useState<boolean>(false);
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isPersonal, setIsPersonal] = React.useState<boolean>(false);
-  const [templateData, setTemplateData] = React.useState<any | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
@@ -36,36 +37,35 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
   });
 
   const onSubmit = async (data: any) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
+    // console.log("🚀 ~ onSubmit ~ data:", data);
+    setClientGeneralData?.({
+      ...data,
+      active: isActive,
+      isStaff: isPersonal,
+      savingAccount: openSavingAccount,
+    });
     action(data);
   };
 
   React.useEffect(() => {
-    (async () => {
-      const response = await getTemplate();
-      console.log("🚀 ~ response:", response);
-      if (response?.status === 200) {
-        setTemplateData(response?.data);
-      }
-    })();
+    // Update default value fields
+    if (clientGeneralData) {
+      Object.entries(clientGeneralData).forEach(([key, value]) => {
+        // @ts-ignore
+        setValue(key, value);
+      });
+    }
   }, []);
 
+  // Actualizar estado cuando se cambia el step
   React.useEffect(() => {
-    console.log("��� ~ watch:", watch());
-    console.log("��� ~ isvalid:", isValid, errors);
-  }, [
-    watch("officeId"),
-    // watch("legalFormId"),
-    watch("firstname"),
-    watch("middlename"),
-    watch("lastname"),
-    watch("externalId"),
-    watch("dateOfBirth"),
-    // watch("staffId"),
-    watch("mobileNo"),
-    watch("emailAddress"),
-    isValid,
-  ]);
+    // Actualizar clientGeneralData
+    return () => {
+      setClientGeneralData?.({ ...watch(), active: isActive, isStaff: isPersonal, savingAccount: openSavingAccount });
+      console.log("��� ~ watch:", watch());
+      console.log("IS valid____", isValid);
+    };
+  }, [step]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -86,6 +86,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors?.officeId?.message}
                   value={value}
                   isValidField={!errors?.officeId}
+                  defaultValue={clientGeneralData?.officeId?.value}
                 />
               )}
             />
@@ -102,6 +103,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.officeId?.message}
                   isValidField={!errors.officeId}
                   value={value}
+                  defaultValue={clientGeneralData?.legalFormId?.value}
                 />
               )}
             />
@@ -121,6 +123,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.firstname?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.firstname}
                 />
               )}
             />
@@ -137,6 +140,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.middlename?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.middlename}
                 />
               )}
             />
@@ -156,6 +160,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.lastname?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.lastname}
                 />
               )}
             />
@@ -172,6 +177,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.externalId?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.externalId}
                 />
               )}
             />
@@ -190,6 +196,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.dateOfBirth?.message}
                   isValidField={!errors.dateOfBirth}
                   maxToday
+                  defaultValue={clientGeneralData?.dateOfBirth}
                 />
               )}
             />
@@ -225,6 +232,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.mobileNo?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.mobileNo}
                 />
               )}
             />
@@ -241,6 +249,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.emailAddress?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={clientGeneralData?.emailAddress}
                 />
               )}
             />
@@ -263,7 +272,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
               ¿Es personal?
             </Typography>
             <Box>
-              <Toggle isChecked={isPersonal} size="small" setIsChecked={setIsActive} />
+              <Toggle isChecked={isPersonal} size="small" setIsChecked={setIsPersonal} />
             </Box>
           </Stack>
           <Stack
@@ -316,6 +325,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                     value={value}
                     hint={errors.savingsProductId?.message}
                     isValidField={!errors.savingsProductId}
+                    defaultValue={clientGeneralData?.savingsProductId?.value}
                   />
                 )}
               />
