@@ -349,4 +349,16 @@ export const getPaymentTypes = async (params?: any) => {
   }
 };
 
+export const createPaymentType = async (data: any) => {
+  try {
+    const response = await HttpClient.post(`/paymenttypes`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ paymentType ~ error:", error);
+  }
+};
+
 // ----- Payment types end -----

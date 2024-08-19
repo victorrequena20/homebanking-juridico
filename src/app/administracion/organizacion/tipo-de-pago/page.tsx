@@ -119,7 +119,7 @@ export default function TipoDePago() {
           text="Crear tipo de pago"
           iconLeft
           icon={<PlusIcon size={20} color="#fff" />}
-          onClick={() => router.push("/administracion/usuarios/crear")}
+          onClick={() => router.push("/administracion/organizacion/tipo-de-pago/crear")}
         />
       </Stack>
 
