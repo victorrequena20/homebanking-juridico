@@ -4,8 +4,6 @@ import Button from "@/components/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TrashIcon from "@/assets/icons/TrashIcon";
-import { deleteUser } from "@/services/Users.service";
-import { useRouter } from "next/navigation";
 import { ConfirmDeleteModalProps } from "./ConfirmDeleteModalProps";
 import { Tooltip } from "@mui/material";
 
@@ -41,8 +39,6 @@ export default function ConfirmDeleteModal({
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-
-  const router = useRouter();
 
   const handleAction = async () => {
     setIsLoading(true);

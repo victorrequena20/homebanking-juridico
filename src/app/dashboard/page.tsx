@@ -236,11 +236,11 @@ export default function DashboardPage() {
             </Typography>
             <Box
               sx={{
-                border: "1px solid #bac3d460",
+                border: "1px solid #bac3d420",
                 display: "inline-flex",
                 width: "100%",
                 maxWidth: "1030px",
-                py: 3,
+                bgColor: "#fff",
                 px: 0,
                 borderRadius: "8px",
                 mt: 2,

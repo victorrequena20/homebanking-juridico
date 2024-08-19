@@ -55,20 +55,19 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
 
   return (
     <Wrapper isLoading={isLoading}>
-      {!showEditView && (
-        <Breadcrumbs
-          items={[
-            {
-              title: "Inicio",
-              href: "/dashboard",
-            },
-            { title: "Administración" },
-            { title: "Usuarios", href: "/administracion/usuarios" },
-          ]}
-        />
-      )}
+      <Breadcrumbs
+        title={showEditView ? "Editar usuario" : ""}
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Usuarios", href: "/administracion/usuarios" },
+        ]}
+      />
       {showEditView ? (
-        <Stack sx={{ width: "100%" }}>
+        <Stack sx={{ width: "100%", mt: 3 }}>
           <Box>
             <Button
               icon={<ArrowLeftIcon size={18} color="#484848" />}
@@ -78,7 +77,9 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
               onClick={() => setShowEditView(false)}
             />
           </Box>
-          <CreateEditUserForm user={userData} close={() => setShowEditView(false)} />
+          <Stack sx={{ alignItems: "center" }}>
+            <CreateEditUserForm user={userData} close={() => setShowEditView(false)} />
+          </Stack>
         </Stack>
       ) : (
         <Stack>

@@ -47,6 +47,7 @@ export default function AdministrationOrganizationPage() {
           alignItems: "center",
           justifyContent: "flex-start",
           mx: "auto",
+          pb: 5,
           gap: 3,
         }}
       >

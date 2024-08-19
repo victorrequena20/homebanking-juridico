@@ -122,6 +122,9 @@ export default function Clients() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={params => {
+            router.push(`/institucion/clientes/${params?.row?.id}`);
+          }}
         />
       </Stack>
     </Wrapper>

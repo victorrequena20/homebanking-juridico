@@ -115,7 +115,16 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       md={12}
-      sx={{ gap: 3, maxWidth: "1000px" }}
+      sx={{
+        gap: 3,
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
       container
       mt={3}
     >
@@ -306,7 +315,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
 
       {/* Buttons */}
       <Grid md={10}>
-        <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "flex-start", columnGap: 2 }}>
+        <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "center", columnGap: 3 }}>
           <Button
             type="button"
             size="small"

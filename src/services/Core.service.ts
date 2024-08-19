@@ -334,3 +334,19 @@ export const createCenter = async (data: any) => {
 };
 
 // ----- Centers end -----
+
+// ----- Payment types start -----
+
+export const getPaymentTypes = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/paymenttypes", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getPaymentTypes ~ error:", error);
+  }
+};
+
+// ----- Payment types end -----
