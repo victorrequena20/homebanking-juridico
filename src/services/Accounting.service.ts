@@ -122,6 +122,19 @@ export const deleteGlClosure = async (id: string): Promise<ApiResponse> => {
 
 // ----- Gl accounts start -----
 
+export const getFinancialActivityAccountsTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/financialactivityaccounts/template");
+    console.log("🚀 ~ getFinancialActivityAccounts ~ response:", response);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getFinancialActivityAccountsTemplate ~ error:", error);
+  }
+};
+
 export const getFinancialActivityAccounts = async () => {
   try {
     const response = await HttpClient.get("/financialactivityaccounts");
@@ -132,6 +145,19 @@ export const getFinancialActivityAccounts = async () => {
     };
   } catch (error) {
     console.log("🚀 ~ getFinancialActivityAccounts ~ error:", error);
+  }
+};
+
+export const createFinancialActivity = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/financialactivityaccounts`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createFinancialActivity ~ error:", error);
+    throw error;
   }
 };
 
