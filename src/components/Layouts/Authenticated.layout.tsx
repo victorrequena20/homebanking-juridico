@@ -51,7 +51,15 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
           pr: 1,
         }}
       >
-        <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2, pb: 4 }}>
+        <Grid
+          md={2}
+          sx={{
+            bgcolor: "hsl(0, 0%, 10%)",
+            px: 2,
+            pt: 2,
+            pb: 4,
+          }}
+        >
           <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
             <Stack>
               <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>

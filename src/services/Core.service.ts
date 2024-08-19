@@ -294,3 +294,43 @@ export const getNotifications = async () => {
 };
 
 // ----- Notifications end -----
+
+// ----- Centers start -----
+
+export const getCenters = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/centers", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getNotifications ~ error:", error);
+  }
+};
+
+export const getCentersTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/centers/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getCentersTemplate ~ error:", error);
+  }
+};
+
+export const createCenter = async (data: any) => {
+  try {
+    const response = await HttpClient.post(`/centers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createCenter ~ error:", error);
+  }
+};
+
+// ----- Centers end -----
