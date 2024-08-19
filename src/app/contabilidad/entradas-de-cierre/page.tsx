@@ -11,6 +11,8 @@ import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
 import { getGlclosures } from "@/services/Accounting.service";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Image from "next/image";
+import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 
 export default function EntradasDeCierrePage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -69,25 +71,46 @@ export default function EntradasDeCierrePage() {
         ]}
       />
 
-      <Stack sx={{ mt: 5 }}>
-        <DataGrid
-          sx={{ borderRadius: "8px", overflow: "hidden", cursor: "pointer" }}
-          rows={closures}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      {closures?.length > 0 ? (
+        <Stack sx={{ mt: 5 }}>
+          <DataGrid
+            sx={{ borderRadius: "8px", overflow: "hidden", cursor: "pointer" }}
+            rows={closures}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          onRowClick={params => router.push(`/contabilidad/entradas-de-cierre/${params?.row?.id}`)}
-          pageSizeOptions={[10, 25, 50]}
-        />
-      </Stack>
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            onRowClick={params => router.push(`/contabilidad/entradas-de-cierre/${params?.row?.id}`)}
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Stack>
+      ) : (
+        <Stack sx={{ alignItems: "center", justifyContent: "center", height: "100%", mt: 32 }}>
+          <Image width={140} height={140} alt="" src="/assets/images/daw.svg" />
+          <Typography variant="body2" fontWeight="400" color="var(--secondaryText)">
+            No hay datos que mostrar.
+          </Typography>
+          <Stack
+            sx={{ flexDirection: "row", mx: "auto", justifyContent: "center", alignItems: "center", gap: 0.5, mt: 1 }}
+            onClick={() => router.back()}
+          >
+            <ArrowLeftIcon color="#606778" size={20} />
+            <Typography
+              variant="body2"
+              sx={{ textDecoration: "underline", textDecorationColor: "#606778", cursor: "pointer" }}
+            >
+              Volver
+            </Typography>
+          </Stack>
+        </Stack>
+      )}
     </Wrapper>
   );
 }
