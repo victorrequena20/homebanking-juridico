@@ -13,6 +13,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Image from "next/image";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
+import NotFoundData from "@/components/NotFoundData";
 
 export default function EntradasDeCierrePage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -92,24 +93,7 @@ export default function EntradasDeCierrePage() {
           />
         </Stack>
       ) : (
-        <Stack sx={{ alignItems: "center", justifyContent: "center", height: "100%", mt: 32 }}>
-          <Image width={140} height={140} alt="" src="/assets/images/daw.svg" />
-          <Typography variant="body2" fontWeight="400" color="var(--secondaryText)">
-            No hay datos que mostrar.
-          </Typography>
-          <Stack
-            sx={{ flexDirection: "row", mx: "auto", justifyContent: "center", alignItems: "center", gap: 0.5, mt: 1 }}
-            onClick={() => router.back()}
-          >
-            <ArrowLeftIcon color="#606778" size={20} />
-            <Typography
-              variant="body2"
-              sx={{ textDecoration: "underline", textDecorationColor: "#606778", cursor: "pointer" }}
-            >
-              Volver
-            </Typography>
-          </Stack>
-        </Stack>
+        <NotFoundData />
       )}
     </Wrapper>
   );

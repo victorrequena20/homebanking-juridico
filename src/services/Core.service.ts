@@ -362,3 +362,19 @@ export const createPaymentType = async (data: any) => {
 };
 
 // ----- Payment types end -----
+
+// ----- Journal entries start -----
+
+export const getJournalEntries = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/journalentries", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getJournalEntries ~ error:", error);
+  }
+};
+
+// ----- Journal entries end -----

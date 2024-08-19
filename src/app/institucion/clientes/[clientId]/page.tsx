@@ -32,7 +32,9 @@ export default function ClientDetails() {
         }}
       >
         <Grid item xs={12} sx={{ pt: 2 }}>
-          <Stack sx={{ width: "100%", borderBottom: "1px solid #bac3d480", px: 4, py: 0.5 }}>
+          <Stack
+            sx={{ width: "100%", borderBottom: "1px solid #bac3d480", alignItems: "space-between", px: 4, py: 0.5 }}
+          >
             <Breadcrumbs
               items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
             />

@@ -2,24 +2,25 @@ import React from "react";
 import { IRenderFormModalProps } from "./RenderFormModalProps";
 import { Box, Modal, Stack, Typography } from "@mui/material";
 
-const style = {
-  position: "absolute",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "4px",
-  height: "auto",
-  maxWidth: "1000px",
-  width: "1000px",
-  bgcolor: "background.paper",
-  borderRadius: "12px",
-  boxShadow: 24,
-  px: 4,
-  py: 6,
-};
+export default function RenderFormModal({ isOpen = false, setIsOpen, title, children, sx }: IRenderFormModalProps) {
+  const style = {
+    position: "absolute",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "4px",
+    height: "auto",
+    maxWidth: "1000px",
+    width: "1000px",
+    bgcolor: "background.paper",
+    borderRadius: "12px",
+    boxShadow: 24,
+    px: 4,
+    py: 6,
+    ...sx,
+  };
 
-export default function RenderFormModal({ isOpen = false, setIsOpen, title, children }: IRenderFormModalProps) {
   function handleClose() {
     setIsOpen?.(false);
   }
