@@ -1,10 +1,11 @@
 import React from "react";
-import Wrapper from "@/components/Wrapper";
+import CreateLoanProvider from "@/modules/productos/creditos/context/CreateLoan.provider";
+import CreateLoan from "@/modules/productos/creditos/CreateLoan";
 
 export default function CreateLoanPage() {
   return (
-    <Wrapper>
-      <></>
-    </Wrapper>
+    <CreateLoanProvider>
+      <CreateLoan />
+    </CreateLoanProvider>
   );
 }

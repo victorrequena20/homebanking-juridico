@@ -378,3 +378,71 @@ export const getJournalEntries = async (params?: any) => {
 };
 
 // ----- Journal entries end -----
+
+// ----- Inversionistas start -----
+
+export const searchExternalAssetOwners = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/external-asset-owners/search`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ searchExternalAssetOwners ~ error:", error);
+  }
+};
+
+// ----- Inversionistas end -----
+
+// ----- entity data tables ckecks start -----
+
+export const createEntityDataTablesChecks = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/entityDatatableChecks`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createEntityDataTablesChecks ~ error:", error);
+  }
+};
+
+export const getEntityDataTablesChecks = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/entityDatatableChecks", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getEntityDataTablesChecks ~ error:", error);
+  }
+};
+
+export const getEntityDataTablesChecksTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/entityDatatableChecks/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getEntityDataTablesChecksTemplate ~ error:", error);
+  }
+};
+
+export const deleteTableVerification = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/entityDatatableChecks/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteTableVerification ~ error:", error);
+    throw error;
+  }
+};
+
+// ----- entity data tables ckecks end -----
