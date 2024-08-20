@@ -1,6 +1,8 @@
 import React from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
+import { Stack } from "@mui/material";
+import ButtonBack from "@/components/ButtonBack";
 
 export default function MigrarSaldosIniciales() {
   return (
@@ -13,6 +15,10 @@ export default function MigrarSaldosIniciales() {
           { title: "Migrar saldos iniciales" },
         ]}
       />
+
+      <Stack sx={{ mt: 3 }}>
+        <ButtonBack />
+      </Stack>
     </Wrapper>
   );
 }

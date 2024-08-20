@@ -14,6 +14,18 @@ export const getClients = async () => {
   }
 };
 
+export const getClientById = async (clientId?: string) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getClientByid ~ error:", error);
+  }
+};
+
 export const createClient = async (data: any): Promise<ApiResponse> => {
   try {
     const response = await HttpClient.post(`/clients`, data);
@@ -37,5 +49,18 @@ export const getTemplate = async (params?: any) => {
     };
   } catch (error) {
     console.log("🚀 ~ getTemplate ~ error:", error);
+  }
+};
+
+// Accounts
+export const getAccountsById = async (clientId?: string) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}/accounts`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getAccountsById ~ error:", error);
   }
 };

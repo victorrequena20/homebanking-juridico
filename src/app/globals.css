@@ -20,10 +20,12 @@ a {
   cursor: pointer;
 }
 :root {
+  --primary: #153075;
   --text: #12141a;
   --secondaryText: #606778;
   --darkBg: hsl(0, 0%, 10%);
   --secondaryBg: #f2f4f7;
+  --primaryGreen: #0b845c;
 }
 
 p {

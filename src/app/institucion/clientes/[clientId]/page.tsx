@@ -1,43 +1,205 @@
+"use client";
+import CashIcon from "@/assets/icons/CashIcon";
+import CheckIcon from "@/assets/icons/Checkicon";
+import MoneyCheckIcon from "@/assets/icons/MoneyCheckIcon";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import NotFoundData from "@/components/NotFoundData";
+import { getAccountsById, getClientById } from "@/services/Clients.service";
+import { formatSpanishDate } from "@/utilities/common.utility";
+import { Box, Grid, Stack, SxProps, Tooltip, Typography } from "@mui/material";
+import { DataGrid, GridCloseIcon, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function ClientDetails() {
+const containerStyles: SxProps = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  width: "100%",
+  height: "100%",
+  maxHeight: "100vh",
+  backgroundColor: "var(--darkBg)",
+  overflow: "auto",
+  overflowX: "hidden",
+  maxWidth: "100vw",
+};
+
+const gridContainerStyles: SxProps = {
+  width: "100%",
+  height: "100%",
+  bgcolor: "#FAFAFA",
+  borderTop: "8px solid var(--darkBg)",
+  borderBottom: "8px solid var(--darkBg)",
+  borderLeft: "8px solid var(--darkBg)",
+  borderRight: "8px solid var(--darkBg)",
+  borderRadius: "24px",
+  overflow: "auto",
+  maxWidth: "100vw",
+};
+
+export default function ClientDetails({ params }: { params: { clientId: string } }) {
+  const [clientData, setClientData] = React.useState<any>(null);
+  const [accounts, setAccounts] = React.useState<any>([]);
+  const [loanAccounts, setLoanAccounts] = React.useState<any>([]);
+  const router = useRouter();
+  const columns: GridColDef<(typeof loanAccounts)[number]>[] = [
+    {
+      field: "accountNo",
+      headerName: "Número de cuenta",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.accountNo || ""}`,
+    },
+    {
+      field: "creditProduct",
+      headerName: "Producto de crédito",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.productName || ""} `,
+    },
+    {
+      field: "originalLoan",
+      headerName: "Crédito original",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.originalLoan || ""} `,
+    },
+    {
+      field: "loanBalance",
+      headerName: "Balance de crédito",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.loanBalance || ""} `,
+    },
+    {
+      field: "amountPaid",
+      headerName: "Monto pagado",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.amountPaid || ""} `,
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      flex: 1,
+      renderCell: params => (
+        <Stack sx={{ justifyContent: "center", height: "100%" }}>
+          {params?.row?.status?.waitingForDisbursal && (
+            <Tooltip placement="top" title="Desembolsar">
+              <Box
+                sx={{
+                  bgcolor: "var(--primary)",
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <CashIcon color="#fff" size={20} />
+              </Box>
+            </Tooltip>
+          )}
+          {params?.row?.status?.pendingApproval && (
+            <Tooltip placement="top" title="Aprobar">
+              <Box
+                sx={{
+                  bgcolor: "var(--primary)",
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <CheckIcon color="#fff" size={16} />
+              </Box>
+            </Tooltip>
+          )}
+          {params?.row?.status?.active && (
+            <Tooltip placement="top" title="Registrar pago">
+              <Box
+                sx={{
+                  bgcolor: "var(--primary)",
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <MoneyCheckIcon color="#fff" size={20} />
+              </Box>
+            </Tooltip>
+          )}
+        </Stack>
+      ),
+      align: "center",
+    },
+  ];
+
+  async function getClientData() {
+    const response = await getClientById(params?.clientId);
+    if (response?.status === 200) {
+      setClientData(response?.data);
+    }
+  }
+
+  async function handleGetAccounts() {
+    const response = await getAccountsById(params?.clientId);
+    console.log("🚀 ~ handleGetAccounts ~ response:", response);
+    console.log("🚀 ~ handleGetAccounts ~ response?.data?.loanAccounts:", response?.data?.loanAccounts);
+    if (response?.status === 200) {
+      setAccounts(response?.data);
+      setLoanAccounts(response?.data?.loanAccounts);
+    }
+  }
+
+  React.useEffect(() => {
+    getClientData();
+    handleGetAccounts();
+  }, []);
+
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "var(--darkBg)",
-      }}
-    >
-      <Grid
-        container
-        sx={{
-          width: "100%",
-          height: "100%",
-          bgcolor: "#FAFAFA",
-          borderTop: "8px solid var(--darkBg)",
-          borderBottom: "8px solid var(--darkBg)",
-          borderLeft: "8px solid var(--darkBg)",
-          borderRight: "8px solid var(--darkBg)",
-          borderRadius: "24px",
-          overflow: "hidden",
-        }}
-      >
+    <Box sx={containerStyles}>
+      <Grid container sx={gridContainerStyles}>
         <Grid item xs={12} sx={{ pt: 2 }}>
           <Stack
-            sx={{ width: "100%", borderBottom: "1px solid #bac3d480", alignItems: "space-between", px: 4, py: 0.5 }}
+            sx={{
+              width: "100%",
+              borderBottom: "1px solid #bac3d480",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              py: 0.5,
+            }}
           >
-            <Breadcrumbs
-              items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-            />
+            <Stack
+              sx={{ width: "100%", px: 4, flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
+            >
+              <Breadcrumbs
+                items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
+              />
+              <Box
+                sx={{
+                  backgroundColor: "var(--darkBg)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "24px",
+                  height: "24px",
+                  borderRadius: "24px",
+                  cursor: "pointer",
+                }}
+                onClick={() => router.push("/institucion/clientes")}
+              >
+                <GridCloseIcon sx={{ color: "#fff", fontSize: "16px" }} />
+              </Box>
+            </Stack>
           </Stack>
         </Grid>
         <Grid xs={1.8} sx={{ borderRight: "1px solid #bac3d480", height: "100%", p: 2 }}>
@@ -60,21 +222,43 @@ export default function ClientDetails() {
           </Box>
         </Grid>
 
-        <Grid xs={10.2} sx={{ px: 10, pt: 6 }}>
+        <Grid xs={10.2} sx={{ px: 10, pt: 6, overflow: "auto" }}>
           <Stack sx={{ alignItems: "center", width: "100%" }}>
             <Stack
               sx={{
-                // bgcolor: "#f2f4f7",
-                backgroundImage: "linear-gradient(135deg, #fff 0%, #f2f4f7 80%)",
+                bgcolor: "#f2f4f7",
+                // backgroundImage: "linear-gradient(135deg, #fff 0%, #f2f4f7 80%)",
                 width: "100%",
                 height: "300px",
                 borderRadius: "16px",
                 justifyContent: "center",
-                boxShadow: "0px 12px 36px -4px #10182809",
+                boxShadow: "0px 4px 12px -4px #10182810",
               }}
             >
               <Stack sx={{ px: 4, flexDirection: "row", alignItems: "center" }}>
-                <Stack sx={{ alignItems: "center" }}>
+                <Stack
+                  sx={{
+                    alignItems: "center",
+                    width: "160px",
+                    height: "160px",
+                    position: "relative",
+                    borderRadius: "80px",
+                  }}
+                >
+                  {/* Status */}
+                  <Tooltip placement="top" title={clientData?.status?.value === "Active" ? "Activo" : ""}>
+                    <Box
+                      sx={{
+                        width: "16px",
+                        height: "16px",
+                        borderRadius: "8px",
+                        bgcolor: "var(--primaryGreen)",
+                        position: "absolute",
+                        top: "7px",
+                        right: "24px",
+                      }}
+                    />
+                  </Tooltip>
                   <Image
                     width={160}
                     height={160}
@@ -90,10 +274,10 @@ export default function ClientDetails() {
                   <Stack sx={{ pl: 4, gap: 1.5, py: 1 }}>
                     <Stack sx={{ flexDirection: "row", gap: 1 }}>
                       <Typography variant="body2" color="var(--secondaryText)">
-                        Nombre:
+                        Nombre del cliente:
                       </Typography>
                       <Typography variant="body2" color="var(--text)">
-                        Jodefina Rodriguez
+                        {clientData?.displayName}
                       </Typography>
                     </Stack>
                     <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -101,7 +285,7 @@ export default function ClientDetails() {
                         Oficina:
                       </Typography>
                       <Typography variant="body2" color="var(--text)">
-                        Head Office
+                        {clientData?.officeName}
                       </Typography>
                     </Stack>
                     <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -109,7 +293,15 @@ export default function ClientDetails() {
                         Documento:
                       </Typography>
                       <Typography variant="body2" color="var(--text)">
-                        V 31.039.208
+                        {clientData?.externalId}
+                      </Typography>
+                    </Stack>
+                    <Stack sx={{ flexDirection: "row", gap: 1 }}>
+                      <Typography variant="body2" color="var(--secondaryText)">
+                        Fecha de activación:
+                      </Typography>
+                      <Typography variant="body2" color="var(--text)">
+                        {formatSpanishDate(clientData?.timeline?.activatedOnDate)}
                       </Typography>
                     </Stack>
                     <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -117,7 +309,7 @@ export default function ClientDetails() {
                         Asesor:
                       </Typography>
                       <Typography variant="body2" color="var(--text)">
-                        Castillo, Daniel
+                        {clientData?.loanOfficer}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -141,6 +333,36 @@ export default function ClientDetails() {
                   </Stack>
                 </Stack>
               </Stack>
+            </Stack>
+          </Stack>
+
+          <Stack sx={{ width: "100%", mt: 5 }}>
+            <Stack sx={{ justifyContent: "center" }}>
+              <Typography variant="body1" color="var(--secondaryText)">
+                Cuentas de crédito
+              </Typography>
+            </Stack>
+
+            <Stack sx={{ mt: 2, pb: 10 }}>
+              {loanAccounts?.length > 0 ? (
+                <DataGrid
+                  rows={loanAccounts}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 10,
+                        page: 0,
+                      },
+                    },
+                  }}
+                  disableRowSelectionOnClick
+                  rowSelection
+                  pageSizeOptions={[10, 25, 50]}
+                />
+              ) : (
+                <NotFoundData title={`El sr ${clientData?.displayName} no posee créditos`} withOutBack mt={6} />
+              )}
             </Stack>
           </Stack>
         </Grid>
