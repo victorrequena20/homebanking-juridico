@@ -89,7 +89,7 @@ export default function CreditProducts() {
             text="Crear producto de crédito"
             iconLeft
             icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+            onClick={() => router.push("/administracion/productos/productos-de-credito/crear")}
           />
         </Stack>
       </Stack>
