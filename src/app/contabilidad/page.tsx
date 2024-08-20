@@ -36,7 +36,7 @@ export default function AccountingPage() {
         <IntermediateMenuItem
           title="Publicaciones frecuentes"
           subtitle="Estas son publicaciones predefinidas."
-          path="/contabilidad/publicaciones-frecuentes"
+          path="/contabilidad/publicaciones-frecuentes/crear"
           icon={<ChartSquareIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem

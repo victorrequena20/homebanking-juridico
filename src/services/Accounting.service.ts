@@ -14,9 +14,9 @@ export const getGlAccounts = async () => {
   }
 };
 
-export const getAccountingRules = async () => {
+export const getAccountingRules = async (params?: any) => {
   try {
-    const response = await HttpClient.get("/accountingrules");
+    const response = await HttpClient.get("/accountingrules", { params });
     console.log("🚀 ~ getAccountingRules ~ response:", response);
     return {
       data: response.data,
