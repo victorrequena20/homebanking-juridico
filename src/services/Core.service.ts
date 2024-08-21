@@ -473,4 +473,18 @@ export const createCashier = async (data?: any) => {
   }
 };
 
-// ----- Tellers end -----
+// ----- Pistas de auditorias start -----
+
+export const getAudits = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/audits", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getAudits ~ error:", error);
+  }
+};
+
+// ----- Pistas de auditorias end -----
