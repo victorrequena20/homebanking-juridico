@@ -528,3 +528,31 @@ export const updateConfigurations = async (data: any, id?: string) => {
 };
 
 // ----- Configuraciones end -----
+
+// ----- External events configuration start -----
+
+export const getExternalEventsConfiguration = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/externalevents/configuration", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getExternalEvents ~ error:", error);
+  }
+};
+
+export const updateExternalEventsConfigurations = async (data: any) => {
+  try {
+    const response = await HttpClient.put(`/externalevents/configuration`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateExternalEventsConfigurations ~ error:", error);
+  }
+};
+
+// ----- External events configuration end -----
