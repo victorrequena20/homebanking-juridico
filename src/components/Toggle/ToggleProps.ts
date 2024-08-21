@@ -4,4 +4,5 @@ export interface ToggleProps {
   label?: string;
   size?: string;
   toggleLeft?: boolean;
+  secondaryEffect?: () => void;
 }

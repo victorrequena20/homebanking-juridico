@@ -488,3 +488,43 @@ export const getAudits = async (params?: any) => {
 };
 
 // ----- Pistas de auditorias end -----
+
+// ----- Configuraciones start -----
+
+export const getConfigurations = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/configurations", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getConfigurations ~ error:", error);
+  }
+};
+
+export const getConfigurationByid = async (params?: any, id?: string) => {
+  try {
+    const response = await HttpClient.get(`/configurations/${id}`, { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getConfigurationByid ~ error:", error);
+  }
+};
+
+export const updateConfigurations = async (data: any, id?: string) => {
+  try {
+    const response = await HttpClient.put(`/configurations/${id}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("��� ~ updateWorkDays ~ error:", error);
+  }
+};
+
+// ----- Configuraciones end -----

@@ -3,7 +3,14 @@ import { Stack, SxProps, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { ToggleProps } from "./ToggleProps";
 
-export default function Toggle({ isChecked, setIsChecked, label, size = "big", toggleLeft }: ToggleProps) {
+export default function Toggle({
+  isChecked,
+  setIsChecked,
+  label,
+  size = "big",
+  toggleLeft,
+  secondaryEffect,
+}: ToggleProps) {
   const stackContainerStyles: SxProps = {
     flexDirection: !toggleLeft ? "row-reverse" : "row",
     alignItems: "center",
@@ -34,6 +41,7 @@ export default function Toggle({ isChecked, setIsChecked, label, size = "big", t
 
   function handleChecked() {
     setIsChecked && setIsChecked(!isChecked);
+    secondaryEffect && secondaryEffect();
   }
 
   return (
