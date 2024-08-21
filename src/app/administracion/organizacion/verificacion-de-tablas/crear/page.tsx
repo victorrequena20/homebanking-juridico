@@ -57,7 +57,7 @@ export default function CreateDataTableVerification() {
     });
     if (response?.status === 200) {
       reset();
-      router.push("/administracion/organizacion/verificar-tablas");
+      router.push("/administracion/organizacion/verificacion-de-tablas");
       toast.success("Verificación de tabla de datos de la entidad creada correctamente");
     } else {
       toast.error("Error al crear verificación de tabla de datos de la entidad");

@@ -1,4 +1,6 @@
 "use client";
+import ArrowCircleReceiveIcon from "@/assets/icons/ArrowCircleReceiveIcon";
+import ArrowCircleSendIcon from "@/assets/icons/ArrowCircleSendIcon";
 import CashIcon from "@/assets/icons/CashIcon";
 import CheckIcon from "@/assets/icons/Checkicon";
 import MoneyCheckIcon from "@/assets/icons/MoneyCheckIcon";
@@ -44,6 +46,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
   const [clientData, setClientData] = React.useState<any>(null);
   const [accounts, setAccounts] = React.useState<any>([]);
   const [loanAccounts, setLoanAccounts] = React.useState<any>([]);
+  const [savingsAccounts, setSavingsAccounts] = React.useState<any>([]);
   const router = useRouter();
   const columns: GridColDef<(typeof loanAccounts)[number]>[] = [
     {
@@ -141,6 +144,72 @@ export default function ClientDetails({ params }: { params: { clientId: string }
       align: "center",
     },
   ];
+  const savingsColumns: GridColDef<(typeof savingsAccounts)[number]>[] = [
+    {
+      field: "accountNo",
+      headerName: "Número de cuenta",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.accountNo || ""}`,
+    },
+    {
+      field: "savingsProduct",
+      headerName: "Producto de ahorro",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.productName || ""} `,
+    },
+    {
+      field: "lastActive",
+      headerName: "Último activo",
+      flex: 1,
+      valueGetter: (value, row) => `${formatSpanishDate(row?.lastActiveTransactionDate) || ""} `,
+    },
+    {
+      field: "balance",
+      headerName: "Saldo",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.accountBalance || ""} `,
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      flex: 1,
+      renderCell: params => (
+        <Stack sx={{ justifyContent: "center", height: "100%" }}>
+          <Stack sx={{ flexDirection: "row", gap: 2 }}>
+            <Box
+              sx={{
+                bgcolor: "var(--primary)",
+                width: "32px",
+                height: "32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+            >
+              <ArrowCircleSendIcon color="#fff" size={20} />
+            </Box>
+            <Box
+              sx={{
+                bgcolor: "var(--primary)",
+                width: "32px",
+                height: "32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+            >
+              <ArrowCircleReceiveIcon color="#fff" size={20} />
+            </Box>
+          </Stack>
+        </Stack>
+      ),
+      align: "center",
+    },
+  ];
 
   async function getClientData() {
     const response = await getClientById(params?.clientId);
@@ -156,6 +225,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
     if (response?.status === 200) {
       setAccounts(response?.data);
       setLoanAccounts(response?.data?.loanAccounts);
+      setSavingsAccounts(response?.data?.savingsAccounts);
     }
   }
 
@@ -336,6 +406,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
             </Stack>
           </Stack>
 
+          {/* Creditos */}
           <Stack sx={{ width: "100%", mt: 5 }}>
             <Stack sx={{ justifyContent: "center" }}>
               <Typography variant="body1" color="var(--secondaryText)">
@@ -343,7 +414,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
               </Typography>
             </Stack>
 
-            <Stack sx={{ mt: 2, pb: 10 }}>
+            <Stack sx={{ mt: 2, pb: 4 }}>
               {loanAccounts?.length > 0 ? (
                 <DataGrid
                   rows={loanAccounts}
@@ -362,6 +433,41 @@ export default function ClientDetails({ params }: { params: { clientId: string }
                 />
               ) : (
                 <NotFoundData title={`El sr ${clientData?.displayName} no posee créditos`} withOutBack mt={6} />
+              )}
+            </Stack>
+          </Stack>
+
+          {/* Cuentas de ahorro */}
+          <Stack sx={{ width: "100%" }}>
+            <Stack sx={{ justifyContent: "center" }}>
+              <Typography variant="body1" color="var(--secondaryText)">
+                Cuentas de ahorro
+              </Typography>
+            </Stack>
+
+            <Stack sx={{ mt: 2, pb: 10 }}>
+              {loanAccounts?.length > 0 ? (
+                <DataGrid
+                  rows={savingsAccounts}
+                  columns={savingsColumns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: {
+                        pageSize: 10,
+                        page: 0,
+                      },
+                    },
+                  }}
+                  disableRowSelectionOnClick
+                  rowSelection
+                  pageSizeOptions={[10, 25, 50]}
+                />
+              ) : (
+                <NotFoundData
+                  title={`El sr ${clientData?.displayName} no posee cuentas de ahorro`}
+                  withOutBack
+                  mt={6}
+                />
               )}
             </Stack>
           </Stack>

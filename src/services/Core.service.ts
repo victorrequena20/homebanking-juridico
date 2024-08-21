@@ -446,3 +446,31 @@ export const deleteTableVerification = async (id: string): Promise<ApiResponse> 
 };
 
 // ----- entity data tables ckecks end -----
+
+// ----- Tellers start -----
+
+export const getTellers = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/tellers", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTellers ~ error:", error);
+  }
+};
+
+export const createCashier = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/tellers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createCashier ~ error:", error);
+  }
+};
+
+// ----- Tellers end -----
