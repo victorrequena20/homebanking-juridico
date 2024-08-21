@@ -13,6 +13,7 @@ import { formatTimestampToSpanishDate } from "@/utilities/common.utility";
 
 export default function PistasDeAuditoria() {
   const [audits, setAudits] = React.useState<any[]>([]);
+  const [allAudits, setAllAudits] = React.useState<any[]>([]);
   const [page, setPage] = React.useState<number>(0);
   const [pageSize, setPageSize] = React.useState<number>(10);
   const [totalRows, setTotalRows] = React.useState<number>(10);
@@ -92,20 +93,88 @@ export default function PistasDeAuditoria() {
     });
     if (response?.status === 200) {
       setAudits(response?.data?.pageItems);
-      setTotalRows(response?.data?.totalFilteredRecords || 0); // Asegúrate de que `totalFilteredRecords` esté disponible en la respuesta.
+      setTotalRows(response?.data?.totalFilteredRecords || 0);
     } else {
       toast.error("Error al obtener las pistas de auditoría.");
     }
   }
 
+  async function handleGetAllAudits() {
+    const response = await getAudits({
+      paged: true,
+      limit: -1, // Sin límite para obtener todos los registros
+      offset: 0,
+      dateFormat: "dd MMMM yyyy",
+      locale: "es",
+    });
+    if (response?.status === 200) {
+      setAllAudits(response?.data?.pageItems);
+    } else {
+      toast.error("Error al obtener todas las pistas de auditoría.");
+    }
+  }
+
   React.useEffect(() => {
     handleGetAudits(page, pageSize);
+    handleGetAllAudits();
   }, [page, pageSize]);
 
   const handlePaginationChange = (newPagination: GridPaginationModel) => {
     setPage(newPagination.page);
     setPageSize(newPagination.pageSize);
   };
+
+  function convertToCSV(data: any[]): string {
+    const headers = [
+      "ID de ruta",
+      "ID del recurso",
+      "Estado",
+      "Hecho por",
+      "Acción",
+      "Entidad",
+      "Oficina",
+      "Fecha de realización",
+      "Inspector",
+      "Fecha comprobada",
+    ];
+
+    const rows = data.map(row => [
+      row.id,
+      row.resourceId,
+      "",
+      row.maker,
+      row.actionName,
+      row.entityName,
+      row.officeName,
+      formatTimestampToSpanishDate(row.madeOnDate),
+      row.checker,
+      formatTimestampToSpanishDate(row.checkedOnDate),
+    ]);
+
+    let csvContent = headers.join(",") + "\n";
+    rows.forEach(rowArray => {
+      let row = rowArray.join(",");
+      csvContent += row + "\n";
+    });
+
+    return csvContent;
+  }
+
+  function downloadCSV(data: any[], filename: string) {
+    try {
+      const csvContent = convertToCSV(data);
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success("Archivo descargado con éxito!"); // Mostrar toast de éxito
+    } catch (error) {
+      toast.error("Error al descargar el archivo CSV."); // Mostrar toast de error
+    }
+  }
 
   return (
     <Wrapper>
@@ -126,7 +195,7 @@ export default function PistasDeAuditoria() {
           text="Descargar CSV"
           iconLeft
           icon={<PlusIcon size={20} color="#fff" />}
-          onClick={() => router.push("/administracion/sistema/pistas-de-auditorias/")}
+          onClick={() => downloadCSV(allAudits, "auditorias.csv")} // Descargar todos los registros
         />
       </Stack>
 
