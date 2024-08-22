@@ -556,3 +556,43 @@ export const updateExternalEventsConfigurations = async (data: any) => {
 };
 
 // ----- External events configuration end -----
+
+// ----- Hooks start -----
+
+export const getHooks = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/hooks", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getHooks ~ error:", error);
+  }
+};
+
+export const getHooksTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/hooks/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getHooksTemplate ~ error:", error);
+  }
+};
+
+export const createHook = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/hooks`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createHook ~ error:", error);
+  }
+};
+
+// ----- Hooks end -----

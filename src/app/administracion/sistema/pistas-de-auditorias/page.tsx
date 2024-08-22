@@ -12,6 +12,7 @@ import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import { formatTimestampToSpanishDate } from "@/utilities/common.utility";
 
 export default function PistasDeAuditoria() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [audits, setAudits] = React.useState<any[]>([]);
   const [allAudits, setAllAudits] = React.useState<any[]>([]);
   const [page, setPage] = React.useState<number>(0);
@@ -83,6 +84,7 @@ export default function PistasDeAuditoria() {
   ];
 
   async function handleGetAudits(page: number, pageSize: number) {
+    setIsLoading(true);
     const offset = page * pageSize;
     const response = await getAudits({
       paged: true,
@@ -97,6 +99,7 @@ export default function PistasDeAuditoria() {
     } else {
       toast.error("Error al obtener las pistas de auditoría.");
     }
+    setIsLoading(false);
   }
 
   async function handleGetAllAudits() {
@@ -177,7 +180,7 @@ export default function PistasDeAuditoria() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Pistas de auditoria"
         items={[
