@@ -118,7 +118,7 @@ export default function Configuraciones() {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Configuraciones"
         items={[
