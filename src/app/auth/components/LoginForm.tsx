@@ -35,7 +35,7 @@ const LoginForm = () => {
       });
       const token = response.data.base64EncodedAuthenticationKey;
       localStorage.setItem("litecoreAuthToken", token);
-      router.push("/institucion/clientes");
+      router.push("/dashboard");
     } catch (err) {
       console.log("🚀 ~ handleLogin ~ err:", err);
     }

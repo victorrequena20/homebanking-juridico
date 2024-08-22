@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Wrapper from "@/components/Wrapper";
 import { getAccountingRules, getGlAccounts } from "@/services/Accounting.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { set } from "react-hook-form";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CatalogoCuentasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -72,32 +73,27 @@ export default function CatalogoCuentasPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Reglas de contabilidad</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Link color="inherit" href="/contabilidad">
-              <Typography variant="body2">Contabilidad</Typography>
-            </Link>
-            <Typography variant="body2">Reglas contables</Typography>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            icon={<PlusIcon size={20} color="#fff" />}
-            text="Agregar regla"
-            iconLeft
-            // onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Reglas de contabilidad"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Contabilidad", href: "/contabilidad" },
+          { title: "Reglas de contabilidad" },
+        ]}
+      />
+
+      <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2, mt: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          icon={<PlusIcon size={20} color="#fff" />}
+          text="Agregar regla"
+          iconLeft
+          // onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+        />
       </Stack>
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
           sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={glAccounts}

@@ -43,13 +43,13 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar tablas de datos"
           subtitle="Agregue nuevos campos adicionales a cualquier entidad en forma de tabla de datos."
-          path=""
+          path="/administracion/sistema/administrar-tablas-de-datos"
           icon={<OfficesIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Pistas de auditoría"
           subtitle="Registros de auditoría de todas las actividades, como crear clientes, desembolsar créditos, etc."
-          path=""
+          path="/administracion/sistema/pistas-de-auditorias"
           icon={<SettingsIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -73,7 +73,7 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Administrar procesos"
           subtitle="Administre calendarización de procesos y sus flujos, modifique procesos o vea el historial."
-          path=""
+          path="/administracion/sistema/administrar-procesos"
           icon={<WalletReloadIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
@@ -85,49 +85,49 @@ export default function AdministrationSystemPage() {
         <IntermediateMenuItem
           title="Configuraciones"
           subtitle="Configuraciones globales, configuración de caché y fecha del sistema."
-          path=""
+          path="/administracion/sistema/configuraciones"
           icon={<CashIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Administrar ganchos"
           subtitle="Definir ganchos."
-          path=""
+          path="/administracion/sistema/ganchos"
           icon={<PersonPlusIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Preferencias de número de cuenta"
           subtitle="Preferencias para generar números de cuenta para cuentas de clientes, créditos y ahorros."
           path=""
           icon={<Calendar2Icon size={28} color="#153075" />}
-        />
+        /> */}
         <IntermediateMenuItem
           title="Mapeo de entidad a entidad"
           subtitle="Definir o modificar asignaciones de entidad a entidad"
-          path=""
+          path="/administracion/sistema/mapeo-de-entidad-a-entidad"
           icon={<MoneyCheckIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Servicios externos"
           subtitle="Configuración de servicios externos."
-          path=""
+          path="/administracion/sistema/servicios-externos"
           icon={<WalletAddIcon size={28} color="#153075" />}
         />
         <IntermediateMenuItem
           title="Administrar encuestas"
           subtitle="Gestiona tus servicios."
-          path=""
+          path="/administracion/sistema/administrar-encuestas"
           icon={<KeySquareIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Configuración de dos factores"
           subtitle="Ajustes de configuración de autenticación de dos factores."
-          path=""
+          path="/administracion/sistema/configuracion-de-dos-factores"
           icon={<MessagesSendIcon size={28} color="#153075" />}
-        />
+        /> */}
         <IntermediateMenuItem
           title="Gestionar eventos externos"
           subtitle="Configuración de eventos externos, para habilitar o deshabilitar la publicación de eventos."
-          path=""
+          path="/administracion/sistema/gestionar-eventos-externos"
           icon={<FilterIcon size={28} color="#153075" />}
         />
       </Stack>

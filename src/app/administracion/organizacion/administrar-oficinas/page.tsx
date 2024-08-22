@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { getFunds } from "@/services/Funds.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrarOficinas() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -58,33 +59,31 @@ export default function AdministrarOficinas() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Administrar oficinas</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Typography variant="body2">Administrar oficinas</Typography>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear oficina"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Administrar oficinas"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Administrar oficinas" },
+        ]}
+      />
+
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear oficina"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+        />
       </Stack>
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
           rows={offices}
           columns={columns}

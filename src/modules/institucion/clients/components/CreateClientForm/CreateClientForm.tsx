@@ -1,49 +1,33 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 import { ICreateClientFormProps } from "./CreateClientFormProps";
 import { Controller, useForm } from "react-hook-form";
 import { Stack, Typography } from "@mui/material";
 import Input from "@/components/Input";
-import { ICreateClientForm } from "./types";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { getOffices } from "@/services/Office.service";
 import { IKeyValue } from "@/types/common";
-import { getTemplate } from "@/services/Clients.service";
 import InputCalendar from "@/components/InputCalendar";
 import { Box } from "@mui/material";
 import Toggle from "@/components/Toggle";
 import Button from "@/components/Button";
-import schema from "./yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CreateClientContext } from "../../context/CreateClient/CreateClient.context";
+import { useCreateClientContext } from "../../context/CreateClient/CreateClient.provider";
 
 export default function CreateClientForm({ action }: ICreateClientFormProps) {
-  const { clientGeneralData, step, setClientGeneralData, templateData } = React.useContext(CreateClientContext);
-  const [openSavingAccount, setOpenSavingAccount] = React.useState<boolean>(false);
-  const [isActive, setIsActive] = React.useState<boolean>(false);
-  const [isPersonal, setIsPersonal] = React.useState<boolean>(false);
+  const { formMethods, clientGeneralData, step, setClientGeneralData, templateData } = useCreateClientContext();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
-    handleSubmit,
     setValue,
+    handleSubmit,
     reset,
     formState: { errors, isValid, dirtyFields },
     watch,
-  } = useForm<ICreateClientForm>({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+    getValues,
+  } = formMethods;
 
   const onSubmit = async (data: any) => {
     // console.log("🚀 ~ onSubmit ~ data:", data);
-    setClientGeneralData?.({
-      ...data,
-      active: isActive,
-      isStaff: isPersonal,
-      savingAccount: openSavingAccount,
-    });
     action(data);
   };
 
@@ -61,7 +45,6 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
   React.useEffect(() => {
     // Actualizar clientGeneralData
     return () => {
-      setClientGeneralData?.({ ...watch(), active: isActive, isStaff: isPersonal, savingAccount: openSavingAccount });
       console.log("��� ~ watch:", watch());
       console.log("IS valid____", isValid);
     };
@@ -74,7 +57,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
-              control={control}
+              control={formMethods?.control}
               name="officeId"
               render={({ field: { value, onChange } }) => (
                 <InputSelect
@@ -120,7 +103,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   label="Nombre*"
                   type="text"
                   isValidField={!errors.firstname}
-                  hint={errors.firstname?.message}
+                  hint={errors.firstname?.message || ""}
                   value={value}
                   onChange={onChange}
                   defaultValue={clientGeneralData?.firstname}
@@ -272,7 +255,11 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
               ¿Es personal?
             </Typography>
             <Box>
-              <Toggle isChecked={isPersonal} size="small" setIsChecked={setIsPersonal} />
+              <Toggle
+                isChecked={formMethods?.getValues("isStaff")}
+                size="small"
+                setIsChecked={value => formMethods.setValue("isStaff", value)}
+              />
             </Box>
           </Stack>
           <Stack
@@ -290,7 +277,11 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
               Activo?
             </Typography>
             <Box>
-              <Toggle isChecked={isActive} size="small" setIsChecked={setIsActive} />
+              <Toggle
+                isChecked={formMethods?.getValues("isActive")}
+                size="small"
+                setIsChecked={value => formMethods.setValue("isActive", value)}
+              />
             </Box>
           </Stack>
         </Stack>
@@ -310,10 +301,14 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
             <Typography variant="body2" fontWeight="400" color="#12141a">
               Abrir cuenta de Ahorros?
             </Typography>
-            <Toggle isChecked={openSavingAccount} size="small" setIsChecked={setOpenSavingAccount} />
+            <Toggle
+              isChecked={getValues("openSavingAccount")}
+              size="small"
+              setIsChecked={value => setValue("openSavingAccount", value)}
+            />
           </Stack>
           <Stack>
-            {openSavingAccount ? (
+            {formMethods?.getValues("openSavingAccount") ? (
               <Controller
                 control={control}
                 name="savingsProductId"

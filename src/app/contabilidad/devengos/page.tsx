@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import InputCalendar from "@/components/InputCalendar";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation";
 import PlayIcon from "@/assets/icons/PlayIcon";
 import { runAccruals } from "@/services/Core.service";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const schema = Yup.object().shape({
   tillDate: Yup.string().required("La fecha es requerida"),
@@ -50,20 +50,14 @@ export default function DevengosPage() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Devengos</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Link color="inherit" href="/contabilidad">
-              <Typography variant="body2">Contabilidad</Typography>
-            </Link>
-            <Typography variant="body2">Devengos</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Contabilidad"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Contabilidad", href: "/contabilidad" },
+          { title: "Devengos" },
+        ]}
+      />
 
       <Stack sx={{ alignItems: "center", justifyContent: "center", width: "100%", mt: 5 }}>
         <Stack component="form" onSubmit={handleSubmit(onSubmit)}>

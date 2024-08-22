@@ -18,6 +18,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   const pathname = usePathname();
   const routeValidations = {
     dashboard: pathname === "/dashboard",
+    plantillas: pathname.includes("/plantillas"),
     institution: pathname.includes("/institucion"),
     institutionClients: pathname.includes("/institucion/clientes"),
     institutionGroups: pathname.includes("/institucion/grupos"),
@@ -50,7 +51,15 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
           pr: 1,
         }}
       >
-        <Grid md={2} sx={{ bgcolor: "hsl(0, 0%, 10%)", px: 2, pt: 2, pb: 4 }}>
+        <Grid
+          md={2}
+          sx={{
+            bgcolor: "hsl(0, 0%, 10%)",
+            px: 2,
+            pt: 2,
+            pb: 4,
+          }}
+        >
           <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
             <Stack>
               <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
@@ -75,7 +84,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     }}
                     onClick={() => router.push("/dashboard")}
                   >
-                    <HomeIcon size={24} />
+                    <HomeIcon size={24} color={routeValidations.dashboard ? "#fff" : "#9aa3b8"} />
                     <Typography variant="body2" fontWeight="200">
                       Inicio
                     </Typography>
@@ -313,10 +322,12 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                           borderRadius: "8px",
                           py: 1,
                           px: 2,
+                          bgcolor: routeValidations.plantillas ? "hsl(0, 0%, 12%)" : "transparent",
                           "& > p": {
-                            color: "#9aa3b8",
+                            color: routeValidations.plantillas ? "#fff" : "#9aa3b8",
                           },
                         }}
+                        onClick={() => router.push("/administracion/plantillas")}
                       >
                         <Typography variant="body2" fontWeight="200" color="#fff">
                           Plantillas

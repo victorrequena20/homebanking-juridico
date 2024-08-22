@@ -5,7 +5,7 @@ export interface InputProps {
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   isValidField?: boolean;
-  hint?: string;
+  hint?: any;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
   defaultValue?: string;

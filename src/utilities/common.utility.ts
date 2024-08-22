@@ -95,3 +95,31 @@ export function convertFromTimestampToSpanishDate(timestamp: string): string {
 
   return `${day} de ${month.charAt(0).toUpperCase() + month.slice(1)} del ${year}`;
 }
+
+export function formatTimestampToSpanishDate(timestampMs: number): string {
+  // Convertir el número de milisegundos a segundos
+  const timestamp = timestampMs / 1000;
+
+  // Convertir el timestamp a una fecha
+  const date = new Date(timestamp * 1000);
+
+  // Definir los nombres de los meses en español
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  // Formatear la fecha como "DD de MMMM de YYYY"
+  const formattedDate = `${date.getDate()} de ${months[date.getMonth()]} de ${date.getFullYear()}`;
+  return isNaN(date.getTime()) ? "" : formattedDate;
+}

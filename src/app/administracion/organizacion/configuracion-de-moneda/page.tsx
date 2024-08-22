@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Breadcrumbs, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
@@ -8,6 +8,7 @@ import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getCurrencies } from "@/services/Core.service";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ConfiguracionDeMonedaPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -51,32 +52,28 @@ export default function ConfiguracionDeMonedaPage() {
   }, []);
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Configuración de moneda</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Link color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Configuración de moneda</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            size="small"
-            variant="primary"
-            text="Agregar/Editar"
-            onClick={() => router.push("/administracion/organizacion/configuracion-de-moneda/manejo")}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Configuración de moneda"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Configuración de moneda" },
+        ]}
+      />
+
+      <Stack sx={{ alignItems: "flex-end" }}>
+        <Button
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          size="small"
+          variant="primary"
+          text="Agregar/Editar"
+          onClick={() => router.push("/administracion/organizacion/configuracion-de-moneda/manejo")}
+        />
       </Stack>
 
       <Stack sx={{ mt: 5 }}>

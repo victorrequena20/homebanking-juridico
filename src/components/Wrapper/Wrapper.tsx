@@ -9,7 +9,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
     <Grid
       md={10}
       sx={{
-        bgcolor: "#FCFCFD",
+        bgcolor: "#FAFAFA",
         borderRadius: "24px",
         pt: 1,
         maxHeight: "100%",

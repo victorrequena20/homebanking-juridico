@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Breadcrumbs, Link, Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { getFunds } from "@/services/Funds.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrarFondos() {
   const [funds, setFunds] = React.useState<any>([{ id: 1 }]);
@@ -39,32 +40,27 @@ export default function AdministrarFondos() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Administrar fondos</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link underline="hover" color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link underline="hover" color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Link underline="hover" color="text.primary" href="/institucion/clientes" aria-current="page">
-              <Typography variant="body2">Administrar fondos</Typography>
-            </Link>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear fondo"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/organizacion/administrar-fondos/create")}
-          />
-        </Stack>
+      <Breadcrumbs
+        title="Administrar fondos"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Administrar fondos" },
+        ]}
+      />
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear fondo"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/organizacion/administrar-fondos/create")}
+        />
       </Stack>
 
       <Stack sx={{ mt: 5 }}>

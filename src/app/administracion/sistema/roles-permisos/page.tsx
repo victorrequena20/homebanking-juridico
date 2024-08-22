@@ -1,9 +1,7 @@
-
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import { Box, Stack, Typography } from "@mui/material";
-import { Breadcrumbs } from "@mui/material";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
@@ -11,6 +9,7 @@ import { getRoles } from "@/services/Roles.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function RolsPermitions() {
   const [roles, setRoles] = React.useState<any | null>([]);
@@ -66,33 +65,27 @@ export default function RolsPermitions() {
 
   return (
     <Wrapper>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Productos de crédito</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/productos">
-              <Typography variant="body2">Productos</Typography>
-            </Link>
-            <Typography variant="body2">Productos de crédito</Typography>
-          </Breadcrumbs>
-        </Stack>
-        <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 2 }}>
-          <Button
-            size="small"
-            variant="primary"
-            text="Crear Roles"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() => router.push("/administracion/sistema/roles-permisos/create")}
-          />
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Administrar roles y permisos"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Administración" },
+          { title: "Sistema", href: "/administracion/sistema" },
+          { title: "Administrar roles y permisos" },
+        ]}
+      />
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 2 }}>
+        <Button
+          size="small"
+          variant="primary"
+          text="Crear Roles"
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          onClick={() => router.push("/administracion/sistema/roles-permisos/create")}
+        />
+      </Stack>
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
           sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={roles}

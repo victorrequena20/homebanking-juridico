@@ -29,7 +29,9 @@ export default function CreateUserPage() {
         <Stack sx={{ mt: 3 }}>
           <ButtonBack />
         </Stack>
-        <CreateEditUserForm close={() => router.push("/administracion/usuarios")} />
+        <Stack sx={{ alignItems: "center" }}>
+          <CreateEditUserForm close={() => router.push("/administracion/usuarios")} />
+        </Stack>
       </Stack>
     </Wrapper>
   );

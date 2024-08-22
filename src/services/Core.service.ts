@@ -294,3 +294,305 @@ export const getNotifications = async () => {
 };
 
 // ----- Notifications end -----
+
+// ----- Centers start -----
+
+export const getCenters = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/centers", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getNotifications ~ error:", error);
+  }
+};
+
+export const getCentersTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/centers/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getCentersTemplate ~ error:", error);
+  }
+};
+
+export const createCenter = async (data: any) => {
+  try {
+    const response = await HttpClient.post(`/centers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createCenter ~ error:", error);
+  }
+};
+
+// ----- Centers end -----
+
+// ----- Payment types start -----
+
+export const getPaymentTypes = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/paymenttypes", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getPaymentTypes ~ error:", error);
+  }
+};
+
+export const createPaymentType = async (data: any) => {
+  try {
+    const response = await HttpClient.post(`/paymenttypes`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ paymentType ~ error:", error);
+  }
+};
+
+// ----- Payment types end -----
+
+// ----- Journal entries start -----
+
+export const getJournalEntries = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/journalentries", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getJournalEntries ~ error:", error);
+  }
+};
+
+// ----- Journal entries end -----
+
+// ----- Inversionistas start -----
+
+export const searchExternalAssetOwners = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/external-asset-owners/search`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ searchExternalAssetOwners ~ error:", error);
+  }
+};
+
+// ----- Inversionistas end -----
+
+// ----- entity data tables ckecks start -----
+
+export const createEntityDataTablesChecks = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/entityDatatableChecks`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createEntityDataTablesChecks ~ error:", error);
+  }
+};
+
+export const getEntityDataTablesChecks = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/entityDatatableChecks", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getEntityDataTablesChecks ~ error:", error);
+  }
+};
+
+export const getEntityDataTablesChecksTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/entityDatatableChecks/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getEntityDataTablesChecksTemplate ~ error:", error);
+  }
+};
+
+export const deleteTableVerification = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/entityDatatableChecks/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteTableVerification ~ error:", error);
+    throw error;
+  }
+};
+
+// ----- entity data tables ckecks end -----
+
+// ----- Tellers start -----
+
+export const getTellers = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/tellers", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTellers ~ error:", error);
+  }
+};
+
+export const createCashier = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/tellers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createCashier ~ error:", error);
+  }
+};
+
+// ----- Pistas de auditorias start -----
+
+export const getAudits = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/audits", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getAudits ~ error:", error);
+  }
+};
+
+// ----- Pistas de auditorias end -----
+
+// ----- Configuraciones start -----
+
+export const getConfigurations = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/configurations", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getConfigurations ~ error:", error);
+  }
+};
+
+export const getConfigurationByid = async (params?: any, id?: string) => {
+  try {
+    const response = await HttpClient.get(`/configurations/${id}`, { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getConfigurationByid ~ error:", error);
+  }
+};
+
+export const updateConfigurations = async (data: any, id?: string) => {
+  try {
+    const response = await HttpClient.put(`/configurations/${id}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("��� ~ updateWorkDays ~ error:", error);
+  }
+};
+
+// ----- Configuraciones end -----
+
+// ----- External events configuration start -----
+
+export const getExternalEventsConfiguration = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/externalevents/configuration", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getExternalEvents ~ error:", error);
+  }
+};
+
+export const updateExternalEventsConfigurations = async (data: any) => {
+  try {
+    const response = await HttpClient.put(`/externalevents/configuration`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateExternalEventsConfigurations ~ error:", error);
+  }
+};
+
+// ----- External events configuration end -----
+
+// ----- Hooks start -----
+
+export const getHooks = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/hooks", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getHooks ~ error:", error);
+  }
+};
+
+export const getHooksTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/hooks/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getHooksTemplate ~ error:", error);
+  }
+};
+
+export const createHook = async (data?: any) => {
+  try {
+    const response = await HttpClient.post(`/hooks`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createHook ~ error:", error);
+  }
+};
+
+// ----- Hooks end -----

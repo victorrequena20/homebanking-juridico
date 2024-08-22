@@ -13,6 +13,18 @@ export const getLoanProducts = async () => {
   }
 };
 
+export const getLoanProductsTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/loanproducts/template");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getLoanProductsTemplate ~ error:", error);
+  }
+};
+
 export const getLoanInfoById = async (loanId: number, params: any) => {
   try {
     const response = await HttpClient.get(`/loanproducts/${loanId}`, { params });
@@ -23,5 +35,29 @@ export const getLoanInfoById = async (loanId: number, params: any) => {
     };
   } catch (error) {
     console.log("🚀 ~ getLoanInfoById ~ error:", error);
+  }
+};
+
+export const getLoanReassignmentTemaplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/loans/loanreassignment/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getLoanReassignmentTemaplate ~ error:", error);
+  }
+};
+
+export const createLoanReassignment = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/loans/loanreassignment", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createLoanReassignment ~ error:", error);
   }
 };

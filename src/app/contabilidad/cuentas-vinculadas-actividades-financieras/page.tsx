@@ -3,11 +3,9 @@ import React from "react";
 import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
-import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
-import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
 import { getFinancialActivityAccounts, getGlclosures } from "@/services/Accounting.service";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -15,7 +13,6 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 export default function CuentasVinculadasActividadesFinancierasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [financialActivties, setFinancialActivties] = React.useState<any>([{ id: 1 }]);
-
   const router = useRouter();
 
   const columns: GridColDef<(typeof financialActivties)[number]>[] = [
@@ -79,7 +76,7 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
           size="small"
           variant="primary"
           text="Definir nueva asignación"
-          onClick={() => router.push("/contabilidad/entradas-de-cierre/crear")}
+          onClick={() => router.push("/contabilidad/cuentas-vinculadas-actividades-financieras/crear")}
         />
       </Stack>
       <Stack sx={{ mt: 3 }}>
