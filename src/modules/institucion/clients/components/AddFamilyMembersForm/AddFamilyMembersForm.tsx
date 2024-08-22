@@ -1,6 +1,6 @@
 import Input from "@/components/Input";
 import { Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IAddFamilyMembersFormProps, IForm } from "./types";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,9 +10,14 @@ import Button from "@/components/Button";
 import InputCalendar from "@/components/InputCalendar";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { CreateClientContext } from "../../context/CreateClient/CreateClient.context";
+import { addFamilyMember, getTemplate } from "@/services/Clients.service";
+import { toast } from "sonner";
+import { useParams } from "next/navigation";
+import { dateFormat } from "@/constants/global";
 
-export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormProps) {
-  const { templateData, clientFamilyMembers, setClientFamilyMembers } = React.useContext(CreateClientContext);
+export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMembersFormProps) {
+  const { templateData, clientFamilyMembers, setClientFamilyMembers } = useContext(CreateClientContext);
+  const [templateCurrentData, setTemplateCurrentData] = React.useState<any>(templateData);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
@@ -25,14 +30,55 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
     resolver: yupResolver(validationSchema),
     mode: "onChange",
   });
+  const params = useParams();
+
+  async function getClientTemplate() {
+    if (mode === "step") return;
+    const response = await getTemplate();
+    if (response?.status === 200) {
+      setTemplateCurrentData(response.data);
+    } else {
+      toast.error("Error al obtener recursos para la agregación de miembros de la familia");
+    }
+  }
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-    setClientFamilyMembers([...clientFamilyMembers, data]);
+    if (mode === "step") {
+      setClientFamilyMembers([...clientFamilyMembers, data]);
+    }
+    if (mode === "create") {
+      console.log("🚀 ~ onSubmit ~ data:");
+      const response = await addFamilyMember(
+        {
+          ...dateFormat,
+          genderId: watch("genderId")?.value,
+          maritalStatusId: watch("maritalStatusId")?.value,
+          professionId: watch("professionId")?.value,
+          relationshipId: watch("relationshipId")?.value,
+          qualification: watch("qualificationId"),
+          dateOfBirth: watch("dateOfBirth"),
+          age: watch("age"),
+          firstName: watch("firstName"),
+          middleName: watch("middleName"),
+          lastName: watch("lastName"),
+        },
+        params?.clientId?.toString()
+      );
+      if (response?.status === 200) {
+        toast.success("Miembro de la familia agregado correctamente");
+      } else {
+        toast.error("Error al agregar miembro de la familia");
+      }
+      console.log("🚀 ~ onSubmit ~ response:", response);
+    }
     onClose?.();
-    console.log("🚀 ~ AddFamilyMembersForm ~ data:", data);
     setIsLoading(false);
   }
+
+  React.useEffect(() => {
+    getClientTemplate();
+  }, []);
 
   return (
     <Grid
@@ -118,7 +164,7 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
           render={({ field: { onChange, value } }) => (
             <Input
               label="Edad*"
-              type="text"
+              type="number"
               value={value}
               onChange={onChange}
               hint={errors.age?.message}
@@ -135,7 +181,7 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
           render={({ field: { onChange } }) => (
             <InputSelect
               label="Relación*"
-              options={keyValueAdapter(templateData?.familyMemberOptions?.relationshipIdOptions, "name", "id")}
+              options={keyValueAdapter(templateCurrentData?.familyMemberOptions?.relationshipIdOptions, "name", "id")}
               setItem={value => onChange(value)}
               hint={errors.relationshipId?.message}
               isValidField={!errors.relationshipId}
@@ -151,7 +197,7 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
           render={({ field: { onChange } }) => (
             <InputSelect
               label="Género*"
-              options={keyValueAdapter(templateData?.familyMemberOptions?.genderIdOptions, "name", "id")}
+              options={keyValueAdapter(templateCurrentData?.familyMemberOptions?.genderIdOptions, "name", "id")}
               setItem={value => onChange(value)}
               hint={errors.genderId?.message}
               isValidField={!errors.genderId}
@@ -167,7 +213,7 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
           render={({ field: { onChange } }) => (
             <InputSelect
               label="Profesión"
-              options={keyValueAdapter(templateData?.familyMemberOptions?.professionIdOptions, "name", "id")}
+              options={keyValueAdapter(templateCurrentData?.familyMemberOptions?.professionIdOptions, "name", "id")}
               setItem={value => onChange(value)}
               hint={errors.professionId?.message}
               isValidField={!errors.professionId}
@@ -183,7 +229,7 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
           render={({ field: { onChange } }) => (
             <InputSelect
               label="Estado civil"
-              options={keyValueAdapter(templateData?.familyMemberOptions?.maritalStatusIdOptions, "name", "id")}
+              options={keyValueAdapter(templateCurrentData?.familyMemberOptions?.maritalStatusIdOptions, "name", "id")}
               setItem={value => onChange(value)}
               hint={errors.maritalStatusId?.message}
               isValidField={!errors.maritalStatusId}
@@ -240,7 +286,14 @@ export default function AddFamilyMembersForm({ onClose }: IAddFamilyMembersFormP
             px: 1,
           }}
         >
-          <Button type="submit" size="small" text="Aceptar" variant="primary" disabled={!isValid} />
+          <Button
+            type="submit"
+            size="small"
+            text="Aceptar"
+            variant="primary"
+            disabled={!isValid}
+            isLoading={isLoading}
+          />
         </Stack>
       </Grid>
     </Grid>

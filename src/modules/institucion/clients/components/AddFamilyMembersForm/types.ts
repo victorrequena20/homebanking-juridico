@@ -13,4 +13,5 @@ export interface IForm {
 
 export interface IAddFamilyMembersFormProps {
   onClose: () => void;
+  mode?: "step" | "create";
 }

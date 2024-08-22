@@ -1,6 +1,6 @@
 import React from "react";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -8,10 +8,15 @@ export default function NotFoundData({
   title,
   withOutBack,
   mt,
+  action,
 }: {
   title?: string;
   withOutBack?: boolean;
   mt?: number;
+  action?: {
+    title: string;
+    onClick: () => void;
+  };
 }) {
   const router = useRouter();
   return (
@@ -33,6 +38,16 @@ export default function NotFoundData({
             Volver
           </Typography>
         </Stack>
+      )}
+      {action?.title && (
+        <Box onClick={action?.onClick} sx={{ mt: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{ textDecoration: "underline", textDecorationColor: "#606778", cursor: "pointer" }}
+          >
+            {action.title}
+          </Typography>
+        </Box>
       )}
     </Stack>
   );

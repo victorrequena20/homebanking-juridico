@@ -10,14 +10,11 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
   return (
     <Stack sx={{ mt: 4, borderBottom: "1px solid #ccc", pb: 3 }} onClick={() => setIsOpen(!isOpen)}>
       <Stack sx={{ ...detailRowStyles, cursor: "pointer" }}>
-        <Typography variant="body2" fontWeight="300" color="#606778">
-          Miembro familiar
+        <Typography variant="body2" fontWeight="400" color="#12141a">
+          {`${data?.firstName || ""} ${data?.middleName || ""} ${data?.lastName || ""}`}
         </Typography>
         <Box sx={{ ...flexRowCenter, gap: 1 }}>
-          <Typography variant="body2" fontWeight="400" color="#12141a">
-            {`${data?.firstName || ""} ${data?.middleName || ""} ${data?.lastName || ""}`}
-          </Typography>
-          {isOpen ? <ArrowDownIcon color="var(--text)" size={16} /> : <ArrowUpIcon color="var(--text)" size={16} />}
+          {isOpen ? <ArrowDownIcon color="var(--text)" size={20} /> : <ArrowUpIcon color="var(--text)" size={20} />}
         </Box>
       </Stack>
       {isOpen && (
@@ -59,7 +56,7 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
             </Typography>
             <Box sx={{ ...flexRowCenter, gap: 1 }}>
               <Typography variant="body2" fontWeight="400" color="#12141a">
-                {data?.qualificationId}
+                {data?.qualificationId || data?.qualification}
               </Typography>
             </Box>
           </Stack>
@@ -69,7 +66,7 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
             </Typography>
             <Box sx={{ ...flexRowCenter, gap: 1 }}>
               <Typography variant="body2" fontWeight="400" color="#12141a">
-                {data?.relationshipId?.label}
+                {data?.relationshipId?.label || data?.relationship}
               </Typography>
             </Box>
           </Stack>
@@ -102,7 +99,7 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
             </Typography>
             <Box sx={{ ...flexRowCenter, gap: 1 }}>
               <Typography variant="body2" fontWeight="400" color="#12141a">
-                {data?.maritalStatusId?.label}
+                {data?.maritalStatusId?.label || data?.maritalStatus}
               </Typography>
             </Box>
           </Stack>
@@ -113,7 +110,7 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
             </Typography>
             <Box sx={{ ...flexRowCenter, gap: 1 }}>
               <Typography variant="body2" fontWeight="400" color="#12141a">
-                {data?.genderId?.label}
+                {data?.genderId?.label || data?.gender}
               </Typography>
             </Box>
           </Stack>
@@ -124,7 +121,7 @@ export default function FamilyMemberDetails({ data }: { data: any }) {
             </Typography>
             <Box sx={{ ...flexRowCenter, gap: 1 }}>
               <Typography variant="body2" fontWeight="400" color="#12141a">
-                {data?.professionId?.label}
+                {data?.professionId?.label || data?.profession}
               </Typography>
             </Box>
           </Stack>
