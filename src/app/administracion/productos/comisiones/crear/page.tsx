@@ -28,7 +28,7 @@ interface IForm {
   chargeGroup?: IKeyValue | any;
 }
 
-export const schema = yup.object().shape({
+const schema = yup.object().shape({
   chargeAppliesTo: yup.mixed().required("El cargo se aplica a es requerido"),
   name: yup.string().required("El nombre es requerido"),
   currencyCode: yup.mixed().required("La moneda es requerida"),

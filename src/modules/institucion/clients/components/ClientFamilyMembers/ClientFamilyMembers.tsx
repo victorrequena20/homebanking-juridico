@@ -71,13 +71,13 @@ export default function ClientFamilyMembers({ formAction, mode = "create" }: Cli
           {mode === "show" ? (
             <>
               {currentFamilyMembers?.map((el: any) => (
-                <FamilyMemberDetails data={el} />
+                <FamilyMemberDetails key={el?.id} data={el} />
               ))}
             </>
           ) : (
             <>
-              {clientFamilyMembers?.map((el: any) => (
-                <FamilyMemberDetails data={el} />
+              {clientFamilyMembers?.map((el: any, index: any) => (
+                <FamilyMemberDetails key={index} data={el} />
               ))}
             </>
           )}

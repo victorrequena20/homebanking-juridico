@@ -6,6 +6,7 @@ import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
 import ArrowUpIcon from "@/assets/icons/ArrowUpIcon";
 
 export default function FamilyMemberDetails({ data }: { data: any }) {
+  console.log("🚀 ~ FamilyMemberDetails ~ data:", data);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   return (
     <Stack sx={{ mt: 4, borderBottom: "1px solid #ccc", pb: 3 }} onClick={() => setIsOpen(!isOpen)}>
