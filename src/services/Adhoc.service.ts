@@ -14,6 +14,20 @@ export const getAdhocquery = async (): Promise<ApiResponse> => {
   }
 };
 
+export const getAdhocqueryById = async (roleId: string): Promise<ApiResponse> => {
+  if (!roleId) throw new Error("Adhocquery es requerido");
+  try {
+    const response = await HttpClient.get(`/adhocquery/${roleId}`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getAdhocqueryById ~ error:", error);
+    throw error;
+  }
+};
+
 export const createAdhocquery = async (data: any): Promise<ApiResponse> => {
     try {
       const response = await HttpClient.post(`/adhocquery`, data);

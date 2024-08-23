@@ -17,9 +17,9 @@ interface IForm {
   name: string;
   query: string;
   tableName: string;
-  tableFields: string; // Nuevo campo
+  tableFields: string;
   email?: string;
-  reportRunFrequency: string;
+  reportRunFrequency: number;
   isActive: boolean;
 }
 
@@ -28,9 +28,12 @@ const schema = yup.object().shape({
   name: yup.string().required("El nombre es obligatorio"),
   query: yup.string().required("La consulta SQL es obligatoria"),
   tableName: yup.string().required("El campo 'Insertar en la tabla' es obligatorio"),
-  tableFields: yup.string().required("El campo 'Campos de tabla' es obligatorio"), // Validación del nuevo campo
+  tableFields: yup.string().required("El campo 'Campos de tabla' es obligatorio"),
   email: yup.string().email("Debe ser un correo electrónico válido").optional(),
-  reportRunFrequency: yup.string().required("La frecuencia del reporte es obligatoria"),
+  reportRunFrequency: yup
+    .number()
+    .required("La frecuencia del reporte es obligatoria")
+    .typeError("La frecuencia del reporte debe ser un número"),
   isActive: yup.boolean().default(false).required("El estado es obligatorio"),
 });
 
@@ -50,7 +53,7 @@ export default function ReportForm() {
     setIsLoading(true);
     const response = await createAdhocquery({
       ...data,
-      reportFrequency: data.reportRunFrequency,
+      reportRunFrequency: data.reportRunFrequency,
     });
     if (response?.status === 200) {
       toast.success("Consulta Ad hoc creada correctamente");
@@ -151,6 +154,30 @@ export default function ReportForm() {
       <Grid item>
         <Controller
           control={control}
+          name="reportRunFrequency"
+          render={({ field: { onChange, value } }) => (
+            <InputSelect
+              label="Frecuencia del reporte *"
+              options={[
+                { label: "Diario", value: 1 },
+                { label: "Semanal", value: 2 },
+                { label: "Mensual", value: 3 },
+                { label: "Anual", value: 4 },
+                { label: "Personalizado", value: 5 },
+              ]}
+              setItem={item => onChange(item)} // Asignar solo el valor numérico
+              value={value}
+              hint={errors.reportRunFrequency?.message}
+              isValidField={!errors.reportRunFrequency}
+            />
+          )}
+        />
+      </Grid>
+
+      {/* Añadir campo de email después de "Frecuencia del reporte" */}
+      <Grid item>
+        <Controller
+          control={control}
           name="email"
           render={({ field: { onChange, value } }) => (
             <Input
@@ -160,27 +187,6 @@ export default function ReportForm() {
               onChange={onChange}
               hint={errors.email?.message}
               isValidField={!errors.email}
-            />
-          )}
-        />
-      </Grid>
-
-      <Grid>
-        <Controller
-          control={control}
-          name="reportRunFrequency"
-          render={({ field: { onChange, value } }) => (
-            <InputSelect
-              label="Frecuencia del reporte *"
-              options={[
-                { label: "Diario", value: "daily" },
-                { label: "Semanal", value: "weekly" },
-                { label: "Anual", value: "yearly" },
-              ]}
-              setItem={item => onChange(item)}
-              value={value}
-              hint={errors.reportRunFrequency?.message}
-              isValidField={!errors.reportRunFrequency}
             />
           )}
         />

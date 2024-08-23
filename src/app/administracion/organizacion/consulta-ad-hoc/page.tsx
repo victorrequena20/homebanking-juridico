@@ -136,7 +136,7 @@ export default function AdhocConsult() {
           disableRowSelectionOnClick
           rowSelection
           onRowClick={(params, event, details) =>
-            router.push(`/administracion/organizacion/config-tareas-realizador-aprobador`)
+            router.push(`/administracion/organizacion/consulta-ad-hoc/${78}`)
           }
           pageSizeOptions={[10, 25, 50]}
         />
