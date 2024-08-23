@@ -2,7 +2,7 @@
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Stack, Checkbox, FormControlLabel } from "@mui/material";
+import { Grid, Stack, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Input from "@/components/Input";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
@@ -10,7 +10,9 @@ import React from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-import { createAdhocquery } from "@/services/Adhoc.service";
+import { createAdhocquery, getAdhocTemplate } from "@/services/Adhoc.service";
+import { keyValueAdapter } from "@/adapters/keyValue.adapter";
+import Toggle from "@/components/Toggle";
 
 // Definición de la interfaz del formulario
 interface IForm {
@@ -19,7 +21,7 @@ interface IForm {
   tableName: string;
   tableFields: string;
   email?: string;
-  reportRunFrequency: number;
+  reportRunFrequency: any;
   isActive: boolean;
 }
 
@@ -30,18 +32,18 @@ const schema = yup.object().shape({
   tableName: yup.string().required("El campo 'Insertar en la tabla' es obligatorio"),
   tableFields: yup.string().required("El campo 'Campos de tabla' es obligatorio"),
   email: yup.string().email("Debe ser un correo electrónico válido").optional(),
-  reportRunFrequency: yup
-    .number()
-    .required("La frecuencia del reporte es obligatoria")
-    .typeError("La frecuencia del reporte debe ser un número"),
+  reportRunFrequency: yup.mixed().required("La frecuencia del reporte es obligatoria"),
   isActive: yup.boolean().default(false).required("El estado es obligatorio"),
 });
 
 export default function ReportForm() {
+  const [adhocTemplateData, setAdhocTemplateData] = React.useState<any | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isValid },
   } = useForm<IForm>({
     resolver: yupResolver(schema),
@@ -49,11 +51,22 @@ export default function ReportForm() {
   });
   const router = useRouter();
 
+  async function handleGetAdHocTemplateData() {
+    setIsLoading(true);
+    const response = await getAdhocTemplate();
+    if (response?.status === 200) {
+      setAdhocTemplateData(response?.data);
+    } else {
+      toast.error("Ocurrió un error al obtener la plantilla de consulta Ad Hoc");
+    }
+    setIsLoading(false);
+  }
+
   const onSubmit = async (data: IForm) => {
     setIsLoading(true);
     const response = await createAdhocquery({
       ...data,
-      reportRunFrequency: data.reportRunFrequency,
+      reportRunFrequency: data.reportRunFrequency?.value,
     });
     if (response?.status === 200) {
       toast.success("Consulta Ad hoc creada correctamente");
@@ -64,6 +77,10 @@ export default function ReportForm() {
     setIsLoading(false);
     console.log(data);
   };
+
+  React.useEffect(() => {
+    handleGetAdHocTemplateData();
+  }, []);
 
   return (
     <Grid
@@ -81,6 +98,7 @@ export default function ReportForm() {
         alignItems: "center",
         justifyContent: "center",
         mx: "auto",
+        mt: 3,
       }}
     >
       <Grid item>
@@ -158,14 +176,8 @@ export default function ReportForm() {
           render={({ field: { onChange, value } }) => (
             <InputSelect
               label="Frecuencia del reporte *"
-              options={[
-                { label: "Diario", value: 1 },
-                { label: "Semanal", value: 2 },
-                { label: "Mensual", value: 3 },
-                { label: "Anual", value: 4 },
-                { label: "Personalizado", value: 5 },
-              ]}
-              setItem={item => onChange(item)} // Asignar solo el valor numérico
+              options={keyValueAdapter(adhocTemplateData?.reportRunFrequencies, "value", "id")}
+              setItem={item => onChange(item)}
               value={value}
               hint={errors.reportRunFrequency?.message}
               isValidField={!errors.reportRunFrequency}
@@ -192,8 +204,8 @@ export default function ReportForm() {
         />
       </Grid>
 
-      <Grid item xs={10}>
-        <Controller
+      <Grid item xs={11}>
+        {/* <Controller
           control={control}
           name="isActive"
           render={({ field: { onChange, value } }) => (
@@ -202,7 +214,17 @@ export default function ReportForm() {
               label="Activo"
             />
           )}
-        />
+        /> */}
+        <Stack sx={{ flexDirection: "row", gap: 3, alignItems: "center" }}>
+          <Typography variant="body2" color="#484848">
+            Activo
+          </Typography>
+          <Toggle
+            isChecked={watch("isActive")}
+            size="small"
+            setIsChecked={() => setValue("isActive", !watch("isActive"))}
+          />
+        </Stack>
       </Grid>
 
       <Grid item xs={12}>
