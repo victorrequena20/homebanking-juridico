@@ -9,7 +9,6 @@ export default function RootLayout({ children }: any) {
     <html lang="es">
       <head>
         <title>Banco digital de caracas</title>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         {/* <link
