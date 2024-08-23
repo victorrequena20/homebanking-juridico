@@ -44,7 +44,6 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
       router.push("/auth/login");
     }
   }, [pathname, router]);
-
   return (
     <section>
       <Grid
