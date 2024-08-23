@@ -3,4 +3,5 @@ export interface IntermediateMenuItemProps {
   subtitle?: string;
   path: string;
   icon?: React.ReactNode;
+  flex?: number;
 }

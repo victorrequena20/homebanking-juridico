@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { IntermediateMenuItemProps } from "./IntermediateMenuItemProps";
 import Link from "next/link";
 
-export default function IntermediateMenuItem({ title, subtitle, path, icon }: IntermediateMenuItemProps) {
+export default function IntermediateMenuItem({ title, subtitle, path, icon, flex }: IntermediateMenuItemProps) {
   return (
     <Link href={path} style={{ cursor: "pointer" }}>
       <Box

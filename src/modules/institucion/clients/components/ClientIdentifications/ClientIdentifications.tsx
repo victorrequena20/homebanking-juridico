@@ -31,6 +31,7 @@ const schema = yup.object().shape({
 
 export default function ClientIdentifications() {
   const [identifiers, setIdentifiers] = React.useState<any>([]);
+  const [isLoadingIdentifiers, setIsLoadingIdentifiers] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [identifierTemplate, setIdentifierTemplate] = React.useState<any>([]);
   const [open, setOpen] = React.useState(false);
@@ -106,6 +107,7 @@ export default function ClientIdentifications() {
   }
 
   async function handleGetIdentifiers() {
+    setIsLoadingIdentifiers(true);
     const response = await getIdentifiers(params?.clientId);
     console.log("🚀 ~ handleGetIdentifiers ~ response:", response);
     if (response?.status === 200) {
@@ -113,6 +115,7 @@ export default function ClientIdentifications() {
     } else {
       toast.error("Error al obtener las identificaciones");
     }
+    setIsLoadingIdentifiers(false);
   }
 
   const onSubmit = async (data: IForm) => {

@@ -31,7 +31,7 @@ export default function AdministrationProductsPage() {
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           mx: "auto",
           gap: 3,
         }}
