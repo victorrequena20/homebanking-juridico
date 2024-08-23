@@ -109,6 +109,7 @@ export default function Clients() {
       </Stack>
       <Stack sx={{ mt: 3 }}>
         <DataGrid
+          sx={{ cursor: "pointer" }}
           rows={clients}
           columns={columns}
           initialState={{

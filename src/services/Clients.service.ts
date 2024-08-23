@@ -120,3 +120,17 @@ export const getAccountsById = async (clientId?: string) => {
     console.log("🚀 ~ getAccountsById ~ error:", error);
   }
 };
+
+// Actions
+export const clientActions = async (clientId?: string, data?: any, params?: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/clients/${clientId}`, data, { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ clientActions ~ error:", error);
+    throw error;
+  }
+};

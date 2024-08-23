@@ -1,29 +1,52 @@
-import React from "react";
+import React, { useContext } from "react";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import { Box, Stack, Typography, Tooltip } from "@mui/material";
 import Image from "next/image";
+import Button from "@/components/Button";
+import EditIcon from "@/assets/icons/EditIcon";
+import LockIcon from "@/assets/icons/LockIcon";
+import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
+import { ClientDetailsContext } from "../../context/ClientDetails/ClientDetails.context";
+import { useParams } from "next/navigation";
 
-export default function ClientDetailsHeader({ clientData }: { clientData: any }) {
+export default function ClientDetailsHeader({
+  clientData,
+  getClientData,
+}: {
+  clientData: any;
+  getClientData: () => void;
+}) {
+  const [isLoadingActivation, setIsLoadingActivation] = React.useState<boolean>(false);
+  const params = useParams();
+  const { activateUser } = useContext(ClientDetailsContext);
+
+  async function handleActivationUser() {
+    setIsLoadingActivation(true);
+    await activateUser(params.clientId);
+    getClientData();
+    setIsLoadingActivation(false);
+  }
+
   return (
-    <Stack sx={{ alignItems: "center", width: "100%" }}>
+    <Stack sx={{ alignItems: "center", maxWidth: "100%", px: 10, py: 1, bgcolor: "#f2f4f7" }}>
       <Stack
         sx={{
-          bgcolor: "#f2f4f7",
           width: "100%",
-          height: "300px",
+          py: 4,
           borderRadius: "16px",
-          justifyContent: "center",
-          boxShadow: "0px 4px 12px -4px #10182810",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          flexDirection: "row",
         }}
       >
-        <Stack sx={{ px: 4, flexDirection: "row", alignItems: "center" }}>
+        <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
           <Stack
             sx={{
               alignItems: "center",
               width: "160px",
               height: "160px",
               position: "relative",
-              borderRadius: "80px",
+              borderRadius: "20px",
             }}
           >
             {/* Status */}
@@ -67,7 +90,7 @@ export default function ClientDetailsHeader({ clientData }: { clientData: any })
             </Typography>
           </Stack>
           <Stack>
-            <Stack sx={{ pl: 4, gap: 1.5, py: 1 }}>
+            <Stack sx={{ pl: 6, gap: 1.5, py: 1 }}>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
                   Nombre del cliente:
@@ -113,7 +136,7 @@ export default function ClientDetailsHeader({ clientData }: { clientData: any })
                 </Stack>
               )}
             </Stack>
-            <Stack sx={{ pl: 4, gap: 1.5, pt: 3 }}>
+            <Stack sx={{ pl: 6, gap: 1.5, pt: 3 }}>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
                   Número de teléfono:
@@ -132,6 +155,30 @@ export default function ClientDetailsHeader({ clientData }: { clientData: any })
               </Stack>
             </Stack>
           </Stack>
+        </Stack>
+        <Stack>
+          <Box sx={{ gap: 3, display: "flex" }}>
+            {clientData?.status?.value === "Active" ? (
+              <Button
+                variant="warning-red"
+                iconLeft
+                icon={<LockIcon color={"#fff"} size={20} />}
+                text="Cerrar cliente"
+              />
+            ) : (
+              <Button
+                variant="success"
+                iconLeft
+                icon={<PersonHexagonalIcon color={"#fff"} size={26} />}
+                text="Activar cliente"
+                onClick={handleActivationUser}
+                asyncAction
+                isLoading={isLoadingActivation}
+              />
+            )}
+            <Button variant="primary" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" />
+            <Button variant="primary" text="Acciones" buttonList />
+          </Box>
         </Stack>
       </Stack>
     </Stack>
