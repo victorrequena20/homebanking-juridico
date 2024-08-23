@@ -8,6 +8,8 @@ import StepBox from "@/components/Stepper/StepBox";
 import { CreateLoanContext } from "../context/CreateLoan.context";
 import CreateLoanDetailsForm from "../components/CreateLoanDetailsForm";
 import CreateLoanCurrencyForm from "../components/CreateLoanCurrencyForm";
+import CreateLoanSettingsForm from "../components/CreateLoanSettingsForm";
+import CreateLoanConditionsForm from "../components/CreateLoanConditionsForm";
 
 export default function CreateLoan() {
   const { step, setStep } = useContext(CreateLoanContext);
@@ -15,12 +17,13 @@ export default function CreateLoan() {
   return (
     <Wrapper>
       <Breadcrumbs
-        title="Crear cliente"
+        title="Crear producto de crédito"
         items={[
           { title: "Inicio", href: "/dashboard" },
-          { title: "Institución" },
-          { title: "Clientes", href: "/institucion/clientes" },
-          { title: "Crear cliente" },
+          { title: "Administración" },
+          { title: "Productos", href: "/administracion/productos" },
+          { title: "Productos de crédito", href: "/administracion/productos/productos-de-creditos" },
+          { title: "Crear producto de crédito" },
         ]}
       />
       <Stack sx={{ mt: 3 }}>
@@ -44,6 +47,8 @@ export default function CreateLoan() {
 
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 1 && <CreateLoanDetailsForm />}</Stack>
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 2 && <CreateLoanCurrencyForm />}</Stack>
+      <Stack sx={{ mt: 3, mx: "auto" }}>{step === 3 && <CreateLoanSettingsForm />}</Stack>
+      <Stack sx={{ mt: 3, mx: "auto" }}>{step === 4 && <CreateLoanConditionsForm />}</Stack>
     </Wrapper>
   );
 }

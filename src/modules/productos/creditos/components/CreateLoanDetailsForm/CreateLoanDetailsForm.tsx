@@ -9,6 +9,7 @@ import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { CreateLoanContext } from "../../context/CreateLoan.context";
 import React, { useContext, useEffect } from "react";
+import Toggle from "@/components/Toggle";
 
 interface IForm {
   productName: string;
@@ -29,7 +30,8 @@ const schema = yup.object().shape({
 });
 
 export default function CreateLoanDetailsForm() {
-  const { handleChangeGlobalFormValues, loanProductsTemplate } = useContext(CreateLoanContext);
+  const { handleChangeGlobalFormValues, loanProductsTemplate, globalForm } = useContext(CreateLoanContext);
+  console.log("🚀 ~ CreateLoanDetailsForm ~ globalForm:", globalForm);
   const {
     control,
     handleSubmit,
@@ -169,6 +171,10 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
+
+      {/* <Grid item>
+        <Toggle label="Activo" isChecked={} setIsChecked={setIsActive} size="small" />
+      </Grid> */}
 
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" spacing={3}>

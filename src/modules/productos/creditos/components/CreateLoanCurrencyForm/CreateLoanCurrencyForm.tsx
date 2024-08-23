@@ -71,7 +71,7 @@ export default function CreateLoanCurrencyForm() {
           render={({ field: { onChange, value } }) => (
             <InputSelect
               label="Moneda *"
-              options={keyValueAdapter(loanProductsTemplate?.currencyOptions, "name", "id")}
+              options={keyValueAdapter(loanProductsTemplate?.currencyOptions, "name", "code")}
               setItem={item => onChange(item)}
               value={value}
               hint={errors.currencyCode?.message}
