@@ -9,6 +9,7 @@ import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface ILoginForm {
   username: string;
@@ -34,9 +35,13 @@ const LoginForm = () => {
         password,
       });
       const token = response.data.base64EncodedAuthenticationKey;
+      if (!token) {
+        toast.error("Usuario o contraseña incorrectos");
+      }
       localStorage.setItem("litecoreAuthToken", token);
       router.push("/dashboard");
     } catch (err) {
+      toast.error("Ocurrio un error al iniciar sesión");
       console.log("🚀 ~ handleLogin ~ err:", err);
     }
     setIsLoading(false);
