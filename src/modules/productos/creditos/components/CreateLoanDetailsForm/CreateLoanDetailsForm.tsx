@@ -8,7 +8,7 @@ import InputCalendar from "@/components/InputCalendar";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { CreateLoanContext } from "../../context/CreateLoan.context";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 interface IForm {
   productName: string;
@@ -29,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 export default function CreateLoanDetailsForm() {
-  const { handleChangeGlobalFormValues, loanProductsTemplate } = React.useContext(CreateLoanContext);
+  const { handleChangeGlobalFormValues, loanProductsTemplate } = useContext(CreateLoanContext);
   const {
     control,
     handleSubmit,

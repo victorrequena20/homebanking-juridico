@@ -38,6 +38,13 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     setShowAdministrationLinks(pathname.includes("/administracion"));
   }, [pathname]);
 
+  React.useEffect(() => {
+    const token = localStorage.getItem("litecoreAuthToken");
+    if (!token && Object.values(routeValidations).some(Boolean)) {
+      router.push("/auth/login");
+    }
+  }, [pathname, router]);
+
   return (
     <section>
       <Grid
@@ -78,6 +85,9 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                       gap: 1.5,
                       cursor: "pointer",
                       bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
+                      "&:hover": {
+                        bgcolor: "hsl(0, 0%, 12%)",
+                      },
                       "& > p": {
                         color: routeValidations.dashboard ? "#fff" : "#9aa3b8",
                       },
@@ -101,9 +111,11 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                       alignItems: "center",
                       gap: 1.5,
                       cursor: "pointer",
-
                       "& > p": {
                         color: routeValidations.institution ? "#fff" : "#9aa3b8",
+                      },
+                      "&:hover": {
+                        bgcolor: "hsl(0, 0%, 12%)",
                       },
                     }}
                     onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
@@ -239,6 +251,9 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                       display: "flex",
                       alignItems: "center",
                       gap: 1.5,
+                      "&:hover": {
+                        bgcolor: "hsl(0, 0%, 12%)",
+                      },
                       "& > p": {
                         color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
                       },

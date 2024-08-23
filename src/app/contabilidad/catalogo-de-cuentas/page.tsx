@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CatalogoCuentasPage() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
   const router = useRouter();
 
@@ -89,15 +90,17 @@ export default function CatalogoCuentasPage() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getGlAccounts();
       if (response?.status === 200) {
         setGlAccounts(response?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Catálogo de cuentas"
         items={[
