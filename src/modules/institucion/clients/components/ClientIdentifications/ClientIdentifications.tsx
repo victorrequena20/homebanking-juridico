@@ -1,5 +1,5 @@
 import RenderFormModal from "@/components/Modals/RenderFormModal";
-import { Stack, Grid } from "@mui/material";
+import { Stack, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Input from "@/components/Input";
@@ -8,9 +8,12 @@ import Button from "@/components/Button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import NotFoundData from "@/components/NotFoundData";
-import { getIdentifierTemplate } from "@/services/Clients.service";
+import { addIdentifier, getIdentifierTemplate, getIdentifiers } from "@/services/Clients.service";
 import { useParams } from "next/navigation";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
+import { toast } from "sonner";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
 
 interface IForm {
   documentTypeId: any;
@@ -27,6 +30,9 @@ const schema = yup.object().shape({
 });
 
 export default function ClientIdentifications() {
+  const [identifiers, setIdentifiers] = React.useState<any>([]);
+  const [isLoadingIdentifiers, setIsLoadingIdentifiers] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [identifierTemplate, setIdentifierTemplate] = React.useState<any>([]);
   const [open, setOpen] = React.useState(false);
   const params = useParams();
@@ -38,6 +44,59 @@ export default function ClientIdentifications() {
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+  const columns: GridColDef<(typeof identifiers)[number]>[] = [
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 1,
+      valueGetter: (value, row) => `${row.id || ""}`,
+    },
+    {
+      field: "description",
+      headerName: "Descripción",
+      flex: 1,
+      valueGetter: (value, row) => `${row.description || ""} `,
+    },
+    {
+      field: "documentKey",
+      headerName: "Clave de documento",
+      flex: 1,
+      valueGetter: (value, row) => `${row.documentKey || ""} `,
+    },
+    {
+      field: "documents",
+      headerName: "Documentos de identificación",
+      flex: 1,
+      valueGetter: (value, row) => `${""} `,
+    },
+    {
+      field: "status",
+      headerName: "Estado",
+      flex: 1,
+      valueGetter: (value, row) => `${row?.documentType?.active ? "Activo" : "Inactivo"} `,
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      flex: 1,
+      renderCell: params => (
+        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
+          <Box
+            sx={{
+              bgcolor: params?.row?.status ? "#E6F0E2" : "#FF8080",
+              width: "120px",
+              py: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+              display: "flex",
+              borderRadius: "16px",
+            }}
+          ></Box>
+        </Box>
+      ),
+      align: "center",
+    },
+  ];
 
   async function handleGetIdentifierTemplate() {
     const response = await getIdentifierTemplate(params?.clientId);
@@ -47,26 +106,75 @@ export default function ClientIdentifications() {
     }
   }
 
-  const onSubmit = (data: IForm) => {
-    console.log("Formulario enviado:", data);
-    setOpen(false);
+  async function handleGetIdentifiers() {
+    setIsLoadingIdentifiers(true);
+    const response = await getIdentifiers(params?.clientId);
+    console.log("🚀 ~ handleGetIdentifiers ~ response:", response);
+    if (response?.status === 200) {
+      setIdentifiers(response.data);
+    } else {
+      toast.error("Error al obtener las identificaciones");
+    }
+    setIsLoadingIdentifiers(false);
+  }
+
+  const onSubmit = async (data: IForm) => {
+    setIsLoading(true);
+    const response = await addIdentifier(
+      {
+        ...data,
+        documentTypeId: data.documentTypeId?.value,
+        status: data.status?.value,
+      },
+      params?.clientId?.toString()
+    );
+    if (response?.status === 200) {
+      toast.success("Identificación agregada correctamente");
+      setOpen(false);
+    } else {
+      toast.error("Error al agregar la identificación");
+    }
+    setIsLoading(false);
   };
 
   React.useEffect(() => {
     handleGetIdentifierTemplate();
+    handleGetIdentifiers();
   }, []);
 
   return (
     <>
       <Stack>
-        <NotFoundData
-          title="No hay identificaciones registradas"
-          withOutBack
-          action={{
-            title: "Agregar identificación",
-            onClick: () => setOpen(true),
-          }}
-        />
+        {identifiers?.length > 0 ? (
+          <Stack>
+            <Typography variant="h6">Identificaciones</Typography>
+            <DataGrid
+              rows={identifiers}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                    page: 0,
+                  },
+                },
+              }}
+              sx={{ mt: 3 }}
+              disableRowSelectionOnClick
+              rowSelection
+              pageSizeOptions={[10, 25, 50]}
+            />
+          </Stack>
+        ) : (
+          <NotFoundData
+            title="No hay identificaciones registradas"
+            withOutBack
+            action={{
+              title: "Agregar identificación",
+              onClick: () => setOpen(true),
+            }}
+          />
+        )}
       </Stack>
 
       <RenderFormModal title="Agregar identificación" isOpen={open} setIsOpen={setOpen} sx={{ maxWidth: "400px" }}>
@@ -161,7 +269,7 @@ export default function ClientIdentifications() {
           <Grid item xs={12} sx={{ mt: 2 }}>
             <Stack direction="row" justifyContent="center" sx={{ gap: 3 }}>
               <Button text="Cancelar" variant="navigation" onClick={() => setOpen(false)} />
-              <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} />
+              <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
             </Stack>
           </Grid>
         </Grid>

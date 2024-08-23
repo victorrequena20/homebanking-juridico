@@ -99,6 +99,15 @@ export const addIdentifier = async (data: any, clientId?: string): Promise<ApiRe
   }
 };
 
+export const getIdentifiers = async (clientId?: any) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}/identifiers`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getIdentifiers ~ error:", error);
+  }
+};
+
 // Accounts
 export const getAccountsById = async (clientId?: string) => {
   try {

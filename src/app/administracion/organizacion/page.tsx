@@ -45,7 +45,7 @@ export default function AdministrationOrganizationPage() {
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           mx: "auto",
           pb: 5,
           gap: 3,
