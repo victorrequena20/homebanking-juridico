@@ -35,3 +35,39 @@ export const createCharge = async (data: any) => {
     console.log("🚀 ~ createCharge ~ error:", error);
   }
 };
+
+export const createGuarantee = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/collateral-management", data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createGuarantee ~ error:", error);
+  }
+};
+
+export const getGuarantees = async () => {
+  try {
+    const response = await HttpClient.get("/collateral-management");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getGuarantees ~ error:", error);
+  }
+};
+
+export const getGuaranteesTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/collateral-management/template");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getGuaranteesTemplate ~ error:", error);
+  }
+};

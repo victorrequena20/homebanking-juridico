@@ -25,7 +25,6 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   // Hooks
   const router = useRouter();
-
   const handleLogin = async (data: any) => {
     const { username, password } = data;
     setIsLoading(true);

@@ -13,6 +13,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function CreditProducts() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [loanProducts, setLoanProducts] = React.useState<any | null>([]);
   const router = useRouter();
 
@@ -61,17 +62,17 @@ export default function CreditProducts() {
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getLoanProducts();
-      console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setLoanProducts(response?.data);
       }
-      console.log("🚀 ~ response:", response);
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Productos de crédito"
         items={[
