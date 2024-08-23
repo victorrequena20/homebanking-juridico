@@ -105,6 +105,7 @@ export default function ManejoPage() {
           {/* Eliminar */}
           {currencies?.selectedCurrencyOptions?.map((el: any) => (
             <Stack
+              key={el.name}
               sx={{
                 flexDirection: "row",
                 width: "100%",

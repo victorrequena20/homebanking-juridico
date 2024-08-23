@@ -40,7 +40,7 @@ export default function Clients() {
         <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
           <Box
             sx={{
-              bgcolor: "#E6F0E2",
+              bgcolor: params?.row?.status ? "#E6F0E2" : "#FF8080",
               width: "120px",
               py: 0.5,
               alignItems: "center",
@@ -49,7 +49,7 @@ export default function Clients() {
               borderRadius: "16px",
             }}
           >
-            <Typography variant="body2" fontWeight="600" color="#76BF66">
+            <Typography variant="body2" fontWeight="600" color={params?.row?.status ? "#76BF66" : "#A02334"}>
               {params.row.status ? "Activo" : "Inactivo"}
             </Typography>
           </Box>
@@ -123,7 +123,7 @@ export default function Clients() {
           rowSelection
           pageSizeOptions={[10, 25, 50]}
           onRowClick={params => {
-            router.push(`/institucion/clientes/${params?.row?.id}`);
+            router.push(`/institucion/clientes/${params?.row?.id}/general`);
           }}
         />
       </Stack>

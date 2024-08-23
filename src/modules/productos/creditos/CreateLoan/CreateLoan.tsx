@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
 import { Box, Stack } from "@mui/material";
@@ -10,7 +10,7 @@ import CreateLoanDetailsForm from "../components/CreateLoanDetailsForm";
 import CreateLoanCurrencyForm from "../components/CreateLoanCurrencyForm";
 
 export default function CreateLoan() {
-  const { step, setStep } = React.useContext(CreateLoanContext);
+  const { step, setStep } = useContext(CreateLoanContext);
 
   return (
     <Wrapper>

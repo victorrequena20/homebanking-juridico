@@ -1,5 +1,6 @@
 import React from "react";
+import ClientDetailsLayout from "@/components/Layouts/ClientDetailsLayout";
 
 export default function layout({ children }: any) {
-  return <div>{children}</div>;
+  return <ClientDetailsLayout>{children}</ClientDetailsLayout>;
 }

@@ -52,6 +52,62 @@ export const getTemplate = async (params?: any) => {
   }
 };
 
+export const getFamilyMembers = async (clientId?: string) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}/familymembers`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ gteFamilyMembers ~ error:", error);
+  }
+};
+
+export const addFamilyMember = async (data: any, clientId?: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/clients/${clientId}/familymembers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ createClient ~ error:", error);
+    throw error;
+  }
+};
+
+export const getIdentifierTemplate = async (clientId?: any) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}/identifiers/template`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getIdentifierTemplate ~ error:", error);
+  }
+};
+
+export const addIdentifier = async (data: any, clientId?: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/clients/${clientId}/identifiers`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ addIdentifier ~ error:", error);
+    throw error;
+  }
+};
+
+export const getIdentifiers = async (clientId?: any) => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}/identifiers`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getIdentifiers ~ error:", error);
+  }
+};
+
 // Accounts
 export const getAccountsById = async (clientId?: string) => {
   try {

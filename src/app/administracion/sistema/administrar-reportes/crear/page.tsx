@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import Toggle from "@/components/Toggle";
 import { useRouter } from "next/navigation";
 
-export interface IForm {
+interface IForm {
   reportName: string;
   reportType: any;
   reportSubType?: any;
@@ -24,7 +24,7 @@ export interface IForm {
   reportSql: string;
 }
 
-export const validationSchema = yup.object().shape({
+const validationSchema = yup.object().shape({
   reportName: yup.string().required("Nombre del reporte es requerido"),
   reportType: yup.mixed().required("Tipo de reporte es requerido"),
   reportSubType: yup.mixed(),

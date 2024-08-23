@@ -16,6 +16,10 @@ a:visited {
   text-decoration: none;
 }
 
+body {
+  max-height: 100vh;
+}
+
 a {
   cursor: pointer;
 }

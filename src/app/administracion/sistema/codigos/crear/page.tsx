@@ -12,7 +12,7 @@ import { createCode } from "@/services/Core.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export const schema = yup.object().shape({
+const schema = yup.object().shape({
   keyName: yup.string().required("El nombre clave es requerido"),
 });
 

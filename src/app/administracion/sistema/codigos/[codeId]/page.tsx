@@ -27,7 +27,7 @@ import EditCodeValueModal from "@/modules/administracion/sistema/components/Edit
 import TrashIcon from "@/assets/icons/TrashIcon";
 import EditIcon from "@/assets/icons/EditIcon";
 
-export const schema = yup.object().shape({
+const schema = yup.object().shape({
   keyName: yup.string().required("El nombre clave es requerido"),
 });
 

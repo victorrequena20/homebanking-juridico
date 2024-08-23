@@ -6,7 +6,7 @@ import Input from "@/components/Input";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { CreateLoanContext } from "../../context/CreateLoan.context";
 
 interface IForm {
@@ -24,7 +24,7 @@ const schema = yup.object().shape({
 });
 
 export default function CreateLoanCurrencyForm() {
-  const { handleChangeGlobalFormValues, loanProductsTemplate } = React.useContext(CreateLoanContext);
+  const { handleChangeGlobalFormValues, loanProductsTemplate } = useContext(CreateLoanContext);
   const {
     control,
     handleSubmit,

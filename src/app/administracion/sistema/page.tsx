@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import IntermediateMenuItem from "@/components/IntermediateMenuItem/IntermediateMenuItem";
 // Assets
 import BillIcon from "@/assets/icons/BillIcon";
@@ -19,6 +19,7 @@ import KeySquareIcon from "@/assets/icons/KeySquareIcon";
 import MessagesSendIcon from "@/assets/icons/MessagesSendIcon";
 import FilterIcon from "@/assets/icons/FilterIcon";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Link from "next/link";
 
 export default function AdministrationSystemPage() {
   return (
@@ -35,7 +36,7 @@ export default function AdministrationSystemPage() {
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           mx: "auto",
           gap: 3,
         }}

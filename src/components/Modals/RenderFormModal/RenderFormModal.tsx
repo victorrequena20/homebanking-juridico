@@ -1,9 +1,9 @@
 import React from "react";
 import { IRenderFormModalProps } from "./RenderFormModalProps";
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Modal, Stack, SxProps, Typography } from "@mui/material";
 
 export default function RenderFormModal({ isOpen = false, setIsOpen, title, children, sx }: IRenderFormModalProps) {
-  const style = {
+  const style: SxProps = {
     position: "absolute",
     display: "flex",
     flexDirection: "column",
