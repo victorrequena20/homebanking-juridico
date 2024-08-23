@@ -29,7 +29,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     administrationUsers: pathname.includes("/administracion/usuarios"),
     administrationOrganization: pathname.includes("/administracion/organizacion"),
     administrationSystem: pathname === "/administracion/sistema",
-    administrationProducts: pathname === "/administracion/productos",
+    administrationProducts: pathname.includes("/administracion/productos"),
     selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),
   };
 

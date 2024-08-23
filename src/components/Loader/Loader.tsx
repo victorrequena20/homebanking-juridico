@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+"use client";
+import React, { useEffect } from "react";
 import { ILoaderProps } from "./LoaderProps";
 
 export default function Loader({ size, color }: ILoaderProps) {
-  useEffect(() => {
+  React.useEffect(() => {
     async function getLoader() {
       const { dotPulse } = await import("ldrs");
       dotPulse.register();

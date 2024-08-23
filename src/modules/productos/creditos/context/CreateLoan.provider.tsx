@@ -23,10 +23,15 @@ export default function CreateLoanProvider(props: React.PropsWithChildren<{}>) {
     handleGetLoanProductsTemplate();
   }, []);
 
+  React.useEffect(() => {
+    console.log("🚀 ~ globalForm", globalForm);
+  }, [globalForm]);
+
   return (
     <CreateLoanContext.Provider
       value={{
         step,
+        globalForm,
         setStep,
         loanProductsTemplate,
         handleChangeGlobalFormValues,

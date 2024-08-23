@@ -107,8 +107,24 @@ export default function CreateChargePage() {
         ]}
       />
 
-      <Stack sx={{ mt: 5, width: "100%", maxWidth: "900px" }}>
-        <Grid container component="form" spacing={3} md={12} onSubmit={handleSubmit(onSubmit)}>
+      <Stack sx={{ mt: 3 }}>
+        <Grid
+          container
+          component="form"
+          md={12}
+          sx={{
+            gap: 3,
+            maxWidth: "1000px",
+            backgroundColor: "#fff",
+            px: 3,
+            py: 6,
+            borderRadius: "16px",
+            alignItems: "center",
+            justifyContent: "center",
+            mx: "auto",
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* El cargo se aplica a */}
           <Grid>
             <Controller
@@ -232,9 +248,11 @@ export default function CreateChargePage() {
             />
           </Grid>
           {/* Activo y multa */}
-          <Grid md={12}>
-            <Stack sx={{ gap: 3 }}>
-              <Toggle label="Activo" isChecked={isActive} setIsChecked={setIsActive} size="small" />
+          <Grid>
+            <Toggle label="Activo" isChecked={isActive} setIsChecked={setIsActive} size="small" />
+          </Grid>
+          <Grid>
+            <Stack sx={{ alignItems: "flex-end" }}>
               <Toggle label="Es multa" isChecked={isPenalty} setIsChecked={setIsPenalty} size="small" />
             </Stack>
           </Grid>

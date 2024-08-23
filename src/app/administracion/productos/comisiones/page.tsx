@@ -110,20 +110,20 @@ export default function ComisionesPage() {
             { title: "Comisiones" },
           ]}
         />
-
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            size="small"
-            variant="primary"
-            text="Crear cargo"
-            onClick={() => router.push("/administracion/productos/comisiones/crear")}
-          />
-        </Stack>
       </Stack>
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ alignItems: "flex-end", mt: 2 }}>
+        <Button
+          iconLeft
+          icon={<PlusIcon size={20} color="#fff" />}
+          size="small"
+          variant="primary"
+          text="Crear cargo"
+          onClick={() => router.push("/administracion/productos/comisiones/crear")}
+        />
+      </Stack>
+
+      <Stack sx={{ mt: 3 }}>
         <DataGrid
           sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={commissions}
