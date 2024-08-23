@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
-export default function UserDetails({ params }: { params: { userId: string } }) {
+export default function UserDetails({ params }: { params: { adhocId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isActiveUser, setIsActiveUser] = React.useState<boolean>(false);
@@ -29,7 +29,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
 
   const handleDeleteUser = async () => {
     try {
-      const response = await deleteUser(params?.userId);
+      const response = await deleteUser(params?.adhocId);
       if (response.status === 200) {
         router.push("/administracion/usuarios");
         toast.success("Usuario eliminado correctamente.");
@@ -44,7 +44,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await getUserById(params.userId);
+      const response = await getUserById(params.adhocId);
       if (response?.status) {
         setUserData(response?.data);
         setIsActiveUser(response?.data?.isSelfServiceUser);
