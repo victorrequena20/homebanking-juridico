@@ -40,7 +40,7 @@ export default function CentrosPage() {
         <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
           <Box
             sx={{
-              bgcolor: "#E6F0E2",
+              bgcolor: params?.row?.active ? "#E6F0E2" : "#FF8080",
               width: "120px",
               py: 0.5,
               alignItems: "center",
@@ -49,7 +49,7 @@ export default function CentrosPage() {
               borderRadius: "16px",
             }}
           >
-            <Typography variant="body2" fontWeight="600" color="#76BF66">
+            <Typography variant="body2" fontWeight="600" color={params?.row?.active ? "#76BF66" : "#A02334"}>
               {params.row.active ? "Activo" : "Inactivo"}
             </Typography>
           </Box>

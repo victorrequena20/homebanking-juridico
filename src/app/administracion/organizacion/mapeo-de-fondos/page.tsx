@@ -1,6 +1,9 @@
 import React from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
+import { Stack } from "@mui/material";
+import FundMapping from "@/modules/administracion/organizacion/components/FundMapping";
+import ButtonBack from "@/components/ButtonBack";
 
 export default function MapeoDeFondos() {
   return (
@@ -17,6 +20,14 @@ export default function MapeoDeFondos() {
           { title: "Mapeo de fondos" },
         ]}
       />
+
+      <Stack sx={{ mt: 3 }}>
+        <ButtonBack />
+      </Stack>
+
+      <Stack sx={{ mt: 3 }}>
+        <FundMapping />
+      </Stack>
     </Wrapper>
   );
 }

@@ -11,6 +11,14 @@ import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
 // Utils
 import { usePathname, useRouter } from "next/navigation";
 
+const gradients = [
+  "linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)",
+  "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",
+  "linear-gradient(to top, #ff0844 0%, #ffb199 100%)",
+  "linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%)",
+];
+const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   const [showInstitutionLinks, setShowInstitutionLinks] = React.useState<boolean>(false);
   const [showAdministrationLinks, setShowAdministrationLinks] = React.useState<boolean>(false);
@@ -331,7 +339,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                           Productos
                         </Typography>
                       </Box>
-                      <Box
+                      {/* <Box
                         sx={{
                           borderRadius: "8px",
                           py: 1,
@@ -346,7 +354,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                         <Typography variant="body2" fontWeight="200" color="#fff">
                           Plantillas
                         </Typography>
-                      </Box>
+                      </Box> */}
                     </Stack>
                   )}
                 </Stack>
@@ -385,7 +393,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     width: "42px",
                     height: "42px",
                     borderRadius: "40px",
-                    backgroundImage: "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",
+                    backgroundImage: randomGradient,
                   }}
                 />
                 <Stack sx={{ justifyContent: "center" }}>

@@ -24,7 +24,7 @@ export default function Button(props: IButtonProps) {
       ${variant === "success" && styles["btn-success"]}
       ${variant === "navigation" && styles["btn-navigation"]}
       ${disabled && styles["disabled"]}
-      ${(props.isLoading || isLoading) && styles["btn-laoding"]}
+      ${isLoading && styles["btn-laoding"]}
       ${iconLeft && styles["btn-reverse"]}
       ${props.buttonList && styles["btn-default"]}
       ${styles[size || "large"]}`}
@@ -33,12 +33,11 @@ export default function Button(props: IButtonProps) {
       {icon}
       {props.buttonList && <ArrowDownIcon size={20} color="#fff" />}
       {text}
-      {props.isLoading ||
-        (isLoading && (
-          <div className={styles.loaderBox}>
-            <Loader />
-          </div>
-        ))}
+      {isLoading && (
+        <div className={styles.loaderBox}>
+          <Loader />
+        </div>
+      )}
     </button>
   );
 }
