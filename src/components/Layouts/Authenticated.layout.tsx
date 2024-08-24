@@ -16,6 +16,7 @@ const gradients = [
   "linear-gradient(15deg, #13547a 0%, #80d0c7 100%)",
   "linear-gradient(to top, #ff0844 0%, #ffb199 100%)",
   "linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%)",
+  "linear-gradient(rgb(68, 101, 219) 0%, rgb(122, 218, 231) 100%)",
 ];
 const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
 
@@ -380,29 +381,39 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     }}
                     onClick={() => router.push("/dashboard")}
                   >
-                    <Typography variant="body2" fontWeight="200" color="#9aa3b8">
+                    <Typography variant="body2" fontSize={"13px"} fontWeight="400" color="#9aa3b8">
                       Configuración
                     </Typography>
                   </Box>
                 </Stack>
-                <Divider sx={{ width: "94%", mx: "auto", bgcolor: "#f3f3f330", mt: 1 }} />
+                <Divider sx={{ width: "94%", mx: "auto", bgcolor: "hsl(0, 0%, 16%)", mt: 1 }} />
               </Stack>
-              <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 2, mt: 2, width: "94%", mx: "auto" }}>
-                <Box
-                  sx={{
-                    width: "42px",
-                    height: "42px",
-                    borderRadius: "40px",
-                    backgroundImage: randomGradient,
-                  }}
-                />
-                <Stack sx={{ justifyContent: "center" }}>
-                  <Typography fontSize="14px" color="#9aa3b8">
-                    Litecore
-                  </Typography>
-                  <Typography fontSize="12px" color="#606778">
-                    Administrador
-                  </Typography>
+              <Stack
+                sx={{
+                  flexDirection: "row",
+                  mt: 2,
+                  width: "94%",
+                  mx: "auto",
+                  // border: "1px solid red",
+                }}
+              >
+                <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                  <Box
+                    sx={{
+                      width: "36px",
+                      height: "36px",
+                      borderRadius: "40px",
+                      backgroundImage: "linear-gradient(rgb(68, 101, 219) 0%, rgb(122, 218, 231) 100%)",
+                    }}
+                  />
+                  <Stack sx={{ justifyContent: "center" }}>
+                    <Typography fontSize="14px" color="#CAD0Db" fontWeight="300">
+                      Litecore
+                    </Typography>
+                    <Typography fontSize="12px" color="#9AA3B8" fontWeight="300">
+                      Administrador
+                    </Typography>
+                  </Stack>
                 </Stack>
               </Stack>
             </Stack>

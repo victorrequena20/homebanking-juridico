@@ -40,12 +40,14 @@ p {
 .css-1gd8mlw-MuiDataGrid-root .MuiDataGrid-container--bottom [role="row"] {
   border-width: 0 !important;
   border-color: transparent !important;
+  border: none !important;
 }
 
 .css-n3fyjk-MuiDataGrid-root .MuiDataGrid-container--top [role="row"],
 .css-n3fyjk-MuiDataGrid-root .MuiDataGrid-container--bottom [role="row"] {
   background-color: #f0f2f5 !important;
   border-width: 0 !important;
+  border: none !important;
   border-color: transparent !important;
 }
 
@@ -54,23 +56,28 @@ p {
   color: #7b8499 !important;
   font-size: 12px !important;
   font-weight: 200 !important;
+  font-family: "Inter", sans-serif !important;
   border-width: 0 !important;
+  border: none !important;
   border-color: transparent !important;
 }
 
 .css-n3fyjk-MuiDataGrid-root {
   border-width: 0 !important;
   border-color: transparent !important;
+  border: none !important;
 }
 
 .MuiDataGrid-virtualScrollerRenderZone .css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
   border-width: 0 !important;
   border-color: transparent !important;
+  border: none !important;
 }
 
 .MuiDataGrid-virtualScrollerRenderZone .css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
   border-width: 0 !important;
   border-color: transparent !important;
+  border: none !important;
 }
 .MuiDataGrid-row,
 .MuiDataGrid-row--firstVisible {
@@ -79,6 +86,56 @@ p {
   font-size: 12px;
   font-weight: 400;
   border-color: transparent !important;
+  border: none !important;
+}
+
+.MuiDataGrid-columnHeaders,
+.css-1pmk00y-MuiDataGrid-columnHeaders {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+.MuiDataGrid-topContainer,
+.MuiDataGrid-container--top,
+.css-1oudwrl {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+.MuiDataGrid-virtualScroller,
+.css-1793420-MuiDataGrid-virtualScroller {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+.css-yrdy0g-MuiDataGrid-columnHeaderRow {
+  background-color: #f0f2f5 !important;
+  border: none !important;
+}
+
+.css-1nxgbwl-MuiDataGrid-root .MuiDataGrid-row {
+  border-width: 0 !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+.MuiStack-root,
+.css-1qv92la-MuiStack-root * {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.MuiStack-root {
+  border: none !important;
+}
+.MuiDataGrid-root,
+.MuiDataGrid-root--densityStandard,
+.MuiDataGrid-withBorderColor,
+.css-1nxgbwl-MuiDataGrid-root {
+  border: none !important;
 }
 
 /* Animaciones */

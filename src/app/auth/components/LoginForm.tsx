@@ -3,13 +3,14 @@ import styles from "../login/auth.module.css";
 import React, { useState } from "react";
 import HttpClient from "@/utilities/HttpClient.utility";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Input from "@/components/Input";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import TextSlider from "./TextSlider";
 
 interface ILoginForm {
   username: string;
@@ -60,8 +61,69 @@ const LoginForm = () => {
           overflow: "hidden",
           position: "relative",
           pl: "10%",
+          justifyContent: "center",
         }}
       >
+        <Grid
+          md={6}
+          sx={{
+            mx: "auto",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Stack sx={{ alignItems: "center", mt: -8 }}>
+            <Box>
+              <Typography variant="h4" fontWeight="500" textAlign="start" color="#12141a">
+                Banco Digital de Caracas
+              </Typography>
+              <Typography variant="body2" fontWeight="300" color="#606778" maxWidth="50ch" sx={{ mt: 2 }}>
+                Accede a créditos con solo un click, más que un banco, somos tu aliado digital en cada paso de tu vida.
+              </Typography>
+              <Typography sx={{ mt: 2, cursor: "pointer" }} variant="body2">
+                ¿Olvidaste tu contraseña?
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSubmit(handleLogin)}
+                sx={{
+                  mt: 3,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                  rowGap: 3,
+                  maxWidth: "392px",
+                }}
+              >
+                <Controller
+                  control={control}
+                  name="username"
+                  render={({ field: { onChange, value } }) => (
+                    <Input label="Usuario" type="text" value={value} onChange={onChange} />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field: { onChange, value } }) => (
+                    <Input label="Contraseña" type="password" value={value} onChange={onChange} />
+                  )}
+                />
+                <Button
+                  variant="primary"
+                  size="small"
+                  text="Iniciar sesión"
+                  type="submit"
+                  isLoading={isLoading}
+                  disabled={!isValid || Object.keys(dirtyFields).length < 2}
+                />
+              </Box>
+            </Box>
+          </Stack>
+        </Grid>
+        <Grid md={6} sx={{ borderLeft: "1px solid #ccc", mt: -2 }}>
+          <TextSlider />
+        </Grid>
         <Box
           sx={{
             position: "absolute",
@@ -69,54 +131,8 @@ const LoginForm = () => {
             bottom: "-10px",
           }}
         >
-          <Image width={700} height={640} src="/assets/images/auth-login-img.png" alt="Image" />
+          <Image width={500} height={480} src="/assets/images/auth-login-img.png" alt="Image" />
         </Box>
-        <Grid md={11} sx={{ px: 3, mx: "auto" }}>
-          <Typography variant="h4" fontWeight="500" textAlign="start" color="#12141a">
-            Banco Digital de Caracas
-          </Typography>
-          <Typography variant="body2" fontWeight="300" color="#606778" maxWidth="40ch">
-            Más que un banco, somos tu aliado digital en cada paso de tu vida.
-          </Typography>
-          <Typography sx={{ mt: 1.5, cursor: "pointer" }} variant="body2">
-            ¿Olvidaste tu contraseña?
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit(handleLogin)}
-            sx={{
-              mt: 3,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              rowGap: 3,
-              maxWidth: "392px",
-            }}
-          >
-            <Controller
-              control={control}
-              name="username"
-              render={({ field: { onChange, value } }) => (
-                <Input label="Usuario" type="text" value={value} onChange={onChange} />
-              )}
-            />
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, value } }) => (
-                <Input label="Contraseña" type="password" value={value} onChange={onChange} />
-              )}
-            />
-            <Button
-              variant="primary"
-              size="small"
-              text="Entrar"
-              type="submit"
-              isLoading={isLoading}
-              disabled={!isValid || Object.keys(dirtyFields).length < 2}
-            />
-          </Box>
-        </Grid>
       </Grid>
     </div>
   );
