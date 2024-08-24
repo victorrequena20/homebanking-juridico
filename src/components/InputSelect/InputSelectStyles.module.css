@@ -6,6 +6,7 @@
   max-width: 360px;
   text-indent: 16px;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .container {

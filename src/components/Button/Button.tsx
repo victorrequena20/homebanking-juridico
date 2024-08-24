@@ -8,6 +8,13 @@ import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
 export default function Button(props: IButtonProps) {
   const [isLoading, setIsLoading] = React.useState(false);
   const { text, variant = "primary", size = "small", icon, disabled, iconLeft, type } = props;
+
+  async function handleAction() {
+    setIsLoading(true);
+    props.onClick && (await props.onClick());
+    setIsLoading(false);
+  }
+
   return (
     <button
       disabled={disabled}
@@ -17,30 +24,21 @@ export default function Button(props: IButtonProps) {
       ${variant === "success" && styles["btn-success"]}
       ${variant === "navigation" && styles["btn-navigation"]}
       ${disabled && styles["disabled"]}
-      ${props.isLoading && styles["btn-laoding"]}
+      ${(props.isLoading || isLoading) && styles["btn-laoding"]}
       ${iconLeft && styles["btn-reverse"]}
       ${props.buttonList && styles["btn-default"]}
       ${styles[size || "large"]}`}
-      onClick={() => {
-        if (props.asyncAction) {
-          (async () => {
-            setIsLoading(true);
-            await props.onClick?.();
-            setIsLoading(false);
-          })();
-        } else {
-          props.onClick?.();
-        }
-      }}
+      onClick={handleAction}
     >
       {icon}
       {props.buttonList && <ArrowDownIcon size={20} color="#fff" />}
       {text}
-      {props.isLoading && (
-        <div className={styles.loaderBox}>
-          <Loader />
-        </div>
-      )}
+      {props.isLoading ||
+        (isLoading && (
+          <div className={styles.loaderBox}>
+            <Loader />
+          </div>
+        ))}
     </button>
   );
 }

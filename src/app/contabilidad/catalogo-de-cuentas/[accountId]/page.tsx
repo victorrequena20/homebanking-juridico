@@ -9,23 +9,66 @@ import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
+import { deleteGlAccount, getGlAccountsTemplateById, updateGlAccount } from "@/services/Accounting.service";
+import { toast } from "sonner";
 
 export default function AccountDetailPage({ params }: { params: { accountId: string } }) {
+  const [isDisabled, setIsDisabled] = React.useState<boolean>(true);
+  const [isLoadingInfo, setIsLoadingInfo] = React.useState<boolean>(false);
+  const [templateByIdData, setTemplateByIdData] = React.useState<any>({});
   const router = useRouter();
+
+  async function handleGetTemplateById() {
+    setIsLoadingInfo(true);
+    const response = await getGlAccountsTemplateById(params?.accountId);
+    if (response?.status === 200) {
+      setTemplateByIdData(response?.data);
+      setIsDisabled(response?.data?.disabled);
+    } else {
+      toast.error("Error al obtener los datos de la cuenta.");
+    }
+    setIsLoadingInfo(false);
+  }
+
+  async function handleDeleteUser() {
+    const response = await deleteGlAccount(params?.accountId);
+    if (response?.status === 200) {
+      toast.success("Cuenta eliminada correctamente.");
+      router.push("/contabilidad/catalogo-de-cuentas");
+    } else {
+      toast.error("Error al eliminar la cuenta.");
+    }
+  }
+
+  async function handleDeactivateAccount() {
+    const response = await updateGlAccount({ disabled: !isDisabled }, params?.accountId);
+    if (response?.status === 200) {
+      toast.success(`Cuenta ${isDisabled ? "activada" : "desactivada"} correctamente`);
+      setIsDisabled(!isDisabled);
+    } else {
+      toast.error("Error al desactivar la cuenta.");
+    }
+  }
+
+  React.useEffect(() => {
+    handleGetTemplateById();
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoadingInfo}>
       <Breadcrumbs
         items={[
           { title: "Inicio" },
           { title: "Administración" },
           { title: "Contabilidad", href: "/contabilidad" },
-          { title: "CUENTAS CONTINGENTES" },
+          { title: "Catálogo de cuentas", href: "/contabilidad/catalogo-de-cuentas" },
+          { title: templateByIdData?.name },
         ]}
       />
 
       <Stack sx={{ mt: 5 }}>
         <Typography variant="h4" fontWeight="600">
-          CUENTAS CONTINGENTES
+          {templateByIdData?.name}
         </Typography>
         <Typography variant="body1" fontWeight="300" color="#606778">
           Los detalles de esta cuenta se encuentran debajo.
@@ -66,7 +109,7 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
             Número de cuenta
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            600.00
+            {templateByIdData?.glCode}
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
@@ -74,7 +117,7 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
             Uso de la cuenta
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            HEADER
+            {templateByIdData?.usage?.value}
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
@@ -82,9 +125,19 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
             Permitir entradas manuales
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            Sí
+            {templateByIdData?.manualEntriesAllowed ? "Sí" : "No"}
           </Typography>
         </Stack>
+        {templateByIdData?.description && (
+          <Stack sx={detailRowStyles}>
+            <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
+              Descripción
+            </Typography>
+            <Typography variant="body2" fontWeight="400">
+              {templateByIdData?.description}
+            </Typography>
+          </Stack>
+        )}
 
         {/* Agregar cuenta auxiliar */}
         <Stack sx={detailRowWithAction}>
@@ -104,12 +157,12 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
         {/* Activación / desactivación */}
         <Stack sx={detailRowWithAction}>
           <Typography variant="body2" fontWeight="400" color="#12141a">
-            Desactivar cuenta
+            {isDisabled ? "Activar" : "Desactivar"} cuenta
           </Typography>
-          <ConfirmDeleteModal
-            buttonText="Desactivar"
-            title="¿Estás seguro de que deseas eliminar esta cuenta?"
-            //   actionCallback={handleDeleteUser}
+          <Button
+            text={isDisabled ? "Activar" : "Desactivar"}
+            variant={isDisabled ? "success" : "warning-red"}
+            onClick={() => handleDeactivateAccount()}
           />
         </Stack>
         {/* Eliminar */}
@@ -119,7 +172,7 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
           </Typography>
           <ConfirmDeleteModal
             title="¿Estás seguro de que deseas eliminar esta cuenta?"
-            //   actionCallback={handleDeleteUser}
+            actionCallback={handleDeleteUser}
           />
         </Stack>
       </Stack>

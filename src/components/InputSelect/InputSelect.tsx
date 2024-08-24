@@ -101,7 +101,7 @@ export default function InputSelect({
   };
 
   return (
-    <Box sx={{ maxWidth: "392px", position: "relative" }} ref={selectRef}>
+    <Box sx={{ maxWidth: "392px", position: "relative", cursor: "pointer" }} ref={selectRef}>
       <Typography variant="body2" color="#606778">
         {label}
       </Typography>

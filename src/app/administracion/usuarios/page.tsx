@@ -89,6 +89,7 @@ export default function AdministrationUsersPage() {
       </Stack>
       <Stack sx={{ mt: 3 }}>
         <DataGrid
+          sx={{ cursor: "pointer" }}
           rows={users}
           columns={columns}
           loading={isLoading}
