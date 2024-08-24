@@ -87,7 +87,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
             <Typography variant="h4" color="#12141a">
               {userData?.username}
             </Typography>
-            <Typography variant="body1" fontWeight="300" color="#606778">
+            <Typography variant="body2" fontWeight="400" color="#606778">
               Los detalles de este usuario se encuentran debajo.
             </Typography>
           </Stack>

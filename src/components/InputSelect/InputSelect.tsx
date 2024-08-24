@@ -102,7 +102,7 @@ export default function InputSelect({
 
   return (
     <Box sx={{ maxWidth: "392px", position: "relative", cursor: "pointer" }} ref={selectRef}>
-      <Typography variant="body2" color="#606778">
+      <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
       <div
@@ -119,6 +119,7 @@ export default function InputSelect({
                 : "Seleccione opciones"
               : value?.label || valueSelected?.label || "Seleccione una opción"
           }
+          style={{ color: value?.label || valueSelected?.label ? "#12141a" : "#606778" }}
           readOnly
         />
         <Box

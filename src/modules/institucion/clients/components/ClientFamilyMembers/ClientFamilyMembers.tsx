@@ -84,7 +84,7 @@ export default function ClientFamilyMembers({ formAction, mode = "create" }: Cli
         </Stack>
       )}
       <RenderFormModal title="Agregar miembro de familia" isOpen={open} setIsOpen={setOpen}>
-        <AddFamilyMembersForm onClose={handleClose} mode="create" />
+        <AddFamilyMembersForm onClose={handleClose} mode={mode === "create" ? "step" : "create"} />
       </RenderFormModal>
     </>
   );

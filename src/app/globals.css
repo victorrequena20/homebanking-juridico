@@ -122,15 +122,6 @@ p {
   border: none !important;
 }
 
-.MuiStack-root,
-.css-1qv92la-MuiStack-root * {
-  border-left: none !important;
-  border-right: none !important;
-}
-
-.MuiStack-root {
-  border: none !important;
-}
 .MuiDataGrid-root,
 .MuiDataGrid-root--densityStandard,
 .MuiDataGrid-withBorderColor,
