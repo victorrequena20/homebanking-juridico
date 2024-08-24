@@ -103,7 +103,7 @@ const TextSlider = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
           gap: "8px",
           mx: "auto",
@@ -122,7 +122,7 @@ const TextSlider = () => {
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              backgroundColor: currentIndex === index ? "#333" : "#bbb",
+              backgroundColor: currentIndex === index ? "#484848" : "#60677820",
               cursor: "pointer",
             }}
             whileHover={{ scale: 1.2 }}

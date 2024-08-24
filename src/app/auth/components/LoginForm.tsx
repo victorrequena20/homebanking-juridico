@@ -131,7 +131,7 @@ const LoginForm = () => {
             bottom: "-10px",
           }}
         >
-          <Image width={500} height={480} src="/assets/images/auth-login-img.png" alt="Image" />
+          <Image width={530} height={570} src="/assets/images/auth-login-img.png" alt="Image" />
         </Box>
       </Grid>
     </div>

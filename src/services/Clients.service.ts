@@ -108,6 +108,28 @@ export const getIdentifiers = async (clientId?: any) => {
   }
 };
 
+export const getClientAddressesTemplate = async () => {
+  try {
+    const response = await HttpClient.get(`/client/addresses/template`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getClientAddressesTemplate ~ error:", error);
+  }
+};
+
+export const addAddress = async (data: any, clientId: any, type: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/client/${clientId}/address`, data, { params: { type } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ addAddress ~ error:", error);
+    throw error;
+  }
+};
+
 // Accounts
 export const getAccountsById = async (clientId?: string) => {
   try {
