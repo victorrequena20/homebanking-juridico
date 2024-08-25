@@ -29,7 +29,7 @@ const gridContainerStyles: SxProps = {
   borderBottom: "8px solid var(--darkBg)",
   borderLeft: "8px solid var(--darkBg)",
   borderRight: "8px solid var(--darkBg)",
-  borderRadius: "24px",
+  borderRadius: "32px",
   overflow: "auto",
   maxWidth: "100vw",
 };
@@ -37,7 +37,7 @@ const gridContainerStyles: SxProps = {
 const sidebarItemStyles: SxProps = {
   borderRadius: "8px",
   py: 1,
-  px: 2,
+  px: 1,
   display: "flex",
   alignItems: "center",
   gap: 1.5,
@@ -78,7 +78,7 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   px: 4,
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                 }}
               >
                 <Breadcrumbs
@@ -94,10 +94,12 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                     height: "24px",
                     borderRadius: "24px",
                     cursor: "pointer",
+                    mr: -1,
+                    mt: 0.5,
                   }}
                   onClick={() => router.push("/institucion/clientes")}
                 >
-                  <GridCloseIcon sx={{ color: "#fff", fontSize: "16px" }} />
+                  <GridCloseIcon sx={{ color: "#fff", fontSize: "15.5px" }} />
                 </Box>
               </Stack>
             </Stack>

@@ -10,6 +10,7 @@ import ReportIcon from "@/assets/icons/ReportIcon";
 import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
 // Utils
 import { usePathname, useRouter } from "next/navigation";
+import ExitIcon from "@/assets/icons/ExitIcon";
 
 const gradients = [
   "linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)",
@@ -391,10 +392,19 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
               <Stack
                 sx={{
                   flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                   mt: 2,
                   width: "94%",
                   mx: "auto",
-                  // border: "1px solid red",
+                  "& svg": {
+                    display: "none",
+                  },
+                  "&:hover": {
+                    "& svg": {
+                      display: "block",
+                    },
+                  },
                 }}
               >
                 <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
@@ -415,6 +425,23 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     </Typography>
                   </Stack>
                 </Stack>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    "&:hover": {
+                      bgcolor: "#ffffff10",
+                    },
+                  }}
+                  onClick={() => router.push("/auth/login")}
+                >
+                  <ExitIcon />
+                </Box>
               </Stack>
             </Stack>
           </Stack>

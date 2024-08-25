@@ -8,7 +8,7 @@ import RenderFormModal from "@/components/Modals/RenderFormModal";
 import ClientAddressForm from "@/modules/institucion/clients/components/ClientAddressForm";
 
 export default function DomicilioPage() {
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
   const router = useRouter();
   const params = useParams();
   return (
@@ -20,7 +20,7 @@ export default function DomicilioPage() {
           action={{
             title: "Agregar domicilio",
             onClick: () => {
-              // router.push(`/institucion/clientes/${params.clientId}/domicilio/crear`);
+              setOpen(true);
             },
           }}
         />
