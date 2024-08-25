@@ -11,6 +11,9 @@ import Link from "next/link";
 import Image from "next/image";
 import LineChart from "@/components/Charts/LineChart";
 import PieChart from "@/components/Charts/PieChart";
+import ReportIcon from "@/assets/icons/ReportIcon";
+import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
+import OfficesIcon from "@/assets/icons/OfficesIcon";
 
 interface RawDataPoint {
   count: number;
@@ -101,169 +104,168 @@ export default function DashboardPage() {
         </Stack>
       </Stack>
 
-      <Box sx={{ mt: 4, width: "auto", display: "flex", maxWidth: "1050px" }}>
-        <Stack sx={{ flexDirection: "column", columnGap: 3 }}>
-          <Stack direction="row" gap={3}>
-            <Box
-              sx={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "16px",
-                backgroundColor: "var(--secondaryBg)",
-                p: 2,
-              }}
-            >
-              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+      <Stack sx={{ flexDirection: "row", gap: 6 }}>
+        <Stack sx={{ flex: 2 }}>
+          <Box sx={{ mt: 4, width: "auto", display: "flex", maxWidth: "1050px" }}>
+            <Stack sx={{ width: "100%", flexDirection: "column", columnGap: 3 }}>
+              <Stack sx={{ width: "100%", flexDirection: "row", gap: 3 }}>
                 <Box
                   sx={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#07195215",
-                    border: "1px solid #E4E7EC",
+                    width: "100%",
+                    maxWidth: "300px",
+                    height: "auto",
+                    borderRadius: "16px",
+                    backgroundColor: "#fff",
+                    p: 2,
                   }}
                 >
-                  <PeopleIcon size={26} color="#12141a" />
-                </Box>
-                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                  <Typography variant="body1" fontWeight="300">
-                    Total de clientes
-                  </Typography>
-                  <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                    <Typography variant="h5" fontWeight="600">
-                      115
-                    </Typography>
-                    <Typography variant="caption" fontWeight="400" color="#067647">
-                      +15%
-                    </Typography>{" "}
+                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        bgcolor: "#07195210",
+                      }}
+                    >
+                      <PeopleIcon size={26} color="#12141a" />
+                    </Box>
+                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                      <Typography variant="body1" fontWeight="300">
+                        Total de clientes
+                      </Typography>
+                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+                        <Typography variant="h5" fontWeight="600">
+                          115
+                        </Typography>
+                        <Typography variant="caption" fontWeight="400" color="#067647">
+                          +15%
+                        </Typography>{" "}
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Stack>
-            </Box>
-            <Box
-              sx={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "16px",
-                backgroundColor: "var(--secondaryBg)",
-                p: 2,
-                // border: "1px solid black",
-              }}
-            >
-              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                </Box>
                 <Box
                   sx={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#07195215",
-                    border: "1px solid #E4E7EC",
+                    width: "100%",
+                    maxWidth: "300px",
+                    height: "auto",
+                    borderRadius: "16px",
+                    backgroundColor: "#fff",
+                    p: 2,
                   }}
                 >
-                  <PersonHexagonalIcon strokeWidth="1.5" size={28} color="#12141a" />
-                </Box>
-                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                  <Typography variant="body1" fontWeight="300">
-                    Total de usuarios
-                  </Typography>
-                  <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                    <Typography variant="h5" fontWeight="600">
-                      72
-                    </Typography>
-                    <Typography variant="caption" fontWeight="400" color="#067647">
-                      +80.5%
-                    </Typography>{" "}
+                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        bgcolor: "#07195210",
+                      }}
+                    >
+                      <PersonHexagonalIcon strokeWidth="1.5" size={28} color="#12141a" />
+                    </Box>
+                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                      <Typography variant="body1" fontWeight="300">
+                        Total de usuarios
+                      </Typography>
+                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+                        <Typography variant="h5" fontWeight="600">
+                          72
+                        </Typography>
+                        <Typography variant="caption" fontWeight="400" color="#067647">
+                          +80.5%
+                        </Typography>{" "}
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Stack>
-            </Box>
-            <Box
-              sx={{
-                width: "300px",
-                height: "auto",
-                borderRadius: "16px",
-                backgroundColor: "var(--secondaryBg)",
-                p: 2,
-                // border: "1px solid black",
-              }}
-            >
-              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                </Box>
                 <Box
                   sx={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "10px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#07195215",
-                    border: "1px solid #E4E7EC",
+                    width: "100%",
+                    maxWidth: "300px",
+                    height: "auto",
+                    borderRadius: "16px",
+                    backgroundColor: "#fff",
+                    p: 2,
                   }}
                 >
-                  <WalletAddIcon size={28} color="#12141a" />
-                </Box>
-                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                  <Typography variant="body1" fontWeight="300">
-                    Créditos otorgados
-                  </Typography>
+                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        bgcolor: "#07195210",
+                      }}
+                    >
+                      <WalletAddIcon size={28} color="#12141a" />
+                    </Box>
+                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                      <Typography variant="body1" fontWeight="300">
+                        Créditos otorgados
+                      </Typography>
 
-                  <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                    <Typography variant="h5" fontWeight="600">
-                      1.203
-                    </Typography>
-                    <Typography variant="caption" fontWeight="400" color="#067647">
-                      +7.5%
-                    </Typography>{" "}
+                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
+                        <Typography variant="h5" fontWeight="600">
+                          1.203
+                        </Typography>
+                        <Typography variant="caption" fontWeight="400" color="#067647">
+                          +7.5%
+                        </Typography>{" "}
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
+                </Box>
               </Stack>
-            </Box>
-          </Stack>
-        </Stack>
-      </Box>
-      <Stack
-        sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 8,
-          swidth: "100%",
-        }}
-      >
-        <Stack
-          sx={{
-            display: "flex",
-            maxWidth: "100%",
-            height: "100%",
-            flex: 1,
-            mt: 7,
-          }}
-        >
-          <Typography variant="h6" fontWeight="400">
-            Actividad de clientes la última semana
-          </Typography>
-          <Box
+            </Stack>
+          </Box>
+          <Stack
             sx={{
-              border: "1px solid #bac3d420",
-              display: "inline-flex",
-              flexDirection: "column",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 8,
               width: "100%",
-              maxWidth: "1030px",
-              px: 0,
-              borderRadius: "8px",
-              mt: 2,
             }}
           >
-            {chartData.length > 0 && <LineChart data={chartData} />}
-          </Box>
-        </Stack>
-        <Stack sx={{ mt: 7 }}>
+            <Stack
+              sx={{
+                display: "flex",
+                maxWidth: "100%",
+                height: "100%",
+                flex: 1,
+                mt: 7,
+              }}
+            >
+              <Typography variant="body1" sx={{ ml: 1 }} fontWeight="300" color="var(--secondaryText)">
+                Actividad de clientes la última semana
+              </Typography>
+              <Box
+                sx={{
+                  border: "1px solid #bac3d420",
+                  display: "inline-flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  px: 0,
+                  borderRadius: "8px",
+                  mt: 2,
+                }}
+              >
+                {chartData.length > 0 && <LineChart data={chartData} />}
+              </Box>
+            </Stack>
+            {/* <Stack sx={{ mt: 7 }}>
           <Typography variant="h6" fontWeight="400">
             Monto Pendiente / Desembolsado
           </Typography>
@@ -281,6 +283,181 @@ export default function DashboardPage() {
             }}
           >
             <PieChart />
+          </Stack>
+        </Stack> */}
+          </Stack>
+        </Stack>
+        <Stack
+          sx={{
+            flex: 1,
+            width: "100%",
+            maxWidth: "360px",
+            height: "100%",
+            alignItems: "center",
+            mt: 4,
+            bgcolor: "#ffffff",
+            px: 2,
+            py: 4,
+            pt: 2,
+            borderRadius: "8px",
+          }}
+        >
+          <Stack sx={{ gap: 2 }}>
+            <Typography variant="body2" color="var(--secondaryText)">
+              Navegación rapida
+            </Typography>
+            <Box
+              sx={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "8px",
+                backgroundColor: "var(--secondaryBg)",
+                p: 1,
+              }}
+            >
+              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    bgcolor: "#07195210",
+                  }}
+                >
+                  <PeopleIcon size={16} color="#12141a" />
+                </Box>
+                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                  <Typography variant="caption" fontWeight="300">
+                    CLientes
+                  </Typography>
+                  <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
+                      Visualizar clientes del sistema.
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+                  <ArrowRightIcon color="#484848" size={16} />
+                </Box>
+              </Stack>
+            </Box>
+            <Box
+              sx={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "8px",
+                backgroundColor: "var(--secondaryBg)",
+                p: 1,
+              }}
+            >
+              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    bgcolor: "#07195210",
+                  }}
+                >
+                  <ReportIcon size={16} color="#12141a" />
+                </Box>
+                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                  <Typography variant="caption" fontWeight="300">
+                    Reportes
+                  </Typography>
+                  <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
+                      Visualizar reportes del sistema.
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+                  <ArrowRightIcon color="#484848" size={16} />
+                </Box>
+              </Stack>
+            </Box>
+            <Box
+              sx={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "8px",
+                backgroundColor: "var(--secondaryBg)",
+                p: 1,
+              }}
+            >
+              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    bgcolor: "#07195210",
+                  }}
+                >
+                  <PersonHexagonalIcon size={18} strokeWidth="1.5" color="#12141a" />
+                </Box>
+                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                  <Typography variant="caption" fontWeight="300">
+                    Usuarios
+                  </Typography>
+                  <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
+                      Visualizar usuarios del sistema.
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+                  <ArrowRightIcon color="#484848" size={16} />
+                </Box>
+              </Stack>
+            </Box>
+            <Box
+              sx={{
+                width: "300px",
+                height: "auto",
+                borderRadius: "8px",
+                backgroundColor: "var(--secondaryBg)",
+                p: 1,
+              }}
+            >
+              <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    bgcolor: "#07195210",
+                  }}
+                >
+                  <OfficesIcon size={16} color="#12141a" />
+                </Box>
+                <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
+                  <Typography variant="caption" fontWeight="300">
+                    Oficinas
+                  </Typography>
+                  <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
+                      Visualizar oficinas del sistema.
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+                  <ArrowRightIcon color="#484848" size={16} />
+                </Box>
+              </Stack>
+            </Box>
           </Stack>
         </Stack>
       </Stack>
