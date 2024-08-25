@@ -211,11 +211,11 @@ export default function ClientDetails({ params }: { params: { clientId: string }
     <>
       {clientData ? (
         <>
-          <Grid xs={10.2} sx={{ overflow: "auto" }}>
+          <Grid xs={10.2} sx={{ overflow: "auto", height: "100%" }}>
             <ClientDetailsHeader clientData={clientData} getClientData={getClientData} />
 
             {/* Creditos */}
-            <Stack sx={{ maWidth: "100%", mt: 5, px: 10 }}>
+            <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
               <Stack sx={{ justifyContent: "center" }}>
                 <Typography variant="body1" color="var(--secondaryText)">
                   Cuentas de crédito

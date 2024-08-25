@@ -30,7 +30,7 @@ const gridContainerStyles: SxProps = {
   borderLeft: "8px solid var(--darkBg)",
   borderRight: "8px solid var(--darkBg)",
   borderRadius: "32px",
-  overflow: "auto",
+  overflow: "hidden",
   maxWidth: "100vw",
 };
 

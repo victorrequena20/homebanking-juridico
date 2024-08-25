@@ -88,7 +88,21 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
   }, [watch()]);
 
   return (
-    <Stack sx={{ gap: 3 }} component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Stack
+      sx={{
+        gap: 3,
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+      }}
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Stack sx={{ flexDirection: "row", gap: 3 }}>
         <Stack>
           <Controller
@@ -106,7 +120,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
             )}
           />
         </Stack>
-        {isActive && (
+        {isActive ? (
           <Stack>
             <Controller
               control={control}
@@ -122,6 +136,10 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
                 />
               )}
             />
+          </Stack>
+        ) : (
+          <Stack sx={{ opacity: 0 }}>
+            <Stack sx={{ minWidth: "392px" }} />
           </Stack>
         )}
       </Stack>
