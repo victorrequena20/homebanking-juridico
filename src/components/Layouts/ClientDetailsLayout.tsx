@@ -4,6 +4,7 @@ import { Box, SxProps, Grid, Typography, Stack } from "@mui/material";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import ClientDetailsProvider from "@/modules/institucion/clients/context/ClientDetails/ClientDetails.provider";
 
 const containerStyles: SxProps = {
   position: "absolute",
@@ -28,7 +29,7 @@ const gridContainerStyles: SxProps = {
   borderBottom: "8px solid var(--darkBg)",
   borderLeft: "8px solid var(--darkBg)",
   borderRight: "8px solid var(--darkBg)",
-  borderRadius: "24px",
+  borderRadius: "32px",
   overflow: "auto",
   maxWidth: "100vw",
 };
@@ -36,7 +37,7 @@ const gridContainerStyles: SxProps = {
 const sidebarItemStyles: SxProps = {
   borderRadius: "8px",
   py: 1,
-  px: 2,
+  px: 1,
   display: "flex",
   alignItems: "center",
   gap: 1.5,
@@ -57,85 +58,93 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
   const isIdentificacionesPage = pathname.includes("identificaciones");
 
   return (
-    <Box sx={containerStyles}>
-      <Grid container sx={gridContainerStyles}>
-        <Grid item xs={12} sx={{ pt: 2 }}>
-          <Stack
-            sx={{
-              width: "100%",
-              borderBottom: "1px solid #bac3d480",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              py: 0.5,
-            }}
-          >
+    <ClientDetailsProvider>
+      <Box sx={containerStyles}>
+        <Grid container sx={gridContainerStyles}>
+          <Grid item xs={12} sx={{ pt: 2 }}>
             <Stack
               sx={{
                 width: "100%",
-                px: 4,
+                borderBottom: "1px solid #bac3d480",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
+                py: 0.5,
               }}
             >
-              <Breadcrumbs
-                items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-              />
-              <Box
+              <Stack
                 sx={{
-                  backgroundColor: "var(--darkBg)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "24px",
-                  height: "24px",
-                  borderRadius: "24px",
-                  cursor: "pointer",
+                  width: "100%",
+                  px: 4,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
                 }}
-                onClick={() => router.push("/institucion/clientes")}
               >
-                <GridCloseIcon sx={{ color: "#fff", fontSize: "16px" }} />
-              </Box>
+                <Breadcrumbs
+                  items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
+                />
+                <Box
+                  sx={{
+                    backgroundColor: "var(--darkBg)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "24px",
+                    height: "24px",
+                    borderRadius: "24px",
+                    cursor: "pointer",
+                    mr: -1,
+                    mt: 0.5,
+                  }}
+                  onClick={() => router.push("/institucion/clientes")}
+                >
+                  <GridCloseIcon sx={{ color: "#fff", fontSize: "15.5px" }} />
+                </Box>
+              </Stack>
             </Stack>
-          </Stack>
+          </Grid>
+          <Grid xs={1.8} sx={{ borderRight: "1px solid #bac3d480", height: "100%", p: 2 }}>
+            <Box
+              sx={{ ...sidebarItemStyles, backgroundColor: isGeneralPage ? "#f2f4f7" : "transparent" }}
+              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/general`)}
+            >
+              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                General
+              </Typography>
+            </Box>
+            <Box
+              sx={{ ...sidebarItemStyles, backgroundColor: isDomicilioPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
+              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/domicilio`)}
+            >
+              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                Domicilio
+              </Typography>
+            </Box>
+            <Box
+              sx={{ ...sidebarItemStyles, backgroundColor: isFamilyMembersPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
+              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/miembros-de-familia`)}
+            >
+              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                Miembros de la familia
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ...sidebarItemStyles,
+                backgroundColor: isIdentificacionesPage ? "#f2f4f7" : "transparent",
+                mt: 1.5,
+              }}
+              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/identificaciones`)}
+            >
+              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                Identificaciones
+              </Typography>
+            </Box>
+          </Grid>
+          {children}
         </Grid>
-        <Grid xs={1.8} sx={{ borderRight: "1px solid #bac3d480", height: "100%", p: 2 }}>
-          <Box
-            sx={{ ...sidebarItemStyles, backgroundColor: isGeneralPage ? "#f2f4f7" : "transparent" }}
-            onClick={() => router.push(`/institucion/clientes/${params?.clientId}/general`)}
-          >
-            <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-              General
-            </Typography>
-          </Box>
-          <Box
-            sx={{ ...sidebarItemStyles, backgroundColor: isDomicilioPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-            onClick={() => router.push(`/institucion/clientes/${params?.clientId}/domicilio`)}
-          >
-            <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-              Domicilio
-            </Typography>
-          </Box>
-          <Box
-            sx={{ ...sidebarItemStyles, backgroundColor: isFamilyMembersPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-            onClick={() => router.push(`/institucion/clientes/${params?.clientId}/miembros-de-familia`)}
-          >
-            <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-              Miembros de la familia
-            </Typography>
-          </Box>
-          <Box
-            sx={{ ...sidebarItemStyles, backgroundColor: isIdentificacionesPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-            onClick={() => router.push(`/institucion/clientes/${params?.clientId}/identificaciones`)}
-          >
-            <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-              Identificaciones
-            </Typography>
-          </Box>
-        </Grid>
-        {children}
-      </Grid>
-    </Box>
+      </Box>
+    </ClientDetailsProvider>
   );
 }

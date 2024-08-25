@@ -13,6 +13,7 @@ import { getTellers } from "@/services/Core.service";
 import { toast } from "sonner";
 import EyeBaseconeIcon from "@/assets/icons/EyeBaseconeIcon";
 import NotFoundData from "@/components/NotFoundData";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function GestionVentanillasCajeros() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -35,23 +36,7 @@ export default function GestionVentanillasCajeros() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.status === "ACTIVE" ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.status === "ACTIVE" ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.status === "ACTIVE"} mode="circle" />,
     },
     {
       field: "startDate",

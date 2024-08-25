@@ -10,6 +10,7 @@ import BellLineIcon from "@/assets/icons/BellLineIcon";
 import Link from "next/link";
 import Image from "next/image";
 import LineChart from "@/components/Charts/LineChart";
+import PieChart from "@/components/Charts/PieChart";
 
 interface RawDataPoint {
   count: number;
@@ -39,12 +40,12 @@ export default function DashboardPage() {
   React.useEffect(() => {
     // Tus datos originales
     const rawData: RawDataPoint[] = [
-      { count: 1, days: [2024, 8, 6] },
-      { count: 2, days: [2024, 8, 7] },
-      { count: 1, days: [2024, 8, 8] },
-      { count: 3, days: [2024, 8, 13] },
-      { count: 1, days: [2024, 8, 14] },
-      { count: 2, days: [2024, 8, 16] },
+      { count: 1, days: [2024, 8, 18] },
+      { count: 2, days: [2024, 8, 19] },
+      { count: 1, days: [2024, 8, 20] },
+      { count: 3, days: [2024, 8, 22] },
+      { count: 1, days: [2024, 8, 21] },
+      { count: 2, days: [2024, 8, 23] },
     ];
 
     // Procesar los datos
@@ -110,7 +111,6 @@ export default function DashboardPage() {
                 borderRadius: "16px",
                 backgroundColor: "var(--secondaryBg)",
                 p: 2,
-                // border: "1px solid black",
               }}
             >
               <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
@@ -225,32 +225,65 @@ export default function DashboardPage() {
               </Stack>
             </Box>
           </Stack>
-          {/* Graphics */}
-          <Stack sx={{ display: "inline-block", maxWidth: "100%", height: "100%", mt: 7 }}>
-            {/* <Image width={120} height={120} alt="" src="/assets/images/daw.svg" />
-            <Typography variant="caption" fontWeight="300" color="var(--secondaryText)">
-              No hay datos que mostrar.
-            </Typography> */}
-            <Typography variant="h6" fontWeight="400">
-              Actividad de clientes la última semana
-            </Typography>
-            <Box
-              sx={{
-                border: "1px solid #bac3d420",
-                display: "inline-flex",
-                width: "100%",
-                maxWidth: "1030px",
-                bgColor: "#fff",
-                px: 0,
-                borderRadius: "8px",
-                mt: 2,
-              }}
-            >
-              {chartData.length > 0 && <LineChart data={chartData} />}
-            </Box>
-          </Stack>
         </Stack>
       </Box>
+      <Stack
+        sx={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 8,
+          swidth: "100%",
+        }}
+      >
+        <Stack
+          sx={{
+            display: "flex",
+            maxWidth: "100%",
+            height: "100%",
+            flex: 1,
+            mt: 7,
+          }}
+        >
+          <Typography variant="h6" fontWeight="400">
+            Actividad de clientes la última semana
+          </Typography>
+          <Box
+            sx={{
+              border: "1px solid #bac3d420",
+              display: "inline-flex",
+              flexDirection: "column",
+              width: "100%",
+              maxWidth: "1030px",
+              px: 0,
+              borderRadius: "8px",
+              mt: 2,
+            }}
+          >
+            {chartData.length > 0 && <LineChart data={chartData} />}
+          </Box>
+        </Stack>
+        <Stack sx={{ mt: 7 }}>
+          <Typography variant="h6" fontWeight="400">
+            Monto Pendiente / Desembolsado
+          </Typography>
+          <Stack
+            sx={{
+              width: "500px",
+              pt: 4,
+              flex: 0.5,
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "#FCFCFD",
+              border: "1px solid #bac3d420",
+              borderRadius: "8px",
+              mt: 2,
+            }}
+          >
+            <PieChart />
+          </Stack>
+        </Stack>
+      </Stack>
     </Wrapper>
   );
 }
