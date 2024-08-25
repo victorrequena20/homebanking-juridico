@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getCenters } from "@/services/Core.service";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function CentrosPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -36,25 +37,7 @@ export default function CentrosPage() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.active ? "#E6F0E2" : "#FF8080",
-              width: "120px",
-              py: 0.5,
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              borderRadius: "16px",
-            }}
-          >
-            <Typography variant="body2" fontWeight="600" color={params?.row?.active ? "#76BF66" : "#A02334"}>
-              {params.row.active ? "Activo" : "Inactivo"}
-            </Typography>
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params.row.active} />,
       align: "center",
     },
     {

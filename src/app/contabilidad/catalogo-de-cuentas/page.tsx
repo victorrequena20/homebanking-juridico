@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import Button from "@/components/Button";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function CatalogoCuentasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -38,45 +39,13 @@ export default function CatalogoCuentasPage() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: !params?.row?.disabled ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {!params?.row?.disabled ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={!params?.row?.disabled} mode="circle" />,
     },
     {
       field: "manualEntriesAllowes",
       headerName: "Permitir entradas manuales",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.manualEntriesAllowed ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.manualEntriesAllowed ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.manualEntriesAllowed} mode="circle" />,
     },
     {
       field: "usedHow",
