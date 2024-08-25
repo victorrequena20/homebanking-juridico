@@ -73,7 +73,7 @@ const TextSlider = () => {
           exit={{ opacity: 0, y: -50 }}
           transition={{ duration: 0.5 }}
         >
-          <Typography variant="body2" color="var(--secondaryText)" textAlign="justify" maxWidth="32ch">
+          <Typography variant="body2" color="var(--secondaryText)" textAlign="justify" fontWeight="300" maxWidth="32ch">
             {data[currentIndex].text}
           </Typography>
           <Image

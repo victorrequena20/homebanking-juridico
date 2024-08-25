@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { Box } from "@mui/material";
 
 const PieChart: React.FC = () => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -11,13 +12,13 @@ const PieChart: React.FC = () => {
     ];
 
     const width = 280;
-    const height = 200;
+    const height = 220;
     const radius = Math.min(width, height) / 2;
 
     const color = d3
-      .scaleOrdinal()
+      .scaleOrdinal<string>()
       .domain(data.map(d => d.label))
-      .range(d3.schemePastel1);
+      .range(["#74E291", "#006edb"]); // Nuevos colores aplicados aquí
 
     const pie = d3.pie<{ label: string; value: number }>().value(d => d.value);
 
@@ -29,7 +30,7 @@ const PieChart: React.FC = () => {
     const svg = d3
       .select(svgRef.current)
       .attr("width", width)
-      .attr("height", height + 60) // Incrementa la altura para la leyenda
+      .attr("height", height + 60)
       .append("g")
       .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
@@ -37,7 +38,7 @@ const PieChart: React.FC = () => {
 
     g.append("path")
       .attr("d", arc)
-      .style("fill", d => color(d.data.label) as string);
+      .style("fill", d => color(d.data.label));
 
     // Tooltips
     const tooltip = d3
@@ -62,9 +63,9 @@ const PieChart: React.FC = () => {
       });
 
     // Legend
-    const legend = svg.append("g").attr("transform", `translate(${-width / 4}, ${radius + 20})`); // Ajustar la posición de la leyenda
+    const legend = svg.append("g").attr("transform", `translate(${-width / 4}, ${radius + 20})`);
 
-    const legendSpacing = width / 2; // Ajusta el espaciado para que ocupe todo el ancho disponible
+    const legendSpacing = width / 2;
 
     const legendItems = legend
       .selectAll("g")
@@ -78,21 +79,22 @@ const PieChart: React.FC = () => {
       .attr("cx", 0)
       .attr("cy", 0)
       .attr("r", 7)
-      .style("fill", d => color(d.label) as string);
+      .style("fill", d => color(d.label));
 
     legendItems
       .append("text")
       .attr("x", 15)
       .attr("y", 5)
       .text(d => d.label)
-      .style("font-size", "14px")
-      .style("alignment-baseline", "middle");
+      .style("font-size", "12px")
+      .style("align-self", "center")
+      .style("margin", "auto");
   }, []);
 
   return (
-    <div>
+    <Box sx={{ mt: 6 }}>
       <svg ref={svgRef}></svg>
-    </div>
+    </Box>
   );
 };
 

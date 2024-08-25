@@ -18,6 +18,7 @@ a:visited {
 
 body {
   max-height: 100vh;
+  overflow: hidden;
 }
 
 a {
