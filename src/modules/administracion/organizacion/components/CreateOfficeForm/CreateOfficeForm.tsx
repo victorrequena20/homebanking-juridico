@@ -60,8 +60,22 @@ export default function CreateOfficeForm() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack sx={{ gap: 3, mt: 3 }}>
+    <Stack
+      component="form"
+      sx={{
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+        mt: 3,
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Stack sx={{ gap: 3 }}>
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -129,26 +143,24 @@ export default function CreateOfficeForm() {
             />
           </Stack>
         </Stack>
-        <Grid md={10}>
-          <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "flex-start", columnGap: 2 }}>
-            <Button
-              type="button"
-              size="small"
-              text="cancelar"
-              variant="navigation"
-              onClick={() => router.push("/administracion/organizacion/administrar-oficinas")}
-            />
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              disabled={!isValid || Object.keys(dirtyFields).length < 2}
-              size="small"
-              text="Aceptar"
-              variant="primary"
-            />
-          </Stack>
-        </Grid>
+        <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "center", columnGap: 2 }}>
+          <Button
+            type="button"
+            size="small"
+            text="cancelar"
+            variant="navigation"
+            onClick={() => router.push("/administracion/organizacion/administrar-oficinas")}
+          />
+          <Button
+            type="submit"
+            isLoading={isLoading}
+            disabled={!isValid || Object.keys(dirtyFields).length < 2}
+            size="small"
+            text="Aceptar"
+            variant="primary"
+          />
+        </Stack>
       </Stack>
-    </form>
+    </Stack>
   );
 }

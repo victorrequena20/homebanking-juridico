@@ -42,8 +42,23 @@ export default function CreateFundForm({}: ICreateFundFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack sx={{ gap: 3, mt: 3 }}>
+    <Stack
+      component="form"
+      sx={{
+        gap: 3,
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+        mt: 3,
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Stack sx={{ gap: 3 }}>
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
           <Stack>
             <Controller
@@ -78,7 +93,14 @@ export default function CreateFundForm({}: ICreateFundFormProps) {
             />
           </Stack>
         </Stack>
-        <Box>
+        <Stack sx={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 3 }}>
+          <Button
+            type="button"
+            size="small"
+            text="Cancelar"
+            onClick={() => router.push("/administracion/organizacion/administrar-fondos")}
+            variant="navigation"
+          />
           <Button
             type="submit"
             isLoading={isLoading}
@@ -87,8 +109,8 @@ export default function CreateFundForm({}: ICreateFundFormProps) {
             text="Aceptar"
             variant="primary"
           />
-        </Box>
+        </Stack>
       </Stack>
-    </form>
+    </Stack>
   );
 }

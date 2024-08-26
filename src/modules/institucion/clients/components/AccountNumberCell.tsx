@@ -18,7 +18,7 @@ export default function AccountNumberCell({ accountNo }: { accountNo: string }) 
           onClick={e => {
             e.stopPropagation();
             navigator.clipboard.writeText(accountNo);
-            toast.success("Litecore ha copiado al portapapeles");
+            toast("Litecore ha copiado al portapapeles");
           }}
         >
           <ClipboardIcon size={14} color="#484848" />
