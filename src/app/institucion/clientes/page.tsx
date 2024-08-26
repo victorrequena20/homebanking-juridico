@@ -55,7 +55,7 @@ export default function Clients() {
 
   async function handleGetClients() {
     setIsLoading(true);
-    const response = await getClients();
+    const response = await getClients({ orderBy: "id" });
     const data = response?.data?.pageItems;
     const clientsData = data.map((el: any) => {
       return {

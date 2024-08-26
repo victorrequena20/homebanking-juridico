@@ -392,7 +392,10 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                       bgcolor: "#ffffff10",
                     },
                   }}
-                  onClick={() => router.push("/auth/login")}
+                  onClick={() => {
+                    localStorage.removeItem("litecoreAuthToken");
+                    router.push("/auth/login");
+                  }}
                 >
                   <ExitIcon />
                 </Box>
