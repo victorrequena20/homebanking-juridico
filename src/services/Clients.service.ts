@@ -1,16 +1,15 @@
 import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
-export const getClients = async () => {
+export const getClients = async (params?: any) => {
   try {
-    const response = await HttpClient.get("/clients");
-    console.log("🚀 ~ getClients ~ response:", response);
+    const response = await HttpClient.get("/clients", { params });
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ constgetClients ~ error:", error);
+    console.error("🚀 ~ constgetClients ~ error:", error);
   }
 };
 

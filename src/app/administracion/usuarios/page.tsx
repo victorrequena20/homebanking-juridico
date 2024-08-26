@@ -13,7 +13,6 @@ export default function AdministrationUsersPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [users, setUsers] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
-
   const columns: GridColDef<(typeof users)[number]>[] = [
     {
       field: "firstname",

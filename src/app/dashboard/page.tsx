@@ -1,74 +1,102 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Box, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
-import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
-import WalletAddIcon from "@/assets/icons/WalletAddIcon";
 import BellLineIcon from "@/assets/icons/BellLineIcon";
 import Link from "next/link";
-import Image from "next/image";
 import LineChart from "@/components/Charts/LineChart";
 import PieChart from "@/components/Charts/PieChart";
-import ReportIcon from "@/assets/icons/ReportIcon";
-import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
-import OfficesIcon from "@/assets/icons/OfficesIcon";
 import QuickNavItem from "@/modules/dashboard/components/QuickNavItem/QuickNavItem";
+import CardInfoList from "@/modules/dashboard/components/CardInfoList/CardInfoList";
+import { getClients } from "@/services/Clients.service";
+
+interface ClientData {
+  timeline: {
+    submittedOnDate: [number, number, number];
+  };
+}
 
 interface RawDataPoint {
   count: number;
   days: [number, number, number];
 }
 
-interface ProcessedDataPoint {
+interface DataPoint {
   date: Date;
   value: number;
 }
 
-interface OutputData {
-  date: Date;
-  value: number;
+function convertToRawData(clients: ClientData[], days: number): RawDataPoint[] {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0); // Normaliza la fecha actual al inicio del día
+  const startDate = new Date(now.getTime() - (days - 1) * 24 * 60 * 60 * 1000);
+
+  const countMap: { [key: string]: number } = {};
+
+  // Inicializa el countMap con todos los días del período
+  for (let d = 0; d < days; d++) {
+    const currentDate = new Date(startDate.getTime() + d * 24 * 60 * 60 * 1000);
+    const dateString = currentDate.toISOString().split("T")[0];
+    countMap[dateString] = 0;
+  }
+
+  clients.forEach(client => {
+    const [year, month, day] = client.timeline.submittedOnDate;
+    const date = new Date(year, month - 1, day);
+
+    if (date >= startDate && date <= now) {
+      const dateString = date.toISOString().split("T")[0];
+      if (dateString in countMap) {
+        countMap[dateString]++;
+      }
+    }
+  });
+
+  return Object.entries(countMap)
+    .map(([dateString, count]) => {
+      const [year, month, day] = dateString.split("-").map(Number);
+      return { count, days: [year, month, day] as [number, number, number] };
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.days[0], a.days[1] - 1, a.days[2]);
+      const dateB = new Date(b.days[0], b.days[1] - 1, b.days[2]);
+      return dateA.getTime() - dateB.getTime();
+    });
 }
 
-function convertDateArray(input: ProcessedDataPoint[]): OutputData[] {
-  return input.map(item => ({
-    date: new Date(item.date),
-    value: item.value,
-  }));
+function getLastWeekData(clients: ClientData[]): RawDataPoint[] {
+  return convertToRawData(clients, 7);
+}
+
+function getLastMonthData(clients: ClientData[]): RawDataPoint[] {
+  return convertToRawData(clients, 30);
 }
 
 export default function DashboardPage() {
-  const [chartData, setChartData] = React.useState<ProcessedDataPoint[]>([]);
+  const [clients, setClients] = React.useState<any>([]);
+  const [chartData, setChartData] = React.useState<DataPoint[]>([]);
+
+  async function handleGetClients() {
+    const response = await getClients({ limit: -1, paginated: false });
+    if (response?.status === 200) {
+      setClients(response?.data?.pageItems);
+    }
+  }
 
   React.useEffect(() => {
-    // Tus datos originales
-    const rawData: RawDataPoint[] = [
-      { count: 1, days: [2024, 8, 18] },
-      { count: 2, days: [2024, 8, 19] },
-      { count: 1, days: [2024, 8, 20] },
-      { count: 3, days: [2024, 8, 22] },
-      { count: 1, days: [2024, 8, 21] },
-      { count: 2, days: [2024, 8, 23] },
-    ];
-
-    // Procesar los datos
-    const processedData: ProcessedDataPoint[] = rawData.map(item => ({
+    const lastWeekData = getLastWeekData(clients);
+    const processedData: DataPoint[] = lastWeekData.map(item => ({
       date: new Date(item.days[0], item.days[1] - 1, item.days[2]), // Restamos 1 al mes porque en JS los meses van de 0 a 11
       value: item.count,
     }));
+    setChartData(processedData);
+  }, [clients]);
 
-    // Filtrar para mostrar solo la última semana
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-    const filteredData = processedData
-      .filter(item => item.date >= oneWeekAgo)
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
-
-    console.log("🚀 ~ React.useEffect ~ filteredData:", filteredData);
-    setChartData(convertDateArray(filteredData));
+  React.useEffect(() => {
+    handleGetClients();
   }, []);
+
   return (
     <Wrapper>
       <Breadcrumbs items={[{ title: "Litecore" }]} />
@@ -107,130 +135,7 @@ export default function DashboardPage() {
 
       <Stack sx={{ flexDirection: "row", gap: 6 }}>
         <Stack sx={{ flex: 2 }}>
-          <Box sx={{ mt: 4, width: "auto", display: "flex", maxWidth: "1050px" }}>
-            <Stack sx={{ width: "100%", flexDirection: "column", columnGap: 3 }}>
-              <Stack sx={{ width: "100%", flexDirection: "row", gap: 3 }}>
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: "300px",
-                    height: "auto",
-                    borderRadius: "16px",
-                    backgroundColor: "#fff",
-                    p: 2,
-                  }}
-                >
-                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        bgcolor: "#07195210",
-                      }}
-                    >
-                      <PeopleIcon size={26} color="#12141a" />
-                    </Box>
-                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                      <Typography variant="body1" fontWeight="300">
-                        Total de clientes
-                      </Typography>
-                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                        <Typography variant="h5" fontWeight="600">
-                          115
-                        </Typography>
-                        <Typography variant="caption" fontWeight="400" color="#067647">
-                          +15%
-                        </Typography>{" "}
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Box>
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: "300px",
-                    height: "auto",
-                    borderRadius: "16px",
-                    backgroundColor: "#fff",
-                    p: 2,
-                  }}
-                >
-                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        bgcolor: "#07195210",
-                      }}
-                    >
-                      <PersonHexagonalIcon strokeWidth="1.5" size={28} color="#12141a" />
-                    </Box>
-                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                      <Typography variant="body1" fontWeight="300">
-                        Total de usuarios
-                      </Typography>
-                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                        <Typography variant="h5" fontWeight="600">
-                          72
-                        </Typography>
-                        <Typography variant="caption" fontWeight="400" color="#067647">
-                          +80.5%
-                        </Typography>{" "}
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Box>
-                <Box
-                  sx={{
-                    width: "100%",
-                    maxWidth: "300px",
-                    height: "auto",
-                    borderRadius: "16px",
-                    backgroundColor: "#fff",
-                    p: 2,
-                  }}
-                >
-                  <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                    <Box
-                      sx={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        bgcolor: "#07195210",
-                      }}
-                    >
-                      <WalletAddIcon size={28} color="#12141a" />
-                    </Box>
-                    <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                      <Typography variant="body1" fontWeight="300">
-                        Créditos otorgados
-                      </Typography>
-
-                      <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1 }}>
-                        <Typography variant="h5" fontWeight="600">
-                          1.203
-                        </Typography>
-                        <Typography variant="caption" fontWeight="400" color="#067647">
-                          +7.5%
-                        </Typography>{" "}
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Box>
-              </Stack>
-            </Stack>
-          </Box>
+          <CardInfoList clients={clients} />
           <Stack
             sx={{
               flexDirection: "row",

@@ -8,9 +8,8 @@ import { Stack } from "@mui/material";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import NotFoundData from "@/components/NotFoundData";
-import { getTaxesComponents, getTaxesGroups } from "@/services/Products.service";
+import { getTaxesGroups } from "@/services/Products.service";
 import { toast } from "sonner";
-import { formatSpanishDate } from "@/utilities/common.utility";
 
 export default function GruposDeImpuestos() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
