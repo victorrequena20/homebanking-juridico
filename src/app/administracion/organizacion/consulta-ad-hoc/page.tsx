@@ -62,7 +62,7 @@ export default function AdhocConsult() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => <StatusTag isActive={params?.row?.isActive === "adhoc.isActive"} mode="circle" />,
+      renderCell: params => <StatusTag isActive={params?.row?.isActive} mode="circle" />,
     },
     {
       field: "createdBy",
