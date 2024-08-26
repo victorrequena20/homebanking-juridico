@@ -1,4 +1,5 @@
 import { dateFormat } from "@/constants/global";
+import { getTodayFormattedEsddMMMMyyyy } from "@/utilities/common.utility";
 
 const createClientFormAdapter = (data: any) => {
   return {
@@ -14,6 +15,7 @@ const createClientFormAdapter = (data: any) => {
     legalFormId: data?.legalFormId?.value,
     savingsProductId: data?.savingsProductId?.value,
     staffId: data?.staffId?.value,
+    submittedOnDate: getTodayFormattedEsddMMMMyyyy(),
   };
 };
 

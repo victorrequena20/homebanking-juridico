@@ -2,7 +2,6 @@
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import { Stack, Typography } from "@mui/material";
-import { Breadcrumbs } from "@mui/material";
 import Link from "next/link";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
@@ -12,6 +11,7 @@ import InputSelect from "@/components/InputSelect";
 import { getCurrencies, updateCurrencies } from "@/services/Core.service";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { toast } from "sonner";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ManejoPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -58,24 +58,19 @@ export default function ManejoPage() {
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <Stack>
-          <Typography variant="h4">Administrar monedas</Typography>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 1 }}>
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">Inicio</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="inherit" href="/administracion/organizacion">
-              <Typography variant="body2">Organización</Typography>
-            </Link>
-            <Link color="text.primary" href="/administracion/organizacion/configuracion-de-moneda" aria-current="page">
-              <Typography variant="body2">Configuración de moneda</Typography>
-            </Link>
-            <Typography variant="body2">Administrar monedas</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Administrar monedas"
+        items={[
+          {
+            title: "Inicio",
+            href: "/dashboard",
+          },
+          { title: "Administración" },
+          { title: "Organización", href: "/administracion/organizacion" },
+          { title: "Configuración de moneda", href: "/administracion/organizacion/configuracion-de-moneda" },
+          { title: "Administrar monedas" },
+        ]}
+      />
 
       <Stack sx={{ mt: 5, minWidth: "600px", maxWidth: "600px" }}>
         {/* Monedas */}

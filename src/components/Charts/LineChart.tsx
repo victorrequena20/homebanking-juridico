@@ -55,7 +55,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         .attr("height", height)
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .style("background-color", "#FCFCFD")
+        .style("background-color", "#fff")
         .style("border-radius", "8px");
 
       // Set up scales

@@ -42,9 +42,6 @@ export default function CreateClient() {
           { title: "Crear cliente" },
         ]}
       />
-      <Stack sx={{ mt: 3 }}>
-        <ButtonBack />
-      </Stack>
 
       {/* Stepper */}
       <Stack sx={{ mt: 3, flexDirection: "row" }}>

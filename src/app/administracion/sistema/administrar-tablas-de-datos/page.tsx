@@ -11,6 +11,7 @@ import { getDataTables } from "@/services/DataTables.service";
 import { toast } from "sonner";
 
 export default function AdministrarTablasDeDatos() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [dataTables, setDataTables] = React.useState<any>([]);
   const router = useRouter();
   const columns: GridColDef<(typeof dataTables)[number]>[] = [
@@ -35,6 +36,7 @@ export default function AdministrarTablasDeDatos() {
   ];
 
   async function handleGetDataTables() {
+    setIsLoading(true);
     const response = await getDataTables();
     if (response?.status === 200) {
       setDataTables(
@@ -48,6 +50,7 @@ export default function AdministrarTablasDeDatos() {
     } else {
       toast.error("Ocurrió un error al obtener las tablas de datos");
     }
+    setIsLoading(false);
   }
 
   React.useEffect(() => {
@@ -55,7 +58,7 @@ export default function AdministrarTablasDeDatos() {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Administrar tablas de datos"
         items={[

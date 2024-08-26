@@ -3,23 +3,26 @@ import React from "react";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { getStaffs } from "@/services/Core.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import CheckIcon from "@/assets/icons/Checkicon";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function AdministrarEmpleados() {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [employees, setEmployees] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const responseStaffs = await getStaffs({ status: "all" });
       if (responseStaffs?.status === 200) {
         setEmployees(responseStaffs?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
@@ -34,23 +37,7 @@ export default function AdministrarEmpleados() {
       field: "isLoanOfficer",
       headerName: "Oficial de créditos",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: !params?.row?.disabled ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.isLoanOfficer ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.isLoanOfficer} mode="circle" />,
     },
     {
       field: "office",
@@ -62,31 +49,13 @@ export default function AdministrarEmpleados() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.isActive ? "#E6F0E2" : "#FF8080",
-              width: "120px",
-              py: 0.5,
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              borderRadius: "16px",
-            }}
-          >
-            <Typography variant="body2" fontWeight="600" color={params?.row?.isActive ? "#76BF66" : "#A02334"}>
-              {params.row.isActive ? "Activo" : "Inactivo"}
-            </Typography>
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params.row.isActive} />,
       align: "center",
     },
   ];
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Administrar empleados"
         items={[
@@ -95,7 +64,7 @@ export default function AdministrarEmpleados() {
             href: "/dashboard",
           },
           { title: "Administración" },
-          { title: "Orgnización", href: "/administracion/organizacion" },
+          { title: "Organización", href: "/administracion/organizacion" },
           { title: "Administrar empleados" },
         ]}
       />

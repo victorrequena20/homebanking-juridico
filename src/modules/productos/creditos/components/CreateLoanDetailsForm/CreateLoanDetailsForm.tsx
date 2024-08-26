@@ -30,6 +30,7 @@ const schema = yup.object().shape({
 });
 
 export default function CreateLoanDetailsForm() {
+  const [isActive, setIsActive] = React.useState<boolean>(false);
   const { handleChangeGlobalFormValues, loanProductsTemplate, globalForm } = useContext(CreateLoanContext);
   console.log("🚀 ~ CreateLoanDetailsForm ~ globalForm:", globalForm);
   const {
@@ -56,8 +57,6 @@ export default function CreateLoanDetailsForm() {
   return (
     <Grid
       container
-      columnSpacing={2}
-      rowSpacing={3}
       component="form"
       sx={{
         gap: 3,
@@ -172,12 +171,23 @@ export default function CreateLoanDetailsForm() {
         />
       </Grid>
 
-      {/* <Grid item>
-        <Toggle label="Activo" isChecked={} setIsChecked={setIsActive} size="small" />
-      </Grid> */}
+      <Grid item xs={11}>
+        <Stack sx={{ maxWidth: "392px", pl: 4 }}>
+          <Toggle
+            toggleLeft
+            label="Incluir en el contador de créditos al cliente"
+            isChecked={isActive}
+            setIsChecked={setIsActive}
+            size="small"
+            secondaryEffect={() => {
+              handleChangeGlobalFormValues({ includeInBorrowerCycle: !isActive });
+            }}
+          />
+        </Stack>
+      </Grid>
 
       <Grid item xs={12}>
-        <Stack direction="row" justifyContent="center" spacing={3}>
+        <Stack direction="row" justifyContent="center" sx={{ gap: 3, mt: 3 }}>
           <Button text="Cancelar" variant="navigation" type="button" />
           <Button text="Siguiente" variant="primary" type="submit" disabled={!isValid} />
         </Stack>

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { getSmsCampaignsTemplate } from "@/services/Core.service";
 import { toast } from "sonner";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import NotFoundData from "@/components/NotFoundData";
 
 export default function CampanaSMSPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -39,7 +40,7 @@ export default function CampanaSMSPage() {
           { title: "Campañas de SMS" },
         ]}
       />
-      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2 }}>
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 2 }}>
         <Button
           size="small"
           variant="primary"
@@ -50,6 +51,10 @@ export default function CampanaSMSPage() {
             goToCreateCampaignSms();
           }}
         />
+      </Stack>
+
+      <Stack sx={{ mt: 3 }}>
+        <NotFoundData title="No hay campañas para mostrar" />
       </Stack>
     </Wrapper>
   );
