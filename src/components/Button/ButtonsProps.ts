@@ -8,4 +8,6 @@ export interface IButtonProps {
   iconLeft?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   isLoading?: boolean;
+  buttonList?: boolean;
+  asyncAction?: boolean;
 }

@@ -10,12 +10,12 @@ import { formatSpanishDate } from "@/utilities/common.utility";
 import { getCodes } from "@/services/Core.service";
 import CheckIcon from "@/assets/icons/Checkicon";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function SystemCodes() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [codes, setCodes] = React.useState<any | null>([]);
-
   const router = useRouter();
-
   const columns: GridColDef<(typeof codes)[number]>[] = [
     {
       field: "name",
@@ -27,38 +27,23 @@ export default function SystemCodes() {
       field: "systemDefined",
       headerName: "Sistema definido",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.systemDefined ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.systemDefined ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.systemDefined} mode="circle" />,
     },
   ];
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getCodes();
       if (response?.status === 200) {
         setCodes(response?.data);
       }
-      console.log("🚀 ~ response:", response);
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Administrar códigos"
         items={[

@@ -28,7 +28,7 @@ export default function AccountingPage() {
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           mx: "auto",
           gap: 3,
         }}
@@ -93,6 +93,34 @@ export default function AccountingPage() {
           path="/contabilidad/entradas-de-aprovisionamiento"
           icon={<ToggleOnIcon size={28} color="#153075" />}
         />
+        <Stack
+          sx={{
+            display: "flex",
+            flex: 1,
+            width: "100%",
+            minWidth: "340px",
+            maxWidth: "340px",
+            height: "80px",
+            maxHeight: "80px",
+            opacity: 0,
+            px: 2,
+            py: 3,
+          }}
+        ></Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            flex: 1,
+            width: "100%",
+            minWidth: "340px",
+            maxWidth: "340px",
+            height: "80px",
+            maxHeight: "80px",
+            opacity: 0,
+            px: 2,
+            py: 3,
+          }}
+        ></Stack>
       </Stack>
     </Wrapper>
   );

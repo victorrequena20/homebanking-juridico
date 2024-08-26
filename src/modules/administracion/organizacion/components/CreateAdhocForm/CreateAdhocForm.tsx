@@ -2,14 +2,13 @@
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Stack, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import Input from "@/components/Input";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
 import React from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-
 import { createAdhocquery, getAdhocTemplate } from "@/services/Adhoc.service";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import Toggle from "@/components/Toggle";

@@ -9,12 +9,13 @@ import ChangeUserPasswordForm from "@/modules/administracion/usuarios/components
 import { getUserById } from "@/services/Users.service";
 import { User } from "@/types/User.types";
 import CreateEditUserForm from "@/modules/administracion/usuarios/components/CreateEditUserForm";
-
+import { flexRowCenter } from "@/styles/GlobalsMUI";
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
 import { deleteUser } from "@/services/Users.service";
 import { toast } from "sonner";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 
 export default function UserDetails({ params }: { params: { userId: string } }) {
   const [userData, setUserData] = React.useState<User | null>(null);
@@ -87,7 +88,7 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
             <Typography variant="h4" color="#12141a">
               {userData?.username}
             </Typography>
-            <Typography variant="body1" fontWeight="300" color="#606778">
+            <Typography variant="body2" fontWeight="400" color="#606778">
               Los detalles de este usuario se encuentran debajo.
             </Typography>
           </Stack>
@@ -107,10 +108,11 @@ export default function UserDetails({ params }: { params: { userId: string } }) 
                 <Typography variant="body2" fontWeight="400" color="#12141a">
                   Detalles del usuario
                 </Typography>
-                <Box onClick={handleShowEditView}>
+                <Box sx={{ ...flexRowCenter, gap: 1 }} onClick={handleShowEditView}>
                   <Typography sx={{ cursor: "pointer" }} variant="body2" fontWeight="300" color="#606778">
                     Ver y editar
                   </Typography>
+                  <ArrowRightIcon size={16} color="var(--secondaryText)" />
                 </Box>
               </Stack>
               <Stack

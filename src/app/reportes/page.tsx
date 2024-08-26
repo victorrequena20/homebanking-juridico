@@ -52,7 +52,7 @@ export default function ReportsAllPage() {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
 
       <Stack sx={{ mt: 5 }}>

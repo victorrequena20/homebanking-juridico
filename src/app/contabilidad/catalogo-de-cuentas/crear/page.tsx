@@ -34,7 +34,7 @@ export default function CreateGlAccount() {
           { title: "Crear cuenta" },
         ]}
       />
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 3 }}>
         <Button
           icon={<ArrowLeftIcon size={18} color="#484848" />}
           size="small"
@@ -44,7 +44,7 @@ export default function CreateGlAccount() {
         />
       </Box>
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 3 }}>
         <CreateGlAccountForm />
       </Stack>
     </Wrapper>

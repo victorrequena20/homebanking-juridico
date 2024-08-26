@@ -211,11 +211,11 @@ export default function ClientDetails({ params }: { params: { clientId: string }
     <>
       {clientData ? (
         <>
-          <Grid xs={10.2} sx={{ px: 10, pt: 6, overflow: "auto" }}>
-            <ClientDetailsHeader clientData={clientData} />
+          <Grid xs={10.2} sx={{ overflow: "auto", height: "100%" }}>
+            <ClientDetailsHeader clientData={clientData} getClientData={getClientData} />
 
             {/* Creditos */}
-            <Stack sx={{ width: "100%", mt: 5 }}>
+            <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
               <Stack sx={{ justifyContent: "center" }}>
                 <Typography variant="body1" color="var(--secondaryText)">
                   Cuentas de crédito
@@ -246,7 +246,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
             </Stack>
 
             {/* Cuentas de ahorro */}
-            <Stack sx={{ width: "100%" }}>
+            <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
               <Stack sx={{ justifyContent: "center" }}>
                 <Typography variant="body1" color="var(--secondaryText)">
                   Cuentas de ahorro
@@ -282,7 +282,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
           </Grid>
         </>
       ) : (
-        <Grid xs={12}>
+        <Grid xs={10.2}>
           <Stack sx={{ justifyContent: "center", alignItems: "center", height: "100%" }}>
             <Loader size="40" color="#484848" />
           </Stack>

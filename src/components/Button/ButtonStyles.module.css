@@ -51,6 +51,10 @@
   flex-direction: row-reverse;
 }
 
+.btn-default {
+  flex-direction: row-reverse;
+}
+
 .btn-navigation {
   background-color: #f2f4f7;
   color: #12141a;

@@ -1,16 +1,15 @@
 import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
-export const getClients = async () => {
+export const getClients = async (params?: any) => {
   try {
-    const response = await HttpClient.get("/clients");
-    console.log("🚀 ~ getClients ~ response:", response);
+    const response = await HttpClient.get("/clients", { params });
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ constgetClients ~ error:", error);
+    console.error("🚀 ~ constgetClients ~ error:", error);
   }
 };
 
@@ -108,6 +107,28 @@ export const getIdentifiers = async (clientId?: any) => {
   }
 };
 
+export const getClientAddressesTemplate = async () => {
+  try {
+    const response = await HttpClient.get(`/client/addresses/template`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getClientAddressesTemplate ~ error:", error);
+  }
+};
+
+export const addAddress = async (data: any, clientId: any, type: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/client/${clientId}/address`, data, { params: { type } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ addAddress ~ error:", error);
+    throw error;
+  }
+};
+
 // Accounts
 export const getAccountsById = async (clientId?: string) => {
   try {
@@ -118,5 +139,19 @@ export const getAccountsById = async (clientId?: string) => {
     };
   } catch (error) {
     console.log("🚀 ~ getAccountsById ~ error:", error);
+  }
+};
+
+// Actions
+export const clientActions = async (clientId?: string, data?: any, params?: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/clients/${clientId}`, data, { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ clientActions ~ error:", error);
+    throw error;
   }
 };

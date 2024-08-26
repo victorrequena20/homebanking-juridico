@@ -1,8 +1,8 @@
 "use client";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
 import { getLoanInfoById } from "@/services/Loans.service";
-import { Box, Breadcrumbs, Stack, SxProps, Typography } from "@mui/material";
-import Link from "next/link";
+import { Stack, SxProps, Typography } from "@mui/material";
 import React from "react";
 
 export default function LoanDetailsPage({ params }: { params: { loanId: string } }) {
@@ -52,29 +52,15 @@ export default function LoanDetailsPage({ params }: { params: { loanId: string }
 
   return (
     <Wrapper isLoading={isLoading}>
-      <Stack
-        sx={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Stack>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" href="/auth/login">
-              <Typography variant="body2">BDC</Typography>
-            </Link>
-            <Typography variant="body2">Administración</Typography>
-            <Link color="#484848" href="/administracion/productos">
-              <Typography variant="body2">Productos</Typography>
-            </Link>
-            <Link color="#484848" href="/administracion/productos/productos-de-credito">
-              <Typography variant="body2">Productos de crédito</Typography>
-            </Link>
-            <Typography variant="body2">{loanData?.name}</Typography>
-          </Breadcrumbs>
-        </Stack>
-      </Stack>
+      <Breadcrumbs
+        title="Detalles del Crédito"
+        items={[
+          { title: "Inicio", href: "/dashboard" },
+          { title: "Administración" },
+          { title: "Productos de crédito", href: "/administracion/productos/productos-de-credito" },
+          { title: "Detalles del crédito" },
+        ]}
+      />
 
       <Stack sx={{ mt: 1, minWidth: "800px", maxWidth: "800px" }}>
         {/* Detalles */}

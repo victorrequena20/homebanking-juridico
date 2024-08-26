@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
-import { getClients } from "@/services/Clients.service";
 import Wrapper from "@/components/Wrapper";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import CheckIcon from "@/assets/icons/Checkicon";
 import { getCommissions } from "@/services/Products.service";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function ComisionesPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -46,45 +45,13 @@ export default function ComisionesPage() {
       field: "isPaymentType",
       headerName: "Es multa?",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.isPaymentType ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.isPaymentType ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.isPaymentType} mode="circle" />,
     },
     {
       field: "active",
       headerName: "Activo?",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.active ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.active ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.active} mode="circle" />,
     },
   ];
 

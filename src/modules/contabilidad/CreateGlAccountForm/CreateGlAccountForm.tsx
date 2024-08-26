@@ -58,13 +58,21 @@ export default function CreateGlAccountForm() {
   return (
     <Grid
       container
-      columnSpacing={1}
-      rowSpacing={3}
-      maxWidth={"860px"}
+      sx={{
+        gap: 3,
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+      }}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="type"
@@ -79,7 +87,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="name"
@@ -89,7 +97,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="usage"
@@ -104,7 +112,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="glCode"
@@ -114,7 +122,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="parentId"
@@ -129,7 +137,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="tagId"
@@ -144,7 +152,7 @@ export default function CreateGlAccountForm() {
         />
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item>
         <Controller
           control={control}
           name="description"
@@ -153,13 +161,14 @@ export default function CreateGlAccountForm() {
           )}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item>
         <Stack sx={{ height: "100%", justifyContent: "flex-end" }}>
           <Stack
             sx={{
               flexDirection: "row",
               width: "392px",
               maxWidth: "392px",
+              height: "100%",
               justifyContent: "space-between",
               alignItems: "flex-end",
               borderBottom: "1px solid #cccccc80",
@@ -175,16 +184,13 @@ export default function CreateGlAccountForm() {
           </Stack>
         </Stack>
       </Grid>
-
-      <Grid md={6} sx={{ mt: 4 }}>
+      <Grid xs={12} sx={{ mt: 4 }}>
         <Stack
           sx={{
             width: "100%",
-            maxWidth: "394px",
             flexDirection: "row",
-            justifyContent: "flex-end",
+            justifyContent: "center",
             columnGap: 3,
-            px: 1,
           }}
         >
           <Button
@@ -194,19 +200,6 @@ export default function CreateGlAccountForm() {
             variant="navigation"
             onClick={() => router.push("/administracion/organizacion/administrar-oficinas")}
           />
-        </Stack>
-      </Grid>
-      <Grid md={6} sx={{ mt: 4 }}>
-        <Stack
-          sx={{
-            width: "100%",
-            maxWidth: "394px",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            columnGap: 3,
-            px: 1,
-          }}
-        >
           <Button
             type="submit"
             isLoading={isLoading}

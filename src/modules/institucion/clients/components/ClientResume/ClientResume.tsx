@@ -12,13 +12,26 @@ import { createClientFormAdapter } from "@/adapters/clients/createClientForm.ada
 
 export default function ClientResume() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const { formMethods, setStep } = useCreateClientContext();
+  const { formMethods, setStep, clientFamilyMembers } = useCreateClientContext();
   const clientGeneralData = formMethods.watch();
   const router = useRouter();
 
   async function onSubmit() {
     setIsLoading(true);
-    const response = await createClient(createClientFormAdapter(formMethods.watch()));
+    const response = await createClient(
+      createClientFormAdapter({
+        ...formMethods.watch(),
+        familyMembers: clientFamilyMembers.map((member: any) => {
+          return {
+            ...member,
+            relationshipId: member.relationshipId?.value,
+            genderId: member.genderId?.value,
+            professionId: member.professionId?.value,
+            maritalStatusId: member.maritalStatusId?.value,
+          };
+        }),
+      })
+    );
     console.log("🚀 ~ onSubmit ~ response:", response);
     if (response?.status === 200) {
       toast.success("Cliente creado correctamente.");

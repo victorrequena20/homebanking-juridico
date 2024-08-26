@@ -596,3 +596,19 @@ export const createHook = async (data?: any) => {
 };
 
 // ----- Hooks end -----
+
+// ----- Floating rates start -----
+
+export const getFloatingRates = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/floatingrates", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getFloatingRates ~ error:", error);
+  }
+};
+
+// ----- Floating rates end -----

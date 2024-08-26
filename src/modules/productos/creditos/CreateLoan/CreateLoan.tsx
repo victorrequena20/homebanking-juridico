@@ -10,6 +10,7 @@ import CreateLoanDetailsForm from "../components/CreateLoanDetailsForm";
 import CreateLoanCurrencyForm from "../components/CreateLoanCurrencyForm";
 import CreateLoanSettingsForm from "../components/CreateLoanSettingsForm";
 import CreateLoanConditionsForm from "../components/CreateLoanConditionsForm";
+import CreateLoanResume from "../components/CreateLoanResume";
 
 export default function CreateLoan() {
   const { step, setStep } = useContext(CreateLoanContext);
@@ -43,12 +44,15 @@ export default function CreateLoan() {
         <StepBox text="Cargos" isActive={step === 5} onClick={() => setStep?.(5)} />
         <Box sx={{ width: "100%", height: "2px", bgcolor: "#ccc", mt: 3 }} />
         <StepBox text="Contabilidad" isActive={step === 6} onClick={() => setStep?.(6)} />
+        <Box sx={{ width: "100%", height: "2px", bgcolor: "#ccc", mt: 3 }} />
+        <StepBox text="Resumen" isActive={step === 7} onClick={() => setStep?.(7)} />
       </Stack>
 
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 1 && <CreateLoanDetailsForm />}</Stack>
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 2 && <CreateLoanCurrencyForm />}</Stack>
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 3 && <CreateLoanSettingsForm />}</Stack>
       <Stack sx={{ mt: 3, mx: "auto" }}>{step === 4 && <CreateLoanConditionsForm />}</Stack>
+      <Stack sx={{ mt: 3 }}>{step === 7 && <CreateLoanResume />}</Stack>
     </Wrapper>
   );
 }

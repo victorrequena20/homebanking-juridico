@@ -55,6 +55,18 @@ export const getGlAccountsTemplate = async () => {
   }
 };
 
+export const getGlAccountsTemplateById = async (accountId: string) => {
+  try {
+    const response = await HttpClient.get(`/glaccounts/${accountId}`, { params: { template: true } });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getGlAccountsTemplate ~ error:", error);
+  }
+};
+
 export const createGlAccount = async (data: any): Promise<ApiResponse> => {
   try {
     const response = await HttpClient.post(`/glaccounts`, data);
@@ -120,7 +132,30 @@ export const deleteGlClosure = async (id: string): Promise<ApiResponse> => {
   }
 };
 
-// ----- Gl accounts start -----
+export const deleteGlAccount = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/glaccounts/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteGlAccount ~ error:", error);
+    throw error;
+  }
+};
+
+export const updateGlAccount = async (data: any, id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.put(`/glaccounts/${id}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateGlAccount ~ error:", error);
+    throw error;
+  }
+};
 
 export const getFinancialActivityAccountsTemplate = async () => {
   try {
@@ -161,7 +196,7 @@ export const createFinancialActivity = async (data: any): Promise<ApiResponse> =
   }
 };
 
-// ----- Gl accounts end -----
+// ----- Gl accounts/closures start -----
 
 // ----- Provisioning entries start -----
 export const createProvisioningEntries = async (data: any): Promise<ApiResponse> => {

@@ -57,7 +57,7 @@ export default function InputCalendar({
 
   return (
     <Box sx={{ maxWidth: "392px" }} ref={containerRef}>
-      <Typography variant="body2" color="#606778">
+      <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
 

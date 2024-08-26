@@ -26,7 +26,7 @@ export default function Input({
 
   return (
     <Box sx={{ maxWidth: "392px" }}>
-      <Typography variant="body2" color="#606778">
+      <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
       <div className={`${styles.container} ${isFocused && styles.focusedInput} ${!isValidField && styles.inputError}`}>
