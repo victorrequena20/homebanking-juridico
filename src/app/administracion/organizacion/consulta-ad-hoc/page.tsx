@@ -74,7 +74,7 @@ export default function AdhocConsult() {
               borderRadius: "30px",
             }}
           >
-            {params?.row?.status === "adhoc.isActive" ? <CheckIcon size={13} /> : null}
+            {params?.row?.isActive === "adhoc.isActive" ? <CheckIcon size={13} /> : null}
           </Box>
         </Box>
       ),
