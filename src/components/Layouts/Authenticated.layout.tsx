@@ -334,7 +334,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                         bgcolor: "hsl(0, 0%, 12%)",
                       },
                     }}
-                    onClick={() => router.push("/dashboard")}
+                    onClick={() => router.push("/configuracion")}
                   >
                     <Typography variant="body2" fontSize={"13px"} fontWeight="400" color="#9aa3b8">
                       Configuración

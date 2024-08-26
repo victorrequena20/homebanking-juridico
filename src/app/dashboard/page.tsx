@@ -14,6 +14,7 @@ import PieChart from "@/components/Charts/PieChart";
 import ReportIcon from "@/assets/icons/ReportIcon";
 import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import OfficesIcon from "@/assets/icons/OfficesIcon";
+import QuickNavItem from "@/modules/dashboard/components/QuickNavItem/QuickNavItem";
 
 interface RawDataPoint {
   count: number;
@@ -267,6 +268,39 @@ export default function DashboardPage() {
           </Stack>
         </Stack>
         <Stack sx={{ pr: 4 }}>
+          <Stack
+            sx={{
+              flex: 1,
+              width: "100%",
+              maxWidth: "360px",
+              height: "100%",
+              alignItems: "center",
+              mt: 4,
+              bgcolor: "#ffffff",
+              px: 2,
+              py: 4,
+              pt: 2,
+              borderRadius: "8px",
+            }}
+          >
+            <Stack sx={{ gap: 2 }}>
+              <Typography variant="body2" color="var(--secondaryText)">
+                Navegación rapida
+              </Typography>
+              <QuickNavItem path="/institucion/clientes" title="Clientes" subtitle="Visualizar clientes del sistema." />
+              <QuickNavItem path="/reportes" title="Reportes" subtitle="Visualizar reportes del sistema." />
+              <QuickNavItem
+                path="/administracion/usuarios"
+                title="Usuarios"
+                subtitle="Visualizar usuarios del sistema."
+              />
+              <QuickNavItem
+                path="/administracion/sistema/administrar-oficinas"
+                title="Oficinas"
+                subtitle="Visualizar oficinas del sistema."
+              />
+            </Stack>
+          </Stack>
           <Stack>
             <Stack
               sx={{
@@ -293,179 +327,6 @@ export default function DashboardPage() {
                 Monto Pendiente / Desembolsado
               </Typography>
               <PieChart />
-            </Stack>
-          </Stack>
-          <Stack
-            sx={{
-              flex: 1,
-              width: "100%",
-              maxWidth: "360px",
-              height: "100%",
-              alignItems: "center",
-              mt: 4,
-              bgcolor: "#ffffff",
-              px: 2,
-              py: 4,
-              pt: 2,
-              borderRadius: "8px",
-            }}
-          >
-            <Stack sx={{ gap: 2 }}>
-              <Typography variant="body2" color="var(--secondaryText)">
-                Navegación rapida
-              </Typography>
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "auto",
-                  borderRadius: "8px",
-                  backgroundColor: "var(--secondaryBg)",
-                  p: 1,
-                }}
-              >
-                <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                  <Box
-                    sx={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#07195210",
-                    }}
-                  >
-                    <PeopleIcon size={16} color="#12141a" />
-                  </Box>
-                  <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                    <Typography variant="caption" fontWeight="300">
-                      Clientes
-                    </Typography>
-                    <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-                      <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
-                        Visualizar clientes del sistema.
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                  <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-                    <ArrowRightIcon color="#484848" size={16} />
-                  </Box>
-                </Stack>
-              </Box>
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "auto",
-                  borderRadius: "8px",
-                  backgroundColor: "var(--secondaryBg)",
-                  p: 1,
-                }}
-              >
-                <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                  <Box
-                    sx={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#07195210",
-                    }}
-                  >
-                    <ReportIcon size={16} color="#12141a" />
-                  </Box>
-                  <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                    <Typography variant="caption" fontWeight="300">
-                      Reportes
-                    </Typography>
-                    <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-                      <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
-                        Visualizar reportes del sistema.
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                  <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-                    <ArrowRightIcon color="#484848" size={16} />
-                  </Box>
-                </Stack>
-              </Box>
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "auto",
-                  borderRadius: "8px",
-                  backgroundColor: "var(--secondaryBg)",
-                  p: 1,
-                }}
-              >
-                <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                  <Box
-                    sx={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#07195210",
-                    }}
-                  >
-                    <PersonHexagonalIcon size={18} strokeWidth="1.5" color="#12141a" />
-                  </Box>
-                  <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                    <Typography variant="caption" fontWeight="300">
-                      Usuarios
-                    </Typography>
-                    <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-                      <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
-                        Visualizar usuarios del sistema.
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                  <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-                    <ArrowRightIcon color="#484848" size={16} />
-                  </Box>
-                </Stack>
-              </Box>
-              <Box
-                sx={{
-                  width: "300px",
-                  height: "auto",
-                  borderRadius: "8px",
-                  backgroundColor: "var(--secondaryBg)",
-                  p: 1,
-                }}
-              >
-                <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
-                  <Box
-                    sx={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#07195210",
-                    }}
-                  >
-                    <OfficesIcon size={16} color="#12141a" />
-                  </Box>
-                  <Stack sx={{ flexDirection: "column", justifyContent: "center" }}>
-                    <Typography variant="caption" fontWeight="300">
-                      Oficinas
-                    </Typography>
-                    <Stack sx={{ flexDirection: "row", alignItems: "center" }}>
-                      <Typography variant="caption" color="var(--secondaryText)" fontWeight="300">
-                        Visualizar oficinas del sistema.
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                  <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-                    <ArrowRightIcon color="#484848" size={16} />
-                  </Box>
-                </Stack>
-              </Box>
             </Stack>
           </Stack>
         </Stack>
