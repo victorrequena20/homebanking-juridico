@@ -10,6 +10,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import { getHooks } from "@/services/Core.service";
 import ButtonBack from "@/components/ButtonBack";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function GanchosPage() {
   const [loadingHooks, setLoadingHooks] = React.useState<boolean>(false);
@@ -32,23 +33,7 @@ export default function GanchosPage() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.isActive ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.isActive ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.isActive} mode="circle" />,
     },
   ];
 

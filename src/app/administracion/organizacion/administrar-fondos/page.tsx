@@ -11,15 +11,18 @@ import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function AdministrarFondos() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [funds, setFunds] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getFunds();
       if (response?.status === 200) {
         setFunds(response?.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
@@ -39,7 +42,7 @@ export default function AdministrarFondos() {
   ];
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Administrar fondos"
         items={[

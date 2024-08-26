@@ -4,7 +4,12 @@ import { StatusTagProps } from "./StatusTagProps";
 import CheckIcon from "@/assets/icons/Checkicon";
 import { GridCloseIcon } from "@mui/x-data-grid";
 
-export default function StatusTag({ isActive, mode = "tag" }: StatusTagProps) {
+export default function StatusTag({
+  isActive,
+  mode = "tag",
+  trueText = "Activo",
+  falseText = "Inactivo",
+}: StatusTagProps) {
   if (mode === "tag") {
     return (
       <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
@@ -20,9 +25,13 @@ export default function StatusTag({ isActive, mode = "tag" }: StatusTagProps) {
             border: `1px solid ${isActive ? "#067647" : "#B42318"}`,
           }}
         >
-          <Box sx={{ width: "6px", height: "6px", borderRadius: "20px", bgcolor: isActive ? "#067647" : "#B42318" }} />
+          {trueText === "Activo" && falseText === "Inactivo" && (
+            <Box
+              sx={{ width: "6px", height: "6px", borderRadius: "20px", bgcolor: isActive ? "#067647" : "#B42318" }}
+            />
+          )}
           <Typography variant="caption" fontWeight="300" color={isActive ? "#067647" : "#B42318"}>
-            {isActive ? "Activo" : "Inactivo"}
+            {isActive ? trueText : falseText}
           </Typography>
         </Box>
       </Box>

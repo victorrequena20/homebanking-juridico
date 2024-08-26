@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Box, Stack } from "@mui/material";
 import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import { Typography } from "@mui/material";
@@ -6,9 +7,13 @@ import { IntermediateMenuItemProps } from "./IntermediateMenuItemProps";
 import Link from "next/link";
 
 export default function IntermediateMenuItem({ title, subtitle, path, icon, flex }: IntermediateMenuItemProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Link href={path} style={{ cursor: "pointer" }}>
       <Box
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         sx={{
           display: "flex",
           flex: 1,
@@ -44,7 +49,7 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon, flex
               <Typography variant="body2" fontWeight="400" color="var(--text)">
                 {title}
               </Typography>
-              <Typography variant="caption" color="#606778" maxWidth="34ch" sx={{ mt: 0.5 }}>
+              <Typography variant="caption" color="#606778" maxWidth="33ch" sx={{ mt: 0.5 }}>
                 {subtitle}
               </Typography>
             </Stack>
@@ -58,9 +63,8 @@ export default function IntermediateMenuItem({ title, subtitle, path, icon, flex
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
-              "&:hover": {
-                bgcolor: "#F6F5F2",
-              },
+              bgcolor: isHovered ? "#F6F5F2" : "transparent",
+              transition: "background-color 0.3s",
             }}
           >
             <ArrowRightIcon size={18} color="#000" />

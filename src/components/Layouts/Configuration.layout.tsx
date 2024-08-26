@@ -47,15 +47,12 @@ const sidebarItemStyles: SxProps = {
   },
 };
 
-export default function ClientDetailsLayout({ children }: { children: React.ReactNode }) {
+export default function ConfigurationLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
   console.log("🚀 ~ ClientDetailsLayout ~ params:", params);
-  const isGeneralPage = pathname.includes("general");
-  const isDomicilioPage = pathname.includes("domicilio");
-  const isFamilyMembersPage = pathname.includes("miembros-de-familia");
-  const isIdentificacionesPage = pathname.includes("identificaciones");
+  const isConfigurationAccount = pathname.includes("configuracion");
 
   return (
     <ClientDetailsProvider>
@@ -81,9 +78,7 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   alignItems: "flex-start",
                 }}
               >
-                <Breadcrumbs
-                  items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-                />
+                <Breadcrumbs items={[{ title: "Inicio", href: "/dashboard" }, { title: "Configuración" }]} />
                 <Box
                   sx={{
                     backgroundColor: "var(--darkBg)",
@@ -106,39 +101,11 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
           </Grid>
           <Grid xs={1.8} sx={{ borderRight: "1px solid #bac3d480", height: "100%", p: 2 }}>
             <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isGeneralPage ? "#f2f4f7" : "transparent" }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/general`)}
+              sx={{ ...sidebarItemStyles, backgroundColor: isConfigurationAccount ? "#f2f4f7" : "transparent" }}
+              onClick={() => router.push(`/configuracion`)}
             >
               <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                General
-              </Typography>
-            </Box>
-            <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isDomicilioPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/domicilio`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Domicilio
-              </Typography>
-            </Box>
-            <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isFamilyMembersPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/miembros-de-familia`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Miembros de la familia
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                ...sidebarItemStyles,
-                backgroundColor: isIdentificacionesPage ? "#f2f4f7" : "transparent",
-                mt: 1.5,
-              }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/identificaciones`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Identificaciones
+                Cuenta
               </Typography>
             </Box>
           </Grid>

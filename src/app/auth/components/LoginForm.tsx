@@ -60,7 +60,7 @@ const LoginForm = () => {
           alignItems: "center",
           overflow: "hidden",
           position: "relative",
-          pl: "10%",
+          pl: 10,
           justifyContent: "center",
         }}
       >

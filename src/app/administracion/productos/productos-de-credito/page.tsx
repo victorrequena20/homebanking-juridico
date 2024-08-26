@@ -11,6 +11,7 @@ import CheckIcon from "@/assets/icons/Checkicon";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function CreditProducts() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -40,23 +41,7 @@ export default function CreditProducts() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.status === "loanProduct.active" ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.status === "loanProduct.active" ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.status === "loanProduct.active"} mode="circle" />,
     },
   ];
 

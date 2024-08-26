@@ -10,8 +10,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import StatusTag from "@/components/Tags/StatusTag";
 
 export default function RolsPermitions() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [roles, setRoles] = React.useState<any | null>([]);
   const router = useRouter();
 
@@ -32,34 +34,19 @@ export default function RolsPermitions() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.disabled === false ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.status === "roles.disabled" ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={!params.row.status} mode="circle" />,
     },
   ];
 
   React.useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const response = await getRoles();
       console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setRoles(response?.data);
       }
-      console.log("🚀 ~ response:", response);
+      setIsLoading(false);
     })();
   }, []);
 
