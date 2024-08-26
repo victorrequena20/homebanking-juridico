@@ -9,6 +9,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import CheckIcon from "@/assets/icons/Checkicon";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getAdhocquery } from "@/services/Adhoc.service";
+import StatusTag from "@/components/Tags/StatusTag";
 
 const getReportRunFrequencyLabel = (frequencyId: number) => {
   const frequencyMap: { [key: number]: string } = {
@@ -61,30 +62,14 @@ export default function AdhocConsult() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex" }}>
-          <Box
-            sx={{
-              bgcolor: params?.row?.isActive === true ? "#0B845C" : "#EA3647",
-              width: "30px",
-              height: "30px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "30px",
-            }}
-          >
-            {params?.row?.isActive === "adhoc.isActive" ? <CheckIcon size={13} /> : null}
-          </Box>
-        </Box>
-      ),
+      renderCell: params => <StatusTag isActive={params?.row?.isActive} mode="circle" />,
     },
     {
       field: "createdBy",
       headerName: "Creado por",
       flex: 2,
       valueGetter: (_, row) => `${row.createdBy || ""}`,
-    }
+    },
   ];
 
   React.useEffect(() => {
@@ -135,9 +120,7 @@ export default function AdhocConsult() {
           }}
           disableRowSelectionOnClick
           rowSelection
-          onRowClick={(params, event, details) =>
-            router.push(`/administracion/organizacion/consulta-ad-hoc/${78}`)
-          }
+          onRowClick={(params, event, details) => router.push(`/administracion/organizacion/consulta-ad-hoc/${78}`)}
           pageSizeOptions={[10, 25, 50]}
         />
       </Stack>

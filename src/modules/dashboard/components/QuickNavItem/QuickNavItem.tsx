@@ -1,7 +1,6 @@
 import React from "react";
 import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import { Stack, Box, Typography } from "@mui/material";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
 import SendIcon from "@/assets/icons/SendIcon";
 import Link from "next/link";
 
@@ -13,10 +12,10 @@ export default function QuickNavItem({ path, title, subtitle }: { path: string; 
           width: "300px",
           height: "auto",
           borderRadius: "8px",
-          backgroundColor: "hsl(0, 0%, 96%)",
+          bgcolor: "hsl(0, 0%, 98%)",
           p: 1,
           "&:hover": {
-            bgcolor: "hsl(0, 0%, 98%)",
+            backgroundColor: "hsl(0, 0%, 96%)",
           },
         }}
       >
