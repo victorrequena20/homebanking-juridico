@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
-import { getholidaysById } from "@/services/Holidays.service";
+import { getholidaysById, getholidaysByOfficeId } from "@/services/Holidays.service";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -34,7 +34,7 @@ export default function AdministrarFestivos() {
     if (!selectedOffice) return;
     setIsLoading(true);
     try {
-      const response = await getholidaysById(selectedOffice); // Buscar días festivos por ID de la oficina
+      const response = await getholidaysByOfficeId(selectedOffice); // Buscar días festivos por ID de la oficina
       if (response?.status === 200) {
         setHolidays(response.data);
       } else {
@@ -56,22 +56,22 @@ export default function AdministrarFestivos() {
       valueGetter: (_, row) => `${row.name || ""}`,
     },
     {
-      field: "startDate",
+      field: "fromDate",
       headerName: "Fecha de Inicio",
       flex: 1,
-      valueGetter: (_, row) => `${formatSpanishDate(row.startDate) || ""}`,
+      valueGetter: (_, row) => `${formatSpanishDate(row.fromDate) || ""}`,
     },
     {
-      field: "endDate",
+      field: "toDate",
       headerName: "Fecha final",
       flex: 1,
-      valueGetter: (_, row) => `${formatSpanishDate(row.endDate) || ""}`,
+      valueGetter: (_, row) => `${formatSpanishDate(row.toDate) || ""}`,
     },
     {
-      field: "scheduledRefunds",
+      field: "reschedulingType",
       headerName: "Reembolso Programados",
       flex: 1,
-      valueGetter: (_, row) => `${row.scheduledRefunds || ""}`,
+      valueGetter: (_, row) => `${row.reschedulingType || ""}`,
     },
     {
       field: "status",
@@ -96,7 +96,6 @@ export default function AdministrarFestivos() {
         ]}
       />
 
-      {/* Botón "Crear día festivo" */}
       <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 2 }}>
         <Button
           size="small"
@@ -108,7 +107,6 @@ export default function AdministrarFestivos() {
         />
       </Stack>
 
-      {/* Barra de búsqueda pegada al botón */}
       <Stack
         sx={{ alignItems: "center", flexDirection: "row", gap: 1, mt: 2 }}
         justifyContent="flex-start"
@@ -132,13 +130,12 @@ export default function AdministrarFestivos() {
           size="small"
           variant="primary"
           text="Buscar"
-          onClick={handleSearch} // Llamada a la función directamente en el evento onClick
+          onClick={handleSearch} 
           disabled={!selectedOffice}
           type="button" // Asegura que el botón no actúe como un submit de formulario
         />
       </Stack>
 
-      {/* Tabla de días festivos */}
       <Stack sx={{ mt: 3 }}>
         <DataGrid
           rows={holidays || []}

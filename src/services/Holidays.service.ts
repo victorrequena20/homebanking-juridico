@@ -1,21 +1,7 @@
 import HttpClient from "@/utilities/HttpClient.utility";
 import { ApiResponse } from "@/types/common";
-
-export const getRoles = async (): Promise<ApiResponse> => {
-    try {
-      const response = await HttpClient.get("/roles");
-      return {
-        data: response.data,
-        status: response.status,
-      };
-    } catch (error) {
-      console.error("🚀 ~ getRoles ~ error:", error);
-      throw error;
-    }
-  };
-
-  export const getholidaysById = async (holidayId: string): Promise<ApiResponse> => {
-    if (!holidayId) throw new Error("holidayId es requerido");
+ 
+  export const getholidaysById = async (holidayId?: string) => {
     try {
       const response = await HttpClient.get(`/holidays/${holidayId}`);
       return {
@@ -23,7 +9,33 @@ export const getRoles = async (): Promise<ApiResponse> => {
         status: response.status,
       };
     } catch (error) {
-      console.error("🚀 ~ getholidayIdById ~ error:", error);
-      throw error;
+      console.log("🚀 ~ getholidaysById ~ error:", error);
+    }
+  };
+
+  export const getholidaysByOfficeId = async (officeId: string) => {
+    try {
+      const response = await HttpClient.get('/holidays', {
+        params: { officeId }, // Pasa el officeId como un parámetro de consulta
+      });
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      console.log("🚀 ~ getholidaysByOfficeId ~ error:", error);
+      throw error; // Opcional: Lanza el error para manejarlo en el llamado
+    }
+  };
+
+  export const getConfigurationByid = async (params?: any, id?: string) => {
+    try {
+      const response = await HttpClient.get(`/configurations/${id}`, { params });
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      console.log("🚀 ~ getConfigurationByid ~ error:", error);
     }
   };
