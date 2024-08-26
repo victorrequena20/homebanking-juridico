@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import { getClients } from "@/services/Clients.service";
@@ -9,6 +9,8 @@ import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import StatusTag from "@/components/Tags/StatusTag";
+import { toast } from "sonner";
+import AccountNumberCell from "@/modules/institucion/clients/components/AccountNumberCell";
 
 export default function Clients() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -25,7 +27,8 @@ export default function Clients() {
       field: "accountNumber",
       headerName: "Número de cuenta",
       flex: 1,
-      valueGetter: (value, row) => `${row.accountNumber || ""} `,
+      // valueGetter: (value, row) => `${row.accountNumber || ""} `,
+      renderCell: params => <AccountNumberCell accountNo={params?.row?.accountNumber} />,
     },
     {
       field: "externalId",

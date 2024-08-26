@@ -71,3 +71,31 @@ export const getGuaranteesTemplate = async () => {
     console.log("🚀 ~ getGuaranteesTemplate ~ error:", error);
   }
 };
+
+// ----- Administrar configuraciones de impuestos start -----
+
+export const getTaxesComponents = async () => {
+  try {
+    const response = await HttpClient.get("/taxes/component");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTaxesComponents ~ error:", error);
+  }
+};
+
+export const getTaxesGroups = async () => {
+  try {
+    const response = await HttpClient.get("/taxes/group");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTaxesGroups ~ error:", error);
+  }
+};
+
+// ----- Administrar configuraciones de impuestos start -----
