@@ -365,6 +365,15 @@ export const createPaymentType = async (data: any) => {
 
 // ----- Journal entries start -----
 
+export const createJournalEntry = async (data: any) => {
+  try {
+    const response = await HttpClient.post(`/journalentries`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ createJournalEntry ~ error:", error);
+  }
+};
+
 export const getJournalEntries = async (params?: any) => {
   try {
     const response = await HttpClient.get("/journalentries", { params });
