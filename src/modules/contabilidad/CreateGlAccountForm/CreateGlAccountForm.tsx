@@ -1,5 +1,5 @@
 import { Grid, Stack } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IForm } from "./types";
@@ -16,10 +16,11 @@ import Toggle from "@/components/Toggle";
 import { toast } from "sonner";
 
 export default function CreateGlAccountForm() {
+  const [parentId, setParentId] = React.useState<number | null>(null);
+  const [accountType, setAccountType] = React.useState<number | null>(null);
   const [glAccountsTemplate, setGlAccountsTemplate] = React.useState<any>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [manualEntriesAllowed, setManualEntriesAllowed] = React.useState<boolean>(false);
-  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -28,11 +29,20 @@ export default function CreateGlAccountForm() {
     watch,
     formState: { errors, isValid, dirtyFields, touchedFields },
   } = useForm<IForm>({ resolver: yupResolver(validationSchema), mode: "onChange" });
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   async function handleGetTemplate() {
     const response = await getGlAccountsTemplate();
-    console.log("🚀 ~ handleGetTemplate ~ response:", response);
-    if (response?.status === 200) setGlAccountsTemplate(response?.data);
+    if (response?.status === 200) {
+      setGlAccountsTemplate(response?.data);
+      if (searchParams.get("parentId")) {
+        setAccountType(parseInt(searchParams.get("accountType") || ""));
+        setParentId(parseInt(searchParams.get("parentId") || ""));
+        setValue("parentId", parseInt(searchParams.get("parentId") || ""));
+        setValue("type", parseInt(searchParams.get("accountType") || ""));
+      }
+    }
   }
 
   React.useEffect(() => {
@@ -81,7 +91,7 @@ export default function CreateGlAccountForm() {
               label="Tipo de cuenta*"
               options={keyValueAdapter(glAccountsTemplate?.accountTypeOptions, "value", "id")}
               setItem={value => onChange(value?.value)}
-              //   defaultValue={defaultValueForType}
+              defaultValue={accountType}
             />
           )}
         />
@@ -129,9 +139,9 @@ export default function CreateGlAccountForm() {
           render={({ field: { onChange } }) => (
             <InputSelect
               label="Cuenta mayor"
-              options={keyValueAdapter([], "value", "id")}
+              options={keyValueAdapter(glAccountsTemplate?.assetHeaderAccountOptions, "name", "id")}
               setItem={value => onChange(value?.value)}
-              //   defaultValue={defaultValueForParentId}
+              defaultValue={parentId}
             />
           )}
         />
@@ -170,7 +180,7 @@ export default function CreateGlAccountForm() {
               maxWidth: "392px",
               height: "100%",
               justifyContent: "space-between",
-              alignItems: "flex-end",
+              alignItems: "center",
               borderBottom: "1px solid #cccccc80",
               pb: 2,
             }}

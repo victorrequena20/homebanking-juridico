@@ -14,6 +14,7 @@ export default function Input({
   onChange,
   value,
   defaultValue,
+  width,
 }: InputProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
@@ -25,11 +26,14 @@ export default function Input({
   }, [defaultValue]);
 
   return (
-    <Box sx={{ maxWidth: "392px" }}>
+    <Box sx={{ maxWidth: width || "392px" }}>
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
-      <div className={`${styles.container} ${isFocused && styles.focusedInput} ${!isValidField && styles.inputError}`}>
+      <div
+        className={`${styles.container} ${isFocused && styles.focusedInput} ${!isValidField && styles.inputError}`}
+        style={{ width: width || "392px", maxWidth: width || "392px" }}
+      >
         <input
           type={type === "password" ? (showPassword ? "text" : "password") : type}
           placeholder={placeholder}

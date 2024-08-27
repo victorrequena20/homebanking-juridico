@@ -21,6 +21,7 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
   async function handleGetTemplateById() {
     setIsLoadingInfo(true);
     const response = await getGlAccountsTemplateById(params?.accountId);
+    console.log("🚀 ~ handleGetTemplateById ~ response:", response);
     if (response?.status === 200) {
       setTemplateByIdData(response?.data);
       setIsDisabled(response?.data?.disabled);
@@ -101,7 +102,7 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
             Tipo de cuenta
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            Activo
+            {templateByIdData?.type?.value}
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
@@ -140,19 +141,23 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
         )}
 
         {/* Agregar cuenta auxiliar */}
-        <Stack sx={detailRowWithAction}>
-          <Typography variant="body2" fontWeight="400" color="#12141a">
-            Cuenta auxiliar
-          </Typography>
-          <Button
-            text="Agregar"
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            onClick={() =>
-              router.push(`/contabilidad/catalogo-de-cuentas/${params?.accountId}/agregar-cuenta-auxiliar`)
-            }
-          />
-        </Stack>
+        {templateByIdData?.usage?.value === "HEADER" && (
+          <Stack sx={detailRowWithAction}>
+            <Typography variant="body2" fontWeight="400" color="#12141a">
+              Cuenta auxiliar
+            </Typography>
+            <Button
+              text="Agregar"
+              iconLeft
+              icon={<PlusIcon size={20} color="#fff" />}
+              onClick={() =>
+                router.push(
+                  `/contabilidad/catalogo-de-cuentas/crear?parentId=${params?.accountId}&accountType=${templateByIdData?.type?.id}`
+                )
+              }
+            />
+          </Stack>
+        )}
 
         {/* Activación / desactivación */}
         <Stack sx={detailRowWithAction}>

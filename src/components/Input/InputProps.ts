@@ -9,4 +9,5 @@ export interface InputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
   defaultValue?: string;
+  width?: string;
 }

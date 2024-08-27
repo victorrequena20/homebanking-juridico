@@ -1,8 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 737.54 737.54" id="top">
+<svg class='animated-svg' xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 737.54 737.54" id="top">
     <defs>
         <style>
-            .es1-cls-1{isolation:isolate;}.es1-cls-2,.es1-cls-6,.es1-cls-7{fill:#5e85d2;}.es1-cls-2{opacity:0.75;}.es1-cls-3{opacity:0.6;}.es1-cls-4,.es1-cls-5{stroke:#5e85d2;stroke-miterlimit:10;stroke-width:2px;}.es1-cls-4{fill:url(#es1-linear-gradient);}.es1-cls-5{fill:url(#es1-linear-gradient-2);}.es1-cls-7{opacity:0.4;}.es1-cls-8{fill:none;}</style>
+            @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-16px); }
+            }
+            .animated-svg {
+            animation: floatUpDown 6s ease-in-out infinite;
+            }
+            .es1-cls-1{isolation:isolate;}.es1-cls-2,.es1-cls-6,.es1-cls-7{fill:#5e85d2;}.es1-cls-2{opacity:0.75;}.es1-cls-3{opacity:0.6;}.es1-cls-4,.es1-cls-5{stroke:#5e85d2;stroke-miterlimit:10;stroke-width:2px;}.es1-cls-4{fill:url(#es1-linear-gradient);}.es1-cls-5{fill:url(#es1-linear-gradient-2);}.es1-cls-7{opacity:0.4;}.es1-cls-8{fill:none;}
+        </style>
         <linearGradient id="es1-linear-gradient" x1="40.76" y1="293.08" x2="696.78" y2="293.08"
             gradientUnits="userSpaceOnUse">
             <stop offset="0.01" stop-color="#5e85d2" stop-opacity="0.6"></stop>
@@ -40,6 +48,8 @@
             <rect class="es1-cls-8" width="737.54" height="737.54"></rect>
         </g>
     </g>
+
+
     <defs>
         <style>
             .es2-cls-1{fill:url(#es2-linear-gradient);}.es2-cls-2{mask:url(#es2-mask);}.es2-cls-3{opacity:0.6;}.es2-cls-4{opacity:0.3;}.es2-cls-5{isolation:isolate;}.es2-cls-6,.es2-cls-7{stroke:#5e85d2;stroke-miterlimit:10;stroke-width:2px;}.es2-cls-6{fill:url(#es2-linear-gradient-2);}.es2-cls-7{fill:url(#es2-linear-gradient-3);}.es2-cls-8,.es2-cls-9{fill:#5e85d2;}.es2-cls-9{opacity:0.4;}.es2-cls-10{fill:none;}</style>
@@ -142,7 +152,10 @@
             <rect class="es3-cls-10" width="737.54" height="737.54"></rect>
         </g>
     </g>
+
 </svg>
+
+
 
  
 
