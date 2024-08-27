@@ -1,6 +1,6 @@
 import { Grid, Stack } from "@mui/material";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IForm } from "./types";
 import { validationSchema } from "./yup";
@@ -62,7 +62,6 @@ export default function CreateGlAccountForm() {
       toast.error("Error al crear la cuenta contable");
     }
     setIsLoading(false);
-    console.log("🚀 ~ onSubmit ~ response:", response);
   }
 
   return (
