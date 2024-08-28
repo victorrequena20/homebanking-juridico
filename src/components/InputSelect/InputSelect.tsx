@@ -16,8 +16,9 @@ interface IInputSelectProps {
   setItems?: (value: any[]) => void;
   options: IKeyValue[];
   withCheckbox?: boolean;
-  defaultValue?: string | number | (string | number)[];
+  defaultValue?: string | number | (string | number)[] | null;
   value?: any;
+  width?: string;
 }
 
 export default function InputSelect({
@@ -32,6 +33,7 @@ export default function InputSelect({
   setItem,
   setItems,
   value,
+  width,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -100,12 +102,13 @@ export default function InputSelect({
   };
 
   return (
-    <Box sx={{ maxWidth: "392px", position: "relative", cursor: "pointer" }} ref={selectRef}>
+    <Box sx={{ maxWidth: width || "392px", position: "relative", cursor: "pointer" }} ref={selectRef}>
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
       <div
         className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
+        style={{ width: width || "392px", maxWidth: width || "392px" }}
         onClick={() => setIsOpen(!isOpen)}
       >
         <input
@@ -127,6 +130,7 @@ export default function InputSelect({
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
+            mr: 2,
           }}
         >
           {isOpen ? <ArrowUpIcon size={20} color="#484848" /> : <ArrowDownIcon size={20} color="#484848" />}
@@ -142,8 +146,8 @@ export default function InputSelect({
       {isOpen && (
         <Stack
           sx={{
-            minWidth: "392px",
-            maxWidth: "392px",
+            minWidth: width || "392px",
+            maxWidth: width || "392px",
             backgroundColor: "#fff",
             maxHeight: "320px",
             borderRadius: "16px",

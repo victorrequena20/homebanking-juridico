@@ -18,9 +18,7 @@ import NotFoundData from "@/components/NotFoundData";
 export default function EntradasDeCierrePage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [closures, setClosures] = React.useState<any>([{ id: 1 }]);
-
   const router = useRouter();
-
   const columns: GridColDef<(typeof closures)[number]>[] = [
     {
       field: "officeId",
@@ -93,7 +91,15 @@ export default function EntradasDeCierrePage() {
           />
         </Stack>
       ) : (
-        <NotFoundData />
+        <NotFoundData
+          withOutBack
+          action={{
+            title: "Crear entrada de cierre",
+            onClick: () => {
+              router.push("/contabilidad/entradas-de-cierre/crear");
+            },
+          }}
+        />
       )}
     </Wrapper>
   );

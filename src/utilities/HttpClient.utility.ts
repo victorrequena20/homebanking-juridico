@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // const API_BASE_URL = "https://staging.mifos.io/fineract-provider/api/v1";
-const API_BASE_URL = "http://15.229.77.198:4201/litecore-provider/api/v1";
-// const API_BASE_URL = "http://localhost:8443/litecore-provider/api/v1" 15.229.77.198:4201;
+const API_BASE_URL = "http://15.228.246.64:8443/litecore-provider/api/v1";
+// const API_BASE_URL = "http://localhost:8443/litecore-provider/api/v1";
 
 const HttpClient = axios.create({
   baseURL: API_BASE_URL,

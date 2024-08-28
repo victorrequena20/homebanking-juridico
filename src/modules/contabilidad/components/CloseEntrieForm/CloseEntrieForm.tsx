@@ -67,8 +67,23 @@ export const CloseEntrieForm: React.FC = () => {
   }, []);
 
   return (
-    <Grid container component="form" spacing={3} onSubmit={handleSubmit(onSubmit)}>
-      <Grid md={12}>
+    <Grid
+      container
+      component="form"
+      sx={{
+        gap: 3,
+        maxWidth: "500px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Grid>
         <Controller
           name="officeId"
           control={control}
@@ -85,7 +100,7 @@ export const CloseEntrieForm: React.FC = () => {
         />
       </Grid>
 
-      <Grid md={12}>
+      <Grid>
         <Controller
           name="closingDate"
           control={control}
@@ -102,7 +117,7 @@ export const CloseEntrieForm: React.FC = () => {
         />
       </Grid>
 
-      <Grid md={12}>
+      <Grid>
         <Controller
           name="comments"
           control={control}
@@ -119,7 +134,7 @@ export const CloseEntrieForm: React.FC = () => {
         />
       </Grid>
       <Grid md={12}>
-        <Stack sx={{ flexDirection: "row", justifyContent: "flex-start", gap: 3 }}>
+        <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 3 }}>
           <Button
             size="small"
             text="Cancelar"
