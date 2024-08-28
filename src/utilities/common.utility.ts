@@ -123,3 +123,14 @@ export function formatTimestampToSpanishDate(timestampMs: number): string {
   const formattedDate = `${date.getDate()} de ${months[date.getMonth()]} de ${date.getFullYear()}`;
   return isNaN(date.getTime()) ? "" : formattedDate;
 }
+
+export function parseDateFromString(dateString: string): Date | null {
+  if (!dateString) return null;
+
+  const [day, month, year] = dateString.split("/").map(Number);
+  if (day && month && year) {
+    return new Date(year, month - 1, day); // Meses son base 0 en Date
+  }
+
+  return null;
+}

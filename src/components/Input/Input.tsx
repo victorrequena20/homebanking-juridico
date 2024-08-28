@@ -15,6 +15,7 @@ export default function Input({
   value,
   defaultValue,
   width,
+  maxLength,
 }: InputProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
@@ -45,6 +46,7 @@ export default function Input({
             setInputValue(e?.target?.value || "");
           }}
           value={inputValue || value || ""}
+          maxLength={maxLength}
         />
         {type === "password" && (
           <>

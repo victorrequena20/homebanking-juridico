@@ -22,7 +22,7 @@ interface IForm {
 
 const schema = yup.object().shape({
   productName: yup.string().required("El nombre del producto es obligatorio"),
-  key: yup.string().required("La clave es obligatoria"),
+  key: yup.string().required("La clave es obligatoria").max(4, "La clave no puede tener más de 4 caracteres"),
   fund: yup.mixed(),
   startDate: yup.string(),
   endDate: yup.string(),
@@ -31,17 +31,26 @@ const schema = yup.object().shape({
 
 export default function CreateLoanDetailsForm() {
   const [isActive, setIsActive] = React.useState<boolean>(false);
-  const { handleChangeGlobalFormValues, loanProductsTemplate, globalForm } = useContext(CreateLoanContext);
+  const { handleChangeGlobalFormValues, loanProductsTemplate, globalForm, step } = useContext(CreateLoanContext);
   console.log("🚀 ~ CreateLoanDetailsForm ~ globalForm:", globalForm);
   const {
     control,
     handleSubmit,
     watch,
     getValues,
+    setValue,
     formState: { errors, isValid },
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      productName: globalForm?.productName,
+      key: globalForm?.key,
+      fund: globalForm?.fund,
+      startDate: globalForm?.startDate,
+      endDate: globalForm?.endDate,
+      description: globalForm?.description,
+    },
   });
   const formValues = watch();
 
@@ -50,9 +59,14 @@ export default function CreateLoanDetailsForm() {
   };
 
   useEffect(() => {
-    console.log("🚀 ~ React.useEffect ~ data:", formValues);
-    handleChangeGlobalFormValues({ ...formValues });
-  }, [JSON.stringify(formValues)]);
+    // update form fields with setValue
+    setValue("productName", globalForm?.productName);
+    setValue("key", globalForm?.key);
+    setValue("fund", globalForm?.value);
+    setValue("startDate", globalForm?.startDate);
+    setValue("endDate", globalForm?.endDate);
+    setValue("description", globalForm?.description);
+  }, [step]);
 
   return (
     <Grid
@@ -80,9 +94,13 @@ export default function CreateLoanDetailsForm() {
               label="Nombre del producto *"
               type="text"
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, productName: e.target.value });
+              }}
               hint={errors.productName?.message}
               isValidField={!errors.productName}
+              defaultValue={globalForm?.productName}
             />
           )}
         />
@@ -96,10 +114,15 @@ export default function CreateLoanDetailsForm() {
             <Input
               label="Clave *"
               type="text"
+              maxLength={4}
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, key: e.target.value });
+              }}
               hint={errors.key?.message}
               isValidField={!errors.key}
+              defaultValue={globalForm?.key}
             />
           )}
         />
@@ -113,10 +136,14 @@ export default function CreateLoanDetailsForm() {
             <InputSelect
               label="Fondo"
               options={keyValueAdapter(loanProductsTemplate?.fundOptions, "name", "id")}
-              setItem={item => onChange(item)}
+              setItem={item => {
+                onChange(item);
+                handleChangeGlobalFormValues({ ...globalForm, fund: item });
+              }}
               value={value}
               hint={errors.fund?.message}
               isValidField={!errors.fund}
+              defaultValue={globalForm.fund?.value}
             />
           )}
         />
@@ -130,9 +157,13 @@ export default function CreateLoanDetailsForm() {
             <InputCalendar
               label="Fecha de inicio"
               value={value}
-              onChange={onChange}
+              onChange={(date: any) => {
+                onChange(date);
+                handleChangeGlobalFormValues({ ...globalForm, startDate: date });
+              }}
               hint={errors.startDate?.message}
               isValidField={!errors.startDate}
+              defaultValue={globalForm?.startDate}
             />
           )}
         />
@@ -146,7 +177,10 @@ export default function CreateLoanDetailsForm() {
             <InputCalendar
               label="Fecha de cierre"
               value={value}
-              onChange={onChange}
+              onChange={(date: any) => {
+                onChange(date);
+                handleChangeGlobalFormValues({ ...globalForm, endDate: date });
+              }}
               hint={errors.endDate?.message}
               isValidField={!errors.endDate}
             />
@@ -163,7 +197,10 @@ export default function CreateLoanDetailsForm() {
               label="Descripcion"
               type="text"
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, description: e.target.value });
+              }}
               hint={errors.description?.message}
               isValidField={!errors.description}
             />

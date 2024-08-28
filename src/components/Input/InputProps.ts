@@ -10,4 +10,5 @@ export interface InputProps {
   value?: string;
   defaultValue?: string;
   width?: string;
+  maxLength?: number;
 }

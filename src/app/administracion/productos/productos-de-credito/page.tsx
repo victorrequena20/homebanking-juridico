@@ -81,7 +81,6 @@ export default function CreditProducts() {
       </Stack>
       <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "8px", overflow: "hidden" }}
           rows={loanProducts}
           columns={columns}
           initialState={{
