@@ -70,6 +70,21 @@ export default function EntradasDeCierrePage() {
         ]}
       />
 
+      {closures?.length > 0 && (
+        <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
+          <Stack sx={{ alignItems: "flex-end" }}>
+            <Button
+              iconLeft
+              icon={<PlusIcon size={20} color="#fff" />}
+              size="small"
+              variant="primary"
+              text="Crear entrada de cierre"
+              onClick={() => router.push("/contabilidad/entradas-de-cierre/crear")}
+            />
+          </Stack>
+        </Stack>
+      )}
+
       {closures?.length > 0 ? (
         <Stack sx={{ mt: 5 }}>
           <DataGrid

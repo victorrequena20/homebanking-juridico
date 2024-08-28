@@ -156,13 +156,24 @@ export const updateGlAccount = async (data: any, id: string): Promise<ApiRespons
 export const getFinancialActivityAccountsTemplate = async () => {
   try {
     const response = await HttpClient.get("/financialactivityaccounts/template");
-    console.log("🚀 ~ getFinancialActivityAccounts ~ response:", response);
     return {
       data: response.data,
       status: response.status,
     };
   } catch (error) {
     console.log("🚀 ~ getFinancialActivityAccountsTemplate ~ error:", error);
+  }
+};
+
+export const getFinancialActivityAccountsTemplateById = async (id: string, params?: any) => {
+  try {
+    const response = await HttpClient.get(`/financialactivityaccounts/${id}`, { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getFinancialActivityAccountsTemplateById ~ error:", error);
   }
 };
 

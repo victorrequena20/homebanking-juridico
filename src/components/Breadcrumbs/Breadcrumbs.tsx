@@ -16,14 +16,14 @@ export default function Breadcrumbs({ title, items }: BreadcrumbsProps) {
             if (item?.href) {
               return (
                 <Link key={item.href} color="inherit" href={item?.href}>
-                  <Typography variant="caption" fontWeight="400" color="#606778">
+                  <Typography variant="caption" fontWeight="300" color="#606778">
                     {item.title}
                   </Typography>
                 </Link>
               );
             } else {
               return (
-                <Typography key={item.title} variant="caption" fontWeight="400" color="#3d424d">
+                <Typography key={item.title} variant="caption" fontWeight="300" color="#3d424d">
                   {item.title}
                 </Typography>
               );

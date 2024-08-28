@@ -71,7 +71,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   return (
     <section>
       <Grid container sx={containerStyles}>
-        <Grid md={2} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 2, pb: 4 }}>
+        <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 2, pb: 4 }}>
           <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
             <Stack>
               <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
@@ -121,7 +121,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.institutionClients ? "#fff" : "#9aa3b8",
+                              color: routeValidations.institutionClients ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                         >
@@ -138,7 +138,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.institutionGroups ? "#fff" : "#9aa3b8",
+                              color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                         >
@@ -155,7 +155,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.institutionCenters ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.institutionCenters ? "#fff" : "#9aa3b8",
+                              color: routeValidations.institutionCenters ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                         >
@@ -231,7 +231,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.administrationUsers ? "#fff" : "#9aa3b8",
+                              color: routeValidations.administrationUsers ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                           onClick={() => router.push("/administracion/usuarios")}
@@ -249,7 +249,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.administrationOrganization ? "#fff" : "#9aa3b8",
+                              color: routeValidations.administrationOrganization ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                           onClick={() => router.push("/administracion/organizacion")}
@@ -267,7 +267,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.administrationSystem ? "#fff" : "#9aa3b8",
+                              color: routeValidations.administrationSystem ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                           onClick={() => router.push("/administracion/sistema")}
@@ -285,7 +285,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                             px: 2,
                             bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
                             "& > p": {
-                              color: routeValidations.administrationProducts ? "#fff" : "#9aa3b8",
+                              color: routeValidations.administrationProducts ? "#cad0db" : "#9aa3b8",
                             },
                           }}
                           onClick={() => router.push("/administracion/productos")}

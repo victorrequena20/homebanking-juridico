@@ -7,7 +7,7 @@ import Loader from "../Loader";
 export default function Wrapper({ children, isLoading }: { children: React.ReactNode; isLoading?: boolean }) {
   return (
     <Grid
-      md={10}
+      md={10.2}
       sx={{
         bgcolor: "#FAFAFA",
         borderRadius: "24px",
