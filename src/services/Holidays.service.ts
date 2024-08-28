@@ -1,7 +1,7 @@
 import HttpClient from "@/utilities/HttpClient.utility";
 import { ApiResponse } from "@/types/common";
 
-export const getholidaysById = async (holidayId?: string) => {
+export const getholidaysById = async (holidayId?: string): Promise<ApiResponse> => {
   try {
     const response = await HttpClient.get(`/holidays/${holidayId}`);
     return {
@@ -10,32 +10,45 @@ export const getholidaysById = async (holidayId?: string) => {
     };
   } catch (error) {
     console.log("🚀 ~ getholidaysById ~ error:", error);
+    throw error;
   }
 };
 
-  export const getholidaysByOfficeId = async (officeId: string) => {
+  export const getholidaysByOfficeId = async (officeId: string): Promise<ApiResponse> => {
     try {
-      const response = await HttpClient.get('/holidays', {
-        params: { officeId }, // Pasa el officeId como un parámetro de consulta
-      });
+      const response = await HttpClient.get('/holidays', { params: { officeId } });
       return {
         data: response.data,
         status: response.status,
       };
     } catch (error) {
       console.log("🚀 ~ getholidaysByOfficeId ~ error:", error);
-      throw error; // Opcional: Lanza el error para manejarlo en el llamado
+      throw error; 
     }
   };
 
-  export const getConfigurationByid = async (params?: any, id?: string) => {
+  export const createholiday = async (data: any): Promise<ApiResponse> => {
     try {
-      const response = await HttpClient.get(`/configurations/${id}`, { params });
+      const response = await HttpClient.post(`/holidays`, data);
       return {
         data: response.data,
         status: response.status,
       };
     } catch (error) {
-      console.log("🚀 ~ getConfigurationByid ~ error:", error);
+      console.log("🚀 ~ createholiday ~ error:", error);
+      throw error;
+    }
+  };
+
+  export const getPaymentType = async (): Promise<ApiResponse> => {
+    try {
+      const response = await HttpClient.get('/holidays/template');
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      console.log("🚀 ~ getPaymentType ~ error:", error);
+      throw error;
     }
   };

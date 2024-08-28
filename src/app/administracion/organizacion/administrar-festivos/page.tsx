@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
-import { getholidaysById, getholidaysByOfficeId } from "@/services/Holidays.service";
+import { getholidaysByOfficeId } from "@/services/Holidays.service";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import InputSelect from "@/components/InputSelect";
