@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import CreateGlAccountForm from "@/modules/contabilidad/CreateGlAccountForm/CreateGlAccountForm";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getGlAccountsTemplate } from "@/services/Accounting.service";
+import Loader from "@/components/Loader";
 
 export default function CreateGlAccount() {
   const [glAccountsTemplate, setGlAccountsTemplate] = React.useState<any>({});
@@ -24,7 +25,7 @@ export default function CreateGlAccount() {
   }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader size="40" color="#484848" />}>
       <Wrapper>
         <Breadcrumbs
           title="Crear cuenta GL"

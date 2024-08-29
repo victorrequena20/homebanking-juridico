@@ -6,6 +6,7 @@ import { getReports } from "@/services/Reports.service";
 import Wrapper from "@/components/Wrapper";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { useSearchParams } from "next/navigation";
+import Loader from "@/components/Loader";
 
 export default function ReportsAllPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -100,7 +101,7 @@ export default function ReportsAllPage() {
   }, [searchParams.get("filter")]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader size="40" color="#484848" />}>
       <Wrapper isLoading={isLoading}>
         <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
 

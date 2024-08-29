@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
 import "react-calendar/dist/Calendar.css";
+import Loader from "@/components/Loader";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
@@ -33,7 +34,7 @@ export default function RootLayout({ children }: any) {
       </head>
       <body>
         <div>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <Suspense fallback={<Loader size="40" color="#484848" />}>{children}</Suspense>
           <Toaster expand richColors visibleToasts={6} />
         </div>
       </body>
