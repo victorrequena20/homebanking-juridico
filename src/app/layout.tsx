@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
 import "react-calendar/dist/Calendar.css";
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: any) {
       </head>
       <body>
         <div>
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Toaster expand richColors visibleToasts={6} />
         </div>
       </body>

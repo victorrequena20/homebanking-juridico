@@ -42,9 +42,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   const [showReportsLinks, setShowReportsLinks] = React.useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
-  console.log("🚀 ~ AuthenticatedLayout ~ pathname:", pathname);
   const searchParams = useSearchParams();
-  console.log("🚀 ~ AuthenticatedLayout ~ searchParams:", searchParams.get("filter"));
   const routeValidations = {
     dashboard: pathname === "/dashboard",
     plantillas: pathname.includes("/plantillas"),

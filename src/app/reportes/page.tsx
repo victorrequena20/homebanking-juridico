@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
@@ -100,27 +100,29 @@ export default function ReportsAllPage() {
   }, [searchParams.get("filter")]);
 
   return (
-    <Wrapper isLoading={isLoading}>
-      <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Wrapper isLoading={isLoading}>
+        <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
 
-      <Stack sx={{ mt: 5 }}>
-        <DataGrid
-          rows={filteredReports}
-          loading={isLoading}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+        <Stack sx={{ mt: 5 }}>
+          <DataGrid
+            rows={filteredReports}
+            loading={isLoading}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-        />
-      </Stack>
-    </Wrapper>
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Stack>
+      </Wrapper>
+    </Suspense>
   );
 }
