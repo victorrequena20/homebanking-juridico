@@ -12,6 +12,16 @@ export const getGlAccounts = async (params?: any) => {
 
 // ----- Accounting rules start -----
 
+export const createAccountingRule = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/accountingrules`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ createAccountingRule ~ error:", error);
+    throw error;
+  }
+};
+
 export const getAccountingRulesTemplate = async (params?: any) => {
   try {
     const response = await HttpClient.get("/accountingrules/template", { params });

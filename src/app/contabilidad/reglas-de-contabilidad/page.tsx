@@ -85,7 +85,7 @@ export default function CatalogoCuentasPage() {
           icon={<PlusIcon size={20} color="#fff" />}
           text="Agregar regla"
           iconLeft
-          // onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+          onClick={() => router.push("/contabilidad/reglas-de-contabilidad/crear")}
         />
       </Stack>
 

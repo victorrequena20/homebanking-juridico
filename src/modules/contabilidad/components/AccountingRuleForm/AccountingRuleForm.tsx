@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useForm, Controller, set } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, Stack } from "@mui/material";
@@ -9,7 +9,7 @@ import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { toast } from "sonner";
-import { getAccountingRulesTemplate, updateAccoutingRule } from "@/services/Accounting.service";
+import { createAccountingRule, getAccountingRulesTemplate, updateAccoutingRule } from "@/services/Accounting.service";
 import { useRouter } from "next/navigation";
 
 // Validation Schema
@@ -71,6 +71,23 @@ export default function AccountingRuleForm({ accountingRuleData }: { accountingR
     }
     setIsLoading(false);
   }
+  async function handleCreateAccountingRule(data?: any) {
+    setIsLoading(true);
+    const response = await createAccountingRule({
+      name: data?.name,
+      officeId: data?.officeId?.value,
+      accountToCredit: data?.accountToDebit?.value,
+      accountToDebit: data?.accountToCredit?.value,
+      description: data?.description,
+    });
+    if (response?.status === 200) {
+      toast.success("Regla contable creada correctamente.");
+      router.push("/contabilidad/reglas-de-contabilidad");
+    } else {
+      toast.error("Error al crear la regla contable.");
+    }
+    setIsLoading(false);
+  }
 
   React.useEffect(() => {
     handleGetTemplateData();
@@ -85,7 +102,11 @@ export default function AccountingRuleForm({ accountingRuleData }: { accountingR
 
   const onSubmit = async (data: any) => {
     console.log("Form Data:", data);
-    await handleEditAccountingRule(data);
+    if (accountingRuleData) {
+      await handleEditAccountingRule(data);
+      return;
+    }
+    await handleCreateAccountingRule(data);
   };
 
   return (
