@@ -95,7 +95,6 @@ export default function CatalogoCuentasPage() {
 
       <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={glAccounts}
           columns={columns}
           initialState={{

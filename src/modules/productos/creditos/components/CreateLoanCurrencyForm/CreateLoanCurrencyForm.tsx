@@ -24,15 +24,22 @@ const schema = yup.object().shape({
 });
 
 export default function CreateLoanCurrencyForm() {
-  const { handleChangeGlobalFormValues, loanProductsTemplate } = useContext(CreateLoanContext);
+  const { handleChangeGlobalFormValues, loanProductsTemplate, globalForm, step } = useContext(CreateLoanContext);
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors, isValid },
+    setValue,
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      currencyCode: globalForm?.currencyCode,
+      digitsAfterDecimal: globalForm?.digitsAfterDecimal,
+      currencyInMultiplesOf: globalForm?.currencyInMultiplesOf,
+      payInMultiplesOf: globalForm?.payInMultiplesOf,
+    },
   });
   const formValues = watch();
 
@@ -42,8 +49,11 @@ export default function CreateLoanCurrencyForm() {
 
   useEffect(() => {
     console.log("🚀 ~ React.useEffect ~ data:", formValues);
-    handleChangeGlobalFormValues({ ...formValues });
-  }, [JSON.stringify(formValues)]);
+    setValue("currencyCode", globalForm?.currencyCode);
+    setValue("digitsAfterDecimal", globalForm?.digitsAfterDecimal);
+    setValue("currencyInMultiplesOf", globalForm?.currencyInMultiplesOf);
+    setValue("payInMultiplesOf", globalForm?.payInMultiplesOf);
+  }, [step]);
 
   return (
     <Grid
@@ -72,10 +82,14 @@ export default function CreateLoanCurrencyForm() {
             <InputSelect
               label="Moneda *"
               options={keyValueAdapter(loanProductsTemplate?.currencyOptions, "name", "code")}
-              setItem={item => onChange(item)}
+              setItem={item => {
+                onChange(item);
+                handleChangeGlobalFormValues({ ...globalForm, currencyCode: item });
+              }}
               value={value}
               hint={errors.currencyCode?.message}
               isValidField={!errors.currencyCode}
+              defaultValue={globalForm?.currencyCode?.value}
             />
           )}
         />
@@ -90,7 +104,10 @@ export default function CreateLoanCurrencyForm() {
               label="Lugares decimales *"
               type="number"
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, digitsAfterDecimal: e.target.value });
+              }}
               hint={errors.digitsAfterDecimal?.message}
               isValidField={!errors.digitsAfterDecimal}
             />
@@ -107,7 +124,10 @@ export default function CreateLoanCurrencyForm() {
               label="Moneda en múltiplos de"
               type="number"
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, currencyInMultiplesOf: e.target.value });
+              }}
               hint={errors.currencyInMultiplesOf?.message}
               isValidField={!errors.currencyInMultiplesOf}
             />
@@ -124,7 +144,10 @@ export default function CreateLoanCurrencyForm() {
               label="Pago en múltiplos de"
               type="number"
               value={value}
-              onChange={onChange}
+              onChange={e => {
+                onChange(e);
+                handleChangeGlobalFormValues({ ...globalForm, payInMultiplesOf: e.target.value });
+              }}
               hint={errors.payInMultiplesOf?.message}
               isValidField={!errors.payInMultiplesOf}
             />

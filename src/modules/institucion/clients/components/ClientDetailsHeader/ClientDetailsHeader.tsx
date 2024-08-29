@@ -177,7 +177,7 @@ export default function ClientDetailsHeader({
               />
             )}
             <Button variant="primary" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" />
-            <Button variant="primary" text="Acciones" buttonList />
+            <Button variant="primary" text="" buttonList />
           </Box>
         </Stack>
       </Stack>

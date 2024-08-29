@@ -78,7 +78,6 @@ export default function ConfiguracionDeMonedaPage() {
 
       <Stack sx={{ mt: 5 }}>
         <DataGrid
-          sx={{ borderRadius: "8px", overflow: "hidden" }}
           rows={currencies}
           columns={columns}
           initialState={{

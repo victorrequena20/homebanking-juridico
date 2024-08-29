@@ -200,7 +200,7 @@ export default function DashboardPage() {
                 subtitle="Visualizar usuarios del sistema."
               />
               <QuickNavItem
-                path="/administracion/sistema/administrar-oficinas"
+                path="/administracion/organizacion/administrar-oficinas"
                 title="Oficinas"
                 subtitle="Visualizar oficinas del sistema."
               />

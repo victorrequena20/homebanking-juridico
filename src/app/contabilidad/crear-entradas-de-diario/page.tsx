@@ -1,6 +1,7 @@
 import React from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
+import CreateJournalEntryForm from "@/modules/contabilidad/components/CreateJournalEntryForm";
 
 export default function CrearEntradasDeDiarioPage() {
   return (
@@ -13,6 +14,8 @@ export default function CrearEntradasDeDiarioPage() {
           { title: "Crear entradas de diario" },
         ]}
       />
+
+      <CreateJournalEntryForm />
     </Wrapper>
   );
 }

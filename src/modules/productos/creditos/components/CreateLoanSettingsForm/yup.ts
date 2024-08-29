@@ -6,4 +6,6 @@ export const schema = yup.object().shape({
   interestCalculationPeriodType: yup.mixed(),
   loanScheduleType: yup.mixed(),
   transactionProccessingStrategyCode: yup.mixed(),
+  isEqualAmortization: yup.boolean(),
+  loanScheduleProcessingType: yup.mixed(),
 });

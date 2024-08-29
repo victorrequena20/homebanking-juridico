@@ -1,40 +1,42 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Stack, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
-import { getholidaysById } from "@/services/Holidays.service";
+import { getholidaysByOfficeId } from "@/services/Holidays.service";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import InputSelect from "@/components/InputSelect";
+import { keyValueAdapter } from "@/adapters/keyValue.adapter";
+import NotFoundData from "@/components/NotFoundData";
 
 export default function AdministrarFestivos() {
+  const [isLoadingOffices, setIsLoadingOffices] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [offices, setOffices] = React.useState<any[]>([]);
-  const [selectedOffice, setSelectedOffice] = React.useState<string>("");
   const [holidays, setHolidays] = React.useState<any[]>([]);
   const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
-      setIsLoading(true);
+      setIsLoadingOffices(true);
       const response = await getOffices();
       console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setOffices(response.data);
       }
-      setIsLoading(false);
+      setIsLoadingOffices(false);
     })();
   }, []);
 
-  const handleSearch = async () => {
-    if (!selectedOffice) return;
+  const handleSearch = async (id: string) => {
     setIsLoading(true);
     try {
-      const response = await getholidaysById(selectedOffice); // Buscar días festivos por ID de la oficina
+      const response = await getholidaysByOfficeId(id);
       if (response?.status === 200) {
         setHolidays(response.data);
       } else {
@@ -43,9 +45,8 @@ export default function AdministrarFestivos() {
     } catch (error) {
       console.error("Error fetching holidays:", error);
       setHolidays([]);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const holidayColumns: GridColDef[] = [
@@ -56,33 +57,33 @@ export default function AdministrarFestivos() {
       valueGetter: (_, row) => `${row.name || ""}`,
     },
     {
-      field: "startDate",
+      field: "fromDate",
       headerName: "Fecha de Inicio",
       flex: 1,
-      valueGetter: (_, row) => `${formatSpanishDate(row.startDate) || ""}`,
+      valueGetter: (_, row) => `${formatSpanishDate(row.fromDate) || ""}`,
     },
     {
-      field: "endDate",
+      field: "toDate",
       headerName: "Fecha final",
       flex: 1,
-      valueGetter: (_, row) => `${formatSpanishDate(row.endDate) || ""}`,
+      valueGetter: (_, row) => `${formatSpanishDate(row.toDate) || ""}`,
     },
     {
-      field: "scheduledRefunds",
+      field: "reschedulingType",
       headerName: "Reembolso Programados",
       flex: 1,
-      valueGetter: (_, row) => `${row.scheduledRefunds || ""}`,
+      valueGetter: (_, row) => `${row.reschedulingType || ""}`,
     },
     {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      valueGetter: (_, row) => `${row.status || ""}`,
+      valueGetter: (_, row) => `${row.status?.value || ""}`,
     },
   ];
 
   return (
-    <Wrapper isLoading={isLoading}>
+    <Wrapper isLoading={isLoadingOffices}>
       <Breadcrumbs
         title="Administrar festivos"
         items={[
@@ -96,7 +97,6 @@ export default function AdministrarFestivos() {
         ]}
       />
 
-      {/* Botón "Crear día festivo" */}
       <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 2 }}>
         <Button
           size="small"
@@ -108,52 +108,43 @@ export default function AdministrarFestivos() {
         />
       </Stack>
 
-      {/* Barra de búsqueda pegada al botón */}
-      <Stack
-        sx={{ alignItems: "center", flexDirection: "row", gap: 1, mt: 2 }}
-        justifyContent="flex-start"
-      >
-        <FormControl sx={{ width: "50%" }}>
-          <InputLabel id="office-select-label">Seleccionar oficina</InputLabel>
-          <Select
-            labelId="office-select-label"
-            value={selectedOffice}
-            onChange={(e) => setSelectedOffice(e.target.value)}
-            label="Seleccionar oficina"
-          >
-            {offices?.map((office: any) => (
-              <MenuItem key={office.id} value={office.id}>
-                {office.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button
-          size="small"
-          variant="primary"
-          text="Buscar"
-          onClick={handleSearch} // Llamada a la función directamente en el evento onClick
-          disabled={!selectedOffice}
-          type="button" // Asegura que el botón no actúe como un submit de formulario
+      <Stack sx={{ alignItems: "center", flexDirection: "row", gap: 1, mt: 2 }} justifyContent="flex-start">
+        <InputSelect
+          label="Oficinas"
+          options={keyValueAdapter(offices, "name", "id")}
+          setItem={item => {
+            handleSearch(item?.value?.toString());
+          }}
         />
       </Stack>
 
-      {/* Tabla de días festivos */}
       <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          rows={holidays || []}
-          columns={holidayColumns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+        {holidays?.length > 0 ? (
+          <DataGrid
+            rows={holidays || []}
+            columns={holidayColumns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          pageSizeOptions={[10, 25, 50]}
-        />
+            }}
+            disableRowSelectionOnClick
+            pageSizeOptions={[10, 25, 50]}
+            loading={isLoading}
+          />
+        ) : (
+          <NotFoundData
+            title="No hay días festivos asociados a esta oficina."
+            withOutBack
+            action={{
+              title: "Crear día festivo",
+              onClick: () => router.push("/administracion/organizacion/administrar-festivos/create"),
+            }}
+          />
+        )}
       </Stack>
     </Wrapper>
   );

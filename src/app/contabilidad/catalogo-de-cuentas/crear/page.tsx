@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import ArrowLeftIcon from "@/assets/icons/ArrowLeftIcon";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
@@ -24,29 +24,31 @@ export default function CreateGlAccount() {
   }, []);
 
   return (
-    <Wrapper>
-      <Breadcrumbs
-        title="Crear cuenta GL"
-        items={[
-          { title: "Inicio" },
-          { title: "Contabilidad", href: "/contabilidad" },
-          { title: "Catálogo de cuentas", href: "/contabilidad/catalogo-de-cuentas" },
-          { title: "Crear cuenta" },
-        ]}
-      />
-      <Box sx={{ mt: 3 }}>
-        <Button
-          icon={<ArrowLeftIcon size={18} color="#484848" />}
-          size="small"
-          variant="navigation"
-          text="Volver"
-          onClick={() => router.push("/contabilidad/catalogo-de-cuentas")}
+    <Suspense fallback={<div>Loading...</div>}>
+      <Wrapper>
+        <Breadcrumbs
+          title="Crear cuenta GL"
+          items={[
+            { title: "Inicio" },
+            { title: "Contabilidad", href: "/contabilidad" },
+            { title: "Catálogo de cuentas", href: "/contabilidad/catalogo-de-cuentas" },
+            { title: "Crear cuenta" },
+          ]}
         />
-      </Box>
+        <Box sx={{ mt: 3 }}>
+          <Button
+            icon={<ArrowLeftIcon size={18} color="#484848" />}
+            size="small"
+            variant="navigation"
+            text="Volver"
+            onClick={() => router.push("/contabilidad/catalogo-de-cuentas")}
+          />
+        </Box>
 
-      <Stack sx={{ mt: 3 }}>
-        <CreateGlAccountForm />
-      </Stack>
-    </Wrapper>
+        <Stack sx={{ mt: 3 }}>
+          <CreateGlAccountForm />
+        </Stack>
+      </Wrapper>
+    </Suspense>
   );
 }

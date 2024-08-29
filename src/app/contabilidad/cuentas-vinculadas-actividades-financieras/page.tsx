@@ -26,7 +26,7 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
       field: "typeAccount",
       headerName: "Tipo de cuenta",
       flex: 1,
-      valueGetter: (value, row) => `${"Activo" || ""} `,
+      valueGetter: (value, row) => `${row?.financialActivityData?.mappedGLAccountType || ""} `,
     },
     {
       field: "glCode",
@@ -81,7 +81,7 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
       </Stack>
       <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "8px", overflow: "hidden" }}
+          sx={{ cursor: "pointer" }}
           rows={financialActivties}
           columns={columns}
           initialState={{
@@ -95,6 +95,9 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={row => {
+            router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${row?.row?.id}`);
+          }}
         />
       </Stack>
     </Wrapper>

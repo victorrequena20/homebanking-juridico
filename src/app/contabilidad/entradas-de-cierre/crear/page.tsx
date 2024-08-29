@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ButtonBack from "@/components/ButtonBack";
 import Wrapper from "@/components/Wrapper";
 import CloseEntrieForm from "@/modules/contabilidad/components/CloseEntrieForm";
 import { Stack } from "@mui/material";
@@ -17,7 +18,11 @@ export default function CreateCloseEntriesPage() {
         ]}
       />
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ mt: 2 }}>
+        <ButtonBack />
+      </Stack>
+
+      <Stack sx={{ mt: 3 }}>
         <CloseEntrieForm />
       </Stack>
     </Wrapper>

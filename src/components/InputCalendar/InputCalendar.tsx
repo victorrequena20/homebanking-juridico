@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { Typography } from "@mui/material";
-import { Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import styles from "./InputCalendarStyeles.module.css";
 import CalendarIcon from "@/assets/icons/CalendarIcon";
 import Calendar from "react-calendar";
-import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
+import { formatDateEsddMMMMyyyy, parseDateFromString } from "@/utilities/common.utility";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -16,8 +15,9 @@ interface InputCalendarProps {
   hint?: any;
   onChange?: (date: string) => void;
   value?: string;
-  defaultValue?: string;
-  maxToday?: boolean; // Nueva propiedad
+  defaultValue?: string; // Nueva prop para la fecha por defecto
+  maxToday?: boolean;
+  width?: string;
 }
 
 export default function InputCalendar({
@@ -28,17 +28,21 @@ export default function InputCalendar({
   onChange,
   value,
   defaultValue,
-  maxToday = false, // Valor predeterminado
+  maxToday = false,
+  width,
 }: InputCalendarProps) {
-  const [date, setDate] = React.useState<Value>(new Date());
+  const [date, setDate] = React.useState<Value>(() => {
+    // Inicializar el estado con defaultValue si está disponible
+    return defaultValue ? parseDateFromString(defaultValue) : new Date();
+  });
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [inputValue, setInputValue] = React.useState<string>("");
+  const [inputValue, setInputValue] = React.useState<string>(() => {
+    // Inicializar inputValue con defaultValue si está disponible
+    return defaultValue ? formatDateEsddMMMMyyyy(parseDateFromString(defaultValue)) : "";
+  });
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
-
-  // Ref para el componente
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Cierra el calendario cuando se hace clic fuera del componente
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -56,12 +60,15 @@ export default function InputCalendar({
   const today = new Date();
 
   return (
-    <Box sx={{ maxWidth: "392px" }} ref={containerRef}>
+    <Box sx={{ maxWidth: width || "392px" }} ref={containerRef}>
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
 
-      <div className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}>
+      <div
+        className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
+        style={{ width: width || "392px", maxWidth: width || "392px" }}
+      >
         <input
           type="text"
           placeholder={placeholder}
@@ -78,6 +85,7 @@ export default function InputCalendar({
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
+            mr: 2,
           }}
           onClick={() => setIsOpen(true)}
         >

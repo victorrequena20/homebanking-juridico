@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,11 +12,12 @@ import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import Wrapper from "@/components/Wrapper";
 import ButtonBack from "@/components/ButtonBack";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import React from "react";
 import { getAccountingRules } from "@/services/Accounting.service";
 import { getOffices } from "@/services/Office.service";
-import { getCurrencies, getPaymentTypes } from "@/services/Core.service";
+import { createJournalEntry, getCurrencies, getPaymentTypes } from "@/services/Core.service";
 import { toast } from "sonner";
+import { createFrecuentPostingsAdapter } from "@/adapters/accounting/createFrecuentPostings.adapter";
+import { useRouter } from "next/navigation";
 
 interface IForm {
   accountNumber?: string;
@@ -69,18 +71,23 @@ export default function TransactionForm() {
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+  const router = useRouter();
 
-  const onSubmit = (data: IForm) => {
+  const onSubmit = async (data: IForm) => {
     setIsLoading(true);
-    toast.error("Error al crear la publicación frecuente");
+    const response = await createJournalEntry(createFrecuentPostingsAdapter(data));
+    if (response?.status === 200) {
+      router.push("/contabilidad/publicaciones-frecuentes");
+      toast.success("Publicación frecuente creada con éxito");
+    } else {
+      toast.error("Error al crear la publicación frecuente");
+    }
     setIsLoading(false);
-    console.log(data);
   };
 
   React.useEffect(() => {
     (async () => {
       const resAccountingRules = await getAccountingRules({ associations: "all" });
-      console.log("🚀 ~ resAccountingRules:", resAccountingRules);
       if (resAccountingRules?.status === 200) {
         setAccountingRules(resAccountingRules?.data);
       }
@@ -139,15 +146,15 @@ export default function TransactionForm() {
           <Grid item>
             <Controller
               control={control}
-              name="accountNumber"
+              name="officeId"
               render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Número de cuenta"
-                  type="text"
+                <InputSelect
+                  label="Oficina *"
+                  options={officesOptions}
+                  setItem={item => onChange(item)}
                   value={value}
-                  onChange={onChange}
-                  hint={errors.accountNumber?.message}
-                  isValidField={!errors.accountNumber}
+                  hint={errors.officeId?.message}
+                  isValidField={!errors.officeId}
                 />
               )}
             />
@@ -173,23 +180,6 @@ export default function TransactionForm() {
           <Grid item>
             <Controller
               control={control}
-              name="officeId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Oficina *"
-                  options={officesOptions}
-                  setItem={item => onChange(item)}
-                  value={value}
-                  hint={errors.officeId?.message}
-                  isValidField={!errors.officeId}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
               name="currencyCode"
               render={({ field: { onChange, value } }) => (
                 <InputSelect
@@ -199,6 +189,45 @@ export default function TransactionForm() {
                   value={value}
                   hint={errors.currencyCode?.message}
                   isValidField={!errors.currencyCode}
+                />
+              )}
+            />
+          </Grid>
+
+          {/* Padding */}
+          <Grid item>
+            <Stack sx={{ width: "392px" }} />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="debits"
+              render={({ field: { onChange, value } }) => (
+                <InputSelect
+                  label="Entrada del libro mayor afectada (débito) *"
+                  options={keyValueAdapter(accountingRules[0]?.debitAccounts, "name", "id")}
+                  setItem={item => onChange(item)}
+                  value={value}
+                  hint={errors.debits?.message}
+                  isValidField={!errors.debits}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="debitAmount"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  label="Monto de débito *"
+                  type="number"
+                  onChange={onChange}
+                  value={value}
+                  hint={errors.debitAmount?.message}
+                  isValidField={!errors.debitAmount}
                 />
               )}
             />
@@ -227,128 +256,12 @@ export default function TransactionForm() {
               name="creditAmount"
               render={({ field: { onChange, value } }) => (
                 <Input
-                  label="Monto de crédito*"
+                  label="Monto de crédito *"
+                  type="number"
                   value={value}
                   onChange={onChange}
                   hint={errors.creditAmount?.message}
                   isValidField={!errors.creditAmount}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="debits"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Entrada del libro mayor afectada (débito) *"
-                  options={keyValueAdapter(accountingRules[0]?.debitAccounts, "name", "id")}
-                  setItem={item => onChange(item)}
-                  value={value}
-                  hint={errors.debits?.message}
-                  isValidField={!errors.debits}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="debitAmount"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Monto de débito*"
-                  onChange={onChange}
-                  value={value}
-                  hint={errors.debitAmount?.message}
-                  isValidField={!errors.debitAmount}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="transactionDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar
-                  label="Fecha de transacción*"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.transactionDate?.message}
-                  isValidField={!errors.transactionDate}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="checkNumber"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Número de cheque"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.checkNumber?.message}
-                  isValidField={!errors.checkNumber}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="bankNumber"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Número de banco"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.bankNumber?.message}
-                  isValidField={!errors.bankNumber}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="paymentTypeId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Tipo de pago"
-                  options={keyValueAdapter(paymentTypes, "name", "id")}
-                  setItem={item => onChange(item)}
-                  value={value}
-                  hint={errors.paymentTypeId?.message}
-                  isValidField={!errors.paymentTypeId}
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item>
-            <Controller
-              control={control}
-              name="receiptNumber"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Número de recibo"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.receiptNumber?.message}
-                  isValidField={!errors.receiptNumber}
                 />
               )}
             />
@@ -374,6 +287,73 @@ export default function TransactionForm() {
           <Grid item>
             <Controller
               control={control}
+              name="transactionDate"
+              render={({ field: { onChange, value } }) => (
+                <InputCalendar
+                  label="Fecha de transacción*"
+                  value={value}
+                  onChange={onChange}
+                  hint={errors.transactionDate?.message}
+                  isValidField={!errors.transactionDate}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="paymentTypeId"
+              render={({ field: { onChange, value } }) => (
+                <InputSelect
+                  label="Tipo de pago"
+                  options={keyValueAdapter(paymentTypes, "name", "id")}
+                  setItem={item => onChange(item)}
+                  value={value}
+                  hint={errors.paymentTypeId?.message}
+                  isValidField={!errors.paymentTypeId}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="accountNumber"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  label="Número de cuenta"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  hint={errors.accountNumber?.message}
+                  isValidField={!errors.accountNumber}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="checkNumber"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  label="Número de cheque"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  hint={errors.checkNumber?.message}
+                  isValidField={!errors.checkNumber}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
               name="routingCode"
               render={({ field: { onChange, value } }) => (
                 <Input
@@ -383,6 +363,40 @@ export default function TransactionForm() {
                   onChange={onChange}
                   hint={errors.routingCode?.message}
                   isValidField={!errors.routingCode}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="receiptNumber"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  label="Número de recibo"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  hint={errors.receiptNumber?.message}
+                  isValidField={!errors.receiptNumber}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item>
+            <Controller
+              control={control}
+              name="bankNumber"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  label="Número de banco"
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  hint={errors.bankNumber?.message}
+                  isValidField={!errors.bankNumber}
                 />
               )}
             />
@@ -408,7 +422,7 @@ export default function TransactionForm() {
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="center" spacing={3}>
               <Button text="Cancelar" variant="navigation" type="button" />
-              <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} />
+              <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
             </Stack>
           </Grid>
         </Grid>

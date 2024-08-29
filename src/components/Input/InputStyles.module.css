@@ -2,8 +2,7 @@
   border: none;
   outline: none;
   max-height: 40px;
-  width: 360px;
-  max-width: 360px;
+  flex: 1;
   text-indent: 16px;
   background-color: transparent;
   color: var(--text);
@@ -13,8 +12,6 @@
 }
 
 .container {
-  width: 392px;
-  max-width: 392px;
   border: 1px solid #d0d5dd;
   /* box-shadow: 0px 1px 2px 0px #1018280d; */
   display: flex;
