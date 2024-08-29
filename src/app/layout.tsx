@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import "react-calendar/dist/Calendar.css";
 import Loader from "@/components/Loader";
+import { Box } from "@mui/material";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
@@ -34,7 +35,23 @@ export default function RootLayout({ children }: any) {
       </head>
       <body>
         <div>
-          <Suspense fallback={<Loader size="40" color="#484848" />}>{children}</Suspense>
+          <Suspense
+            fallback={
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100vh",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Loader size="40" color="#484848" />
+              </Box>
+            }
+          >
+            {children}
+          </Suspense>
           <Toaster expand richColors visibleToasts={6} />
         </div>
       </body>
