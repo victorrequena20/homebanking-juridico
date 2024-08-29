@@ -338,7 +338,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                   >
                     <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
                     <Typography variant="body2" fontWeight="200">
-                      Contabilidad
+                      Administración
                     </Typography>
                   </Box>
                   {showAdministrationLinks && (
