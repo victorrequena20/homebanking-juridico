@@ -9,9 +9,10 @@ import ChartSquareIcon from "@/assets/icons/ChartSquareIcon";
 import ReportIcon from "@/assets/icons/ReportIcon";
 import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
 // Utils
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ExitIcon from "@/assets/icons/ExitIcon";
 import Link from "next/link";
+import LogoIcon from "@/assets/icons/LogoIcon";
 
 const containerStyles: SxProps = {
   backgroundColor: "hsl(0, 0%, 10%)",
@@ -38,8 +39,12 @@ const itemStyles: SxProps = {
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
   const [showInstitutionLinks, setShowInstitutionLinks] = React.useState<boolean>(false);
   const [showAdministrationLinks, setShowAdministrationLinks] = React.useState<boolean>(false);
+  const [showReportsLinks, setShowReportsLinks] = React.useState<boolean>(false);
   const router = useRouter();
   const pathname = usePathname();
+  console.log("🚀 ~ AuthenticatedLayout ~ pathname:", pathname);
+  const searchParams = useSearchParams();
+  console.log("🚀 ~ AuthenticatedLayout ~ searchParams:", searchParams.get("filter"));
   const routeValidations = {
     dashboard: pathname === "/dashboard",
     plantillas: pathname.includes("/plantillas"),
@@ -49,6 +54,12 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     institutionCenters: pathname.includes("/institucion/centros"),
     accounting: pathname.includes("/contabilidad"),
     reports: pathname === "/reportes",
+    reportsAll: pathname.includes("/reportes") && searchParams.get("filter") === "todos",
+    reportsClients: pathname.includes("/reportes") && searchParams.get("filter") === "clientes",
+    reportsLoans: pathname.includes("/reportes") && searchParams.get("filter") === "creditos",
+    reportsSavings: pathname.includes("/reportes") && searchParams.get("filter") === "ahorros",
+    reportsFunds: pathname.includes("/reportes") && searchParams.get("filter") === "fondos",
+    reportsAccounting: pathname.includes("/reportes") && searchParams.get("filter") === "contabilidad",
     administrationTab: pathname.includes("/administracion"),
     administrationUsers: pathname.includes("/administracion/usuarios"),
     administrationOrganization: pathname.includes("/administracion/organizacion"),
@@ -71,12 +82,15 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   return (
     <section>
       <Grid container sx={containerStyles}>
-        <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 2, pb: 4 }}>
+        <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 3, pb: 4 }}>
           <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
             <Stack>
-              <Typography variant="body1" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
-                Banco Digital de Caracas
-              </Typography>
+              <Stack sx={{ px: 1.5, flexDirection: "row", alignItems: "center" }}>
+                <LogoIcon size={20} />
+                {/* <Typography variant="body2" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
+                  Banco Digital de Caracas
+                </Typography> */}
+              </Stack>
               <Stack sx={{ mt: 5 }}>
                 {/* Dashboard */}
                 <Link href="/dashboard">
@@ -187,24 +201,132 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                   </Stack>
                 </Link>
                 {/* Reportes */}
-                <Link href="/reportes">
-                  <Stack sx={{ mt: 2 }}>
-                    <Box
-                      sx={{
-                        ...itemStyles,
-                        bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
-                        "& > p": {
-                          color: routeValidations.reports ? "#fff" : "#9aa3b8",
-                        },
-                      }}
-                    >
-                      <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
-                      <Typography variant="body2" fontWeight="200">
-                        Reportes
-                      </Typography>
-                    </Box>
-                  </Stack>
-                </Link>
+                <Stack sx={{ mt: 2 }}>
+                  <Box
+                    sx={{
+                      ...itemStyles,
+                      bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
+                      "& > p": {
+                        color: routeValidations.reports ? "#fff" : "#9aa3b8",
+                      },
+                    }}
+                    onClick={() => setShowReportsLinks(!showReportsLinks)}
+                  >
+                    <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
+                    <Typography variant="body2" fontWeight="200">
+                      Reportes
+                    </Typography>
+                  </Box>
+                  {showReportsLinks && (
+                    <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+                      <Link href={"/reportes?filter=todos"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsAll ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsAll ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Todos
+                          </Typography>
+                        </Box>
+                      </Link>
+                      <Link href={"/reportes?filter=clientes"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsClients ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsClients ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Clientes
+                          </Typography>
+                        </Box>
+                      </Link>
+                      <Link href={"/reportes?filter=creditos"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsLoans ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsLoans ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Créditos
+                          </Typography>
+                        </Box>
+                      </Link>
+                      <Link href={"/reportes?filter=ahorros"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsSavings ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsSavings ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                          onClick={() => router.push("/administracion/sistema")}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Ahorros
+                          </Typography>
+                        </Box>
+                      </Link>
+                      <Link href={"/reportes?filter=fondos"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsFunds ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsFunds ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                          onClick={() => router.push("/administracion/productos")}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Fondos
+                          </Typography>
+                        </Box>
+                      </Link>
+                      <Link href={"/reportes?filter=contabilidad"}>
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            py: 1,
+                            px: 2,
+                            bgcolor: routeValidations.reportsAccounting ? "hsl(0, 0%, 12%)" : "transparent",
+                            "& > p": {
+                              color: routeValidations.reportsAccounting ? "#cad0db" : "#9aa3b8",
+                            },
+                          }}
+                          onClick={() => router.push("/administracion/productos")}
+                        >
+                          <Typography variant="body2" fontWeight="200">
+                            Contabilidad
+                          </Typography>
+                        </Box>
+                      </Link>
+                    </Stack>
+                  )}
+                </Stack>
                 {/* administracion */}
                 <Stack sx={{ mt: 2, cursor: "pointer" }}>
                   <Box
@@ -218,7 +340,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                   >
                     <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
                     <Typography variant="body2" fontWeight="200">
-                      Administración
+                      Contabilidad
                     </Typography>
                   </Box>
                   {showAdministrationLinks && (
