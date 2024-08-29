@@ -134,3 +134,61 @@ export function parseDateFromString(dateString: string): Date | null {
 
   return null;
 }
+
+interface InputType {
+  row: [number, string];
+}
+
+interface OutputType {
+  label: string;
+  value: number;
+}
+
+export function transformArray(input: InputType[]): OutputType[] {
+  return input.map(item => ({
+    label: item.row[1],
+    value: item.row[0],
+  }));
+}
+
+export function generateCSV(csvData: any): string {
+  // Función auxiliar para escapar campos si es necesario
+  const escapeField = (field: any): string => {
+    if (typeof field === "string" && (field.includes(",") || field.includes('"') || field.includes("\n"))) {
+      return `"${field.replace(/"/g, '""')}"`;
+    }
+    return String(field);
+  };
+
+  // Generar la línea de encabezados
+  const headers = csvData.columnHeaders.map((header: any) => escapeField(header.columnName));
+  let csvContent = headers.join(",") + "\n";
+
+  // Generar las líneas de datos
+  csvData.data.forEach((item: any) => {
+    const row = item.row.map((field: any) => {
+      if (Array.isArray(field)) {
+        // Si el campo es un array (como la fecha), lo unimos con guiones
+        return field.join("-");
+      }
+      return escapeField(field);
+    });
+    csvContent += row.join(",") + "\n";
+  });
+
+  return csvContent;
+}
+
+export function downloadCSV(csvContent: string, fileName: string = "output.csv"): void {
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  if (link.download !== undefined) {
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
