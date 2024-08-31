@@ -6,14 +6,13 @@ import { Box, Stack } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { ICreateFundForm } from "./types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { updateUserPassword } from "@/services/Users.service";
 import { schema } from "./yup";
 import { toast } from "sonner";
 import { ICreateFundFormProps } from "./CreateFundFormProps";
-import { createFund } from "@/services/Funds.service";
+import { createFund, updateFund } from "@/services/Funds.service";
 import { useRouter } from "next/navigation";
 
-export default function CreateFundForm({}: ICreateFundFormProps) {
+export default function CreateFundForm({ fundData }: ICreateFundFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
@@ -23,20 +22,34 @@ export default function CreateFundForm({}: ICreateFundFormProps) {
   } = useForm<ICreateFundForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      name: fundData?.name || "",
+      externalId: fundData?.externalId || "",
+    },
   });
   const router = useRouter();
 
   const onSubmit = async (data: ICreateFundForm) => {
     const { name, externalId } = data;
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
-    const response = await createFund({ name, externalId });
-    if (response?.status) {
-      toast.success("Fondo creado con exito!", {
-        cancel: true,
-      });
-      router.push("/administracion/organizacion/administrar-fondos");
-      reset();
+    if (fundData) {
+      const response = await updateFund({ name, externalId }, fundData.id);
+      if (response?.status === 200) {
+        toast.success("Fondo actualizado con exito!");
+        router.push("/administracion/organizacion/administrar-fondos");
+        reset();
+      } else {
+        toast.error("Error al actualizar el fondo.");
+      }
+    } else {
+      const response = await createFund({ name, externalId });
+      if (response?.status === 200) {
+        toast.success("Fondo creado con exito!");
+        router.push("/administracion/organizacion/administrar-fondos");
+        reset();
+      } else {
+        toast.error("Error al crear el fondo.");
+      }
     }
     setIsLoading(false);
   };
@@ -104,7 +117,7 @@ export default function CreateFundForm({}: ICreateFundFormProps) {
           <Button
             type="submit"
             isLoading={isLoading}
-            disabled={!isValid || Object.keys(dirtyFields).length < 2}
+            disabled={!isValid}
             size="small"
             text="Aceptar"
             variant="primary"

@@ -81,6 +81,7 @@ export default function AdministrarFondos() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={params => router.push(`/administracion/organizacion/administrar-fondos/${params.row.id}`)}
         />
       </Stack>
     </Wrapper>

@@ -1,1 +1,3 @@
-export interface ICreateFundFormProps {}
+export interface ICreateFundFormProps {
+  fundData?: any;
+}
