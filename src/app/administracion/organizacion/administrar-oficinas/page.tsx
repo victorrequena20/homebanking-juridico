@@ -85,6 +85,7 @@ export default function AdministrarOficinas() {
 
       <Stack sx={{ mt: 3 }}>
         <DataGrid
+          sx={{ cursor: "pointer" }}
           rows={offices}
           columns={columns}
           initialState={{
@@ -98,6 +99,9 @@ export default function AdministrarOficinas() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
+          onRowClick={params => {
+            router.push(`/administracion/organizacion/administrar-oficinas/${params.row.id}`);
+          }}
         />
       </Stack>
     </Wrapper>
