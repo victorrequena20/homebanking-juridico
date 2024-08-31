@@ -27,12 +27,18 @@ export const getStaffById = async (id: any, params: any) => {
 export const createStaff = async (data: any) => {
   try {
     const response = await HttpClient.post("/staff", data);
-    return {
-      data: response.data,
-      status: response.status,
-    };
+    return { data: response.data, status: response.status };
   } catch (error) {
-    console.log("🚀 ~ createStaff ~ error:", error);
+    console.error("🚀 ~ createStaff ~ error:", error);
+  }
+};
+
+export const updateStaff = async (id: any, data: any) => {
+  try {
+    const response = await HttpClient.put(`/staff/${id}`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ updateStaff ~ error:", error);
   }
 };
 

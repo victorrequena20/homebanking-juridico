@@ -7,15 +7,17 @@ import { toast } from "sonner";
 import { IForm } from "./types";
 import { validationSchema } from "./yup";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { createStaff } from "@/services/Core.service";
+import { createStaff, updateStaff } from "@/services/Core.service";
 import { getOffices } from "@/services/Office.service";
 import InputCalendar from "@/components/InputCalendar";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Toggle from "@/components/Toggle";
+import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
 
 export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
+  console.log("🚀 ~ EmployeeForm ~ employeeData:", employeeData);
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [offices, setOffices] = React.useState<any[]>([]);
@@ -25,13 +27,20 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
     control,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm<IForm>({
     resolver: yupResolver(validationSchema),
     mode: "onChange",
+    defaultValues: {
+      officeId: employeeData?.officeId || "",
+      firstname: employeeData?.firstname || "",
+      lastname: employeeData?.lastname || "",
+      mobileNo: employeeData?.mobileNo || "",
+      joiningDate: formatDateEsddMMMMyyyy(employeeData?.joiningDate) || "",
+    },
   });
 
   const onSubmit = async (data: any) => {
-    console.log("Form Data:", data);
     const dataToSend = {
       ...data,
       officeId: data.officeId?.value,
@@ -40,21 +49,33 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
       isLoanOfficer: isActive,
     };
     setIsLoading(true);
-    const response = await createStaff(dataToSend);
-    if (response?.status === 200) {
-      toast.success("Empleado creado correctamente");
-      router.push("/administracion/organizacion/administrar-empleados");
+    if (employeeData) {
+      const response = await updateStaff(employeeData.id, dataToSend);
+      if (response?.status === 200) {
+        toast.success("Empleado actualizado correctamente");
+        router.push("/administracion/organizacion/administrar-empleados");
+      } else {
+        toast.error("Error al actualizar empleado");
+      }
     } else {
-      toast.error("Error al crear empleado");
+      const response = await createStaff(dataToSend);
+      if (response?.status === 200) {
+        toast.success("Empleado creado correctamente");
+        router.push("/administracion/organizacion/administrar-empleados");
+      } else {
+        toast.error("Error al crear empleado");
+      }
     }
     setIsLoading(false);
   };
 
   React.useEffect(() => {
+    if (employeeData) {
+      setIsActive(employeeData.isLoanOfficer);
+    }
     (async () => {
       setIsLoading(true);
       const response = await getOffices();
-      console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setOffices(response?.data);
       }
@@ -81,6 +102,7 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
         mx: "auto",
       }}
     >
+      {/* Oficina */}
       <Grid item>
         <Controller
           control={control}
@@ -92,11 +114,12 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               setItem={item => onChange(item)}
               hint={errors.officeId?.message}
               isValidField={!errors.officeId}
+              defaultValue={employeeData?.officeId}
             />
           )}
         />
       </Grid>
-
+      {/* Nombre */}
       <Grid item>
         <Controller
           control={control}
@@ -109,11 +132,12 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               onChange={onChange}
               hint={errors.firstname?.message}
               isValidField={!errors.firstname}
+              defaultValue={employeeData?.firstname}
             />
           )}
         />
       </Grid>
-
+      {/* Apellido */}
       <Grid item>
         <Controller
           control={control}
@@ -126,11 +150,12 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               onChange={onChange}
               hint={errors.lastname?.message}
               isValidField={!errors.lastname}
+              defaultValue={employeeData?.lastname}
             />
           )}
         />
       </Grid>
-
+      {/* Numero de telefono para SMS */}
       <Grid item>
         <Controller
           control={control}
@@ -143,11 +168,12 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               onChange={onChange}
               hint={errors.mobileNo?.message}
               isValidField={!errors.mobileNo}
+              defaultValue={employeeData?.mobileNo}
             />
           )}
         />
       </Grid>
-
+      {/* Dia de ingreso */}
       <Grid item>
         <Controller
           control={control}
@@ -158,6 +184,7 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               onChange={date => onChange(date)}
               hint={errors.joiningDate?.message}
               isValidField={!errors.joiningDate}
+              defaultValue={formatDateEsddMMMMyyyy(employeeData?.joiningDate)}
             />
           )}
         />
