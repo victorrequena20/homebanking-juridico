@@ -65,13 +65,23 @@ export default function EmployeeForm() {
   return (
     <Grid
       container
-      rowSpacing={3}
       maxWidth={"860px"}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ mt: 1.5 }}
+      sx={{
+        gap: 3,
+        mt: 3,
+        maxWidth: "1000px",
+        backgroundColor: "#fff",
+        px: 3,
+        py: 6,
+        borderRadius: "16px",
+        alignItems: "center",
+        justifyContent: "center",
+        mx: "auto",
+      }}
     >
-      <Grid item xs={12}>
+      <Grid item>
         <Controller
           control={control}
           name="officeId"
@@ -87,7 +97,7 @@ export default function EmployeeForm() {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <Controller
           control={control}
           name="firstname"
@@ -104,7 +114,7 @@ export default function EmployeeForm() {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <Controller
           control={control}
           name="lastname"
@@ -121,7 +131,7 @@ export default function EmployeeForm() {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <Controller
           control={control}
           name="mobileNo"
@@ -138,7 +148,7 @@ export default function EmployeeForm() {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <Controller
           control={control}
           name="joiningDate"
@@ -153,14 +163,14 @@ export default function EmployeeForm() {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <Stack
           sx={{
             flexDirection: "row",
             width: "392px",
             maxWidth: "392px",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "flex-end",
             borderBottom: "1px solid #cccccc80",
             pb: 2,
           }}
@@ -179,7 +189,7 @@ export default function EmployeeForm() {
           sx={{
             width: "100%",
             flexDirection: "row",
-            justifyContent: "flex-start",
+            justifyContent: "center",
             columnGap: 3,
             px: 1,
           }}

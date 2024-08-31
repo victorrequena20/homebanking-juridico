@@ -15,6 +15,15 @@ export const getStaffs = async (params: any) => {
   }
 };
 
+export const getStaffById = async (id: any, params: any) => {
+  try {
+    const response = await HttpClient.get(`/staff/${id}`, { params });
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getStaffById ~ error:", error);
+  }
+};
+
 export const createStaff = async (data: any) => {
   try {
     const response = await HttpClient.post("/staff", data);
