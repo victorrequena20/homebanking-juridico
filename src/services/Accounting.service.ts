@@ -115,7 +115,7 @@ export const getGlAccountsTemplateById = async (accountId: string) => {
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ getGlAccountsTemplate ~ error:", error);
+    console.log("🚀 ~ getGlAccountsTemplateById ~ error:", error);
   }
 };
 
