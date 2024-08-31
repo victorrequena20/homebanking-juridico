@@ -15,7 +15,7 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Toggle from "@/components/Toggle";
 
-export default function EmployeeForm() {
+export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [offices, setOffices] = React.useState<any[]>([]);
