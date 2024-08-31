@@ -24,7 +24,7 @@ const schema = yup.object().shape({
   glAccountId: yup.mixed().required("La cuenta es obligatoria"),
 });
 
-export default function CreateGlMappingForm({ accountData }: { accountData: any }) {
+export default function CreateGlMappingForm({ accountData }: { accountData?: any }) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [templateData, setTemplateData] = React.useState<any>({});
   const [accounts, setAccounts] = React.useState<any>([]);
