@@ -85,7 +85,7 @@ export default function ConfirmDeleteModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="p" textAlign="center">
+          <Typography id="modal-modal-title" variant="h6" fontWeight="400" component="p" textAlign="center">
             {title}
           </Typography>
 
@@ -97,7 +97,7 @@ export default function ConfirmDeleteModal({
               mt: 2,
             }}
           >
-            <Button iconLeft size="small" text="Cancelar" variant="primary" onClick={handleClose} />
+            <Button iconLeft size="small" text="Cancelar" variant="navigation" onClick={handleClose} />
             <Button
               iconLeft
               size="small"

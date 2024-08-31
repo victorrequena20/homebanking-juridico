@@ -1,7 +1,7 @@
 import { Grid, Stack } from "@mui/material";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, set, useForm } from "react-hook-form";
 import { IForm } from "./types";
 import { validationSchema } from "./yup";
 import InputSelect from "@/components/InputSelect";
@@ -9,26 +9,35 @@ import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import Input from "@/components/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "@/components/Button";
-import { createGlAccount, getGlAccountsTemplate } from "@/services/Accounting.service";
+import { createGlAccount, getGlAccountsTemplate, updateGlAccount } from "@/services/Accounting.service";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import Toggle from "@/components/Toggle";
 import { toast } from "sonner";
 
-export default function CreateGlAccountForm() {
+export default function CreateGlAccountForm({ glAccountData }: { glAccountData?: any }) {
+  console.log("🚀 ~ CreateGlAccountForm ~ glAccountData:", glAccountData);
   const [parentId, setParentId] = React.useState<number | null>(null);
-  const [accountType, setAccountType] = React.useState<number | null>(null);
+  const [accountType, setAccountType] = React.useState<number | string | null>(null);
   const [glAccountsTemplate, setGlAccountsTemplate] = React.useState<any>({});
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [manualEntriesAllowed, setManualEntriesAllowed] = React.useState<boolean>(false);
   const {
     control,
     handleSubmit,
-    reset,
     setValue,
     watch,
-    formState: { errors, isValid, dirtyFields, touchedFields },
-  } = useForm<IForm>({ resolver: yupResolver(validationSchema), mode: "onChange" });
+    formState: { errors, isValid },
+  } = useForm<IForm>({
+    resolver: yupResolver(validationSchema),
+    mode: "onChange",
+    defaultValues: {
+      type: glAccountData?.type?.id || "",
+      name: glAccountData?.name || "",
+      usage: glAccountData?.usage?.id || "",
+      glCode: glAccountData?.glCode || "",
+    },
+  });
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -45,24 +54,83 @@ export default function CreateGlAccountForm() {
     }
   }
 
+  async function onSubmit(data: any) {
+    console.log("glAccountData", glAccountData);
+    console.log("isValid", isValid);
+    console.log("🚀 ~ onSubmit ~ data:", data);
+    setIsLoading(true);
+    if (glAccountData) {
+      const response = await updateGlAccount(
+        {
+          type: data.type?.value || data.type,
+          name: data.name,
+          usage: data.usage?.value || data.usage,
+          glCode: data.glCode,
+          parentId: data.parentId?.value || data.parentId,
+          tagId: data.tagId?.value || data.tagId,
+          description: data.description,
+          manualEntriesAllowed,
+        },
+        glAccountData?.id
+      );
+      if (response?.status === 200) {
+        toast.success("Cuenta contable actualizada con exito");
+        router.push("/contabilidad/catalogo-de-cuentas");
+      } else {
+        toast.error("Error al actualizar la cuenta contable");
+      }
+    } else {
+      const response = await createGlAccount({
+        type: data.type?.value || data.type,
+        name: data.name,
+        usage: data.usage?.value || data.usage,
+        glCode: data.glCode,
+        parentId: data.parentId?.value || data.parentId,
+        tagId: data.tagId?.value || data.tagId,
+        description: data.description,
+        manualEntriesAllowed,
+      });
+      if (response?.status === 200) {
+        toast.success("Cuenta contable creada con exito");
+        router.push("/contabilidad/catalogo-de-cuentas");
+      } else {
+        toast.error("Error al crear la cuenta contable");
+      }
+    }
+    setIsLoading(false);
+  }
+
   React.useEffect(() => {
     handleGetTemplate();
   }, []);
 
-  async function onSubmit(data: any) {
-    setIsLoading(true);
-    const response = await createGlAccount({
-      ...data,
-      manualEntriesAllowed,
-    });
-    if (response?.status === 200) {
-      toast.success("Cuenta contable creada con exito");
-      router.push("/contabilidad/catalogo-de-cuentas");
-    } else {
-      toast.error("Error al crear la cuenta contable");
+  React.useEffect(() => {
+    if (glAccountData) {
+      setAccountType(glAccountData?.type?.id);
+      setParentId(glAccountData?.parentId || "");
+      setValue("name", glAccountData?.name);
+      setValue("usage", glAccountData?.usage?.id);
+      setValue("glCode", glAccountData?.glCode);
+      setValue("tagId", glAccountData?.tagId?.id);
+      setValue("description", glAccountData?.description);
+      setValue("parentId", glAccountData?.parentId || null);
+      setValue("type", glAccountData?.type?.id);
+      setManualEntriesAllowed(glAccountData?.manualEntriesAllowed);
     }
-    setIsLoading(false);
-  }
+  }, [glAccountData]);
+
+  React.useEffect(() => {
+    console.log("🚀 ~ CreateGlAccountForm ~ watch()", watch());
+    console.log("errors", errors);
+  }, [
+    watch("name"),
+    watch("glCode"),
+    watch("type"),
+    watch("usage"),
+    watch("parentId"),
+    watch("tagId"),
+    watch("description"),
+  ]);
 
   return (
     <Grid
@@ -81,15 +149,20 @@ export default function CreateGlAccountForm() {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
+      {/* Tipo de cuenta */}
       <Grid item>
         <Controller
           control={control}
           name="type"
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <InputSelect
               label="Tipo de cuenta*"
               options={keyValueAdapter(glAccountsTemplate?.accountTypeOptions, "value", "id")}
-              setItem={value => onChange(value?.value)}
+              value={value}
+              setItem={item => {
+                onChange(item);
+                setAccountType(item?.value);
+              }}
               defaultValue={accountType}
             />
           )}
@@ -101,7 +174,13 @@ export default function CreateGlAccountForm() {
           control={control}
           name="name"
           render={({ field: { onChange, value } }) => (
-            <Input label="Nombre de la cuenta*" type="text" value={value} onChange={onChange} />
+            <Input
+              label="Nombre de la cuenta*"
+              type="text"
+              value={value}
+              onChange={onChange}
+              defaultValue={glAccountData?.name}
+            />
           )}
         />
       </Grid>
@@ -110,12 +189,15 @@ export default function CreateGlAccountForm() {
         <Controller
           control={control}
           name="usage"
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <InputSelect
               label="Uso de la cuenta*"
+              value={value}
               options={keyValueAdapter(glAccountsTemplate?.usageOptions, "value", "id")}
-              setItem={value => onChange(value?.value)}
-              //   defaultValue={defaultValueForUsage}
+              setItem={item => {
+                onChange(item);
+              }}
+              defaultValue={glAccountData?.usage?.id}
             />
           )}
         />
@@ -126,7 +208,13 @@ export default function CreateGlAccountForm() {
           control={control}
           name="glCode"
           render={({ field: { onChange, value } }) => (
-            <Input label="Número de la cuenta*" type="text" value={value} onChange={onChange} />
+            <Input
+              label="Número de la cuenta*"
+              type="text"
+              value={value}
+              onChange={onChange}
+              defaultValue={glAccountData?.glCode}
+            />
           )}
         />
       </Grid>
@@ -155,7 +243,7 @@ export default function CreateGlAccountForm() {
               label="Etiqueta"
               options={keyValueAdapter([], "value", "id")}
               setItem={value => onChange(value?.value)}
-              //   defaultValue={defaultValueForTagId}
+              defaultValue={glAccountData?.tagId?.id}
             />
           )}
         />
@@ -212,7 +300,7 @@ export default function CreateGlAccountForm() {
           <Button
             type="submit"
             isLoading={isLoading}
-            disabled={!isValid || Object.keys(dirtyFields).length < 4}
+            disabled={!isValid}
             size="small"
             text="Aceptar"
             variant="primary"

@@ -69,6 +69,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   React.useEffect(() => {
     setShowInstitutionLinks(pathname.includes("/institucion"));
     setShowAdministrationLinks(pathname.includes("/administracion"));
+    setShowReportsLinks(pathname.includes("/reportes"));
   }, [pathname]);
 
   React.useEffect(() => {

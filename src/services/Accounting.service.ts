@@ -10,6 +10,30 @@ export const getGlAccounts = async (params?: any) => {
   }
 };
 
+// ----- Accounting rules start -----
+
+export const createAccountingRule = async (data: any): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/accountingrules`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ createAccountingRule ~ error:", error);
+    throw error;
+  }
+};
+
+export const getAccountingRulesTemplate = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/accountingrules/template", { params });
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getAccountingRulesTemplate ~ error:", error);
+  }
+};
+
 export const getAccountingRules = async (params?: any) => {
   try {
     const response = await HttpClient.get("/accountingrules", { params });
@@ -23,12 +47,44 @@ export const getAccountingRules = async (params?: any) => {
   }
 };
 
+export const getAccountingRuleById = async (id: any) => {
+  try {
+    const response = await HttpClient.get(`/accountingrules/${id}`);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ getAccountingRuleById ~ error:", error);
+  }
+};
+
+export const updateAccoutingRule = async (data: any, id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.put(`/accountingrules/${id}`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ updateAccoutingRule ~ error:", error);
+    throw error;
+  }
+};
+
+export const deleteAccountingRule = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/accountingrules/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteAccountingRule ~ error:", error);
+    throw error;
+  }
+};
+
+// ----- Accounting rules end -----
+
 // ----- Gl accounts/closures start -----
 
 export const getGlclosures = async () => {
   try {
     const response = await HttpClient.get("/glclosures");
-    console.log("🚀 ~ getGlclosures ~ response:", response);
     return {
       data: response.data,
       status: response.status,
@@ -59,7 +115,7 @@ export const getGlAccountsTemplateById = async (accountId: string) => {
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ getGlAccountsTemplate ~ error:", error);
+    console.log("🚀 ~ getGlAccountsTemplateById ~ error:", error);
   }
 };
 
@@ -199,6 +255,31 @@ export const createFinancialActivity = async (data: any): Promise<ApiResponse> =
     };
   } catch (error) {
     console.log("🚀 ~ createFinancialActivity ~ error:", error);
+    throw error;
+  }
+};
+
+export const updateFinancialActivity = async (data: any, id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.put(`/financialactivityaccounts/${id}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateFinancialActivity ~ error:", error);
+    throw error;
+  }
+};
+
+export const deleteFinancialActivityMapping = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/financialactivityaccounts/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteFinancialActivityMapping ~ error:", error);
     throw error;
   }
 };

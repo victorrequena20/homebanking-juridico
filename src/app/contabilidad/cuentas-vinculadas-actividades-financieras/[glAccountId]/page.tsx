@@ -6,10 +6,46 @@ import { flexRowCenter } from "@/styles/GlobalsMUI";
 import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import {
+  deleteFinancialActivityMapping,
+  getFinancialActivityAccountsTemplateById,
+} from "@/services/Accounting.service";
+import { toast } from "sonner";
+import CreateGlMappingForm from "@/modules/contabilidad/components/CreateGlAccountMapping/CreateGlAccountMapping";
+import { useRouter } from "next/navigation";
 
 export default function GlAccountDetails({ params }: { params: { glAccountId: string } }) {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [templateData, setTemplateData] = React.useState<any>(null);
+  const router = useRouter();
+
+  async function handleGetFinancialActivityAccountsTemplateById() {
+    setIsLoading(true);
+    const response = await getFinancialActivityAccountsTemplateById(params.glAccountId);
+    if (response?.status === 200) {
+      setTemplateData(response?.data);
+    } else {
+      toast.error("Error al obtener la información de la actividad financiera");
+    }
+    setIsLoading(false);
+  }
+
+  async function handleDeleteFinancialActivity() {
+    const response = await deleteFinancialActivityMapping(params.glAccountId);
+    if (response?.status === 200) {
+      toast.success("Actividad financiera eliminada correctamente");
+      router.push("/contabilidad/cuentas-vinculadas-actividades-financieras");
+    } else {
+      toast.error("Error al eliminar la actividad financiera");
+    }
+  }
+
+  React.useEffect(() => {
+    handleGetFinancialActivityAccountsTemplateById();
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Mapeos de actividades financieras"
         items={[
@@ -38,7 +74,12 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
             <Typography variant="body2" fontWeight="400" color="#12141a">
               Detalles de la actividad financiera
             </Typography>
-            <Box sx={{ ...flexRowCenter, gap: 1 }}>
+            <Box
+              sx={{ ...flexRowCenter, gap: 1 }}
+              onClick={() =>
+                router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${params.glAccountId}/editar`)
+              }
+            >
               <Typography sx={{ cursor: "pointer" }} variant="body2" fontWeight="300" color="#606778">
                 Ver y editar
               </Typography>
@@ -57,7 +98,7 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
               Actividad financiera
             </Typography>
             <Typography variant="body2" fontWeight="400" color="#12141a">
-              {/* {`${userData?.firstname} ${userData?.lastname}`} */}
+              {templateData?.financialActivityData?.name}
             </Typography>
           </Stack>
           <Stack
@@ -72,7 +113,7 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
               Tipo de cuenta
             </Typography>
             <Typography variant="body2" fontWeight="400" color="#12141a">
-              {/* {userData?.email} */}
+              {templateData?.financialActivityData?.mappedGLAccountType}
             </Typography>
           </Stack>
           <Stack
@@ -86,30 +127,9 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
             <Typography variant="body2" fontWeight="300" color="#606778">
               Nombre de la cuenta
             </Typography>
-            <Typography variant="body2" fontWeight="400" color="#12141a">
-              04121504757
+            <Typography variant="body2" fontWeight="400" color="#12141a" maxWidth="40ch" textAlign="end">
+              {templateData?.glAccountData?.name}
             </Typography>
-          </Stack>
-
-          {/* Editar contraseña */}
-          <Stack>
-            <Stack
-              sx={{
-                flexDirection: "row",
-                width: "100%",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottom: "1px solid #cccccc80",
-                pb: 2,
-                mt: 5,
-              }}
-            >
-              <Typography variant="body2" fontWeight="400" color="#12141a">
-                Editar actividad financiera
-              </Typography>
-            </Stack>
-
-            {/* Form */}
           </Stack>
 
           {/* Activación / desactivación */}
@@ -119,7 +139,7 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
                 flexDirection: "row",
                 width: "100%",
                 justifyContent: "space-between",
-                alignItems: "center",
+                alignItems: "flex-end",
                 borderBottom: "1px solid #cccccc80",
                 pb: 2,
                 mt: 5,
@@ -130,7 +150,7 @@ export default function GlAccountDetails({ params }: { params: { glAccountId: st
               </Typography>
               <ConfirmDeleteModal
                 title="¿Estás seguro de que deseas eliminar esta actividad financiera?"
-                // actionCallback={handleDeleteUser}
+                actionCallback={handleDeleteFinancialActivity}
               />
             </Stack>
           </Stack>
