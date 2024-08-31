@@ -259,6 +259,31 @@ export const createFinancialActivity = async (data: any): Promise<ApiResponse> =
   }
 };
 
+export const updateFinancialActivity = async (data: any, id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.put(`/financialactivityaccounts/${id}`, data);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ updateFinancialActivity ~ error:", error);
+    throw error;
+  }
+};
+
+export const deleteFinancialActivityMapping = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/financialactivityaccounts/${id}`);
+    return {
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ deleteFinancialActivityMapping ~ error:", error);
+    throw error;
+  }
+};
+
 // ----- Gl accounts/closures start -----
 
 // ----- Provisioning entries start -----
