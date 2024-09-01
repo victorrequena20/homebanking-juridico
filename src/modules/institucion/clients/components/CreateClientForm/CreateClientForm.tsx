@@ -12,6 +12,7 @@ import { Box } from "@mui/material";
 import Toggle from "@/components/Toggle";
 import Button from "@/components/Button";
 import { useCreateClientContext } from "../../context/CreateClient/CreateClient.provider";
+import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
 
 export default function CreateClientForm({ action }: ICreateClientFormProps) {
   const { formMethods, clientGeneralData, step, setClientGeneralData, templateData } = useCreateClientContext();
@@ -179,7 +180,7 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   hint={errors.dateOfBirth?.message}
                   isValidField={!errors.dateOfBirth}
                   maxToday
-                  defaultValue={clientGeneralData?.dateOfBirth}
+                  defaultValue={formatDateEsddMMMMyyyy(clientGeneralData?.dateOfBirth) || null}
                 />
               )}
             />
@@ -200,6 +201,26 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
               )}
             />
           </Stack>
+        </Stack>
+        {/* Genero */}
+        <Stack sx={{ flexDirection: "row", gap: 3 }}>
+          <Stack>
+            <Controller
+              control={control}
+              name="genderId"
+              render={({ field: { value, onChange } }) => (
+                <InputSelect
+                  label="Genero"
+                  options={keyValueAdapter(templateData?.genderOptions, "name", "id")}
+                  setItem={(item: IKeyValue) => onChange(item)}
+                  hint={errors.genderId?.message}
+                  isValidField={!errors.genderId}
+                  value={value}
+                />
+              )}
+            />
+          </Stack>
+          <Stack sx={{ width: "392px" }}></Stack>
         </Stack>
         {/* Teléfono y email */}
         <Stack sx={{ flexDirection: "row", gap: 3 }}>
@@ -233,6 +254,41 @@ export default function CreateClientForm({ action }: ICreateClientFormProps) {
                   value={value}
                   onChange={onChange}
                   defaultValue={clientGeneralData?.emailAddress}
+                />
+              )}
+            />
+          </Stack>
+        </Stack>
+        {/* Tipo de cliente y clasificacion de clientes */}
+        <Stack sx={{ flexDirection: "row", gap: 3 }}>
+          <Stack>
+            <Controller
+              control={control}
+              name="clientTypeId"
+              render={({ field: { value, onChange } }) => (
+                <InputSelect
+                  label="Tipo de cliente"
+                  options={keyValueAdapter(templateData?.clientTypeOptions, "name", "id")}
+                  setItem={(item: IKeyValue) => onChange(item)}
+                  hint={errors.clientType?.message}
+                  isValidField={!errors.clientType}
+                  value={value}
+                />
+              )}
+            />
+          </Stack>
+          <Stack>
+            <Controller
+              control={control}
+              name="clientClassificationId"
+              render={({ field: { value, onChange } }) => (
+                <InputSelect
+                  label="Clasificación de cliente"
+                  options={keyValueAdapter(templateData?.clientClassificationOptions, "name", "id")}
+                  setItem={(item: IKeyValue) => onChange(item)}
+                  hint={errors.clientClassification?.message}
+                  isValidField={!errors.clientClassification}
+                  value={value}
                 />
               )}
             />
