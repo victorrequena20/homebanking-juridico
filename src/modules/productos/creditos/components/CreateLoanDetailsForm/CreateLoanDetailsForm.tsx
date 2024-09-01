@@ -52,7 +52,7 @@ export default function CreateLoanDetailsForm() {
       description: globalForm?.description,
     },
   });
-  const formValues = watch();
+  // const formValues = watch();
 
   const onSubmit = (data: IForm) => {
     console.log(data);
@@ -85,6 +85,7 @@ export default function CreateLoanDetailsForm() {
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
+      {/* Nombre del producto */}
       <Grid item>
         <Controller
           control={control}
@@ -105,7 +106,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Clave */}
       <Grid item>
         <Controller
           control={control}
@@ -127,7 +128,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Fondo */}
       <Grid item>
         <Controller
           control={control}
@@ -148,7 +149,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Fecha de inicio */}
       <Grid item>
         <Controller
           control={control}
@@ -168,7 +169,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Fecha de cierre */}
       <Grid item>
         <Controller
           control={control}
@@ -187,7 +188,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Descripción */}
       <Grid item>
         <Controller
           control={control}
@@ -207,7 +208,7 @@ export default function CreateLoanDetailsForm() {
           )}
         />
       </Grid>
-
+      {/* Incluir en el contador de créditos al cliente */}
       <Grid item xs={11}>
         <Stack sx={{ maxWidth: "392px", pl: 4 }}>
           <Toggle

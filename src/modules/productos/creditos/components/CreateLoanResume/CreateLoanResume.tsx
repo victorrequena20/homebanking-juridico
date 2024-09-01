@@ -104,10 +104,10 @@ export default function CreateLoanResume() {
       </Stack>
       <Stack sx={detailRowStyles}>
         <Typography variant="body2" fontWeight="300" color="#606778">
-          Moneda:
+          código de la moneda:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.currencyCode?.value}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -115,7 +115,7 @@ export default function CreateLoanResume() {
           Moneda:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.currencyCode?.label}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -123,7 +123,7 @@ export default function CreateLoanResume() {
           Lugares decimales:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.digitsAfterDecimal}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -131,7 +131,7 @@ export default function CreateLoanResume() {
           Moneda en múltiplos de:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.currencyInMultiplesOf}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -139,7 +139,7 @@ export default function CreateLoanResume() {
           Pago en múltiplos de:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.payInMultiplesOf}
         </Typography>
       </Stack>
       {/* ----- Currency end ----- */}
@@ -161,7 +161,13 @@ export default function CreateLoanResume() {
           Principal:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm.conditionsPrincipalDefault +
+            " (Min " +
+            globalForm.conditionsPrincipalMin +
+            " : " +
+            "Max " +
+            globalForm.conditionsPrincipalMax +
+            ")"}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -169,15 +175,27 @@ export default function CreateLoanResume() {
           Permitir montos aprobados/desembolsados ​por encima de los aplicados:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm.conditionsAllowApprovalAboveCreditAmount ? "Si" : "No"}
         </Typography>
       </Stack>
+      {globalForm.conditionsAllowApprovalAboveCreditAmount && (
+        <Stack sx={detailRowStyles}>
+          <Typography variant="body2" fontWeight="300" color="#606778">
+            Monto extra:
+          </Typography>
+          <Typography variant="body2" fontWeight="400" color="#12141a">
+            {`${globalForm?.conditionsExtraAmount} ${
+              globalForm?.conditionsCalculeType?.value === "PERCENTAGE" ? "%" : "Bs."
+            }`}
+          </Typography>
+        </Stack>
+      )}
       <Stack sx={detailRowStyles}>
         <Typography variant="body2" fontWeight="300" color="#606778">
           Cálculo del día de pago a partir de:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm.conditionsRepaymentStartDateType?.label}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -185,7 +203,7 @@ export default function CreateLoanResume() {
           Número de reembolsos:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {`${globalForm?.conditionsNumberOfRepaymentsDefault} (Min ${globalForm?.conditionsNumberOfRepaymentsMin} : Max ${globalForm?.conditionsNumberOfRepaymentsMax})`}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -193,7 +211,7 @@ export default function CreateLoanResume() {
           Vinculado a tasa de interés variable:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          No
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -201,7 +219,7 @@ export default function CreateLoanResume() {
           Tasa de interés nominal:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {`${globalForm?.conditionsInterestRateDefault} (Min ${globalForm?.conditionsInterestRateMin} : Max ${globalForm?.conditionsInterestRateMax}) ${globalForm?.conditionsInterestRateFrequencyType?.label}`}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -209,7 +227,7 @@ export default function CreateLoanResume() {
           Los términos varían según el ciclo del crédito:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          No
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -217,7 +235,7 @@ export default function CreateLoanResume() {
           Paga cada:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {`${globalForm?.conditionsRepaymentEvery} ${globalForm?.conditionsRepaymentFrequencyType?.label}`}
         </Typography>
       </Stack>
       {/* ----- Terms end ----- */}
@@ -239,7 +257,7 @@ export default function CreateLoanResume() {
           Amortización:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.amortizationType?.label}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -247,7 +265,7 @@ export default function CreateLoanResume() {
           ¿Amortizaciones iguales?:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.isEqualAmortization ? "Si " : "No"}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -255,7 +273,7 @@ export default function CreateLoanResume() {
           Método de interés:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.interestType?.label}
         </Typography>
       </Stack>
       <Stack sx={detailRowStyles}>
@@ -263,7 +281,7 @@ export default function CreateLoanResume() {
           Período de cálculo de intereses:
         </Typography>
         <Typography variant="body2" fontWeight="400" color="#12141a">
-          Prueba
+          {globalForm?.interestCalculationPeriodType?.label}
         </Typography>
       </Stack>
       {/* ----- Settings end ----- */}

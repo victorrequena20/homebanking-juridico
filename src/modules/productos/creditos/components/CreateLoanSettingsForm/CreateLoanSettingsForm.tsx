@@ -12,6 +12,7 @@ import SectionTextSeparator from "../SectionTextSeparator";
 import Toggle from "@/components/Toggle";
 import { Box } from "@mui/material";
 import Input from "@/components/Input";
+import { Divider } from "@mui/material";
 
 interface IForm {
   amortizationType?: any;
@@ -176,7 +177,7 @@ export default function CreateLoanSettingForm() {
               }}
             >
               <Typography variant="caption" fontWeight="400" color="#12141a">
-                Es oficial de créditos
+                ¿Es igual la amortización?
               </Typography>
               <Box>
                 <Toggle
@@ -246,6 +247,9 @@ export default function CreateLoanSettingForm() {
         </Stack>
       </Grid>
 
+      <Grid item xs={12} sx={{ py: 2 }}>
+        <Divider sx={{ color: "#f2f4f7", bgcolor: "#f2f4f7" }} color="#f05800" variant="fullWidth" />
+      </Grid>
       <SectionTextSeparator label="Calendario de pagos" />
 
       <Grid item xs={12}>
@@ -323,6 +327,9 @@ export default function CreateLoanSettingForm() {
         </Stack>
       </Grid>
 
+      <Grid item xs={12} sx={{ py: 2 }}>
+        <Divider sx={{ color: "#f2f4f7", bgcolor: "#f2f4f7" }} color="#f05800" variant="fullWidth" />
+      </Grid>
       <SectionTextSeparator label="Detalles de Dispersión de Crédito" />
 
       <Grid item xs={12} sx={{ mt: 4 }}>
@@ -458,6 +465,9 @@ export default function CreateLoanSettingForm() {
         </Stack>
       </Grid>
 
+      <Grid item xs={12} sx={{ py: 2 }}>
+        <Divider sx={{ color: "#f2f4f7", bgcolor: "#f2f4f7" }} color="#f05800" variant="fullWidth" />
+      </Grid>
       <SectionTextSeparator label="Pago inicial" />
 
       <Grid item xs={12}>

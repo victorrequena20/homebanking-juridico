@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import Button from "@/components/Button";
 import { getOffices } from "@/services/Office.service";
 import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.utility";
+import { useParams } from "next/navigation";
 
 export default function RunReportForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -23,10 +24,12 @@ export default function RunReportForm() {
     watch,
     formState: { errors, isValid, dirtyFields, touchedFields },
   } = useForm<any>({ mode: "onChange" });
+  const params = useParams();
+  console.log("🚀 ~ RunReportForm ~ params:", decodeURIComponent(params?.reportName?.toString()));
 
   async function handleGetFullParameterList() {
     const response = await getRunReportsFullParameterList({
-      R_reportListing: "'Client Listing'",
+      R_reportListing: `'${decodeURIComponent(params?.reportName?.toString())}'`,
       parameterType: true,
     });
     if (response?.status === 200) {
