@@ -21,12 +21,12 @@ export const getRunReportsFullParameterList = async (params?: any) => {
   }
 };
 
-export const getRunReportsOfficeIdSelectOne = async (params?: any) => {
+export const getRunReportsOptionsByParamName = async (parameterName?: string, params?: any) => {
   try {
-    const response = await HttpClient.get("/runreports/OfficeIdSelectOne", { params });
+    const response = await HttpClient.get(`/runreports/${parameterName}`, { params });
     return { data: response.data, status: response.status };
   } catch (error) {
-    console.log("🚀 ~ getRunReportsOfficeIdSelectOne ~ error:", error);
+    console.log("🚀 ~ getRunReportsOptionsByParamName ~ error:", error);
   }
 };
 

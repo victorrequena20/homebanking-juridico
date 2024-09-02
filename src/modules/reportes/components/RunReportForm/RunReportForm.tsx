@@ -2,7 +2,7 @@
 import React from "react";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import InputSelect from "@/components/InputSelect";
-import { getRunReportsFullParameterList, getRunReportsOfficeIdSelectOne, runReport } from "@/services/Reports.service";
+import { getRunReportsFullParameterList, getRunReportsOptionsByParamName, runReport } from "@/services/Reports.service";
 import { IKeyValue } from "@/types/common";
 import { Grid, Stack } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
@@ -13,9 +13,17 @@ import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.uti
 import { useParams } from "next/navigation";
 
 export default function RunReportForm() {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
   const [fullParameterList, setFullParameterList] = React.useState<any>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoadingParameters, setIsLoadingParameters] = React.useState<boolean>(false);
+  const [isLoadingOptions, setIsLoadingOptions] = React.useState<boolean>(false);
+  // ----- States for select options -----
   const [offices, setOffices] = React.useState<any>([]);
+  const [currencies, setCurrencies] = React.useState<any>([]);
+  const [funds, setFunds] = React.useState<any>([]);
+  const [loanPurposes, setLoanPurposes] = React.useState<any>([]);
+  // ---------------------------------------------------------------
   const {
     control,
     handleSubmit,
@@ -25,34 +33,52 @@ export default function RunReportForm() {
     formState: { errors, isValid, dirtyFields, touchedFields },
   } = useForm<any>({ mode: "onChange" });
   const params = useParams();
-  console.log("🚀 ~ RunReportForm ~ params:", decodeURIComponent(params?.reportName?.toString()));
+  const decodeUri = decodeURIComponent(params?.reportName?.toString());
 
   async function handleGetFullParameterList() {
+    setIsLoadingParameters(true);
     const response = await getRunReportsFullParameterList({
-      R_reportListing: `'${decodeURIComponent(params?.reportName?.toString())}'`,
+      R_reportListing: `'${decodeUri}'`,
       parameterType: true,
     });
+    console.log("🚀 ~ handleGetFullParameterList ~ response.data:", response?.data);
     if (response?.status === 200) {
       setFullParameterList(response?.data);
+      setParametersColumnHeaders(response?.data?.columnHeaders);
     } else {
       toast.error("Error al obtener los parametros");
     }
+    setIsLoadingParameters(false);
   }
 
-  async function handleGetRunReportsOfficeIdSelectOne() {
-    const response = await getRunReportsOfficeIdSelectOne({ parameterType: true });
+  async function handleGetRunReportsOptionsByParamName(paramName: string) {
+    setIsLoadingOptions(true);
+    const response = await getRunReportsOptionsByParamName(paramName, { parameterType: true });
     if (response?.status === 200) {
-      setOffices(transformArray(response?.data?.data));
+      if (paramName === "OfficeIdSelectOne") {
+        setOffices(transformArray(response?.data?.data));
+      }
+      if (paramName === "currencyIdSelectAll") {
+        setCurrencies(transformArray(response?.data?.data));
+      }
+      if (paramName === "fundIdSelectAll") {
+        setFunds(transformArray(response?.data?.data));
+      }
+      if (paramName === "loanPurposeIdSelectAll") {
+        setLoanPurposes(transformArray(response?.data?.data));
+      }
     } else {
       toast.error("Error al obtener las oficinas");
     }
+    setIsLoadingOptions(false);
   }
 
   async function launchReport(data: any) {
+    console.log("🚀 ~ launchReport ~ data:", data);
     setIsLoading(true);
-    const response = await runReport("Client Listing", {
-      R_officeId: data.officeId.value,
-      decimalChoice: data.decimalPlaces.value,
+    const response = await runReport(decodeUri, {
+      R_officeId: data.officeId?.value,
+      decimalChoice: data.decimalPlaces?.value,
     });
     if (response?.status === 200) {
       const csvContent = await generateCSV(response?.data);
@@ -65,10 +91,19 @@ export default function RunReportForm() {
   }
 
   React.useEffect(() => {
-    // handleGetOffices();
     handleGetFullParameterList();
-    handleGetRunReportsOfficeIdSelectOne();
   }, []);
+
+  React.useEffect(() => {
+    if (parametersColumnHeaders) {
+      const parameterNameIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_name");
+      fullParameterList?.data?.map((item: any, index: number) => {
+        (async () => {
+          await handleGetRunReportsOptionsByParamName(item.row[parameterNameIndex]);
+        })();
+      });
+    }
+  }, [parametersColumnHeaders]);
 
   return (
     <Grid
@@ -87,26 +122,46 @@ export default function RunReportForm() {
       container
       mt={3}
     >
-      {/* Office */}
-      <Grid xs={12}>
-        <Stack sx={{ width: "100%" }}>
-          <Controller
-            control={control}
-            name="officeId"
-            render={({ field: { value, onChange } }) => (
-              <InputSelect
-                label="Oficina*"
-                options={offices}
-                setItem={(item: IKeyValue) => onChange(item)}
-                isValidField={!errors.officeId}
-                hint={errors.officeId?.message}
-                value={value}
-                width="100%"
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {fullParameterList?.data?.map((item: any, index: number) => {
+        const parameterNameIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_name");
+        const parameterVariableIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_variable");
+        const parameterLabelIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_label");
+        const parameterDefaultValueIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_defaultValue");
+        if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "select") {
+          return (
+            <Grid xs={12} key={index}>
+              <Stack>
+                <Controller
+                  control={control}
+                  name={item.row[parameterVariableIndex]}
+                  render={({ field: { value, onChange } }) => (
+                    <InputSelect
+                      label={item.row[parameterLabelIndex] + " *"}
+                      options={
+                        item.row[parameterNameIndex] === "OfficeIdSelectOne"
+                          ? offices
+                          : item.row[parameterNameIndex] === "currencyIdSelectAll"
+                          ? currencies
+                          : item.row[parameterNameIndex] === "fundIdSelectAll"
+                          ? funds
+                          : item.row[parameterNameIndex] === "loanPurposeIdSelectAll"
+                          ? loanPurposes
+                          : []
+                      }
+                      setItem={(item: IKeyValue) => onChange(item)}
+                      isValidField={!errors[item.row[parameterNameIndex]]}
+                      hint={errors[item.row[parameterNameIndex]?.message]}
+                      value={value}
+                      width="100%"
+                      defaultValue={item.row[parameterDefaultValueIndex]}
+                    />
+                  )}
+                />
+              </Stack>
+            </Grid>
+          );
+        }
+      })}
 
       {/* Lugares decimales */}
       <Grid xs={12}>
