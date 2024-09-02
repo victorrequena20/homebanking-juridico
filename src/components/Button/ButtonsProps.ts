@@ -1,7 +1,7 @@
 export interface IButtonProps {
   text?: string;
   onClick?: () => void;
-  variant?: "primary" | "secondary" | "success" | "warning-red" | "navigation";
+  variant?: "primary" | "secondary" | "success" | "warning-red" | "navigation" | "standard";
   size?: "small" | "medium" | "large";
   icon?: React.ReactNode;
   disabled?: boolean;

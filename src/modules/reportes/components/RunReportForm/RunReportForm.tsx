@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import { getOffices } from "@/services/Office.service";
 import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.utility";
 import { useParams } from "next/navigation";
+import DownloadIcon from "@/assets/icons/DownloadIcon";
 
 export default function RunReportForm() {
   const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
@@ -111,7 +112,7 @@ export default function RunReportForm() {
       onSubmit={handleSubmit(launchReport)}
       sx={{
         gap: 3,
-        maxWidth: "540px",
+        maxWidth: "580px",
         backgroundColor: "#fff",
         px: 3,
         py: 6,
@@ -214,7 +215,7 @@ export default function RunReportForm() {
         <Stack sx={{ flexDirection: "row", justifyContent: "space-between", gap: 2 }}>
           <Button type="button" text="Cancelar" variant="navigation" />
           <Button type="button" text="Sacar un reporte" variant="primary" />
-          <Button type="submit" text="Ejecutar y descargar reporte" variant="primary" isLoading={isLoading} />
+          <Button type="submit" text="Ejecutar y descargar reporte" variant="primary" isLoading={isLoading} iconLeft icon={<DownloadIcon size={20} />} />
         </Stack>
       </Grid>
     </Grid>

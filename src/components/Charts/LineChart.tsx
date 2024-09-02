@@ -24,20 +24,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
       periods: ["AM", "PM"],
       days: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
       shortDays: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
-      months: [
-        "enero",
-        "febrero",
-        "marzo",
-        "abril",
-        "mayo",
-        "junio",
-        "julio",
-        "agosto",
-        "septiembre",
-        "octubre",
-        "noviembre",
-        "diciembre",
-      ],
+      months: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
       shortMonths: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
     });
 
@@ -153,13 +140,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         .y((d: DataPoint) => y(d.value))
         .curve(d3.curveMonotoneX);
 
-      svg
-        .append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 2)
-        .attr("d", line);
+      svg.append("path").datum(data).attr("fill", "none").attr("stroke", "steelblue").attr("stroke-width", 2).attr("d", line);
 
       // Add area under the line
       const area = d3
@@ -196,13 +177,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
         .on("mouseout", mouseOut);
 
       // Add circle that travels along the curve of chart
-      const focus = svg
-        .append("g")
-        .append("circle")
-        .style("fill", "steelblue")
-        .attr("stroke", "white")
-        .attr("r", 5)
-        .style("opacity", 0);
+      const focus = svg.append("g").append("circle").style("fill", "steelblue").attr("stroke", "white").attr("r", 5).style("opacity", 0);
 
       function mouseMove(event: any) {
         const bisect = d3.bisector((d: DataPoint) => d.date).left;
