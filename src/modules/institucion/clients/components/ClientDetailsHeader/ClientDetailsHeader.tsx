@@ -1,17 +1,28 @@
-import React, { useContext } from "react";
-import { formatSpanishDate } from "@/utilities/common.utility";
-import { Box, Stack, Typography, Tooltip } from "@mui/material";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Box, Stack, Typography, Tooltip, SxProps } from "@mui/material";
 import Image from "next/image";
 import Button from "@/components/Button";
 import EditIcon from "@/assets/icons/EditIcon";
-import LockIcon from "@/assets/icons/LockIcon";
 import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
 import { ClientDetailsContext } from "../../context/ClientDetails/ClientDetails.context";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import PlayIcon from "@/assets/icons/PlayIcon";
+import PersonPlusIcon from "@/assets/icons/PersonPlusIcon";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import { formatSpanishDate } from "@/utilities/common.utility";
 
-export default function ClientDetailsHeader({ clientData, getClientData }: { clientData: any; getClientData: () => void }) {
-  const [isLoadingActivation, setIsLoadingActivation] = React.useState<boolean>(false);
+interface ClientDetailsHeaderProps {
+  clientData: any;
+  getClientData: () => void;
+}
+
+export default function ClientDetailsHeader({ clientData, getClientData }: ClientDetailsHeaderProps) {
+  const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
+  const [isListVisible, setIsListVisible] = useState<boolean>(false);
+  const [showActionsList, setShowActionsList] = useState<boolean>(false);
+  const listRef = useRef<HTMLDivElement | null>(null);
   const params = useParams();
+  const router = useRouter();
   const { activateUser } = useContext(ClientDetailsContext);
 
   async function handleActivationUser() {
@@ -20,6 +31,49 @@ export default function ClientDetailsHeader({ clientData, getClientData }: { cli
     getClientData();
     setIsLoadingActivation(false);
   }
+
+  const toggleListVisibility = () => {
+    setIsListVisible(prev => !prev);
+  };
+
+  const handleClickOutsideMouse = (event: MouseEvent) => {
+    if (listRef.current && !listRef.current.contains(event.target as Node)) {
+      setIsListVisible(false);
+    }
+  };
+
+  const handleClickOutsideTouch = (event: TouchEvent) => {
+    if (listRef.current && !listRef.current.contains(event.target as Node)) {
+      setIsListVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isListVisible) {
+      document.addEventListener("mousedown", handleClickOutsideMouse);
+      document.addEventListener("touchstart", handleClickOutsideTouch);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideMouse);
+      document.removeEventListener("touchstart", handleClickOutsideTouch);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMouse);
+      document.removeEventListener("touchstart", handleClickOutsideTouch);
+    };
+  }, [isListVisible]);
+
+  const listItemStyles: SxProps = {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 2,
+    pl: 2,
+    py: 1.5,
+    cursor: "pointer",
+    "&:hover": {
+      bgcolor: "#f2f4f760",
+    },
+  };
 
   return (
     <Stack sx={{ alignItems: "center", maxWidth: "100%", px: 10, py: 1, bgcolor: "#f2f4f7" }}>
@@ -120,7 +174,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: { cli
                   Número de teléfono:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  0412-15-4757
+                  {"0412-15-4757"}
                 </Typography>
               </Stack>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -128,7 +182,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: { cli
                   Correo electrónico:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  requenade@gmail.com
+                  {"requenade@gmail.com"}
                 </Typography>
               </Stack>
             </Stack>
@@ -148,7 +202,148 @@ export default function ClientDetailsHeader({ clientData, getClientData }: { cli
               />
             )}
             <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" />
-            <Button variant="standard" text="" buttonList />
+            <Box sx={{ position: "relative" }} ref={listRef}>
+              <Button variant="standard" text="" buttonList onClick={toggleListVisibility} />
+              {isListVisible && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "46px",
+                    right: 0,
+                    width: "180px",
+                    bgcolor: "#fff",
+                    borderRadius: 2,
+                    py: 1,
+                    boxShadow: "0px 8px 16px 0px #2636990A",
+                    overflow: "hidden",
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      ...listItemStyles,
+                      "&:hover .second-list": {
+                        display: "block",
+                      },
+                    }}
+                  >
+                    <EditIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Editar
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      ...listItemStyles,
+                      "&:hover .second-list": {
+                        display: "block",
+                      },
+                    }}
+                    onMouseEnter={() => setShowActionsList(true)}
+                    onMouseLeave={() => setShowActionsList(false)}
+                  >
+                    <PlayIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Acciones
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <PersonPlusIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Asignar asesor
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <PlusIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Más
+                    </Typography>
+                  </Stack>
+                </Box>
+              )}
+              {/* Secondary list actions */}
+              <Box
+                className="second-list"
+                sx={{
+                  display: showActionsList ? "block" : "none",
+                  // display: "block",
+                  position: "absolute",
+                  top: "100px",
+                  right: "182px",
+                  width: "180px",
+                  bgcolor: "#fff",
+                  borderRadius: 2,
+                  boxShadow: "0px 8px 16px 0px #2636990A",
+                }}
+                onMouseEnter={() => setShowActionsList(true)}
+                onMouseLeave={() => setShowActionsList(false)}
+              >
+                <Stack>
+                  {clientData?.status?.value === "Active" && (
+                    <Stack
+                      sx={{ ...listItemStyles }}
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/cerrar`);
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        Cerrar
+                      </Typography>
+                    </Stack>
+                  )}
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Transferir cliente
+                    </Typography>
+                  </Stack>
+                  {clientData?.status?.value === "Closed" && (
+                    <Stack
+                      sx={{ ...listItemStyles }}
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/reactivar`);
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        Reactivar
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography variant="body2" fontWeight="300">
+                        Activar
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography variant="body2" fontWeight="300">
+                        Retirar
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography variant="body2" fontWeight="300">
+                        Rechazar
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography variant="body2" fontWeight="300">
+                        Borrar
+                      </Typography>
+                    </Stack>
+                  )}
+                </Stack>
+              </Box>
+            </Box>
           </Box>
         </Stack>
       </Stack>

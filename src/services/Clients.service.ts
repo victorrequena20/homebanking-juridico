@@ -41,7 +41,6 @@ export const createClient = async (data: any): Promise<ApiResponse> => {
 export const getTemplate = async (params?: any) => {
   try {
     const response = await HttpClient.get("/clients/template", { params });
-    console.log("🚀 ~ getTemplate ~ response:", response);
     return {
       data: response.data,
       status: response.status,
@@ -151,7 +150,7 @@ export const clientActions = async (clientId?: string, data?: any, params?: any)
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ clientActions ~ error:", error);
+    console.error("🚀 ~ clientActions ~ error:", error);
     throw error;
   }
 };
