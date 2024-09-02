@@ -301,6 +301,19 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       Transferir cliente
                     </Typography>
                   </Stack>
+                  {clientData?.status?.value === "Transfer in progress" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography
+                        variant="body2"
+                        fontWeight="300"
+                        onClick={() => {
+                          router.push(`/institucion/clientes/${params.clientId}/acciones/aceptar-transferencia-de-cliente`);
+                        }}
+                      >
+                        Aceptar transferencia
+                      </Typography>
+                    </Stack>
+                  )}
                   {clientData?.status?.value === "Closed" && (
                     <Stack
                       sx={{ ...listItemStyles }}
