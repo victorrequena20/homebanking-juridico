@@ -201,9 +201,9 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 isLoading={isLoadingActivation}
               />
             )}
-            <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" />
+            {/* <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" /> */}
             <Box sx={{ position: "relative" }} ref={listRef}>
-              <Button variant="standard" text="" buttonList onClick={toggleListVisibility} />
+              <Button variant="standard" text="Acciones" buttonList onClick={toggleListVisibility} />
               {isListVisible && (
                 <Box
                   sx={{
@@ -216,6 +216,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                     py: 1,
                     boxShadow: "0px 8px 16px 0px #2636990A",
                     overflow: "hidden",
+                    zIndex: 1,
                   }}
                 >
                   <Stack
@@ -273,6 +274,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   bgcolor: "#fff",
                   borderRadius: 2,
                   boxShadow: "0px 8px 16px 0px #2636990A",
+                  zIndex: 1,
                 }}
                 onMouseEnter={() => setShowActionsList(true)}
                 onMouseLeave={() => setShowActionsList(false)}

@@ -5,7 +5,6 @@ import Button from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { IKeyValue } from "@/types/common";
 import InputCalendar from "@/components/InputCalendar";
 import { clientActions, getTemplate } from "@/services/Clients.service";
 import { toast } from "sonner";

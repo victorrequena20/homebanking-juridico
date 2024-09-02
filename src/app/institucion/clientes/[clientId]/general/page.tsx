@@ -193,8 +193,6 @@ export default function ClientDetails({ params }: { params: { clientId: string }
 
   async function handleGetAccounts() {
     const response = await getAccountsById(params?.clientId);
-    console.log("🚀 ~ handleGetAccounts ~ response:", response);
-    console.log("🚀 ~ handleGetAccounts ~ response?.data?.loanAccounts:", response?.data?.loanAccounts);
     if (response?.status === 200) {
       setAccounts(response?.data);
       setLoanAccounts(response?.data?.loanAccounts);
@@ -215,70 +213,70 @@ export default function ClientDetails({ params }: { params: { clientId: string }
             <ClientDetailsHeader clientData={clientData} getClientData={getClientData} />
 
             {/* Creditos */}
-            <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
-              <Stack sx={{ justifyContent: "center" }}>
-                <Typography variant="body1" color="var(--secondaryText)">
-                  Cuentas de crédito
-                </Typography>
-              </Stack>
+            {loanAccounts?.length > 0 && (
+              <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
+                <Stack sx={{ justifyContent: "center" }}>
+                  <Typography variant="body1" color="var(--secondaryText)">
+                    Cuentas de crédito
+                  </Typography>
+                </Stack>
 
-              <Stack sx={{ mt: 2, pb: 4 }}>
-                {loanAccounts?.length > 0 ? (
-                  <DataGrid
-                    rows={loanAccounts}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                          page: 0,
+                <Stack sx={{ mt: 2, pb: 4 }}>
+                  {loanAccounts?.length > 0 ? (
+                    <DataGrid
+                      rows={loanAccounts}
+                      columns={columns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                            page: 0,
+                          },
                         },
-                      },
-                    }}
-                    disableRowSelectionOnClick
-                    rowSelection
-                    pageSizeOptions={[10, 25, 50]}
-                  />
-                ) : (
-                  <NotFoundData title={`El sr ${clientData?.displayName} no posee créditos`} withOutBack mt={6} />
-                )}
+                      }}
+                      disableRowSelectionOnClick
+                      rowSelection
+                      pageSizeOptions={[10, 25, 50]}
+                    />
+                  ) : (
+                    <NotFoundData title={`El sr ${clientData?.displayName} no posee créditos`} withOutBack mt={6} />
+                  )}
+                </Stack>
               </Stack>
-            </Stack>
+            )}
 
             {/* Cuentas de ahorro */}
-            <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
-              <Stack sx={{ justifyContent: "center" }}>
-                <Typography variant="body1" color="var(--secondaryText)">
-                  Cuentas de ahorro
-                </Typography>
-              </Stack>
+            {savingsAccounts?.length > 0 && (
+              <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
+                <Stack sx={{ justifyContent: "center" }}>
+                  <Typography variant="body1" color="var(--secondaryText)">
+                    Cuentas de ahorro
+                  </Typography>
+                </Stack>
 
-              <Stack sx={{ mt: 2, pb: 10 }}>
-                {loanAccounts?.length > 0 ? (
-                  <DataGrid
-                    rows={savingsAccounts}
-                    columns={savingsColumns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 10,
-                          page: 0,
+                <Stack sx={{ mt: 2, pb: 10 }}>
+                  {savingsAccounts?.length > 0 ? (
+                    <DataGrid
+                      rows={savingsAccounts}
+                      columns={savingsColumns}
+                      initialState={{
+                        pagination: {
+                          paginationModel: {
+                            pageSize: 10,
+                            page: 0,
+                          },
                         },
-                      },
-                    }}
-                    disableRowSelectionOnClick
-                    rowSelection
-                    pageSizeOptions={[10, 25, 50]}
-                  />
-                ) : (
-                  <NotFoundData
-                    title={`El sr ${clientData?.displayName} no posee cuentas de ahorro`}
-                    withOutBack
-                    mt={6}
-                  />
-                )}
+                      }}
+                      disableRowSelectionOnClick
+                      rowSelection
+                      pageSizeOptions={[10, 25, 50]}
+                    />
+                  ) : (
+                    <NotFoundData title={`El sr ${clientData?.displayName} no posee cuentas de ahorro`} withOutBack mt={6} />
+                  )}
+                </Stack>
               </Stack>
-            </Stack>
+            )}
           </Grid>
         </>
       ) : (
