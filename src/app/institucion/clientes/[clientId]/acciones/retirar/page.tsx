@@ -42,7 +42,6 @@ export default function WithdrawPage() {
       toast.error("Servicio de cierre no disponible");
     }
   }
-
   async function onSubmit(data: any) {
     setIsLoading(true);
     const response = await clientActions(
