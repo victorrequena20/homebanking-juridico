@@ -7,15 +7,36 @@ import { useRouter } from "next/navigation";
 import { Box, Stack } from "@mui/material";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
-import { getPaymentTypes } from "@/services/Core.service";
+import { deletePaymentType, getPaymentTypes } from "@/services/Core.service";
 import { Tooltip } from "@mui/material";
 import EditIcon from "@/assets/icons/EditIcon";
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import { toast } from "sonner";
 
 export default function TipoDePago() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [paymentTypes, setPaymentTypes] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
+
+  async function handleDeletePaymentType(id: string) {
+    const response = await deletePaymentType(id);
+    if (response?.status === 200) {
+      toast.success("Tipo de pago eliminado correctamente");
+      handleGetPaymentTypes();
+    } else {
+      toast.error("Error al eliminar el tipo de pago");
+    }
+  }
+
+  async function handleGetPaymentTypes() {
+    setIsLoading(true);
+    const response = await getPaymentTypes();
+    if (response?.status === 200) {
+      setPaymentTypes(response?.data);
+    }
+    setIsLoading(false);
+  }
+
   const columns: GridColDef<(typeof paymentTypes)[number]>[] = [
     {
       field: "name",
@@ -69,7 +90,9 @@ export default function TipoDePago() {
                 height: "36px",
                 cursor: "pointer",
               }}
-              onClick={() => {}}
+              onClick={() => {
+                router.push(`/administracion/organizacion/tipo-de-pago/${params.row.id}/editar`);
+              }}
             >
               <EditIcon color="#fff" size={20} />
             </Box>
@@ -77,21 +100,12 @@ export default function TipoDePago() {
           <ConfirmDeleteModal
             buttonType="action"
             title="¿Estás seguro de que deseas eliminar este tipo de pago?"
-            actionCallback={() => {}}
+            actionCallback={() => handleDeletePaymentType(params.row.id)}
           />
         </Stack>
       ),
     },
   ];
-
-  async function handleGetPaymentTypes() {
-    setIsLoading(true);
-    const response = await getPaymentTypes();
-    if (response?.status === 200) {
-      setPaymentTypes(response?.data);
-    }
-    setIsLoading(false);
-  }
 
   React.useEffect(() => {
     handleGetPaymentTypes();
@@ -139,9 +153,6 @@ export default function TipoDePago() {
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
-          // onRowClick={(params, event, details) => {
-          //   router.push(`/administracion/usuarios/${params.row.userId}`);
-          // }}
         />
       </Stack>
     </Wrapper>

@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, Stack } from "@mui/material";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import { createPaymentType } from "@/services/Core.service";
+import { createPaymentType, updatePaymentType } from "@/services/Core.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Toggle from "@/components/Toggle";
@@ -23,7 +23,7 @@ const schema = yup.object().shape({
   position: yup.string().required("La posición es obligatoria"),
 });
 
-export default function CreatePaymentTypeForm() {
+export default function CreatePaymentTypeForm({ paymentTypeData }: { paymentTypeData?: any }) {
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const {
@@ -33,21 +33,45 @@ export default function CreatePaymentTypeForm() {
   } = useForm<IForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      name: paymentTypeData?.name || "",
+      description: paymentTypeData?.description || "",
+      position: paymentTypeData?.position || "",
+    },
   });
   const router = useRouter();
 
   const onSubmit = async (data: IForm) => {
     setIsLoading(true);
-    const response = await createPaymentType({ ...data, isCashPayment: isActive });
-    if (response?.status === 200) {
-      toast.success("Tipo de pago creado correctamente");
-      router.push("/administracion/organizacion/tipos-pago");
-    } else {
-      toast.error("Error al crear el tipo de pago");
+    {
+      if (paymentTypeData) {
+        const response = await updatePaymentType(paymentTypeData?.id, { ...data, isCashPayment: isActive });
+        if (response?.status === 200) {
+          toast.success("Tipo de pago actualizado correctamente");
+          router.push("/administracion/organizacion/tipo-de-pago");
+        } else {
+          toast.error("Error al actualizar el tipo de pago");
+        }
+      } else {
+        const response = await createPaymentType({ ...data, isCashPayment: isActive });
+        if (response?.status === 200) {
+          toast.success("Tipo de pago creado correctamente");
+          router.push("/administracion/organizacion/tipo-de-pago");
+        } else {
+          toast.error("Error al crear el tipo de pago");
+        }
+      }
     }
-    console.log(data);
     setIsLoading(false);
   };
+
+  React.useEffect(() => {
+    if (paymentTypeData?.isCashPayment) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, []);
 
   return (
     <Grid
@@ -79,6 +103,7 @@ export default function CreatePaymentTypeForm() {
                 onChange={onChange}
                 hint={errors.name?.message}
                 isValidField={!errors.name}
+                defaultValue={paymentTypeData?.name || ""}
               />
             )}
           />
@@ -97,6 +122,7 @@ export default function CreatePaymentTypeForm() {
               onChange={onChange}
               hint={errors.description?.message}
               isValidField={!errors.description}
+              defaultValue={paymentTypeData?.description || ""}
             />
           )}
         />
@@ -114,6 +140,7 @@ export default function CreatePaymentTypeForm() {
               onChange={onChange}
               hint={errors.position?.message}
               isValidField={!errors.position}
+              defaultValue={paymentTypeData?.position || ""}
             />
           )}
         />

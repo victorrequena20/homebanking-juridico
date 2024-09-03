@@ -364,6 +364,15 @@ export const getPaymentTypes = async (params?: any) => {
   }
 };
 
+export const getPaymentTypeById = async (id?: any, params?: any) => {
+  try {
+    const response = await HttpClient.get(`/paymenttypes/${id}`, { params });
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getPaymentTypeById ~ error:", error);
+  }
+};
+
 export const createPaymentType = async (data: any) => {
   try {
     const response = await HttpClient.post(`/paymenttypes`, data);
@@ -373,6 +382,25 @@ export const createPaymentType = async (data: any) => {
     };
   } catch (error) {
     console.log("🚀 ~ paymentType ~ error:", error);
+  }
+};
+
+export const updatePaymentType = async (id: string, data: any) => {
+  try {
+    const response = await HttpClient.put(`/paymenttypes/${id}`, data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ updatePaymentType ~ error:", error);
+  }
+};
+
+export const deletePaymentType = async (id: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/paymenttypes/${id}`);
+    return { status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ deletePaymentType ~ error:", error);
+    throw error;
   }
 };
 

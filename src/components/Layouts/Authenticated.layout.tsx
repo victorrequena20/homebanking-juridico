@@ -458,7 +458,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                     onClick={() => router.push("/configuracion")}
                   >
                     <Typography variant="body2" fontSize={"13px"} fontWeight="400" color="#9aa3b8">
-                      Configuración
+                      Perfil
                     </Typography>
                   </Box>
                 </Stack>
