@@ -280,7 +280,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 onMouseLeave={() => setShowActionsList(false)}
               >
                 <Stack>
-                  {clientData?.status?.value === "Active" && (
+                  {(clientData?.status?.value === "Active" || clientData?.status?.value === "Pending") && (
                     <Stack
                       sx={{ ...listItemStyles }}
                       onClick={() => {
@@ -329,14 +329,19 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                     </Stack>
                   )}
                   {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
-                    <Stack sx={{ ...listItemStyles }}>
+                    <Stack sx={{ ...listItemStyles }} onClick={handleActivationUser}>
                       <Typography variant="body2" fontWeight="300">
                         Activar
                       </Typography>
                     </Stack>
                   )}
                   {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
-                    <Stack sx={{ ...listItemStyles }}>
+                    <Stack
+                      sx={{ ...listItemStyles }}
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/retirar`);
+                      }}
+                    >
                       <Typography variant="body2" fontWeight="300">
                         Retirar
                       </Typography>
