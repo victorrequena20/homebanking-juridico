@@ -11,7 +11,7 @@ import { schema } from "./yup";
 import { toast } from "sonner";
 import { IChangeUserPasswordFormProps } from "./ChangeUserPasswordFormProps";
 
-export default function ChangeUserPasswordForm({ userId }: IChangeUserPasswordFormProps) {
+export default function ChangeUserPasswordForm({ userId, fromAdmin, secondaryAction }: IChangeUserPasswordFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     control,
@@ -34,11 +34,12 @@ export default function ChangeUserPasswordForm({ userId }: IChangeUserPasswordFo
       reset();
     }
     setIsLoading(false);
+    secondaryAction?.();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack sx={{ gap: 3, mt: 3 }}>
+      <Stack sx={{ gap: 3, mt: fromAdmin ? 0 : 3 }}>
         <Stack>
           <Controller
             control={control}

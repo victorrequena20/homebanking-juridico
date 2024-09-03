@@ -34,11 +34,13 @@ const LoginForm = () => {
         username,
         password,
       });
+      console.log("🚀 ~ handleLogin ~ response:", response);
       const token = response.data.base64EncodedAuthenticationKey;
       if (!token) {
         toast.error("Usuario o contraseña incorrectos");
       }
       localStorage.setItem("litecoreAuthToken", token);
+      localStorage.setItem("litecoreXCredentials", JSON.stringify(response.data));
       router.push("/dashboard");
     } catch (err) {
       toast.error("Ocurrio un error al iniciar sesión");
@@ -98,16 +100,12 @@ const LoginForm = () => {
                 <Controller
                   control={control}
                   name="username"
-                  render={({ field: { onChange, value } }) => (
-                    <Input label="Usuario" type="text" value={value} onChange={onChange} />
-                  )}
+                  render={({ field: { onChange, value } }) => <Input label="Usuario" type="text" value={value} onChange={onChange} />}
                 />
                 <Controller
                   control={control}
                   name="password"
-                  render={({ field: { onChange, value } }) => (
-                    <Input label="Contraseña" type="password" value={value} onChange={onChange} />
-                  )}
+                  render={({ field: { onChange, value } }) => <Input label="Contraseña" type="password" value={value} onChange={onChange} />}
                 />
                 <Button
                   variant="primary"

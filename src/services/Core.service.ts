@@ -664,3 +664,14 @@ export const getFloatingRates = async (params?: any) => {
 };
 
 // ----- Floating rates end -----
+
+// ----- Actuator start -----
+export const getActuatorInfo = async (params?: any) => {
+  try {
+    const response = await HttpClient.get("/actuator/info", { params });
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.log("🚀 ~ getActuatorInfo ~ error:", error);
+  }
+};
+// ----- Actuator end -----
