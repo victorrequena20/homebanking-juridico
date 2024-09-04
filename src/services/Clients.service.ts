@@ -154,3 +154,13 @@ export const clientActions = async (clientId?: string, data?: any, params?: any)
     throw error;
   }
 };
+
+export const deleteCliente = async (clientId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/clients/${clientId}`);
+    return { status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ deleteCliente ~ error:", error);
+    throw error;
+  }
+};

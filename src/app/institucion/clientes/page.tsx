@@ -46,7 +46,6 @@ export default function Clients() {
     {
       field: "office",
       headerName: "Oficina",
-      // description: "This column has a value getter and is not sortable.",
       sortable: false,
       flex: 1,
       valueGetter: (value, row) => `${row.office || ""} `,

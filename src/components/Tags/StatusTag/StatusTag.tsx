@@ -9,8 +9,8 @@ export default function StatusTag({ isActive, mode = "tag", trueText = "Activo",
     Closed: {
       bgColor: "",
       color: "",
-      borderColor: "",
-      dotColor: "#EF6820",
+      borderColor: "#000",
+      dotColor: "#000",
       text: "Cerrado",
     },
     Active: {
@@ -33,6 +33,20 @@ export default function StatusTag({ isActive, mode = "tag", trueText = "Activo",
       borderColor: "#FEDF89",
       dotColor: "#F79009",
       text: "Pendiente",
+    },
+    Withdrawn: {
+      bgColor: "",
+      color: "",
+      borderColor: "#000",
+      dotColor: "#000",
+      text: "Retirado",
+    },
+    Rejected: {
+      bgColor: "",
+      color: "",
+      borderColor: "#000",
+      dotColor: "#000",
+      text: "Rechazado",
     },
   };
 

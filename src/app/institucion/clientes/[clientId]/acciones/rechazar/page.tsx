@@ -15,10 +15,11 @@ import { dateFormat } from "@/constants/global";
 import { useParams, useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
-  reactivationDate: yup.string().required("Fecha de reactivación es obligatoria"),
+  rejectionDate: yup.string().required("La fecha de rechazo es obligatoria"),
+  rejectionReasonId: yup.mixed().required("Motivo del rechazo es obligatorio"),
 });
 
-export default function ReactivateClientPage() {
+export default function RejectPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [template, setTemplate] = React.useState<any>(null);
   const {
@@ -34,23 +35,26 @@ export default function ReactivateClientPage() {
   const router = useRouter();
 
   async function handleGetTemplate() {
-    const response = await getTemplate({ commandParam: "close" });
+    const response = await getTemplate({ commandParam: "reject" });
     if (response?.status === 200) {
       setTemplate(response.data);
     } else {
       toast.error("Servicio de cierre no disponible");
     }
   }
-
   async function onSubmit(data: any) {
     setIsLoading(true);
-    const response = await clientActions(params?.clientId?.toString(), { ...data, ...dateFormat }, { command: "reactivate" });
+    const response = await clientActions(
+      params?.clientId?.toString(),
+      { ...data, ...dateFormat, rejectionReasonId: data?.rejectionReasonId?.value },
+      { command: "reject" }
+    );
     if (response?.status === 200) {
-      toast.success("Cliente reactivado con éxito");
+      toast.success("Cliente rechazado con éxito");
       router.push(`/institucion/clientes/${params?.clientId}/general`);
       reset();
     } else {
-      toast.error("Error al reactivar el cliente");
+      toast.error("Error al rechazar al cliente");
     }
     setIsLoading(false);
   }
@@ -78,21 +82,41 @@ export default function ReactivateClientPage() {
         container
         mt={3}
       >
-        {/* Cerrado el dia  */}
+        {/* Fecha de retiro  */}
         <Grid xs={12}>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="reactivationDate"
+              name="rejectionDate"
               render={({ field: { onChange, value } }) => (
                 <InputCalendar
                   width="100%"
-                  label="Fecha de reactivación *"
+                  label="Fecha de rechazo *"
                   value={value}
                   onChange={onChange}
                   maxToday
-                  hint={errors.reactivationDate?.message}
-                  isValidField={!errors.reactivationDate}
+                  hint={errors.rejectionDate?.message}
+                  isValidField={!errors.rejectionDate}
+                />
+              )}
+            />
+          </Stack>
+        </Grid>
+        {/* Motivo del retiro */}
+        <Grid xs={12}>
+          <Stack sx={{ flex: 1 }}>
+            <Controller
+              control={control}
+              name="rejectionReasonId"
+              render={({ field: { value, onChange } }) => (
+                <InputSelect
+                  label="Motivo del rechazo *"
+                  options={keyValueAdapter(template?.narrations, "name", "id")}
+                  setItem={(item: IKeyValue) => onChange(item)}
+                  value={value}
+                  width="100%"
+                  hint={errors.rejectionReasonId?.message}
+                  isValidField={!errors.rejectionReasonId}
                 />
               )}
             />

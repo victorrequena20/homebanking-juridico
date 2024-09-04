@@ -15,8 +15,8 @@ import { dateFormat } from "@/constants/global";
 import { useParams, useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
-  closureDate: yup.string().required("Cerrado el día es obligatorio"),
-  closureReasonId: yup.mixed().required("Motivo del cierre es obligatorio"),
+  withdrawalDate: yup.string().required("Cerrado el día es obligatorio"),
+  withdrawalReasonId: yup.mixed().required("Motivo del cierre es obligatorio"),
 });
 
 export default function WithdrawPage() {
@@ -46,15 +46,15 @@ export default function WithdrawPage() {
     setIsLoading(true);
     const response = await clientActions(
       params?.clientId?.toString(),
-      { ...data, ...dateFormat, closureReasonId: data?.closureReasonId?.value },
-      { command: "close" }
+      { ...data, ...dateFormat, withdrawalReasonId: data?.withdrawalReasonId?.value },
+      { command: "withdraw" }
     );
     if (response?.status === 200) {
-      toast.success("Cliente cerrado con éxito");
-      router.push(`/institucion/clientes/${params?.clientId}`);
+      toast.success("Cliente retirado con éxito");
+      router.push(`/institucion/clientes/${params?.clientId}/general`);
       reset();
     } else {
-      toast.error("Error al cerrar el cliente");
+      toast.error("Error al retirar el cliente");
     }
     setIsLoading(false);
   }
@@ -87,7 +87,7 @@ export default function WithdrawPage() {
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="closureDate"
+              name="withdrawalDate"
               render={({ field: { onChange, value } }) => (
                 <InputCalendar
                   width="100%"
@@ -95,8 +95,8 @@ export default function WithdrawPage() {
                   value={value}
                   onChange={onChange}
                   maxToday
-                  hint={errors.closureDate?.message}
-                  isValidField={!errors.closureDate}
+                  hint={errors.withdrawalDate?.message}
+                  isValidField={!errors.withdrawalDate}
                 />
               )}
             />
@@ -107,7 +107,7 @@ export default function WithdrawPage() {
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="closureReasonId"
+              name="withdrawalReasonId"
               render={({ field: { value, onChange } }) => (
                 <InputSelect
                   label="Motivo del retiro *"
@@ -115,8 +115,8 @@ export default function WithdrawPage() {
                   setItem={(item: IKeyValue) => onChange(item)}
                   value={value}
                   width="100%"
-                  hint={errors.closureReasonId?.message}
-                  isValidField={!errors.closureReasonId}
+                  hint={errors.withdrawalReasonId?.message}
+                  isValidField={!errors.withdrawalReasonId}
                 />
               )}
             />

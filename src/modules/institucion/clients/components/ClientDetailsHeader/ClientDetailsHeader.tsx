@@ -10,6 +10,9 @@ import PlayIcon from "@/assets/icons/PlayIcon";
 import PersonPlusIcon from "@/assets/icons/PersonPlusIcon";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { formatSpanishDate } from "@/utilities/common.utility";
+import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import { deleteCliente } from "@/services/Clients.service";
+import { toast } from "sonner";
 
 interface ClientDetailsHeaderProps {
   clientData: any;
@@ -17,6 +20,7 @@ interface ClientDetailsHeaderProps {
 }
 
 export default function ClientDetailsHeader({ clientData, getClientData }: ClientDetailsHeaderProps) {
+  const [showDeleteClientModal, setShowDeleteClientModal] = useState<boolean>(false);
   const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
   const [showActionsList, setShowActionsList] = useState<boolean>(false);
@@ -24,6 +28,16 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
   const params = useParams();
   const router = useRouter();
   const { activateUser } = useContext(ClientDetailsContext);
+
+  async function handleDeleteClient() {
+    const response = await deleteCliente(params.clientId?.toString());
+    if (response?.status === 200) {
+      toast.success("Cliente eliminado con éxito");
+      router.push("/institucion/clientes");
+    } else {
+      toast.error("Error al eliminar el cliente");
+    }
+  }
 
   async function handleActivationUser() {
     setIsLoadingActivation(true);
@@ -201,6 +215,9 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 isLoading={isLoadingActivation}
               />
             )}
+            {clientData?.status?.value === "Pending" && (
+              <ConfirmDeleteModal actionCallback={handleDeleteClient} title="¿Estás seguro de que deseas borrar este cliente?" />
+            )}
             {/* <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" /> */}
             <Box sx={{ position: "relative" }} ref={listRef}>
               <Button variant="standard" text="Acciones" buttonList onClick={toggleListVisibility} />
@@ -280,7 +297,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 onMouseLeave={() => setShowActionsList(false)}
               >
                 <Stack>
-                  {(clientData?.status?.value === "Active" || clientData?.status?.value === "Pending") && (
+                  {(clientData?.status?.value === "Active" || clientData?.status?.value === "Pending" || clientData?.status?.value === "Withdrawn") && (
                     <Stack
                       sx={{ ...listItemStyles }}
                       onClick={() => {
@@ -328,14 +345,14 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       </Typography>
                     </Stack>
                   )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
                     <Stack sx={{ ...listItemStyles }} onClick={handleActivationUser}>
                       <Typography variant="body2" fontWeight="300">
                         Activar
                       </Typography>
                     </Stack>
                   )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
                     <Stack
                       sx={{ ...listItemStyles }}
                       onClick={() => {
@@ -347,17 +364,10 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       </Typography>
                     </Stack>
                   )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
-                    <Stack sx={{ ...listItemStyles }}>
+                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
+                    <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/rechazar`)}>
                       <Typography variant="body2" fontWeight="300">
                         Rechazar
-                      </Typography>
-                    </Stack>
-                  )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && (
-                    <Stack sx={{ ...listItemStyles }}>
-                      <Typography variant="body2" fontWeight="300">
-                        Borrar
                       </Typography>
                     </Stack>
                   )}

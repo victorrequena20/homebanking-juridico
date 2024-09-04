@@ -52,7 +52,7 @@ export default function ClosePage() {
     );
     if (response?.status === 200) {
       toast.success("Cliente cerrado con éxito");
-      router.push(`/institucion/clientes/${params?.clientId}`);
+      router.push(`/institucion/clientes/${params?.clientId}/general`);
       reset();
     } else {
       toast.error("Error al cerrar el cliente");
