@@ -3,4 +3,5 @@ export interface StatusTagProps {
   mode?: "tag" | "circle";
   trueText?: string;
   falseText?: string;
+  statusVariant?: "Active" | "Inactive" | "Closed" | "Pending";
 }

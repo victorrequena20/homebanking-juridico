@@ -50,7 +50,7 @@ export default function Toggle({
         <Box sx={toggleBallStyles} />
       </Box>
       {label && (
-        <Typography variant="body2" sx={{ textTransform: "none" }} color="common.black" fontWeight="400">
+        <Typography variant="body2" sx={{ textTransform: "none" }} color="common.black" fontWeight="200">
           {label}
         </Typography>
       )}

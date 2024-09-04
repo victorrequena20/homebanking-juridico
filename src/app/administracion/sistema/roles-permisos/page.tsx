@@ -51,7 +51,7 @@ export default function RolsPermitions() {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Administrar roles y permisos"
         items={[
@@ -74,7 +74,6 @@ export default function RolsPermitions() {
       </Stack>
       <Stack sx={{ mt: 3 }}>
         <DataGrid
-          sx={{ borderRadius: "16px", overflow: "hidden" }}
           rows={roles}
           columns={columns}
           initialState={{
@@ -87,9 +86,7 @@ export default function RolsPermitions() {
           }}
           disableRowSelectionOnClick
           rowSelection
-          onRowClick={(params, event, details) =>
-            router.push(`/administracion/sistema/config-tareas-realizador-aprobador`)
-          }
+          onRowClick={(params, event, details) => router.push(`/administracion/sistema/config-tareas-realizador-aprobador`)}
           pageSizeOptions={[10, 25, 50]}
         />
       </Stack>

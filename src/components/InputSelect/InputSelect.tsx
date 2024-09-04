@@ -165,7 +165,7 @@ export default function InputSelect({
           }}
         >
           <Stack sx={{ rowGap: 1 }}>
-            {options.map(item => (
+            {options?.map(item => (
               <Box
                 key={item.value}
                 sx={{

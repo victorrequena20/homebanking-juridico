@@ -33,6 +33,11 @@
   color: #f3f3f3;
 }
 
+.btn-standard {
+  background-color: var(--darkBg);
+  color: #fff;
+}
+
 .small {
   width: auto;
   padding: 8px 16px;

@@ -1,5 +1,14 @@
 import HttpClient from "@/utilities/HttpClient.utility";
 
+export const createLoanProduct = async (data: any) => {
+  try {
+    const response = await HttpClient.post("/loanproducts", data);
+    return { data: response.data, status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ createLoanProduct ~ error:", error);
+  }
+};
+
 export const getCommissions = async () => {
   try {
     const response = await HttpClient.get("/charges");

@@ -8,15 +8,16 @@ import { useRouter } from "next/navigation";
 import { Stack } from "@mui/material";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { createOffice, getOffices } from "@/services/Office.service";
+import { createOffice, getOffices, updateOffice } from "@/services/Office.service";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import InputCalendar from "@/components/InputCalendar";
 import { schema } from "./yup";
 import { IKeyValue } from "@/types/common";
+import { formatDateEsddMMMMyyyy, formatSpanishDate } from "@/utilities/common.utility";
+import { dateFormat } from "@/constants/global";
 
-export default function CreateOfficeForm() {
+export default function CreateOfficeForm({ officeData }: { officeData?: any }) {
   const [offices, setOffices] = React.useState<any[] | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
@@ -24,27 +25,44 @@ export default function CreateOfficeForm() {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors, isValid, dirtyFields },
   } = useForm<ICreateOfficeForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      name: officeData?.name,
+      parentId: officeData?.parentId,
+      openingDate: officeData ? formatDateEsddMMMMyyyy(officeData?.openingDate) : "",
+      externalId: officeData?.externalId,
+    },
   });
   const router = useRouter();
 
   const onSubmit = async (data: ICreateOfficeForm) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
-    const response = await createOffice({
-      ...data,
-      locale: "es",
-      dateFormat: "dd MMMM yyyy",
-    });
-    if (response?.status) {
-      toast.success("Ofiina creada con exito!", {
-        cancel: true,
-      });
-      router.push("/administracion/organizacion/administrar-oficinas");
-      reset();
+    if (officeData) {
+      const response = await updateOffice({ ...data, ...dateFormat }, officeData?.id);
+      if (response?.status === 200) {
+        toast.success("Oficina actualizada con exito!", {
+          cancel: true,
+        });
+        router.push("/administracion/organizacion/administrar-oficinas");
+        reset();
+      } else {
+        toast.error("Error al actualizar la oficina.");
+      }
+    } else {
+      const response = await createOffice({ ...data, ...dateFormat });
+      if (response?.status === 200) {
+        toast.success("Ofiina creada con exito!", {
+          cancel: true,
+        });
+        router.push("/administracion/organizacion/administrar-oficinas");
+        reset();
+      } else {
+        toast.error("Error al crear la oficina.");
+      }
     }
     setIsLoading(false);
   };
@@ -52,12 +70,15 @@ export default function CreateOfficeForm() {
   React.useEffect(() => {
     (async () => {
       const response = await getOffices();
-      console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setOffices(response?.data);
       }
     })();
   }, []);
+
+  React.useEffect(() => {
+    console.log("Watch: ", watch());
+  }, [watch("externalId"), watch("name"), watch("openingDate"), watch("parentId")]);
 
   return (
     <Stack
@@ -89,6 +110,7 @@ export default function CreateOfficeForm() {
                   hint={errors.name?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={officeData?.name}
                 />
               )}
             />
@@ -104,6 +126,7 @@ export default function CreateOfficeForm() {
                   setItem={(item: IKeyValue) => onChange(item?.value.toString())}
                   hint={errors.parentId?.message}
                   isValidField={!errors.parentId}
+                  defaultValue={officeData?.parentId}
                 />
               )}
             />
@@ -122,6 +145,7 @@ export default function CreateOfficeForm() {
                   onChange={date => onChange(date)}
                   isValidField={!errors.openingDate}
                   hint={errors.openingDate?.message}
+                  defaultValue={officeData ? formatDateEsddMMMMyyyy(officeData?.openingDate) : ""}
                 />
               )}
             />
@@ -138,6 +162,7 @@ export default function CreateOfficeForm() {
                   hint={errors.externalId?.message}
                   value={value}
                   onChange={onChange}
+                  defaultValue={officeData?.externalId}
                 />
               )}
             />
@@ -154,7 +179,7 @@ export default function CreateOfficeForm() {
           <Button
             type="submit"
             isLoading={isLoading}
-            disabled={!isValid || Object.keys(dirtyFields).length < 2}
+            disabled={!isValid}
             size="small"
             text="Aceptar"
             variant="primary"

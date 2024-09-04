@@ -21,7 +21,7 @@ export default function Clients() {
       field: "name",
       headerName: "Nombre",
       flex: 1,
-      valueGetter: (value, row) => `${row.name || ""}`,
+      valueGetter: (value, row) => `${row?.name || row.displayName || ""} `,
     },
     {
       field: "accountNumber",
@@ -40,13 +40,12 @@ export default function Clients() {
       field: "status",
       headerName: "Estado",
       flex: 1,
-      renderCell: params => <StatusTag isActive={params?.row?.status} />,
+      renderCell: params => <StatusTag isActive={params?.row?.status} statusVariant={params?.row?.statusAll?.value} />,
       align: "center",
     },
     {
       field: "office",
       headerName: "Oficina",
-      // description: "This column has a value getter and is not sortable.",
       sortable: false,
       flex: 1,
       valueGetter: (value, row) => `${row.office || ""} `,
@@ -60,10 +59,12 @@ export default function Clients() {
     const clientsData = data.map((el: any) => {
       return {
         id: el?.id,
-        name: `${el?.firstname} ${el?.lastname}`,
+        name: el?.firstname ? `${el?.firstname} ${el?.lastname}` : el?.displayName,
+        displayName: el?.displayName,
         accountNumber: el?.accountNo,
         externalId: el?.externalId,
         status: el?.active,
+        statusAll: el.status,
         office: el?.officeName,
       };
     });
@@ -76,10 +77,7 @@ export default function Clients() {
   }, []);
   return (
     <Wrapper isLoading={isLoading}>
-      <Breadcrumbs
-        title="Clientes"
-        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-      />
+      <Breadcrumbs title="Clientes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
 
       <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
         <Stack sx={{ alignItems: "flex-end" }}>
