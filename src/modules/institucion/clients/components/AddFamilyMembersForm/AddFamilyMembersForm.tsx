@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { useParams } from "next/navigation";
 import { dateFormat } from "@/constants/global";
 
-export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMembersFormProps) {
+export default function AddFamilyMembersForm({ onClose, mode, createdSecondaryAction }: IAddFamilyMembersFormProps) {
   const { templateData, clientFamilyMembers, setClientFamilyMembers } = useContext(CreateClientContext);
   const [templateCurrentData, setTemplateCurrentData] = React.useState<any>(templateData);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -48,7 +48,6 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
       setClientFamilyMembers([...clientFamilyMembers, data]);
     }
     if (mode === "create") {
-      console.log("🚀 ~ onSubmit ~ data:");
       const response = await addFamilyMember(
         {
           ...dateFormat,
@@ -67,10 +66,10 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
       );
       if (response?.status === 200) {
         toast.success("Miembro de la familia agregado correctamente");
+        createdSecondaryAction?.();
       } else {
         toast.error("Error al agregar miembro de la familia");
       }
-      console.log("🚀 ~ onSubmit ~ response:", response);
     }
     onClose?.();
     setIsLoading(false);
@@ -81,27 +80,13 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
   }, []);
 
   return (
-    <Grid
-      container
-      columnSpacing={1}
-      rowSpacing={3}
-      maxWidth={"860px"}
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <Grid container columnSpacing={1} rowSpacing={3} maxWidth={"860px"} component="form" onSubmit={handleSubmit(onSubmit)}>
       <Grid item xs={6}>
         <Controller
           control={control}
           name="firstName"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Nombre*"
-              type="text"
-              value={value}
-              onChange={onChange}
-              hint={errors.firstName?.message}
-              isValidField={!errors.firstName}
-            />
+            <Input label="Nombre*" type="text" value={value} onChange={onChange} hint={errors.firstName?.message} isValidField={!errors.firstName} />
           )}
         />
       </Grid>
@@ -111,14 +96,7 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
           control={control}
           name="middleName"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Segundo nombre"
-              type="text"
-              value={value}
-              onChange={onChange}
-              hint={errors.middleName?.message}
-              isValidField={!errors.middleName}
-            />
+            <Input label="Segundo nombre" type="text" value={value} onChange={onChange} hint={errors.middleName?.message} isValidField={!errors.middleName} />
           )}
         />
       </Grid>
@@ -128,14 +106,7 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
           control={control}
           name="lastName"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Apellido*"
-              type="text"
-              value={value}
-              onChange={onChange}
-              hint={errors.lastName?.message}
-              isValidField={!errors.lastName}
-            />
+            <Input label="Apellido*" type="text" value={value} onChange={onChange} hint={errors.lastName?.message} isValidField={!errors.lastName} />
           )}
         />
       </Grid>
@@ -162,14 +133,7 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
           control={control}
           name="age"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Edad*"
-              type="number"
-              value={value}
-              onChange={onChange}
-              hint={errors.age?.message}
-              isValidField={!errors.age}
-            />
+            <Input label="Edad*" type="number" value={value} onChange={onChange} hint={errors.age?.message} isValidField={!errors.age} />
           )}
         />
       </Grid>
@@ -286,14 +250,7 @@ export default function AddFamilyMembersForm({ onClose, mode }: IAddFamilyMember
             px: 1,
           }}
         >
-          <Button
-            type="submit"
-            size="small"
-            text="Aceptar"
-            variant="primary"
-            disabled={!isValid}
-            isLoading={isLoading}
-          />
+          <Button type="submit" size="small" text="Aceptar" variant="primary" disabled={!isValid} isLoading={isLoading} />
         </Stack>
       </Grid>
     </Grid>

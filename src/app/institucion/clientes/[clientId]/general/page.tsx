@@ -15,15 +15,18 @@ import { DataGrid, GridCloseIcon, GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/navigation";
 import ClientDetailsHeader from "@/modules/institucion/clients/components/ClientDetailsHeader";
 import RenderFormModal from "@/components/Modals/RenderFormModal";
-import DepositMoneyAccountForm from "@/modules/institucion/clients/components/DepositMonetAccountForm";
+import DepositMoneyAccountForm from "@/modules/institucion/clients/components/DepositMoneyAccountForm";
+import WithdrawalMoneyAccountForm from "@/modules/institucion/clients/components/WithdrawalMoneyAccountForm";
 
 export default function ClientDetails({ params }: { params: { clientId: string } }) {
-  const [showDepositModal, setShowDepositModal] = React.useState(true);
+  const [showDepositModal, setShowDepositModal] = React.useState(false);
+  const [showWithdrawalModal, setShowWithdrawalModal] = React.useState(false);
   const [clientData, setClientData] = React.useState<any>(null);
   const [accounts, setAccounts] = React.useState<any>([]);
   const [loanAccounts, setLoanAccounts] = React.useState<any>([]);
   const [savingsAccounts, setSavingsAccounts] = React.useState<any>([]);
   const [accountIdToDeposit, setAccountIdToDeposit] = React.useState<string>("");
+  const [accountIdToWithdraw, setAccountIdToWithdraw] = React.useState<string>("");
   const router = useRouter();
   const columns: GridColDef<(typeof loanAccounts)[number]>[] = [
     {
@@ -182,6 +185,10 @@ export default function ClientDetails({ params }: { params: { clientId: string }
                 borderRadius: "8px",
                 cursor: "pointer",
               }}
+              onClick={() => {
+                setAccountIdToWithdraw(params?.row?.id);
+                setShowWithdrawalModal(true);
+              }}
             >
               <ArrowCircleReceiveIcon color="#fff" size={20} />
             </Box>
@@ -294,13 +301,22 @@ export default function ClientDetails({ params }: { params: { clientId: string }
             </Stack>
 
             <RenderFormModal
-              title="Depositar dinero en una cuenta de ahorro"
+              title="Depositar dinero en una cuenta"
               subtitle="Deposita dinero en la cuenta del cliente."
               sx={{ maxWidth: "460px", width: "460px" }}
               isOpen={showDepositModal}
               setIsOpen={setShowDepositModal}
             >
               <DepositMoneyAccountForm accountId={accountIdToDeposit} />
+            </RenderFormModal>
+            <RenderFormModal
+              title="Retirar dinero de una cuenta"
+              subtitle="Retira dinero de la cuenta del cliente."
+              sx={{ maxWidth: "460px", width: "460px" }}
+              isOpen={showWithdrawalModal}
+              setIsOpen={setShowWithdrawalModal}
+            >
+              <WithdrawalMoneyAccountForm accountId={accountIdToWithdraw} />
             </RenderFormModal>
           </Grid>
         </>
