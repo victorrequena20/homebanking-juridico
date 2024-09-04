@@ -130,7 +130,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 }}
               />
             </Tooltip>
-            <Image width={160} height={160} src="/assets/images/profile.jpg" style={{ borderRadius: "100px", objectFit: "cover" }} alt="Profile" />
+            <Image width={160} height={160} src="/assets/images/genericProfile.webp" style={{ borderRadius: "100px", objectFit: "cover" }} alt="Profile" />
             <Typography variant="caption" fontWeight="300" color="var(--secondaryText)" sx={{ mt: 1 }}>
               Ver firma
             </Typography>
@@ -297,7 +297,10 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                 onMouseLeave={() => setShowActionsList(false)}
               >
                 <Stack>
-                  {(clientData?.status?.value === "Active" || clientData?.status?.value === "Pending" || clientData?.status?.value === "Withdrawn") && (
+                  {(clientData?.status?.value === "Active" ||
+                    clientData?.status?.value === "Pending" ||
+                    clientData?.status?.value === "Withdrawn" ||
+                    clientData?.status?.value === "Rejected") && (
                     <Stack
                       sx={{ ...listItemStyles }}
                       onClick={() => {
@@ -345,29 +348,45 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       </Typography>
                     </Stack>
                   )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
-                    <Stack sx={{ ...listItemStyles }} onClick={handleActivationUser}>
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack sx={{ ...listItemStyles }} onClick={handleActivationUser}>
+                        <Typography variant="body2" fontWeight="300">
+                          Activar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack
+                        sx={{ ...listItemStyles }}
+                        onClick={() => {
+                          router.push(`/institucion/clientes/${params.clientId}/acciones/retirar`);
+                        }}
+                      >
+                        <Typography variant="body2" fontWeight="300">
+                          Retirar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/rechazar`)}>
+                        <Typography variant="body2" fontWeight="300">
+                          Rechazar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value === "Rejected" && (
+                    <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/deshacer-rechazo`)}>
                       <Typography variant="body2" fontWeight="300">
-                        Activar
-                      </Typography>
-                    </Stack>
-                  )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
-                    <Stack
-                      sx={{ ...listItemStyles }}
-                      onClick={() => {
-                        router.push(`/institucion/clientes/${params.clientId}/acciones/retirar`);
-                      }}
-                    >
-                      <Typography variant="body2" fontWeight="300">
-                        Retirar
-                      </Typography>
-                    </Stack>
-                  )}
-                  {clientData?.status?.value !== "Closed" && clientData?.status?.value !== "Active" && clientData?.status?.value !== "Withdrawn" && (
-                    <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/rechazar`)}>
-                      <Typography variant="body2" fontWeight="300">
-                        Rechazar
+                        Deshacer rechazo
                       </Typography>
                     </Stack>
                   )}
