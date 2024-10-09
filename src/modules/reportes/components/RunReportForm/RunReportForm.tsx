@@ -208,7 +208,7 @@ export default function RunReportForm() {
 
         if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "text") {
           return (
-            <Grid item xs={12}>
+            <Grid item xs={12} key={index}>
               <Stack>
                 <Controller
                   control={control}
