@@ -1,6 +1,6 @@
 "use client";
+import React from "react";
 import styles from "../login/auth.module.css";
-import React, { useState } from "react";
 import HttpClient from "@/utilities/HttpClient.utility";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack, Typography } from "@mui/material";
@@ -34,7 +34,6 @@ const LoginForm = () => {
         username,
         password,
       });
-      console.log("🚀 ~ handleLogin ~ response:", response);
       const token = response.data.base64EncodedAuthenticationKey;
       if (!token) {
         toast.error("Usuario o contraseña incorrectos");
