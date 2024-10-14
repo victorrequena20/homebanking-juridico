@@ -12,6 +12,20 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { dateFormat } from "@/constants/global";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const validationSchema = yup.object().shape({
+  transactionDate: yup.date().required("La fecha de transacción es obligatoria").max(new Date(), "La fecha no puede ser futura"),
+  transactionAmount: yup.number().typeError("Debe ser un número válido").positive("El monto debe ser mayor a cero").required("El monto es obligatorio"),
+  paymentTypeId: yup
+    .object()
+    .shape({
+      value: yup.string().required("El tipo de pago es obligatorio"),
+    })
+    .required("El tipo de pago es obligatorio"),
+  note: yup.string().optional(),
+});
 
 export default function DepositMoneyAccountForm({ accountId }: { accountId: string }) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -23,7 +37,7 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
     setValue,
     reset,
   } = useForm<any>({
-    // resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchema), // Resolver de Yup agregado aquí
     mode: "onChange",
   });
   const router = useRouter();
@@ -88,7 +102,6 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
               isValidField={!errors.transactionDate}
               maxToday
               width="100%"
-              // defaultValue={formatDateEsddMMMMyyyy(employeeData?.joiningDate)}
             />
           )}
         />
@@ -98,7 +111,9 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
         <Controller
           control={control}
           name="transactionAmount"
-          render={({ field }) => <Input label="Monto *" type="number" {...field} isValidField={!errors.amount} hint={errors.amount?.message} width="100%" />}
+          render={({ field }) => (
+            <Input label="Monto *" type="number" {...field} isValidField={!errors.transactionAmount} hint={errors.transactionAmount?.message} width="100%" />
+          )}
         />
       </Grid>
       {/* Tipo de pago */}

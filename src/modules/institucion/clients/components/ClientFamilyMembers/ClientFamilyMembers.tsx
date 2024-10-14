@@ -16,7 +16,6 @@ export default function ClientFamilyMembers({ formAction, mode = "create" }: Cli
   const { clientFamilyMembers } = useContext(CreateClientContext);
   const [open, setOpen] = React.useState<boolean>(false);
   const params = useParams();
-  console.log("🚀 ~ ClientFamilyMembers ~ params:", params);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,7 +31,6 @@ export default function ClientFamilyMembers({ formAction, mode = "create" }: Cli
     if (response?.status === 200) {
       setCurrentFamilyMembers(response.data);
     }
-    console.log("🚀 ~ getCurrentFamilyMembers ~ response:", response);
   }
 
   React.useEffect(() => {
@@ -84,7 +82,7 @@ export default function ClientFamilyMembers({ formAction, mode = "create" }: Cli
         </Stack>
       )}
       <RenderFormModal title="Agregar miembro de familia" isOpen={open} setIsOpen={setOpen}>
-        <AddFamilyMembersForm onClose={handleClose} mode={mode === "create" ? "step" : "create"} />
+        <AddFamilyMembersForm onClose={handleClose} mode={mode === "create" ? "step" : "create"} createdSecondaryAction={getCurrentFamilyMembers} />
       </RenderFormModal>
     </>
   );

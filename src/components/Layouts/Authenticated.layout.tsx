@@ -61,7 +61,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     administrationTab: pathname.includes("/administracion"),
     administrationUsers: pathname.includes("/administracion/usuarios"),
     administrationOrganization: pathname.includes("/administracion/organizacion"),
-    administrationSystem: pathname === "/administracion/sistema",
+    administrationSystem: pathname.includes("/administracion/sistema"),
     administrationProducts: pathname.includes("/administracion/productos"),
     selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),
   };

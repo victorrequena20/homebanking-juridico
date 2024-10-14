@@ -12,6 +12,7 @@ import { getOffices } from "@/services/Office.service";
 import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.utility";
 import { useParams } from "next/navigation";
 import DownloadIcon from "@/assets/icons/DownloadIcon";
+import Input from "@/components/Input";
 
 export default function RunReportForm() {
   const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
@@ -24,12 +25,15 @@ export default function RunReportForm() {
   const [currencies, setCurrencies] = React.useState<any>([]);
   const [funds, setFunds] = React.useState<any>([]);
   const [loanPurposes, setLoanPurposes] = React.useState<any>([]);
+  const [loanStaffs, setLoanStaffs] = React.useState<any>([]);
+  const [loanProducts, setLoanProducts] = React.useState<any>([]);
   // ---------------------------------------------------------------
   const {
     control,
     handleSubmit,
     reset,
     setValue,
+    getValues,
     watch,
     formState: { errors, isValid, dirtyFields, touchedFields },
   } = useForm<any>({ mode: "onChange" });
@@ -52,9 +56,14 @@ export default function RunReportForm() {
     setIsLoadingParameters(false);
   }
 
-  async function handleGetRunReportsOptionsByParamName(paramName: string) {
+  async function handleGetRunReportsOptionsByParamName(paramName: string, params?: any) {
     setIsLoadingOptions(true);
-    const response = await getRunReportsOptionsByParamName(paramName, { parameterType: true });
+    if (paramName === "loanOfficerIdSelectAll" && getValues("officeId") === undefined) return;
+    if (paramName === "loanProductIdSelectAll" && getValues("currencyId") === undefined) return;
+    if (paramName === "cycleXSelect") return;
+    if (paramName === "cycleYSelect") return;
+
+    const response: any = await getRunReportsOptionsByParamName(paramName, { ...params, parameterType: true });
     if (response?.status === 200) {
       if (paramName === "OfficeIdSelectOne") {
         setOffices(transformArray(response?.data?.data));
@@ -68,6 +77,14 @@ export default function RunReportForm() {
       if (paramName === "loanPurposeIdSelectAll") {
         setLoanPurposes(transformArray(response?.data?.data));
       }
+
+      if (paramName === "loanOfficerIdSelectAll") {
+        setLoanStaffs(transformArray(response?.data?.data));
+      }
+
+      if (paramName === "loanProductIdSelectAll") {
+        setLoanProducts(transformArray(response?.data?.data));
+      }
     } else {
       toast.error("Error al obtener las oficinas");
     }
@@ -79,6 +96,13 @@ export default function RunReportForm() {
     setIsLoading(true);
     const response = await runReport(decodeUri, {
       R_officeId: data.officeId?.value,
+      R_currencyId: data.currencyId?.value,
+      R_fundId: data.fundId?.value,
+      R_loanPurposeId: data.loanPurposeId?.value,
+      R_loanOfficerId: data.loanOfficerId?.value,
+      R_loanProductId: data.loanProductId?.value,
+      R_cycleX: data.cycleX,
+      R_cycleY: data.cycleY,
       decimalChoice: data.decimalPlaces?.value,
     });
     if (response?.status === 200) {
@@ -128,6 +152,7 @@ export default function RunReportForm() {
         const parameterVariableIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_variable");
         const parameterLabelIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_label");
         const parameterDefaultValueIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_defaultValue");
+
         if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "select") {
           return (
             <Grid xs={12} key={index}>
@@ -147,14 +172,55 @@ export default function RunReportForm() {
                           ? funds
                           : item.row[parameterNameIndex] === "loanPurposeIdSelectAll"
                           ? loanPurposes
+                          : item.row[parameterNameIndex] === "loanOfficerIdSelectAll"
+                          ? loanStaffs
+                          : item.row[parameterNameIndex] === "loanProductIdSelectAll"
+                          ? loanProducts
                           : []
                       }
-                      setItem={(item: IKeyValue) => onChange(item)}
+                      setItem={(value: IKeyValue) => {
+                        onChange(value);
+                        // Pide los oficiales de prestamos cuando se selecciona una oficina
+                        if (item.row[parameterNameIndex] === "OfficeIdSelectOne") {
+                          (async () => {
+                            await handleGetRunReportsOptionsByParamName("loanOfficerIdSelectAll", { R_officeId: value.value });
+                          })();
+                        }
+                        // Pide los productos cuando se selecciona una moneda
+                        if (item.row[parameterNameIndex] === "currencyIdSelectAll") {
+                          (async () => {
+                            await handleGetRunReportsOptionsByParamName("loanProductIdSelectAll", { R_currencyId: value.value });
+                          })();
+                        }
+                      }}
                       isValidField={!errors[item.row[parameterNameIndex]]}
                       hint={errors[item.row[parameterNameIndex]?.message]}
                       value={value}
                       width="100%"
                       defaultValue={item.row[parameterDefaultValueIndex]}
+                    />
+                  )}
+                />
+              </Stack>
+            </Grid>
+          );
+        }
+
+        if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "text") {
+          return (
+            <Grid item xs={12} key={index}>
+              <Stack>
+                <Controller
+                  control={control}
+                  name={item.row[parameterVariableIndex]}
+                  render={({ field: { onChange } }) => (
+                    <Input
+                      label={item.row[parameterLabelIndex] + " *"}
+                      type="text"
+                      onChange={onChange}
+                      isValidField={!errors[item.row[parameterNameIndex]]}
+                      hint={errors[item.row[parameterNameIndex]?.message]}
+                      width="100%"
                     />
                   )}
                 />
@@ -212,9 +278,9 @@ export default function RunReportForm() {
 
       {/* Buttons */}
       <Grid xs={12} sx={{ mt: 3 }}>
-        <Stack sx={{ flexDirection: "row", justifyContent: "space-between", gap: 2 }}>
+        <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 2 }}>
           <Button type="button" text="Cancelar" variant="navigation" />
-          <Button type="button" text="Sacar un reporte" variant="primary" />
+          {/* <Button type="button" text="Sacar un reporte" variant="primary" /> */}
           <Button type="submit" text="Ejecutar y descargar reporte" variant="primary" isLoading={isLoading} iconLeft icon={<DownloadIcon size={20} />} />
         </Stack>
       </Grid>

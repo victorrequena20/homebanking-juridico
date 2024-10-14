@@ -23,14 +23,6 @@ export default function CreateClient() {
 
   function handleActionStep2() {}
 
-  React.useEffect(() => {
-    console.log("CLIENT DATA____", clientData);
-  }, [clientData]);
-
-  React.useEffect(() => {
-    console.log("STEP____", step);
-  }, [step]);
-
   return (
     <Wrapper>
       <Breadcrumbs
