@@ -43,7 +43,7 @@ const LoginForm = () => {
       router.push("/dashboard");
     } catch (err) {
       toast.error("Ocurrio un error al iniciar sesión");
-      console.log("🚀 ~ handleLogin ~ err:", err);
+      console.error("🚀 ~ handleLogin ~ err:", err);
     }
     setIsLoading(false);
   };
