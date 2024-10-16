@@ -7,14 +7,14 @@ import Loader from "../Loader";
 export default function Wrapper({ children, isLoading }: { children: React.ReactNode; isLoading?: boolean }) {
   return (
     <Grid
-      xs={12}
+      // xs={12}
       md={10.2}
       sx={{
         bgcolor: "#FAFAFA",
         borderRadius: "24px",
         pt: { xs: 3, md: 1 },
         maxHeight: "100%",
-        minHeight: "100%",
+        minHeight: { xs: "100%", md: "auto" },
         overflow: "auto",
         pb: 4,
         px: { xs: 3, md: 0 },
@@ -23,9 +23,13 @@ export default function Wrapper({ children, isLoading }: { children: React.React
       {isLoading ? (
         <Box
           sx={{
-            width: "100%",
+            maxWidth: {
+              md: "900px",
+              lg: "900px",
+              xl: "1900px",
+            },
             height: "100%",
-            minHeight: "100%",
+            minHeight: { xs: "100%", md: "auto" },
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
