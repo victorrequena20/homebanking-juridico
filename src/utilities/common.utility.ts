@@ -57,6 +57,12 @@ export function getTodayFormattedEsddMMMMyyyy(): string {
   return formatDateEsddMMMMyyyy(today);
 }
 
+export function getPrevMonthFormattedEsddMMMMyyyy(): string {
+  const today = new Date();
+  today.setMonth(today.getMonth() - 1);
+  return formatDateEsddMMMMyyyy(today);
+}
+
 export function parseByDayString(input: string): { label: string; value: string }[] {
   const daysMap: { [key: string]: string } = {
     MO: "Lunes",
