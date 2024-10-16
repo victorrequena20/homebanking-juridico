@@ -7,14 +7,17 @@ import Loader from "../Loader";
 export default function Wrapper({ children, isLoading }: { children: React.ReactNode; isLoading?: boolean }) {
   return (
     <Grid
+      xs={12}
       md={10.2}
       sx={{
         bgcolor: "#FAFAFA",
         borderRadius: "24px",
-        pt: 1,
+        pt: { xs: 3, md: 1 },
         maxHeight: "100%",
+        minHeight: "100%",
         overflow: "auto",
         pb: 4,
+        px: { xs: 3, md: 0 },
       }}
     >
       {isLoading ? (
@@ -22,6 +25,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
           sx={{
             width: "100%",
             height: "100%",
+            minHeight: "100%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
