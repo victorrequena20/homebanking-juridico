@@ -90,7 +90,10 @@ export default function AccountDetailPage({ params }: { params: { accountId: str
           <Typography variant="body2" fontWeight="400">
             Detalles de la cuenta
           </Typography>
-          <Box sx={{ ...flexRowCenter, gap: 1 }}>
+          <Box
+            sx={{ ...flexRowCenter, gap: 1 }}
+            onClick={() => router.push(`/contabilidad/catalogo-de-cuentas/${params?.accountId}/editar`)}
+          >
             <Typography sx={{ cursor: "pointer" }} variant="body2" fontWeight="300" color="var(--secondaryText)">
               Ver y editar
             </Typography>

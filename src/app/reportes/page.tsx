@@ -5,7 +5,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
 import Wrapper from "@/components/Wrapper";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader";
 
 export default function ReportsAllPage() {
@@ -13,6 +13,7 @@ export default function ReportsAllPage() {
   const [reports, setReports] = React.useState<any>([]);
   const [filteredReports, setFilteredReports] = React.useState<any>([]);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const columns: GridColDef<(typeof reports)[number]>[] = [
     {
@@ -107,6 +108,7 @@ export default function ReportsAllPage() {
 
         <Stack sx={{ mt: 5 }}>
           <DataGrid
+            sx={{ cursor: "pointer" }}
             rows={filteredReports}
             loading={isLoading}
             columns={columns}
@@ -120,6 +122,9 @@ export default function ReportsAllPage() {
             }}
             disableRowSelectionOnClick
             rowSelection
+            onRowClick={params => {
+              router.push(`/reportes/run/${params?.row?.name}?type=${params?.row?.type}&id=${params?.row?.id}`);
+            }}
             pageSizeOptions={[10, 25, 50]}
           />
         </Stack>

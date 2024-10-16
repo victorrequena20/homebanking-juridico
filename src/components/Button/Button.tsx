@@ -23,6 +23,7 @@ export default function Button(props: IButtonProps) {
       ${variant === "warning-red" && styles["btn-warning-red"]}
       ${variant === "success" && styles["btn-success"]}
       ${variant === "navigation" && styles["btn-navigation"]}
+      ${variant === "standard" && styles["btn-standard"]}
       ${disabled && styles["disabled"]}
       ${(props.isLoading || isLoading) && styles["btn-laoding"]}
       ${iconLeft && styles["btn-reverse"]}

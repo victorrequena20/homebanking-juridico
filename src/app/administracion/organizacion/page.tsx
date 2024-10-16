@@ -153,12 +153,26 @@ export default function AdministrationOrganizationPage() {
           path="/administracion/organizacion/verificacion-de-tablas"
           icon={<TaskListIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        <Stack
+          sx={{
+            display: "flex",
+            flex: 1,
+            width: "100%",
+            minWidth: "340px",
+            maxWidth: "340px",
+            height: "80px",
+            maxHeight: "80px",
+            opacity: 0,
+            px: 2,
+            py: 3,
+          }}
+        ></Stack>
+        {/* <IntermediateMenuItem
           title="Importación masiva"
           subtitle="Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, oficinas, etc."
           path="/administracion/organizacion/importacion-masiva"
           icon={<MessagesReceivedIcon size={28} color="#153075" />}
-        />
+        /> */}
       </Stack>
     </Wrapper>
   );

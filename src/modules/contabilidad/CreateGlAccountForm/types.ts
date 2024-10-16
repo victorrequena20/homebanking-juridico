@@ -6,6 +6,6 @@ export interface IForm {
   usage: any;
   glCode: string;
   parentId?: any;
-  tagId?: string;
+  tagId?: number;
   description?: string;
 }

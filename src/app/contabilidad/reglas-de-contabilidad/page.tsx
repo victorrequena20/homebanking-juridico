@@ -10,11 +10,12 @@ import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { set } from "react-hook-form";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { useRouter } from "next/navigation";
 
 export default function CatalogoCuentasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [glAccounts, setGlAccounts] = React.useState<any[]>([]);
-
+  const router = useRouter();
   const columns: GridColDef<(typeof glAccounts)[number]>[] = [
     {
       field: "name",
@@ -38,11 +39,7 @@ export default function CatalogoCuentasPage() {
       field: "debitAccount",
       headerName: "Cuenta de débito",
       flex: 1,
-      renderCell: params => (
-        <Box sx={{ height: "100%", alignItems: "center", display: "flex", flexWrap: "wrap" }}>
-          <Typography variant="body2">{params?.row?.debitAccounts[0]?.name}</Typography>
-        </Box>
-      ),
+      valueGetter: (value, row) => `${row.debitAccounts[0]?.name || ""} `,
     },
     {
       field: "creditTags",
@@ -53,7 +50,6 @@ export default function CatalogoCuentasPage() {
     {
       field: "creditAccount",
       headerName: "Cuenta de crédito",
-      // description: "This column has a value getter and is not sortable.",
       sortable: false,
       flex: 2,
       valueGetter: (value, row) => `${row?.creditAccounts[0]?.name || ""} `,
@@ -75,11 +71,7 @@ export default function CatalogoCuentasPage() {
     <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Reglas de contabilidad"
-        items={[
-          { title: "Inicio", href: "/dashboard" },
-          { title: "Contabilidad", href: "/contabilidad" },
-          { title: "Reglas de contabilidad" },
-        ]}
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Contabilidad", href: "/contabilidad" }, { title: "Reglas de contabilidad" }]}
       />
 
       <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2, mt: 2 }}>
@@ -89,12 +81,12 @@ export default function CatalogoCuentasPage() {
           icon={<PlusIcon size={20} color="#fff" />}
           text="Agregar regla"
           iconLeft
-          // onClick={() => router.push("/administracion/organizacion/administrar-oficinas/create")}
+          onClick={() => router.push("/contabilidad/reglas-de-contabilidad/crear")}
         />
       </Stack>
-
       <Stack sx={{ mt: 3 }}>
         <DataGrid
+          sx={{ cursor: "pointer" }}
           rows={glAccounts}
           columns={columns}
           initialState={{
@@ -107,6 +99,9 @@ export default function CatalogoCuentasPage() {
           }}
           disableRowSelectionOnClick
           rowSelection
+          onRowClick={params => {
+            router.push(`/contabilidad/reglas-de-contabilidad/${params.row.id}`);
+          }}
           pageSizeOptions={[10, 25, 50]}
         />
       </Stack>

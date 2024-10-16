@@ -81,12 +81,12 @@ export default function AccountingPage() {
           path="/contabilidad/devengos"
           icon={<CalendarIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Migrar saldos iniciales (en la oficina)"
           subtitle="Establecer o actualizar saldos de apertura a nivel de oficina para cuentas del libro mayor."
           path="/contabilidad/migrar-saldos-iniciales"
           icon={<CashIcon size={28} color="#153075" />}
-        />
+        /> */}
         <IntermediateMenuItem
           title="Entradas de aprovisionamiento"
           subtitle="Crear entradas de aprovisionamiento."

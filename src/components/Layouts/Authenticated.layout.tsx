@@ -61,7 +61,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
     administrationTab: pathname.includes("/administracion"),
     administrationUsers: pathname.includes("/administracion/usuarios"),
     administrationOrganization: pathname.includes("/administracion/organizacion"),
-    administrationSystem: pathname === "/administracion/sistema",
+    administrationSystem: pathname.includes("/administracion/sistema"),
     administrationProducts: pathname.includes("/administracion/productos"),
     selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),
   };
@@ -69,6 +69,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   React.useEffect(() => {
     setShowInstitutionLinks(pathname.includes("/institucion"));
     setShowAdministrationLinks(pathname.includes("/administracion"));
+    setShowReportsLinks(pathname.includes("/reportes"));
   }, [pathname]);
 
   React.useEffect(() => {

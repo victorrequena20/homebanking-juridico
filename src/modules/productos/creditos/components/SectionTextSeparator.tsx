@@ -10,7 +10,7 @@ export default function SectionTextSeparator({ label }: { label: string }) {
   return (
     <Grid item xs={12}>
       <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "center" }}>
-        <Stack sx={{ flex: 1, alignItems: "center", mt: 4 }}>
+        <Stack sx={{ flex: 1, alignItems: "center", mt: 0 }}>
           <Typography variant="body1" color="var(--text)">
             {label}
           </Typography>

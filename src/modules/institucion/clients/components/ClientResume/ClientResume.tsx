@@ -9,6 +9,8 @@ import { createClient } from "@/services/Clients.service";
 import { toast } from "sonner";
 import Button from "@/components/Button";
 import { createClientFormAdapter } from "@/adapters/clients/createClientForm.adapter";
+import { getTodayFormattedEsddMMMMyyyy } from "@/utilities/common.utility";
+import { dateFormat } from "@/constants/global";
 
 export default function ClientResume() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -18,21 +20,41 @@ export default function ClientResume() {
 
   async function onSubmit() {
     setIsLoading(true);
-    const response = await createClient(
-      createClientFormAdapter({
-        ...formMethods.watch(),
-        familyMembers: clientFamilyMembers.map((member: any) => {
-          return {
-            ...member,
-            relationshipId: member.relationshipId?.value,
-            genderId: member.genderId?.value,
-            professionId: member.professionId?.value,
-            maritalStatusId: member.maritalStatusId?.value,
-          };
-        }),
-      })
-    );
-    console.log("🚀 ~ onSubmit ~ response:", response);
+    const response = await createClient({
+      ...dateFormat,
+      firstname: clientGeneralData?.firstname,
+      middlename: clientGeneralData?.middlename,
+      lastname: clientGeneralData?.lastname,
+      officeId: clientGeneralData?.officeId?.value,
+      legalFormId: clientGeneralData?.legalFormId?.value,
+      externalId: clientGeneralData?.externalId,
+      mobileNo: clientGeneralData?.mobileNo,
+      emailAddress: clientGeneralData?.emailAddress,
+      staffId: clientGeneralData?.staffId?.value,
+      dateOfBirth: clientGeneralData?.dateOfBirth,
+      savingsProductId: clientGeneralData?.savingsProductId?.value,
+      activationDate: clientGeneralData?.isActive ? getTodayFormattedEsddMMMMyyyy() : null,
+      active: clientGeneralData?.isActive,
+      clientTypeId: clientGeneralData.clientTypeId?.value,
+      clientClassificationId: clientGeneralData.clientClassificationId?.value,
+      genderId: clientGeneralData.genderId?.value,
+      submittedOnDate: getTodayFormattedEsddMMMMyyyy(),
+      familyMembers: clientFamilyMembers.map((member: any) => {
+        return {
+          ...dateFormat,
+          age: member.age,
+          dateOfBirth: member.dateOfBirth,
+          firstName: member.firstName,
+          middleName: member.middleName,
+          lastName: member.lastName,
+          qualification: member.qualificationId,
+          relationshipId: member.relationshipId?.value,
+          genderId: member.genderId?.value,
+          professionId: member.professionId?.value,
+          maritalStatusId: member.maritalStatusId?.value,
+        };
+      }),
+    });
     if (response?.status === 200) {
       toast.success("Cliente creado correctamente.");
       router.push("/institucion/clientes");
@@ -116,6 +138,26 @@ export default function ClientResume() {
           {`${clientGeneralData?.externalId || ""}`}
         </Typography>
       </Stack>
+      {clientGeneralData?.clientType && (
+        <Stack sx={detailRowStyles}>
+          <Typography variant="body2" fontWeight="300" color="#606778">
+            Tipo de cliente
+          </Typography>
+          <Typography variant="body2" fontWeight="400" color="#12141a">
+            {`${clientGeneralData?.clientType?.label || ""}`}
+          </Typography>
+        </Stack>
+      )}
+      {clientGeneralData?.clientClassification && (
+        <Stack sx={detailRowStyles}>
+          <Typography variant="body2" fontWeight="300" color="#606778">
+            Clasificación de clientes
+          </Typography>
+          <Typography variant="body2" fontWeight="400" color="#12141a">
+            {`${clientGeneralData?.clientClassification?.label || ""}`}
+          </Typography>
+        </Stack>
+      )}
       {/* Numero de telefono movil */}
       {clientGeneralData?.mobileNo && (
         <Stack sx={detailRowStyles}>

@@ -42,19 +42,19 @@ export default function AdministrationProductsPage() {
           path="/administracion/productos/productos-de-credito"
           icon={<OfficesIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Mezcla de productos"
           subtitle="Define reglas para tomar múltiples reglas."
           path="/administracion/productos/mezcla-de-productos"
           icon={<SettingsIcon size={28} color="#153075" />}
-        />
+        /> */}
         <IntermediateMenuItem
           title="Productos de ahorro"
           subtitle="Agregar nuevo producto de ahorro o modificar o desactivar producto de ahorro."
           path="/administracion/productos/productos-de-ahorro"
           icon={<CalendarEditIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Productos de depósito fijo"
           subtitle="Agregar, modificar o desactivar un producto de depósito fijo."
           path="/administracion/productos/productos-de-deposito-fijo"
@@ -71,7 +71,7 @@ export default function AdministrationProductsPage() {
           subtitle="Agregar, modificar o desactivar un producto de depósito Recurrente"
           path="/administracion/productos/productos-de-deposito-recurrentes"
           icon={<WalletReloadIcon size={28} color="#153075" />}
-        />
+        /> */}
         <IntermediateMenuItem
           title="Comisiones"
           subtitle="Definir cargos/penalizaciones para productos de crédito, ahorro y depósito."
@@ -96,12 +96,12 @@ export default function AdministrationProductsPage() {
           path="/administracion/productos/tasas-variables"
           icon={<Calendar2Icon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
+        {/* <IntermediateMenuItem
           title="Grupos de morosidad"
           subtitle="Definir rangos de días de morosidad y conjuntos de categorías para productos de crédito."
           path="/administracion/productos/grupos-de-morosidad"
           icon={<MoneyCheckIcon size={28} color="#153075" />}
-        />
+        /> */}
         <Stack
           sx={{
             display: "flex",

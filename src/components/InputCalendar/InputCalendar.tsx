@@ -15,7 +15,7 @@ interface InputCalendarProps {
   hint?: any;
   onChange?: (date: string) => void;
   value?: string;
-  defaultValue?: string; // Nueva prop para la fecha por defecto
+  defaultValue?: string | null; // Nueva prop para la fecha por defecto
   maxToday?: boolean;
   width?: string;
 }
@@ -33,7 +33,7 @@ export default function InputCalendar({
 }: InputCalendarProps) {
   const [date, setDate] = React.useState<Value>(() => {
     // Inicializar el estado con defaultValue si está disponible
-    return defaultValue ? parseDateFromString(defaultValue) : new Date();
+    return defaultValue ? parseDateFromString(defaultValue) : null;
   });
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [inputValue, setInputValue] = React.useState<string>(() => {

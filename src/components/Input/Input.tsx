@@ -22,7 +22,6 @@ export default function Input({
   const [showPassword, setShowPassword] = React.useState<boolean>(!(type === "password"));
 
   React.useEffect(() => {
-    console.log("Hola");
     if (defaultValue) setInputValue(defaultValue);
   }, [defaultValue]);
 

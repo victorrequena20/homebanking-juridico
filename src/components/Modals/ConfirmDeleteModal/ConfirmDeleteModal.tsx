@@ -22,7 +22,8 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: "12px",
   boxShadow: 24,
-  p: 6,
+  p: 4,
+  px: 6,
 };
 
 export default function ConfirmDeleteModal({
@@ -69,23 +70,11 @@ export default function ConfirmDeleteModal({
           </Box>
         </Tooltip>
       ) : (
-        <Button
-          iconLeft
-          icon={<TrashIcon size={20} color="#fff" />}
-          size="small"
-          text={buttonText}
-          variant="warning-red"
-          onClick={handleOpen}
-        />
+        <Button iconLeft icon={<TrashIcon size={20} color="#fff" />} size="small" text={buttonText} variant="warning-red" onClick={handleOpen} />
       )}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="p" textAlign="center">
+          <Typography id="modal-modal-title" variant="h6" fontWeight="400" component="p" textAlign="center">
             {title}
           </Typography>
 
@@ -97,15 +86,8 @@ export default function ConfirmDeleteModal({
               mt: 2,
             }}
           >
-            <Button iconLeft size="small" text="Cancelar" variant="primary" onClick={handleClose} />
-            <Button
-              iconLeft
-              size="small"
-              text="Eliminar"
-              variant="warning-red"
-              onClick={handleAction}
-              isLoading={isLoading}
-            />
+            <Button iconLeft size="small" text="Cancelar" variant="navigation" onClick={handleClose} />
+            <Button iconLeft size="small" text="Eliminar" variant="warning-red" onClick={handleAction} isLoading={isLoading} />
           </Box>
         </Box>
       </Modal>

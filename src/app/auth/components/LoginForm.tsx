@@ -1,6 +1,6 @@
 "use client";
+import React from "react";
 import styles from "../login/auth.module.css";
-import React, { useState } from "react";
 import HttpClient from "@/utilities/HttpClient.utility";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Box, Stack, Typography } from "@mui/material";
@@ -39,10 +39,11 @@ const LoginForm = () => {
         toast.error("Usuario o contraseña incorrectos");
       }
       localStorage.setItem("litecoreAuthToken", token);
+      localStorage.setItem("litecoreXCredentials", JSON.stringify(response.data));
       router.push("/dashboard");
     } catch (err) {
       toast.error("Ocurrio un error al iniciar sesión");
-      console.log("🚀 ~ handleLogin ~ err:", err);
+      console.error("🚀 ~ handleLogin ~ err:", err);
     }
     setIsLoading(false);
   };
@@ -98,16 +99,12 @@ const LoginForm = () => {
                 <Controller
                   control={control}
                   name="username"
-                  render={({ field: { onChange, value } }) => (
-                    <Input label="Usuario" type="text" value={value} onChange={onChange} />
-                  )}
+                  render={({ field: { onChange, value } }) => <Input label="Usuario" type="text" value={value} onChange={onChange} />}
                 />
                 <Controller
                   control={control}
                   name="password"
-                  render={({ field: { onChange, value } }) => (
-                    <Input label="Contraseña" type="password" value={value} onChange={onChange} />
-                  )}
+                  render={({ field: { onChange, value } }) => <Input label="Contraseña" type="password" value={value} onChange={onChange} />}
                 />
                 <Button
                   variant="primary"

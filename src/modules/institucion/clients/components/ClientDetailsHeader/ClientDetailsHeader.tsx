@@ -1,24 +1,43 @@
-import React, { useContext } from "react";
-import { formatSpanishDate } from "@/utilities/common.utility";
-import { Box, Stack, Typography, Tooltip } from "@mui/material";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Box, Stack, Typography, Tooltip, SxProps } from "@mui/material";
 import Image from "next/image";
 import Button from "@/components/Button";
 import EditIcon from "@/assets/icons/EditIcon";
-import LockIcon from "@/assets/icons/LockIcon";
 import PersonHexagonalIcon from "@/assets/icons/PersonHexagonalIcon";
 import { ClientDetailsContext } from "../../context/ClientDetails/ClientDetails.context";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import PlayIcon from "@/assets/icons/PlayIcon";
+import PersonPlusIcon from "@/assets/icons/PersonPlusIcon";
+import PlusIcon from "@/assets/icons/PlusIcon";
+import { formatSpanishDate } from "@/utilities/common.utility";
+import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
+import { deleteCliente } from "@/services/Clients.service";
+import { toast } from "sonner";
 
-export default function ClientDetailsHeader({
-  clientData,
-  getClientData,
-}: {
+interface ClientDetailsHeaderProps {
   clientData: any;
   getClientData: () => void;
-}) {
-  const [isLoadingActivation, setIsLoadingActivation] = React.useState<boolean>(false);
+}
+
+export default function ClientDetailsHeader({ clientData, getClientData }: ClientDetailsHeaderProps) {
+  const [showDeleteClientModal, setShowDeleteClientModal] = useState<boolean>(false);
+  const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
+  const [isListVisible, setIsListVisible] = useState<boolean>(false);
+  const [showActionsList, setShowActionsList] = useState<boolean>(false);
+  const listRef = useRef<HTMLDivElement | null>(null);
   const params = useParams();
+  const router = useRouter();
   const { activateUser } = useContext(ClientDetailsContext);
+
+  async function handleDeleteClient() {
+    const response = await deleteCliente(params.clientId?.toString());
+    if (response?.status === 200) {
+      toast.success("Cliente eliminado con éxito");
+      router.push("/institucion/clientes");
+    } else {
+      toast.error("Error al eliminar el cliente");
+    }
+  }
 
   async function handleActivationUser() {
     setIsLoadingActivation(true);
@@ -26,6 +45,49 @@ export default function ClientDetailsHeader({
     getClientData();
     setIsLoadingActivation(false);
   }
+
+  const toggleListVisibility = () => {
+    setIsListVisible(prev => !prev);
+  };
+
+  const handleClickOutsideMouse = (event: MouseEvent) => {
+    if (listRef.current && !listRef.current.contains(event.target as Node)) {
+      setIsListVisible(false);
+    }
+  };
+
+  const handleClickOutsideTouch = (event: TouchEvent) => {
+    if (listRef.current && !listRef.current.contains(event.target as Node)) {
+      setIsListVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isListVisible) {
+      document.addEventListener("mousedown", handleClickOutsideMouse);
+      document.addEventListener("touchstart", handleClickOutsideTouch);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutsideMouse);
+      document.removeEventListener("touchstart", handleClickOutsideTouch);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMouse);
+      document.removeEventListener("touchstart", handleClickOutsideTouch);
+    };
+  }, [isListVisible]);
+
+  const listItemStyles: SxProps = {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: 2,
+    pl: 2,
+    py: 1.5,
+    cursor: "pointer",
+    "&:hover": {
+      bgcolor: "#f2f4f760",
+    },
+  };
 
   return (
     <Stack sx={{ alignItems: "center", maxWidth: "100%", px: 10, py: 1, bgcolor: "#f2f4f7" }}>
@@ -52,13 +114,7 @@ export default function ClientDetailsHeader({
             {/* Status */}
             <Tooltip
               placement="top"
-              title={
-                clientData?.status?.value === "Active"
-                  ? "Activo"
-                  : clientData?.status?.value === "Pending"
-                  ? "Pendiente"
-                  : "Activo"
-              }
+              title={clientData?.status?.value === "Active" ? "Activo" : clientData?.status?.value === "Pending" ? "Pendiente" : "Activo"}
             >
               <Box
                 sx={{
@@ -66,11 +122,7 @@ export default function ClientDetailsHeader({
                   height: "16px",
                   borderRadius: "8px",
                   bgcolor: `${
-                    clientData?.status?.value === "Active"
-                      ? "var(--primaryGreen)"
-                      : clientData?.status?.value === "Pending"
-                      ? "#FF9300"
-                      : "var(--primaryGreen)"
+                    clientData?.status?.value === "Active" ? "var(--primaryGreen)" : clientData?.status?.value === "Pending" ? "#FF9300" : "var(--primaryGreen)"
                   }`,
                   position: "absolute",
                   top: "7px",
@@ -78,13 +130,7 @@ export default function ClientDetailsHeader({
                 }}
               />
             </Tooltip>
-            <Image
-              width={160}
-              height={160}
-              src="/assets/images/profile.jpg"
-              style={{ borderRadius: "100px", objectFit: "cover" }}
-              alt="Profile"
-            />
+            <Image width={160} height={160} src="/assets/images/genericProfile.webp" style={{ borderRadius: "100px", objectFit: "cover" }} alt="Profile" />
             <Typography variant="caption" fontWeight="300" color="var(--secondaryText)" sx={{ mt: 1 }}>
               Ver firma
             </Typography>
@@ -142,7 +188,7 @@ export default function ClientDetailsHeader({
                   Número de teléfono:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  0412-15-4757
+                  {"0412-15-4757"}
                 </Typography>
               </Stack>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -150,7 +196,7 @@ export default function ClientDetailsHeader({
                   Correo electrónico:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  requenade@gmail.com
+                  {"requenade@gmail.com"}
                 </Typography>
               </Stack>
             </Stack>
@@ -158,14 +204,7 @@ export default function ClientDetailsHeader({
         </Stack>
         <Stack>
           <Box sx={{ gap: 3, display: "flex" }}>
-            {clientData?.status?.value === "Active" ? (
-              <Button
-                variant="warning-red"
-                iconLeft
-                icon={<LockIcon color={"#fff"} size={20} />}
-                text="Cerrar cliente"
-              />
-            ) : (
+            {clientData?.status?.value !== "Active" && (
               <Button
                 variant="success"
                 iconLeft
@@ -176,8 +215,184 @@ export default function ClientDetailsHeader({
                 isLoading={isLoadingActivation}
               />
             )}
-            <Button variant="primary" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" />
-            <Button variant="primary" text="" buttonList />
+            {clientData?.status?.value === "Pending" && (
+              <ConfirmDeleteModal actionCallback={handleDeleteClient} title="¿Estás seguro de que deseas borrar este cliente?" />
+            )}
+            {/* <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" /> */}
+            <Box sx={{ position: "relative" }} ref={listRef}>
+              <Button variant="standard" text="Acciones" buttonList onClick={toggleListVisibility} />
+              {isListVisible && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "46px",
+                    right: 0,
+                    width: "180px",
+                    bgcolor: "#fff",
+                    borderRadius: 2,
+                    py: 1,
+                    boxShadow: "0px 8px 16px 0px #2636990A",
+                    overflow: "hidden",
+                    zIndex: 1,
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      ...listItemStyles,
+                      "&:hover .second-list": {
+                        display: "block",
+                      },
+                    }}
+                  >
+                    <EditIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Editar
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      ...listItemStyles,
+                      "&:hover .second-list": {
+                        display: "block",
+                      },
+                    }}
+                    onMouseEnter={() => setShowActionsList(true)}
+                    onMouseLeave={() => setShowActionsList(false)}
+                  >
+                    <PlayIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Acciones
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <PersonPlusIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Asignar asesor
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <PlusIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Más
+                    </Typography>
+                  </Stack>
+                </Box>
+              )}
+              {/* Secondary list actions */}
+              <Box
+                className="second-list"
+                sx={{
+                  display: showActionsList ? "block" : "none",
+                  // display: "block",
+                  position: "absolute",
+                  top: "100px",
+                  right: "182px",
+                  width: "180px",
+                  bgcolor: "#fff",
+                  borderRadius: 2,
+                  boxShadow: "0px 8px 16px 0px #2636990A",
+                  zIndex: 1,
+                }}
+                onMouseEnter={() => setShowActionsList(true)}
+                onMouseLeave={() => setShowActionsList(false)}
+              >
+                <Stack>
+                  {(clientData?.status?.value === "Active" ||
+                    clientData?.status?.value === "Pending" ||
+                    clientData?.status?.value === "Withdrawn" ||
+                    clientData?.status?.value === "Rejected") && (
+                    <Stack
+                      sx={{ ...listItemStyles }}
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/cerrar`);
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        Cerrar
+                      </Typography>
+                    </Stack>
+                  )}
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Transferir cliente
+                    </Typography>
+                  </Stack>
+                  {clientData?.status?.value === "Transfer in progress" && (
+                    <Stack sx={{ ...listItemStyles }}>
+                      <Typography
+                        variant="body2"
+                        fontWeight="300"
+                        onClick={() => {
+                          router.push(`/institucion/clientes/${params.clientId}/acciones/aceptar-transferencia-de-cliente`);
+                        }}
+                      >
+                        Aceptar transferencia
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value === "Closed" && (
+                    <Stack
+                      sx={{ ...listItemStyles }}
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/reactivar`);
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        Reactivar
+                      </Typography>
+                    </Stack>
+                  )}
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack sx={{ ...listItemStyles }} onClick={handleActivationUser}>
+                        <Typography variant="body2" fontWeight="300">
+                          Activar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack
+                        sx={{ ...listItemStyles }}
+                        onClick={() => {
+                          router.push(`/institucion/clientes/${params.clientId}/acciones/retirar`);
+                        }}
+                      >
+                        <Typography variant="body2" fontWeight="300">
+                          Retirar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value !== "Closed" &&
+                    clientData?.status?.value !== "Active" &&
+                    clientData?.status?.value !== "Withdrawn" &&
+                    clientData?.status?.value !== "Rejected" && (
+                      <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/rechazar`)}>
+                        <Typography variant="body2" fontWeight="300">
+                          Rechazar
+                        </Typography>
+                      </Stack>
+                    )}
+                  {clientData?.status?.value === "Rejected" && (
+                    <Stack sx={{ ...listItemStyles }} onClick={() => router.push(`/institucion/clientes/${params.clientId}/acciones/deshacer-rechazo`)}>
+                      <Typography variant="body2" fontWeight="300">
+                        Deshacer rechazo
+                      </Typography>
+                    </Stack>
+                  )}
+                </Stack>
+              </Box>
+            </Box>
           </Box>
         </Stack>
       </Stack>

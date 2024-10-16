@@ -41,7 +41,6 @@ export const createClient = async (data: any): Promise<ApiResponse> => {
 export const getTemplate = async (params?: any) => {
   try {
     const response = await HttpClient.get("/clients/template", { params });
-    console.log("🚀 ~ getTemplate ~ response:", response);
     return {
       data: response.data,
       status: response.status,
@@ -151,7 +150,17 @@ export const clientActions = async (clientId?: string, data?: any, params?: any)
       status: response.status,
     };
   } catch (error) {
-    console.log("🚀 ~ clientActions ~ error:", error);
+    console.error("🚀 ~ clientActions ~ error:", error);
+    throw error;
+  }
+};
+
+export const deleteCliente = async (clientId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.delete(`/clients/${clientId}`);
+    return { status: response.status };
+  } catch (error) {
+    console.error("🚀 ~ deleteCliente ~ error:", error);
     throw error;
   }
 };
