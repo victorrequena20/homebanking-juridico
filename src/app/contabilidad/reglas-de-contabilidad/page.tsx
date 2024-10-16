@@ -71,11 +71,7 @@ export default function CatalogoCuentasPage() {
     <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Reglas de contabilidad"
-        items={[
-          { title: "Inicio", href: "/dashboard" },
-          { title: "Contabilidad", href: "/contabilidad" },
-          { title: "Reglas de contabilidad" },
-        ]}
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Contabilidad", href: "/contabilidad" }, { title: "Reglas de contabilidad" }]}
       />
 
       <Stack sx={{ alignItems: "center", flexDirection: "row", justifyContent: "flex-end", gap: 2, mt: 2 }}>
@@ -88,7 +84,6 @@ export default function CatalogoCuentasPage() {
           onClick={() => router.push("/contabilidad/reglas-de-contabilidad/crear")}
         />
       </Stack>
-
       <Stack sx={{ mt: 3 }}>
         <DataGrid
           sx={{ cursor: "pointer" }}
