@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Divider, Drawer, Stack, SxProps, Typography, useMediaQuery, IconButton } from "@mui/material";
+import { Box, Divider, Drawer, Stack, SxProps, Typography, IconButton, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@/assets/icons/HomeIcon";
 import BankIcon from "@/assets/icons/BankIcon";
@@ -79,7 +79,7 @@ function RenderMenu() {
   }, [pathname, router]);
 
   return (
-    <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 3, pb: 4 }}>
+    <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 3, pb: 4, height: "100%" }}>
       <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
         <Stack>
           <Stack sx={{ px: 1.5, flexDirection: "row", alignItems: "center" }}>
@@ -526,22 +526,43 @@ function RenderMenu() {
 }
 
 export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
-  const isSmallScreen = useMediaQuery("(max-width:1030px)");
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const isTablet = useMediaQuery("(max-width: 1030px)");
+  const isMobile = useMediaQuery("(max-width: 700px)");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setDrawerOpen(!drawerOpen);
-  };
+  useLayoutEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  const toggleDrawer = () => setDrawerOpen(prev => !prev);
+
+  if (!isReady) return null;
 
   return (
     <section>
       <Grid container sx={containerStyles}>
-        {isSmallScreen ? (
+        {isTablet ? (
           <>
-            <IconButton onClick={handleDrawerToggle} sx={{ color: "#fff" }}>
-              <MenuIcon />
-            </IconButton>
-            <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle} sx={{ "& .MuiDrawer-paper": { width: "60vw", bgcolor: "var(--darkBg)" } }}>
+            <Grid sx={{ width: "100%" }}>
+              <IconButton onClick={toggleDrawer} sx={{ color: "#fff" }}>
+                <MenuIcon />
+              </IconButton>
+            </Grid>
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={toggleDrawer}
+              sx={{
+                "& .MuiDrawer-paper": {
+                  width: isMobile ? "70vw" : "30vw",
+                  bgcolor: "var(--darkBg)",
+                },
+              }}
+            >
+              <IconButton onClick={toggleDrawer} sx={{ color: "#fff", position: "absolute", right: "0" }}>
+                <MenuIcon />
+              </IconButton>
               <RenderMenu />
             </Drawer>
           </>
