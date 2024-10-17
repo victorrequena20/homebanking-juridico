@@ -57,46 +57,24 @@ export default function EntradasDeAprovisionamientoPage() {
     <Wrapper>
       <Breadcrumbs
         title="Entradas de aprovisionamiento"
-        items={[
-          { title: "Inicio", href: "/dashboard" },
-          { title: "Contabilidad", href: "/contabilidad" },
-          { title: "Entradas de aprovisionamiento" },
-        ]}
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Contabilidad", href: "/contabilidad" }, { title: "Entradas de aprovisionamiento" }]}
       />
 
       <Stack sx={{ alignItems: "center", justifyContent: "center", width: "100%", mt: 5 }}>
-        <Stack component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Stack component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
           <Controller
             control={control}
             name="date"
             render={({ field: { onChange } }) => (
-              <InputCalendar
-                label="Fecha*"
-                onChange={date => onChange(date)}
-                hint={errors.date?.message}
-                isValidField={!errors.date}
-                maxToday
-              />
+              <InputCalendar label="Fecha*" onChange={date => onChange(date)} hint={errors.date?.message} isValidField={!errors.date} maxToday />
             )}
           />
           <Stack sx={{ flexDirection: "row", justifyContent: "flex-start", mt: 2 }}>
-            <Toggle
-              label="Crear entradas de diario"
-              isChecked={isActive}
-              setIsChecked={setIsActive}
-              size="small"
-              toggleLeft
-            />
+            <Toggle label="Crear entradas de diario" isChecked={isActive} setIsChecked={setIsActive} size="small" toggleLeft />
           </Stack>
 
           <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "center", mt: 3 }}>
-            <Button
-              text="cancelar"
-              variant="navigation"
-              onClick={() => router.push("/contabilidad")}
-              size="small"
-              type="button"
-            />
+            <Button text="cancelar" variant="navigation" onClick={() => router.push("/contabilidad")} size="small" type="button" />
             <Button
               text="Aceptar"
               variant="primary"

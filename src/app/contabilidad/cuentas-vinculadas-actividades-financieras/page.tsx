@@ -14,6 +14,14 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [financialActivties, setFinancialActivties] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
+  const validatedTypAccount = (typeAccount: string) => {
+    const accountTypes: { [key: string]: string } = {
+      ASSET: "Activo",
+      LIABILITY: "Pasivo",
+      EQUITY: "Patrimonio",
+    };
+    return accountTypes[typeAccount] || typeAccount || "";
+  };
 
   const columns: GridColDef<(typeof financialActivties)[number]>[] = [
     {
@@ -26,7 +34,7 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
       field: "typeAccount",
       headerName: "Tipo de cuenta",
       flex: 1,
-      valueGetter: (value, row) => `${row?.financialActivityData?.mappedGLAccountType || ""} `,
+      valueGetter: (value, row) => `${validatedTypAccount(row?.financialActivityData?.mappedGLAccountType)} `,
     },
     {
       field: "glCode",
