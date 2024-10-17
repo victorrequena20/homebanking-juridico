@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
@@ -118,33 +118,38 @@ export default function AdministrarFestivos() {
         />
       </Stack>
 
-      <Stack sx={{ mt: 3 }}>
-        {holidays?.length > 0 ? (
-          <DataGrid
-            rows={holidays || []}
-            columns={holidayColumns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "700px" }}>
+          {holidays?.length > 0 ? (
+            <DataGrid
+              rows={holidays || []}
+              columns={holidayColumns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                    page: 0,
+                  },
                 },
-              },
-            }}
-            disableRowSelectionOnClick
-            pageSizeOptions={[10, 25, 50]}
-            loading={isLoading}
-          />
-        ) : (
-          <NotFoundData
-            title="No hay días festivos asociados a esta oficina."
-            withOutBack
-            action={{
-              title: "Crear día festivo",
-              onClick: () => router.push("/administracion/organizacion/administrar-festivos/create"),
-            }}
-          />
-        )}
+              }}
+              disableRowSelectionOnClick
+              pageSizeOptions={[10, 25, 50]}
+              loading={isLoading}
+              onRowClick={row => {
+                router.push(`/administracion/organizacion/administrar-festivos/${row?.row?.id}`);
+              }}
+            />
+          ) : (
+            <NotFoundData
+              title="No hay días festivos asociados a esta oficina."
+              withOutBack
+              action={{
+                title: "Crear día festivo",
+                onClick: () => router.push("/administracion/organizacion/administrar-festivos/create"),
+              }}
+            />
+          )}
+        </Box>
       </Stack>
     </Wrapper>
   );
