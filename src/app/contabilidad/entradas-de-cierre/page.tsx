@@ -63,11 +63,7 @@ export default function EntradasDeCierrePage() {
     <Wrapper isLoading={isLoading}>
       <Breadcrumbs
         title="Entradas de cierre"
-        items={[
-          { title: "Inicio", href: "/dashboard" },
-          { title: "Contabilidad", href: "/contabilidad" },
-          { title: "Entradas de cierre" },
-        ]}
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: "Contabilidad", href: "/contabilidad" }, { title: "Entradas de cierre" }]}
       />
 
       {closures?.length > 0 && (
@@ -86,24 +82,26 @@ export default function EntradasDeCierrePage() {
       )}
 
       {closures?.length > 0 ? (
-        <Stack sx={{ mt: 5 }}>
-          <DataGrid
-            sx={{ borderRadius: "8px", overflow: "hidden", cursor: "pointer" }}
-            rows={closures}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
+        <Stack sx={{ mt: 5, width: "100%", overflowX: "auto" }}>
+          <Box sx={{ minWidth: "600px" }}>
+            <DataGrid
+              sx={{ borderRadius: "8px", overflow: "hidden", cursor: "pointer" }}
+              rows={closures}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                    page: 0,
+                  },
                 },
-              },
-            }}
-            disableRowSelectionOnClick
-            rowSelection
-            onRowClick={params => router.push(`/contabilidad/entradas-de-cierre/${params?.row?.id}`)}
-            pageSizeOptions={[10, 25, 50]}
-          />
+              }}
+              disableRowSelectionOnClick
+              rowSelection
+              onRowClick={params => router.push(`/contabilidad/entradas-de-cierre/${params?.row?.id}`)}
+              pageSizeOptions={[10, 25, 50]}
+            />
+          </Box>
         </Stack>
       ) : (
         <NotFoundData

@@ -6,13 +6,10 @@ import { Grid, Stack } from "@mui/material";
 import InputSelect from "@/components/InputSelect";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import {
-  createFinancialActivity,
-  getFinancialActivityAccountsTemplate,
-  updateFinancialActivity,
-} from "@/services/Accounting.service";
+import { createFinancialActivity, getFinancialActivityAccountsTemplate, updateFinancialActivity } from "@/services/Accounting.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 interface IForm {
   financialActivityId: any;
@@ -75,10 +72,38 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
     setIsLoading(false);
   };
 
+  const mapFinancialActivityOptions = (financialActivityOptions: any) => {
+    try {
+      return financialActivityOptions.map((option: any) => {
+        switch (option.name) {
+          case "assetTransfer":
+            return { ...option, name: "(100) Transferencia de Activos" };
+          case "liabilityTransfer":
+            return { ...option, name: "(200) Transferencia de Pasivo" };
+          case "cashAtMainVault":
+            return { ...option, name: "(101) Efectivo en la bóveda principal" };
+          case "cashAtTeller":
+            return { ...option, name: "(102) Efectivo en el cajero" };
+          case "openingBalancesTransferContra":
+            return { ...option, name: "(300) Saldos de apertura transferencia contra" };
+          case "fundSource":
+            return { ...option, name: "(103) Fuente del fondo" };
+          case "payableDividends":
+            return { ...option, name: "(201) Dividendos a pagar" };
+          default:
+            return option;
+        }
+      });
+    } catch (error) {
+      return financialActivityOptions;
+    }
+  };
+
   async function handleGetTemplate() {
     const response = await getFinancialActivityAccountsTemplate();
     if (response?.status === 200) {
-      setTemplateData(response?.data);
+      const translatedData = mapFinancialActivityOptions(response?.data?.financialActivityOptions);
+      setTemplateData({ ...response?.data, financialActivityOptions: translatedData });
       handleSetAccounts(response?.data?.glAccountOptions);
     } else {
       toast.error("Error al obtener la plantilla de actividades financieras");
@@ -89,12 +114,12 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
     let selectedAccounts;
     const financialActivityId = watch("financialActivityId")?.value || watch("financialActivityId");
 
-    const activityId =
-      typeof financialActivityId === "string" ? parseInt(financialActivityId, 10) : financialActivityId;
+    const activityId = typeof financialActivityId === "string" ? parseInt(financialActivityId, 10) : financialActivityId;
 
     if (activityId === 100 || activityId === 101 || activityId === 102 || activityId === 103) {
       selectedAccounts = glAccounts?.assetAccountOptions;
     } else if (activityId === 200 || activityId === 201) {
+      glAccounts?.assetAccountOptions?.filter((item: any) => (item.name = `(${item.glCode}) ${item.name}`));
       selectedAccounts = glAccounts?.liabilityAccountOptions;
     } else if (activityId === 300) {
       selectedAccounts = glAccounts?.equityAccountOptions;
@@ -105,7 +130,7 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
         .concat(glAccounts?.expenseAccountOptions)
         .concat(glAccounts?.liabilityAccountOptions);
     }
-
+    console.warn(selectedAccounts);
     setAccounts(selectedAccounts);
   }
 
@@ -140,7 +165,7 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
         justifyContent: "center",
       }}
     >
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="financialActivityId"
@@ -159,9 +184,9 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="glAccountId"
@@ -177,11 +202,11 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" spacing={3} mt={3}>
-          <Button text="Cancelar" variant="navigation" type="button" />
+          <Button text="Cancelar" variant="navigation" type="button" onClick={() => router.back()} />
           <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
         </Stack>
       </Grid>

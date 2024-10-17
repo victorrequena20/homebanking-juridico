@@ -9,12 +9,12 @@ import InputCalendar from "@/components/InputCalendar";
 import Input from "@/components/Input";
 import { IKeyValue } from "@/types/common";
 import { getOffices } from "@/services/Office.service";
-import { Stack } from "@mui/material";
+import { Stack, Grid } from "@mui/material";
 import Button from "@/components/Button";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { createGlClosure } from "@/services/Accounting.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 interface IForm {
   officeId: IKeyValue | any;
@@ -83,7 +83,7 @@ export const CloseEntrieForm: React.FC = () => {
       }}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Grid>
+      <InputResponsiveContainer>
         <Controller
           name="officeId"
           control={control}
@@ -98,9 +98,9 @@ export const CloseEntrieForm: React.FC = () => {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid>
+      <InputResponsiveContainer>
         <Controller
           name="closingDate"
           control={control}
@@ -115,9 +115,9 @@ export const CloseEntrieForm: React.FC = () => {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid>
+      <InputResponsiveContainer>
         <Controller
           name="comments"
           control={control}
@@ -132,24 +132,11 @@ export const CloseEntrieForm: React.FC = () => {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       <Grid md={12}>
         <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 3 }}>
-          <Button
-            size="small"
-            text="Cancelar"
-            variant="navigation"
-            type="button"
-            onClick={() => router.push("/contabilidad/entradas-de-cierre")}
-          />
-          <Button
-            size="small"
-            text="Aceptar"
-            variant="primary"
-            type="submit"
-            disabled={!isValid}
-            isLoading={isLoading}
-          />
+          <Button size="small" text="Cancelar" variant="navigation" type="button" onClick={() => router.push("/contabilidad/entradas-de-cierre")} />
+          <Button size="small" text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
         </Stack>
       </Grid>
     </Grid>
