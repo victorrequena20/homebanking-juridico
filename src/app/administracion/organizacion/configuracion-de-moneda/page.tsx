@@ -65,7 +65,7 @@ export default function ConfiguracionDeMonedaPage() {
         ]}
       />
 
-      <Stack sx={{ alignItems: "flex-end" }}>
+      <Stack sx={{ alignItems: "flex-end", mt: 3 }}>
         <Button
           iconLeft
           icon={<PlusIcon size={20} color="#fff" />}
