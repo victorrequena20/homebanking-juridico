@@ -258,8 +258,8 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
           <Stack
             sx={{
               flexDirection: "row",
-              width: "392px",
               maxWidth: "392px",
+              width: { xs: "100%" },
               height: "100%",
               justifyContent: "space-between",
               alignItems: "center",
