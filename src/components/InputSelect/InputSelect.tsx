@@ -106,9 +106,9 @@ export default function InputSelect({
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
-      <div
+      <Box
         className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
-        style={{ width: width || "392px", maxWidth: width || "392px" }}
+        sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
         onClick={() => setIsOpen(!isOpen)}
       >
         <input
@@ -135,7 +135,7 @@ export default function InputSelect({
         >
           {isOpen ? <ArrowUpIcon size={20} color="#484848" /> : <ArrowDownIcon size={20} color="#484848" />}
         </Box>
-      </div>
+      </Box>
 
       {hint && (
         <Typography variant="caption" color={isValidField ? "#606778" : "#ea3647"}>

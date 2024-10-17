@@ -134,7 +134,7 @@ export default function TransactionForm() {
             rowGap: 3,
             maxWidth: "1000px",
             backgroundColor: "#fff",
-            px: 3,
+            px: { xs: 1.5, sm: 3 },
             py: 6,
             borderRadius: "16px",
             alignItems: "center",
@@ -143,7 +143,7 @@ export default function TransactionForm() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="officeId"
@@ -160,7 +160,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="accountingRule"
@@ -177,7 +177,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="currencyCode"
@@ -195,11 +195,11 @@ export default function TransactionForm() {
           </Grid>
 
           {/* Padding */}
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Stack sx={{ width: "392px" }} />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="debits"
@@ -216,7 +216,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="debitAmount"
@@ -233,7 +233,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="credits"
@@ -250,7 +250,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="creditAmount"
@@ -267,7 +267,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="referenceNumber"
@@ -284,7 +284,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="transactionDate"
@@ -300,7 +300,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="paymentTypeId"
@@ -317,7 +317,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="accountNumber"
@@ -334,7 +334,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="checkNumber"
@@ -351,7 +351,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="routingCode"
@@ -368,7 +368,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="receiptNumber"
@@ -385,7 +385,7 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="bankNumber"
@@ -402,19 +402,12 @@ export default function TransactionForm() {
             />
           </Grid>
 
-          <Grid item>
+          <Grid item sx={{ maxWidth: "392px", width: { xs: "100%" } }}>
             <Controller
               control={control}
               name="comments"
               render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Comentarios"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.comments?.message}
-                  isValidField={!errors.comments}
-                />
+                <Input label="Comentarios" type="text" value={value} onChange={onChange} hint={errors.comments?.message} isValidField={!errors.comments} />
               )}
             />
           </Grid>

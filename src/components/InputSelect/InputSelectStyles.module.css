@@ -32,15 +32,10 @@
   border: 1px solid #d0d5dd40;
 }
 
-.container svg {
-}
+
 
 .inputError {
   background-color: hsl(12, 70%, 96%);
   outline: 1px solid #ea3647;
 }
 
-.list {
-}
-.listItem {
-}
