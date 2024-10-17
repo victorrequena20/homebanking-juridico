@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
@@ -87,26 +87,28 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
           onClick={() => router.push("/contabilidad/cuentas-vinculadas-actividades-financieras/crear")}
         />
       </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={financialActivties}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "700px" }}>
+          <DataGrid
+            sx={{ cursor: "pointer" }}
+            rows={financialActivties}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-          onRowClick={row => {
-            router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${row?.row?.id}`);
-          }}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+            onRowClick={row => {
+              router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${row?.row?.id}`);
+            }}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );

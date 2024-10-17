@@ -113,7 +113,7 @@ export default function TransactionForm() {
   return (
     <Wrapper>
       <Breadcrumbs
-        title="Crear publicacion frecuente"
+        title="Crear publicación frecuente"
         items={[
           { title: "Inicio", href: "/dashboard" },
           { title: "Contabilidad", href: "/contabilidad" },

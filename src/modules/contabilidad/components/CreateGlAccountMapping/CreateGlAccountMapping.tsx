@@ -206,7 +206,7 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
 
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" spacing={3} mt={3}>
-          <Button text="Cancelar" variant="navigation" type="button" />
+          <Button text="Cancelar" variant="navigation" type="button" onClick={() => router.back()} />
           <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
         </Stack>
       </Grid>
