@@ -4,7 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import { ICreateEditUserForm } from "./types";
-import { createSchema, schema } from "./yup";
+import { schema } from "./yup";
 import { Stack } from "@mui/material";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
@@ -15,9 +15,9 @@ import { getStaffs } from "@/services/Core.service";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { IKeyValue } from "@/types/common";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function CreateEditUserForm({ user, close }: ICreateEditUserFormProps) {
-  console.log("🚀 ~ CreateEditUserForm ~ user:", user);
   const [asesoresByOffice, setAsesoresByOffice] = React.useState<any[]>();
   const [allowedOffices, setAllowedOffices] = React.useState<any[] | null>(null);
   const [availableRoles, setAvailableRoles] = React.useState<any[] | null>(null);
@@ -35,16 +35,12 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
   } = useForm<ICreateEditUserForm>({ resolver: user ? resolver : createResolver, mode: "onChange" });
 
   const onSubmit = async (data: ICreateEditUserForm) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     const dataToSend = {
       ...data,
       officeId: data?.officeId?.value,
       staffId: data?.staffId?.value,
     };
-    console.log("🚀 ~ onSubmit ~ dataToSend:", isValid, Object.keys(dirtyFields).length);
     // @ts-ignore
-    const invalidFields = Object.keys(touchedFields).filter(field => !dirtyFields[field] || errors[field]);
-    console.log("🚀 ~ React.useEffect ~ invalidFields:", invalidFields);
     setIsLoading(true);
     if (user) {
       const response = await updateUser(dataToSend, user?.id?.toString() || "");
@@ -69,20 +65,12 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
   React.useEffect(() => {
     (async () => {
       const response = await getUsersTemplate();
-      console.log("🚀 ~ response temapl:", response);
       if (response.status === 200) {
         setAllowedOffices(response?.data?.allowedOffices);
         setAvailableRoles(response?.data?.availableRoles);
       }
     })();
   }, []);
-
-  React.useEffect(() => {
-    // @ts-ignore
-    const invalidFields = Object.keys(touchedFields).filter(field => !dirtyFields[field] || errors[field]);
-    console.log("🚀 ~ React.useEffect ~ invalidFields:", invalidFields);
-    console.log("��� ~ errors:", errors);
-  }, [errors]);
 
   React.useEffect(() => {
     (async () => {
@@ -129,7 +117,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
       mt={3}
     >
       {/* Username */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -147,9 +135,9 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Email */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -167,9 +155,9 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Name */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -187,9 +175,9 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Lastname */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -207,9 +195,9 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Office */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -227,9 +215,9 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Asesor */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -245,10 +233,10 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Password */}
       {!user && (
-        <Grid>
+        <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
@@ -265,11 +253,11 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
               )}
             />
           </Stack>
-        </Grid>
+        </InputResponsiveContainer>
       )}
       {/* Confirm password */}
       {!user && (
-        <Grid>
+        <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
@@ -286,23 +274,18 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
               )}
             />
           </Stack>
-        </Grid>
+        </InputResponsiveContainer>
       )}
       {/* Roles */}
-      <Grid>
+      <InputResponsiveContainer>
         <Stack>
           <InputSelect
             label="Roles*"
-            options={keyValueAdapter(
-              user ? user?.selectedRoles.concat(user?.availableRoles) : availableRoles,
-              "name",
-              "id"
-            )}
+            options={keyValueAdapter(user ? user?.selectedRoles.concat(user?.availableRoles) : availableRoles, "name", "id")}
             withCheckbox
             isValidField={!errors.roles}
             hint={errors.roles?.message}
             setItems={selectedValues => {
-              console.log("🚀 ~ WorkDaysPage ~ selectedValues:", selectedValues);
               setValue(
                 "roles",
                 selectedValues?.filter(el => el !== undefined)
@@ -311,7 +294,7 @@ export default function CreateEditUserForm({ user, close }: ICreateEditUserFormP
             defaultValue={user?.selectedRoles?.map((item: any) => item?.id)}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Buttons */}
       <Grid md={10}>

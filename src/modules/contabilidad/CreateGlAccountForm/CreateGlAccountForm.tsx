@@ -17,7 +17,6 @@ import { toast } from "sonner";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function CreateGlAccountForm({ glAccountData }: { glAccountData?: any }) {
-  console.log("🚀 ~ CreateGlAccountForm ~ glAccountData:", glAccountData);
   const [parentId, setParentId] = React.useState<number | null>(null);
   const [accountType, setAccountType] = React.useState<number | string | null>(null);
   const [glAccountsTemplate, setGlAccountsTemplate] = React.useState<any>({});
@@ -72,9 +71,6 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
   }
 
   async function onSubmit(data: any) {
-    console.log("glAccountData", glAccountData);
-    console.log("isValid", isValid);
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
     if (glAccountData) {
       const response = await updateGlAccount(
@@ -135,11 +131,6 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
       setManualEntriesAllowed(glAccountData?.manualEntriesAllowed);
     }
   }, [glAccountData]);
-
-  React.useEffect(() => {
-    console.log("🚀 ~ CreateGlAccountForm ~ watch()", watch());
-    console.log("errors", errors);
-  }, [watch("name"), watch("glCode"), watch("type"), watch("usage"), watch("parentId"), watch("tagId"), watch("description")]);
 
   return (
     <Grid
