@@ -51,7 +51,7 @@ export default function ViewFundDetails({ params }: { params: { fundId: string }
         </Typography>
       </Stack>
 
-      <Stack sx={{ mt: 5, minWidth: "600px", maxWidth: "600px" }}>
+      <Stack sx={{ mt: 5, minWidth: { xs: "100%", lg: "600px" }, maxWidth: "600px" }}>
         <Stack
           sx={{
             flexDirection: "row",
@@ -65,10 +65,7 @@ export default function ViewFundDetails({ params }: { params: { fundId: string }
           <Typography variant="body2" fontWeight="400" color="#12141a">
             Detalles del fondo
           </Typography>
-          <Box
-            sx={{ ...flexRowCenter, gap: 1 }}
-            onClick={() => router.push(`/administracion/organizacion/administrar-fondos/${params.fundId}/editar`)}
-          >
+          <Box sx={{ ...flexRowCenter, gap: 1 }} onClick={() => router.push(`/administracion/organizacion/administrar-fondos/${params.fundId}/editar`)}>
             <Typography sx={{ cursor: "pointer" }} variant="body2" fontWeight="300" color="#606778">
               Ver y editar
             </Typography>
