@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { Typography } from "@mui/material";
 import { getFunds } from "@/services/Funds.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -83,26 +83,28 @@ export default function AdministrarOficinas() {
         />
       </Stack>
 
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={offices}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "600px" }}>
+          <DataGrid
+            sx={{ cursor: "pointer" }}
+            rows={offices}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-          onRowClick={params => {
-            router.push(`/administracion/organizacion/administrar-oficinas/${params.row.id}`);
-          }}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+            onRowClick={params => {
+              router.push(`/administracion/organizacion/administrar-oficinas/${params.row.id}`);
+            }}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );
