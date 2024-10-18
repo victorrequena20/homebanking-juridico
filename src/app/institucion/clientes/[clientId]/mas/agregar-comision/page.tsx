@@ -82,7 +82,6 @@ export default function AddComission() {
   }, []);
 
   const setInputs = (item: any) => {
-    console.warn(item);
     const dataCalculatedComission = keyValueAdapter([item], "calculatedComission", "value");
     const dataTypeTimeComission = keyValueAdapter([item], "typeTimeComission", "value");
     setValue("calculatedComission", dataCalculatedComission[0]);

@@ -191,3 +191,28 @@ export const addComission = async (id: string, body: { amount: number; chargeId:
     console.log("🚀 ~ addComission ~ error:", error);
   }
 };
+
+export const getTemplateCollateralManagement = async () => {
+  try {
+    const response = await HttpClient.get(`/collateral-management`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateCollateralManagement ~ error:", error);
+  }
+};
+
+export const createCollateralManagement = async (id: string, body: { collateralId: number; quantity: string; locale?: string }) => {
+  try {
+    body.locale = "es";
+    const response = await HttpClient.post(`/clients/${id}/collaterals`, body);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateCollateralManagement ~ error:", error);
+  }
+};

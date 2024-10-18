@@ -425,7 +425,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       variant="body2"
                       fontWeight="300"
                       onClick={() => {
-                        router.push(`/institucion/clientes/${params.clientId}/mas/agregar-comision`);
+                        router.push(`/institucion/clientes/${params.clientId}/mas/crear-garantia`);
                       }}
                     >
                       Crear garantía
