@@ -164,3 +164,30 @@ export const deleteCliente = async (clientId: string): Promise<ApiResponse> => {
     throw error;
   }
 };
+
+export const getTemplateAddComission = async (id?: string) => {
+  try {
+    const response = await HttpClient.get(`/clients/${id}/charges/template`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateAddComission ~ error:", error);
+  }
+};
+
+export const addComission = async (id: string, body: { amount: number; chargeId: number; dateFormat?: string; locale?: string; dueDate: string }) => {
+  try {
+    body.locale = "es";
+    body.dateFormat = "dd MMMM yyyy";
+
+    const response = await HttpClient.post(`/clients/${id}/charges`, body);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ addComission ~ error:", error);
+  }
+};
