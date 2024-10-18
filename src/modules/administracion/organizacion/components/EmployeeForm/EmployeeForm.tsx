@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
@@ -15,9 +15,10 @@ import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Toggle from "@/components/Toggle";
 import { formatDateEsddMMMMyyyy } from "@/utilities/common.utility";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
+import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
-  console.log("🚀 ~ EmployeeForm ~ employeeData:", employeeData);
   const [isActive, setIsActive] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [offices, setOffices] = React.useState<any[]>([]);
@@ -85,13 +86,11 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
 
   return (
     <Grid
-      container
-      maxWidth={"860px"}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
+      md={12}
       sx={{
         gap: 3,
-        mt: 3,
         maxWidth: "1000px",
         backgroundColor: "#fff",
         px: 3,
@@ -101,9 +100,11 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
         justifyContent: "center",
         mx: "auto",
       }}
+      container
+      mt={3}
     >
       {/* Oficina */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="officeId"
@@ -118,9 +119,9 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Nombre */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="firstname"
@@ -136,9 +137,9 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Apellido */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="lastname"
@@ -154,9 +155,9 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Numero de telefono para SMS */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="mobileNo"
@@ -172,9 +173,9 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Dia de ingreso */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="joiningDate"
@@ -188,13 +189,13 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack
           sx={{
             flexDirection: "row",
-            width: "392px",
+            width: { xs: "100%", lg: "392px" },
             maxWidth: "392px",
             justifyContent: "space-between",
             alignItems: "flex-end",
@@ -209,9 +210,9 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
             <Toggle isChecked={isActive} size="small" setIsChecked={setIsActive} />
           </Box>
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item xs={12} sx={{ mt: 4 }}>
+      <Grid xs={12} sx={{ mt: 4 }}>
         <Stack
           sx={{
             width: "100%",
@@ -230,14 +231,7 @@ export default function EmployeeForm({ employeeData }: { employeeData?: any }) {
               router.push("/administracion/organizacion/administrar-empleados");
             }}
           />
-          <Button
-            type="submit"
-            size="small"
-            text="Aceptar"
-            isLoading={isLoading}
-            variant="primary"
-            disabled={!isValid}
-          />
+          <Button type="submit" size="small" text="Aceptar" isLoading={isLoading} variant="primary" disabled={!isValid} />
         </Stack>
       </Grid>
     </Grid>

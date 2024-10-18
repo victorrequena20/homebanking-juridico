@@ -5,18 +5,7 @@ import styles from "./InputStyles.module.css";
 import EyeIcon from "@/assets/icons/EyeIcon";
 import EyeCloseIcon from "@/assets/icons/EyeCloseIcon";
 
-export default function Input({
-  label,
-  type,
-  placeholder,
-  isValidField = true,
-  hint,
-  onChange,
-  value,
-  defaultValue,
-  width,
-  maxLength,
-}: InputProps) {
+export default function Input({ label, type, placeholder, isValidField = true, hint, onChange, value, defaultValue, width, maxLength }: InputProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
   const [showPassword, setShowPassword] = React.useState<boolean>(!(type === "password"));
@@ -26,13 +15,13 @@ export default function Input({
   }, [defaultValue]);
 
   return (
-    <Box sx={{ maxWidth: width || "392px" }}>
+    <Box sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "392px" } }}>
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
-      <div
+      <Box
         className={`${styles.container} ${isFocused && styles.focusedInput} ${!isValidField && styles.inputError}`}
-        style={{ width: width || "392px", maxWidth: width || "392px" }}
+        sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
       >
         <input
           type={type === "password" ? (showPassword ? "text" : "password") : type}
@@ -76,7 +65,7 @@ export default function Input({
             )}
           </>
         )}
-      </div>
+      </Box>
       {hint && (
         <Typography variant="caption" color={isValidField ? "#606778" : "#ea3647"}>
           {hint}

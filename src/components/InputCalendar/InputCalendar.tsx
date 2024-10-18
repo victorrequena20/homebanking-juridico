@@ -65,9 +65,9 @@ export default function InputCalendar({
         {label}
       </Typography>
 
-      <div
+      <Box
         className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
-        style={{ width: width || "392px", maxWidth: width || "392px" }}
+        sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
       >
         <input
           type="text"
@@ -91,7 +91,7 @@ export default function InputCalendar({
         >
           <CalendarIcon size={24} color="#484848" />
         </Box>
-      </div>
+      </Box>
 
       {hint && (
         <Typography variant="caption" color={isValidField ? "#606778" : "#ea3647"}>

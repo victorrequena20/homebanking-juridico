@@ -14,9 +14,9 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import Toggle from "@/components/Toggle";
 import { toast } from "sonner";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function CreateGlAccountForm({ glAccountData }: { glAccountData?: any }) {
-  console.log("🚀 ~ CreateGlAccountForm ~ glAccountData:", glAccountData);
   const [parentId, setParentId] = React.useState<number | null>(null);
   const [accountType, setAccountType] = React.useState<number | string | null>(null);
   const [glAccountsTemplate, setGlAccountsTemplate] = React.useState<any>({});
@@ -44,7 +44,23 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
   async function handleGetTemplate() {
     const response = await getGlAccountsTemplate();
     if (response?.status === 200) {
-      setGlAccountsTemplate(response?.data);
+      const translatedAccountTypeOptions = response?.data?.accountTypeOptions.map((option: any) => {
+        switch (option.value) {
+          case "ASSET":
+            return { ...option, value: "ACTIVO" };
+          case "LIABILITY":
+            return { ...option, value: "PASIVO" };
+          case "EQUITY":
+            return { ...option, value: "PATRIMONIO" };
+          case "INCOME":
+            return { ...option, value: "INGRESO" };
+          case "EXPENSE":
+            return { ...option, value: "EGRESO" };
+          default:
+            return option;
+        }
+      });
+      setGlAccountsTemplate({ ...response?.data, accountTypeOptions: translatedAccountTypeOptions });
       if (searchParams.get("parentId")) {
         setAccountType(parseInt(searchParams.get("accountType") || ""));
         setParentId(parseInt(searchParams.get("parentId") || ""));
@@ -55,9 +71,6 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
   }
 
   async function onSubmit(data: any) {
-    console.log("glAccountData", glAccountData);
-    console.log("isValid", isValid);
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
     if (glAccountData) {
       const response = await updateGlAccount(
@@ -119,19 +132,6 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
     }
   }, [glAccountData]);
 
-  React.useEffect(() => {
-    console.log("🚀 ~ CreateGlAccountForm ~ watch()", watch());
-    console.log("errors", errors);
-  }, [
-    watch("name"),
-    watch("glCode"),
-    watch("type"),
-    watch("usage"),
-    watch("parentId"),
-    watch("tagId"),
-    watch("description"),
-  ]);
-
   return (
     <Grid
       container
@@ -150,7 +150,7 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Tipo de cuenta */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="type"
@@ -167,25 +167,19 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="name"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Nombre de la cuenta*"
-              type="text"
-              value={value}
-              onChange={onChange}
-              defaultValue={glAccountData?.name}
-            />
+            <Input label="Nombre de la cuenta*" type="text" value={value} onChange={onChange} defaultValue={glAccountData?.name} />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="usage"
@@ -201,25 +195,19 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="glCode"
           render={({ field: { onChange, value } }) => (
-            <Input
-              label="Número de la cuenta*"
-              type="text"
-              value={value}
-              onChange={onChange}
-              defaultValue={glAccountData?.glCode}
-            />
+            <Input label="Número de la cuenta*" type="text" value={value} onChange={onChange} defaultValue={glAccountData?.glCode} />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="parentId"
@@ -232,9 +220,9 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="tagId"
@@ -247,24 +235,22 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="description"
-          render={({ field: { onChange, value } }) => (
-            <Input label="Descripción" type="text" value={value} onChange={onChange} />
-          )}
+          render={({ field: { onChange, value } }) => <Input label="Descripción" type="text" value={value} onChange={onChange} />}
         />
-      </Grid>
-      <Grid item>
+      </InputResponsiveContainer>
+      <InputResponsiveContainer>
         <Stack sx={{ height: "100%", justifyContent: "flex-end" }}>
           <Stack
             sx={{
               flexDirection: "row",
-              width: "392px",
               maxWidth: "392px",
+              width: { xs: "100%" },
               height: "100%",
               justifyContent: "space-between",
               alignItems: "center",
@@ -280,7 +266,7 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             </Box>
           </Stack>
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       <Grid xs={12} sx={{ mt: 4 }}>
         <Stack
           sx={{
@@ -297,14 +283,7 @@ export default function CreateGlAccountForm({ glAccountData }: { glAccountData?:
             variant="navigation"
             onClick={() => router.push("/administracion/organizacion/administrar-oficinas")}
           />
-          <Button
-            type="submit"
-            isLoading={isLoading}
-            disabled={!isValid}
-            size="small"
-            text="Aceptar"
-            variant="primary"
-          />
+          <Button type="submit" isLoading={isLoading} disabled={!isValid} size="small" text="Aceptar" variant="primary" />
         </Stack>
       </Grid>
     </Grid>

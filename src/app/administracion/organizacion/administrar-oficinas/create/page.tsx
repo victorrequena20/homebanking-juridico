@@ -24,7 +24,9 @@ export default function CreateFund() {
       <Stack sx={{ mt: 3 }}>
         <ButtonBack />
       </Stack>
-      <CreateOfficeForm />
+      <Stack sx={{ alignItems: "center" }}>
+        <CreateOfficeForm />
+      </Stack>
     </Wrapper>
   );
 }

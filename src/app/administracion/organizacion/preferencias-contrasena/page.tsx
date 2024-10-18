@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Wrapper from "@/components/Wrapper";
 import { Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import Toggle from "@/components/Toggle";
@@ -56,7 +55,6 @@ export default function PreferenciasContrasenaPage() {
     });
     if (response?.status === 200) {
       toast.success("Operacion realizada con exito!");
-      //   router.push("/administracion/organizacion");
     }
     setIsLoadingForm(false);
   };
@@ -90,22 +88,9 @@ export default function PreferenciasContrasenaPage() {
           <Toggle isChecked={password2} size="small" setIsChecked={handlePassword2Toggle} />
         </Stack>
 
-        <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "flex-start" }}>
-          <Button
-            text="cancelar"
-            variant="navigation"
-            onClick={() => router.push("/administracion/organizacion")}
-            size="small"
-            type="button"
-          />
-          <Button
-            text="Aceptar"
-            variant="primary"
-            size="small"
-            isLoading={isLoadingForm}
-            type="button"
-            onClick={() => changePasswordPreferences()}
-          />
+        <Stack sx={{ flex: 1, flexDirection: "row", gap: 3, justifyContent: { xs: "center", lg: "flex-start" } }}>
+          <Button text="cancelar" variant="navigation" onClick={() => router.push("/administracion/organizacion")} size="small" type="button" />
+          <Button text="Aceptar" variant="primary" size="small" isLoading={isLoadingForm} type="button" onClick={() => changePasswordPreferences()} />
         </Stack>
       </Stack>
     </Wrapper>

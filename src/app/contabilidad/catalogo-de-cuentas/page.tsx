@@ -33,7 +33,7 @@ export default function CatalogoCuentasPage() {
       field: "type",
       headerName: "Tipo",
       flex: 1,
-      valueGetter: (value, row) => `${row?.type?.value}`,
+      valueGetter: (value, row) => `${row?.type?.value == "INCOME" ? "Ingreso" : "Activo"}`,
     },
     {
       field: "status",
@@ -62,6 +62,8 @@ export default function CatalogoCuentasPage() {
       setIsLoading(true);
       const response = await getGlAccounts();
       if (response?.status === 200) {
+        console.log(response?.data);
+
         setGlAccounts(response?.data);
       }
       setIsLoading(false);
@@ -91,24 +93,26 @@ export default function CatalogoCuentasPage() {
           />
         </Stack>
       </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={glAccounts}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "600px" }}>
+          <DataGrid
+            sx={{ cursor: "pointer" }}
+            rows={glAccounts}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          onRowClick={params => router.push(`/contabilidad/catalogo-de-cuentas/${params?.row?.id}`)}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-        />
+            }}
+            onRowClick={params => router.push(`/contabilidad/catalogo-de-cuentas/${params?.row?.id}`)}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );
