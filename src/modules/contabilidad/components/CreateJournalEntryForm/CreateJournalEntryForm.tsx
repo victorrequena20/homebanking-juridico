@@ -18,6 +18,7 @@ import { getOffices } from "@/services/Office.service";
 import { createJournalEntry, getCurrencies, getPaymentTypes } from "@/services/Core.service";
 import { useRouter } from "next/navigation";
 import { dateFormat } from "@/constants/global";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 // Validation Schema
 const schema = yup.object().shape({
   officeId: yup.mixed().required("La oficina es obligatoria"),
@@ -160,7 +161,7 @@ export default function CreateJournalEntryForm() {
       }}
     >
       {/* Office */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -177,10 +178,10 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Currency */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -197,10 +198,10 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Additional Fields */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -217,9 +218,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -235,9 +236,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -254,9 +255,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -273,9 +274,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -292,9 +293,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -311,9 +312,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -330,9 +331,9 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -349,19 +350,14 @@ export default function CreateJournalEntryForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Debits */}
-      <Grid item xs={12}>
+      <Grid xs={12} item>
         <Stack sx={{ mx: "auto", gap: 3 }}>
           {debitFields.map((field, index) => (
-            <Grid
-              container
-              xs={12}
-              sx={{ gap: 3, mx: "auto", alignItems: "center", justifyContent: "center" }}
-              key={field.id}
-            >
-              <Grid item>
+            <Grid container xs={12} sx={{ gap: 3, mx: "auto", alignItems: "center", justifyContent: "center" }} key={field.id}>
+              <InputResponsiveContainer>
                 <Stack>
                   <Controller
                     control={control}
@@ -370,7 +366,7 @@ export default function CreateJournalEntryForm() {
                       <InputSelect
                         label="Entrada de libro mayor afectada (débito) *"
                         options={keyValueAdapter(glAccounts, "name", "id")}
-                        setItem={item => onChange(item?.value)}
+                        setItem={item => onChange(item)}
                         value={value}
                         isValidField={!errors.debits?.[index]?.glAccountId}
                         hint={errors.debits?.[index]?.glAccountId?.message}
@@ -378,8 +374,8 @@ export default function CreateJournalEntryForm() {
                     )}
                   />
                 </Stack>
-              </Grid>
-              <Grid item>
+              </InputResponsiveContainer>
+              <InputResponsiveContainer>
                 <Stack sx={{ flexDirection: "row", alignItems: "flex-end", gap: 2 }}>
                   <Controller
                     control={control}
@@ -387,49 +383,35 @@ export default function CreateJournalEntryForm() {
                     render={({ field: { onChange, value } }) => (
                       <Input
                         label="Monto del débito *"
-                        type="text"
                         value={value}
                         onChange={onChange}
                         isValidField={!errors.debits?.[index]?.amount}
                         hint={errors.debits?.[index]?.amount?.message}
                         width="320px"
+                        type="number"
                       />
                     )}
                   />
                   <Box>
                     {index !== 0 ? (
-                      <Button
-                        icon={<TrashIcon color="#fff" />}
-                        variant="warning-red"
-                        type="button"
-                        onClick={() => removeDebit(index)}
-                      />
+                      <Button icon={<TrashIcon color="#fff" />} variant="warning-red" type="button" onClick={() => removeDebit(index)} />
                     ) : (
-                      <Button
-                        type="button"
-                        onClick={() => appendDebit({ glAccountId: "", amount: "" })}
-                        icon={<PlusIcon />}
-                      />
+                      <Button type="button" onClick={() => appendDebit({ glAccountId: "", amount: "" })} icon={<PlusIcon />} />
                     )}
                   </Box>
                 </Stack>
-              </Grid>
+              </InputResponsiveContainer>
             </Grid>
           ))}
         </Stack>
       </Grid>
 
       {/* Credits */}
-      <Grid item xs={12}>
+      <Grid xs={12} item>
         <Stack sx={{ mx: "auto", gap: 3 }}>
           {creditFields.map((field, index) => (
-            <Grid
-              container
-              xs={12}
-              sx={{ gap: 3, mx: "auto", alignItems: "center", justifyContent: "center" }}
-              key={field.id}
-            >
-              <Grid item>
+            <Grid container xs={12} sx={{ gap: 3, mx: "auto", alignItems: "center", justifyContent: "center" }} key={field.id}>
+              <InputResponsiveContainer>
                 <Controller
                   control={control}
                   name={`credits.${index}.glAccountId`}
@@ -444,8 +426,8 @@ export default function CreateJournalEntryForm() {
                     />
                   )}
                 />
-              </Grid>
-              <Grid item>
+              </InputResponsiveContainer>
+              <InputResponsiveContainer>
                 <Stack sx={{ flexDirection: "row", alignItems: "flex-end", gap: 2 }}>
                   <Controller
                     control={control}
@@ -453,7 +435,7 @@ export default function CreateJournalEntryForm() {
                     render={({ field: { onChange, value } }) => (
                       <Input
                         label="Monto del crédito *"
-                        type="text"
+                        type="number"
                         value={value}
                         onChange={onChange}
                         isValidField={!errors.credits?.[index]?.amount}
@@ -463,49 +445,33 @@ export default function CreateJournalEntryForm() {
                     )}
                   />
                   {index !== 0 ? (
-                    <Button
-                      icon={<TrashIcon color="#fff" />}
-                      variant="warning-red"
-                      type="button"
-                      onClick={() => removeCredit(index)}
-                    />
+                    <Button icon={<TrashIcon color="#fff" />} variant="warning-red" type="button" onClick={() => removeCredit(index)} />
                   ) : (
-                    <Button
-                      type="button"
-                      onClick={() => appendCredit({ glAccountId: "", amount: "" })}
-                      icon={<PlusIcon />}
-                    />
+                    <Button type="button" onClick={() => appendCredit({ glAccountId: "", amount: "" })} icon={<PlusIcon />} />
                   )}
                 </Stack>
-              </Grid>
+              </InputResponsiveContainer>
             </Grid>
           ))}
         </Stack>
       </Grid>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
             name="comments"
             render={({ field: { value, onChange } }) => (
-              <Input
-                label="Comentarios"
-                type="text"
-                value={value}
-                onChange={onChange}
-                isValidField={!errors.comments}
-                hint={errors.comments?.message}
-              />
+              <Input label="Comentarios" type="text" value={value} onChange={onChange} isValidField={!errors.comments} hint={errors.comments?.message} />
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Padding */}
-      <Grid item>
+      <InputResponsiveContainer>
         <Stack sx={{ width: "392px" }}></Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       <Grid item xs={12}>
         <Stack sx={{ gap: 3, mt: 3, justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
