@@ -93,12 +93,7 @@ export default function AdministrationOrganizationPage() {
           path="/administracion/organizacion/historial-instrucciones-permanentes"
           icon={<BillIcon size={28} color="#153075" />}
         />
-        <IntermediateMenuItem
-          title="Gestión de ventanillas y cajeros"
-          subtitle="Gestionar cajeros/cajeros y asignación y liquidación de efectivo."
-          path="/administracion/organizacion/gestion-ventanillas-cajeros"
-          icon={<CashIcon size={28} color="#153075" />}
-        />
+
         <IntermediateMenuItem
           title="Inversores"
           subtitle="Ver los detalles de la cuenta de crédito asociados con los inversores."
