@@ -72,10 +72,10 @@ export default function InputSelect({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ value:", value);
-    setValueSelected(value);
+    if (value && value.value !== valueSelected?.value) {
+      setValueSelected(value);
+    }
   }, [value]);
 
   useEffect(() => {
