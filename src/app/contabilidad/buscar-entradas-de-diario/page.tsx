@@ -16,10 +16,10 @@ import InputCalendar from "@/components/InputCalendar";
 import Input from "@/components/Input";
 import { dateFormat } from "@/constants/global";
 import { useRouter } from "next/navigation";
-import { useMediaQuery } from '@mui/material';
+import { formatAmountB } from "@/utilities/amount.utility";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function BuscarEntradasDeDiarioPage() {
-  const isSmallScreen = useMediaQuery('(max-width:600px)');
   const [offices, setOffices] = React.useState<any>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isLoadingTable, setIsLoadingTable] = React.useState<boolean>(false);
@@ -116,7 +116,7 @@ export default function BuscarEntradasDeDiarioPage() {
       sortable: false,
       flex: 1,
       minWidth: 80,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && row?.amount) || ""} `,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && formatAmountB(row?.amount)) || ""} `,
     },
     {
       field: "credit",
@@ -124,7 +124,7 @@ export default function BuscarEntradasDeDiarioPage() {
       sortable: false,
       flex: 1,
       minWidth: 80,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && row?.amount) || ""} `,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && formatAmountB(row?.amount)) || ""} `,
     },
   ];
 
@@ -209,36 +209,41 @@ export default function BuscarEntradasDeDiarioPage() {
             flexWrap: "wrap",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="officeId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Oficina"
-                  options={keyValueAdapter(offices, "name", "id")}
-                  setItem={value => onChange(value?.value)}
-                  defaultValue={value}
-                  width={isSmallScreen ? '320px' : '360px'}
-                />
-              )}
-            />
-          </Stack>
-          <Stack>
-            <Controller
-              control={control}
-              name="glAccountId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Nombre o código de cuenta del libro mayor"
-                  options={keyValueAdapter(glAccounts, "name", "id")}
-                  setItem={value => onChange(value?.value)}
-                  defaultValue={value}
-                  width={isSmallScreen ? '320px' : '360px'}
-                />
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="officeId"
+                render={({ field: { onChange, value } }) => (
+                  <InputSelect
+                    label="Oficina"
+                    options={keyValueAdapter(offices, "name", "id")}
+                    setItem={value => onChange(value?.value)}
+                    defaultValue={value}
+                    width={'360px'}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="glAccountId"
+                render={({ field: { onChange, value } }) => (
+                  <InputSelect
+                    label="Nombre o código de cuenta del libro mayor"
+                    options={keyValueAdapter(glAccounts, "name", "id")}
+                    setItem={value => onChange(value?.value)}
+                    defaultValue={value}
+                    width={'360px'}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
@@ -253,11 +258,12 @@ export default function BuscarEntradasDeDiarioPage() {
                   ]}
                   setItem={value => onChange(value?.value)}
                   defaultValue={value}
-                  width={isSmallScreen ? '320px' : '360px'}
+                  width={'360px'}
                 />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         {/* ---------- */}
         <Stack
@@ -269,69 +275,79 @@ export default function BuscarEntradasDeDiarioPage() {
             flexWrap: "wrap",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="fromDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar
-                  label="Fecha de transacción desde"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.dateValue?.message}
-                  isValidField={!errors.dateValue}
-                  width={isSmallScreen ? '320px' : '360px'}
-                  defaultValue={prevMonth}
-                />
-              )}
-            />
-          </Stack>
-          <Stack>
-            <Controller
-              control={control}
-              name="toDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={isSmallScreen ? '320px' : '360px'} defaultValue={today}/>
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="fromDate"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar
+                    label="Fecha de transacción desde"
+                    value={value}
+                    onChange={onChange}
+                    hint={errors.dateValue?.message}
+                    isValidField={!errors.dateValue}
+                    width={'360px'}
+                    defaultValue={prevMonth}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="toDate"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={'360px'} defaultValue={today}/>
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
               name="transactionId"
               render={({ field: { onChange, value } }) => (
-                <Input label="ID de transacción" type="text" value={value} onChange={onChange} width={isSmallScreen ? '320px' : '360px'} />
+                <Input label="ID de transacción" type="text" value={value} onChange={onChange} width={'360px'} />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         {/* ---------- */}
         <Stack
           sx={{
             mb: 4,
-            flexDirection: isSmallScreen ? 'col' : 'row',
+            flexDirection: 'row',
             gap: 3,
             alignItems: "flex-end",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="submittedOnDateFrom"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción desde" value={value} onChange={onChange} width={isSmallScreen ? '320px' : '360px'} />
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="submittedOnDateFrom"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar label="Fecha de transacción desde" value={value} onChange={onChange} width={'360px'} />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
               name="toDate"
               render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={isSmallScreen ? '320px' : '360px'} />
+                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={'360px'} />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         <DataGrid
           rows={journalEntries}

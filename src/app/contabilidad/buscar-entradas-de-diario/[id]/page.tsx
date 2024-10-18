@@ -9,6 +9,7 @@ import { formatSpanishDate } from "@/utilities/common.utility";
 import { useMediaQuery } from "@mui/material";
 import RenderFormModal from "@/components/Modals/RenderFormModal";
 import Button from "@/components/Button";
+import { formatAmountB } from "@/utilities/amount.utility";
 
 export default function TransactionDetails({ params }: { params: { id: string } }) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -53,14 +54,14 @@ export default function TransactionDetails({ params }: { params: { id: string } 
       headerName: "Débito",
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && row?.amount) || ""} `,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && formatAmountB(row?.amount)) || ""} `,
     },
     {
       field: "credit",
       headerName: "Crédito",
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && row?.amount) || ""} `,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && formatAmountB(row?.amount)) || ""} `,
     },
   ];
 
@@ -193,11 +194,11 @@ export default function TransactionDetails({ params }: { params: { id: string } 
             { label: "Oficina", value: selectedEntry?.officeName },
             { label: "Id de entrada", value: selectedEntry?.id },
             { label: "Fecha de Transacción", value: formatSpanishDate(selectedEntry?.transactionDate) },
-            { label: "Tipo", value: selectedEntry?.glAccountType.value },
+            { label: "Tipo", value: selectedEntry?.glAccountType?.value },
             { label: "Código de cuenta", value: selectedEntry?.glAccountId },
             { label: "Nombre de la cuenta", value: selectedEntry?.glAccountName },
             { label: "Débito", value: selectedEntry?.amount },
-            { label: "Moneda", value: `(${selectedEntry?.currency.code}) ${selectedEntry?.currency.name}` },
+            { label: "Moneda", value: `(${selectedEntry?.currency?.code}) ${selectedEntry?.currency?.name}` },
             { label: "Registrado el", value: formatSpanishDate(selectedEntry?.createdDate) },
           ].map((item, index) => (
             <React.Fragment key={index}>
