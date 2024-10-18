@@ -130,7 +130,6 @@ export default function CreateGlMappingForm({ accountData }: { accountData?: any
         .concat(glAccounts?.expenseAccountOptions)
         .concat(glAccounts?.liabilityAccountOptions);
     }
-    console.warn(selectedAccounts);
     setAccounts(selectedAccounts);
   }
 

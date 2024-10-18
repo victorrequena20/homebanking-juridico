@@ -61,7 +61,6 @@ export default function AddComission() {
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-    console.warn(data);
     const response = await addComission(params?.clientId?.toString(), {
       amount: data.amount,
       chargeId: data.comission.value,

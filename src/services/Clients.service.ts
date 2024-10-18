@@ -216,3 +216,27 @@ export const createCollateralManagement = async (id: string, body: { collateralI
     console.log("🚀 ~ getTemplateCollateralManagement ~ error:", error);
   }
 };
+
+export const getTemplateAssignAdviser = async (id: string) => {
+  try {
+    const response = await HttpClient.get(`/clients/${id}?template=true&staffInSelectedOfficeOnly=true`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateAssignAdviser ~ error:", error);
+  }
+};
+
+export const assignAndDeallocateAdviser = async (id: string, body: { staffId: number }, assign: boolean) => {
+  try {
+    const response = await HttpClient.post(`/clients/${id}?command=${assign ? "assignStaff" : "unassignStaff"}`, body);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateAssignAdviser ~ error:", error);
+  }
+};
