@@ -5,64 +5,68 @@ import Button from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import InputCalendar from "@/components/InputCalendar";
-import { clientActions, getTemplate } from "@/services/Clients.service";
+
+import { assignAndDeallocateAdviser, getTemplateAssignAdviser } from "@/services/Clients.service";
 import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { dateFormat } from "@/constants/global";
+
 import { useParams, useRouter } from "next/navigation";
-import { getOffices } from "@/services/Office.service";
-import Input from "@/components/Input";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
+import { IKeyValue } from "@/types/common";
 
 const schema = yup.object().shape({
-  officeId: yup.mixed().required("Oficina es obligatoria"),
-  transferDate: yup.string().required("Cerrado el día es obligatorio"),
-  note: yup.string(),
+  adviser: yup.mixed().required("El asesor es obligatorio"),
 });
 
-export default function TransferClientPage() {
-  const [offices, setOffices] = React.useState<any[]>([]);
+export default function AssignAdviser() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [template, setTemplate] = React.useState<any>(null);
   const {
     control,
     handleSubmit,
+    watch,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<any>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const params = useParams();
+  const params: { clientId: string } = useParams();
   const router = useRouter();
 
-  async function handleGetOffices() {
-    const response = await getOffices();
+  async function handleGetTemplate() {
+    const response = await getTemplateAssignAdviser(params?.clientId);
     if (response?.status === 200) {
-      setOffices(response?.data);
+      setTemplate(keyValueAdapter(response?.data?.staffOptions, "displayName", "id"));
+    } else {
+      toast.error("Servicio de asesores no disponible");
     }
   }
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-    const response = await clientActions(
+
+    const response = await assignAndDeallocateAdviser(
       params?.clientId?.toString(),
-      { ...dateFormat, destinationOfficeId: data?.officeId?.value, transferDate: data?.transferDate, note: data?.note },
-      { command: "proposeTransfer" }
+      {
+        staffId: watch("adviser").value,
+      },
+      true
     );
     if (response?.status === 200) {
-      toast.success("Transferencia de cliente aceptada");
-      router.push(`/institucion/clientes`);
+      toast.success("Asesor asignado con éxito");
+      router.push(`/institucion/clientes/${params?.clientId}/general`);
       reset();
     } else {
-      toast.error("Error al aceptar la transferencia de el cliente");
+      toast.error("Error al asignar el asesor");
     }
     setIsLoading(false);
   }
 
   React.useEffect(() => {
-    handleGetOffices();
+    handleGetTemplate();
   }, []);
 
   return (
@@ -84,45 +88,25 @@ export default function TransferClientPage() {
         container
         mt={3}
       >
-        {/* Offices */}
+        {/* Comisión */}
         <InputResponsiveContainer>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="officeId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect label="Oficina *" options={keyValueAdapter(offices, "name", "id")} setItem={value => onChange(value)} width="100%" />
-              )}
-            />
-          </Stack>
-        </InputResponsiveContainer>
-        {/* Cerrado el dia  */}
-        <InputResponsiveContainer>
-          <Stack sx={{ flex: 1 }}>
-            <Controller
-              control={control}
-              name="transferDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar
-                  width="100%"
-                  label="Fecha de transferencia *"
+              name="adviser"
+              render={({ field: { value, onChange } }) => (
+                <InputSelect
+                  label="Asesor *"
+                  options={template}
+                  setItem={(item: IKeyValue) => {
+                    onChange(item);
+                  }}
                   value={value}
-                  onChange={onChange}
-                  maxToday
-                  hint={errors.transferDate?.message}
-                  isValidField={!errors.transferDate}
+                  width="100%"
+                  hint={errors.comission?.message}
+                  isValidField={!errors.comission}
                 />
               )}
-            />
-          </Stack>
-        </InputResponsiveContainer>
-
-        <InputResponsiveContainer>
-          <Stack sx={{ flex: 1 }}>
-            <Controller
-              control={control}
-              name="note"
-              render={({ field: { onChange, value } }) => <Input label="Nota" type="text" value={value} onChange={onChange} width="100%" />}
             />
           </Stack>
         </InputResponsiveContainer>

@@ -11,7 +11,7 @@ import PersonPlusIcon from "@/assets/icons/PersonPlusIcon";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal";
-import { deleteCliente } from "@/services/Clients.service";
+import { assignAndDeallocateAdviser, deleteCliente } from "@/services/Clients.service";
 import { toast } from "sonner";
 
 interface ClientDetailsHeaderProps {
@@ -20,7 +20,7 @@ interface ClientDetailsHeaderProps {
 }
 
 export default function ClientDetailsHeader({ clientData, getClientData }: ClientDetailsHeaderProps) {
-  const [showDeleteClientModal, setShowDeleteClientModal] = useState<boolean>(false);
+  const [showMoreList, setShowMoreList] = useState<boolean>(false);
   const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
   const [showActionsList, setShowActionsList] = useState<boolean>(false);
@@ -87,6 +87,23 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
     "&:hover": {
       bgcolor: "#f2f4f760",
     },
+  };
+
+  const deallocateAdviser = async () => {
+    const response = await assignAndDeallocateAdviser(
+      params?.clientId?.toString(),
+      {
+        staffId: clientData?.staffId,
+      },
+      false
+    );
+    if (response?.status === 200) {
+      toast.success("Asesor desasignado con éxito");
+      toggleListVisibility();
+      getClientData();
+    } else {
+      toast.error("Error al desasignar el asesor");
+    }
   };
 
   return (
@@ -266,11 +283,22 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   </Stack>
                   <Stack sx={{ ...listItemStyles }}>
                     <PersonPlusIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Asignar asesor
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        if (clientData?.staffId) {
+                          deallocateAdviser();
+                          return;
+                        }
+
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/asignar-asesor`);
+                      }}
+                    >
+                      {!clientData?.staffId ? "Asignar asesor" : " Desasignar asesor"}
                     </Typography>
                   </Stack>
-                  <Stack sx={{ ...listItemStyles }}>
+                  <Stack sx={{ ...listItemStyles }} onMouseEnter={() => setShowMoreList(true)} onMouseLeave={() => setShowMoreList(false)}>
                     <PlusIcon color={"#000"} size={20} />
                     <Typography variant="body2" fontWeight="300">
                       Más
@@ -390,6 +418,135 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       </Typography>
                     </Stack>
                   )}
+                </Stack>
+              </Box>
+              <Box
+                className="second-list"
+                sx={{
+                  display: showMoreList ? "block" : "none",
+                  position: "absolute",
+                  top: "0px",
+                  right: "182px",
+                  width: "280px",
+                  bgcolor: "#fff",
+                  borderRadius: 2,
+                  boxShadow: "0px 8px 16px 0px #2636990A",
+                  zIndex: 1,
+                }}
+                onMouseEnter={() => setShowMoreList(true)}
+                onMouseLeave={() => setShowMoreList(false)}
+              >
+                <Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/mas/agregar-comision`);
+                      }}
+                    >
+                      Agregar Comisión
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/mas/crear-garantia`);
+                      }}
+                    >
+                      Crear garantía
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Encuesta
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Actualizar ahorros predeterminados
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Subir firma
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Eliminar firma
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Reportes de pantalla del cliente
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Crear instrucciones permanentes
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Ver instrucciones permanentes
+                    </Typography>
+                  </Stack>
+                  <Stack sx={{ ...listItemStyles }}>
+                    <Typography
+                      variant="body2"
+                      fontWeight="300"
+                      onClick={() => {
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                      }}
+                    >
+                      Crear usuario de autoservicio
+                    </Typography>
+                  </Stack>
                 </Stack>
               </Box>
             </Box>

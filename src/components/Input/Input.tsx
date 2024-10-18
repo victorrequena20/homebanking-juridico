@@ -5,7 +5,19 @@ import styles from "./InputStyles.module.css";
 import EyeIcon from "@/assets/icons/EyeIcon";
 import EyeCloseIcon from "@/assets/icons/EyeCloseIcon";
 
-export default function Input({ label, type, placeholder, isValidField = true, hint, onChange, value, defaultValue, width, maxLength }: InputProps) {
+export default function Input({
+  label,
+  type,
+  placeholder,
+  isValidField = true,
+  hint,
+  onChange,
+  value,
+  defaultValue,
+  width,
+  maxLength,
+  disabled = false,
+}: InputProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
   const [showPassword, setShowPassword] = React.useState<boolean>(!(type === "password"));
@@ -29,12 +41,14 @@ export default function Input({ label, type, placeholder, isValidField = true, h
           className={styles.input}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          disabled={disabled}
           onChange={e => {
             if (onChange) onChange(e);
             setInputValue(e?.target?.value || "");
           }}
           value={inputValue || value || ""}
           maxLength={maxLength}
+          style={{ color: disabled ? "#12141a77" : "#12141a" }}
         />
         {type === "password" && (
           <>

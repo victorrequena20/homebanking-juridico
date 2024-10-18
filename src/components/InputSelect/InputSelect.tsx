@@ -19,6 +19,7 @@ interface IInputSelectProps {
   defaultValue?: string | number | (string | number)[] | null;
   value?: any;
   width?: string;
+  disabled?: boolean;
 }
 
 export default function InputSelect({
@@ -34,6 +35,7 @@ export default function InputSelect({
   setItems,
   value,
   width,
+  disabled = false,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -109,7 +111,7 @@ export default function InputSelect({
       <Box
         className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
         sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
       >
         <input
           placeholder={placeholder}
@@ -121,7 +123,7 @@ export default function InputSelect({
                 : "Seleccione opciones"
               : value?.label || valueSelected?.label || "Seleccione una opción"
           }
-          style={{ color: value?.label || valueSelected?.label ? "#12141a" : "#606778" }}
+          style={{ color: disabled ? "#12141a77" : value?.label || valueSelected?.label ? "#12141a" : "#606778" }}
           readOnly
         />
         <Box
