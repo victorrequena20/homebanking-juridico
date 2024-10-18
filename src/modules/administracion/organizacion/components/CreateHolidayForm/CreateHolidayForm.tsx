@@ -12,12 +12,12 @@ import InputSelect from "@/components/InputSelect";
 import InputCalendar from "@/components/InputCalendar";
 import { schema } from "./yup";
 import { getOffices } from "@/services/Office.service";
-import { createholiday, getPaymentType } from "@/services/Holidays.service";
+import { createholiday, editHoliday, getPaymentType } from "@/services/Holidays.service";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
 import { IKeyValue } from "@/types/common";
-import { dateFormat } from "@/constants/global";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
-export default function CreateHolidayForm() {
+export default function CreateHolidayForm({ holidayData, edit = false }: { holidayData?: any; edit?: boolean }) {
   const [offices, setOffices] = React.useState<any[] | null>(null);
   const [paymentType, setpaymentType] = React.useState<any[] | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -27,35 +27,39 @@ export default function CreateHolidayForm() {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors, isValid, dirtyFields },
+    watch,
+    formState: { errors },
   } = useForm<ICreateHolidayForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      name: holidayData?.name || null,
+      description: holidayData?.description || null,
+    },
   });
   const router = useRouter();
-
   const onSubmit = async (data: ICreateHolidayForm) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
     try {
-        console.log("��� ~ onSubmit ~ data:", data.officeIds);
-        
       const { officeIds, ...dataRequest } = data;
       const officesRequest = officeIds.map(officeId => ({ officeId }));
-     
-      console.log("��� ~ onSubmit ~ data:", officesRequest);
-      const response = await createholiday({
-        ...dataRequest,
-        dateFormat: "dd MMMM yyyy",
-        locale: "es",
-        offices: officesRequest, 
-      });
-      if (response?.status === 200) {
-        toast.success("Día festivo creado con éxito!");
-        router.push("/administracion/organizacion/administrar-festivos");
-        reset();
-      } else {
-        toast.error("Ocurrió un error al crear el día festivo");
+
+      if (!edit) {
+        const body = {
+          ...dataRequest,
+          dateFormat: "dd MMMM yyyy",
+          locale: "es",
+          offices: officesRequest,
+        };
+        const response = await createholiday(body);
+        if (response?.status === 200) {
+          toast.success("Día festivo creado con éxito!");
+          router.push("/administracion/organizacion/administrar-festivos");
+          reset();
+        } else {
+          toast.error("Ocurrió un error al crear el día festivo");
+        }
+        return;
       }
     } catch (error) {
       console.error("🚀 ~ onSubmit ~ error:", error);
@@ -65,12 +69,30 @@ export default function CreateHolidayForm() {
     }
   };
 
+  const editHolidayFunction = async () => {
+    try {
+      const bodyEdit = {
+        name: watch("name"),
+        dateFormat: "dd MMMM yyyy",
+        locale: "es",
+        description: watch("description"),
+      };
+      const response = await editHoliday(bodyEdit, holidayData?.id);
+      if (response?.status === 200) {
+        toast.success("Día festivo editado con éxito!");
+        router.push("/administracion/organizacion/administrar-festivos");
+        reset();
+      } else {
+        toast.error("Ocurrió un error al editar el día festivo");
+      }
+      return;
+    } catch (error) {}
+  };
+
   React.useEffect(() => {
     (async () => {
       const response = await getOffices();
       const responsePaymentType = await getPaymentType();
-      console.log("🚀 ~ response:", response);
-      console.log("🚀 ~ response:", responsePaymentType);
       if (response?.status === 200) {
         setOffices(response?.data);
       }
@@ -79,10 +101,6 @@ export default function CreateHolidayForm() {
       }
     })();
   }, []);
-
-  React.useEffect(() => {
-    console.log("��� ~ isValid:", selectecPaymentType);
-  }, [selectecPaymentType]);
 
   return (
     <Grid
@@ -103,131 +121,119 @@ export default function CreateHolidayForm() {
         mt: 3,
       }}
     >
-      <Grid>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="name"
           render={({ field: { value, onChange } }) => (
-            <Input
-              label="Nombre del festivo*"
-              type="text"
-              isValidField={!errors.name}
-              hint={errors.name?.message}
-              value={value}
-              onChange={onChange}
-            />
+            <Input label="Nombre del festivo*" type="text" isValidField={!errors.name} hint={errors.name?.message} value={value} onChange={onChange} />
           )}
         />
-      </Grid>
-
-      <Grid>
-        <Controller
-          control={control}
-          name="fromDate"
-          render={({ field: { value, onChange } }) => (
-            <InputCalendar
-              label="Desde la fecha*"
-              maxToday={false}
-              value={value}
-              onChange={(date) => onChange(date)}
-              isValidField={!errors.fromDate}
-              hint={errors.fromDate?.message}
-            />
-          )}
-        />
-      </Grid>
-
-      <Grid>
-        <Controller
-          control={control}
-          name="toDate"
-          render={({ field: { value, onChange } }) => (
-            <InputCalendar
-              label="Hasta la fecha*"
-              maxToday={false}
-              value={value}
-              onChange={(date) => onChange(date)}
-              isValidField={!errors.toDate}
-              hint={errors.toDate?.message}
-            />
-          )}
-        />
-      </Grid>
-
-      <Grid>
-        <Controller
-          control={control}
-          name="reschedulingType"
-          render={({ field: { onChange } }) => (
-            <InputSelect
-              label="Tipo de programación de pagos*"
-              options={
-                keyValueAdapter(paymentType, "value", "id")
-            }
-              setItem={(item: IKeyValue) =>{ onChange(item?.value), setselectecPaymentType(item.value)}}
-              
-              hint={errors.reschedulingType?.message}
-              isValidField={!errors.reschedulingType}
-            />
-          )}
-        />
-      </Grid>
-      {selectecPaymentType === 2 && (
-            <Grid>
-                <Controller
-                control={control}
-                name="repaymentsRescheduledTo"
-                render={({ field: { value, onChange } }) => (
-                    <InputCalendar
-                    label="Reembolso programado para*"
-                    maxToday={false}
-                    value={value}
-                    onChange={(date) => onChange(date)}
-                    isValidField={!errors.repaymentsRescheduledTo}
-                    hint={errors.repaymentsRescheduledTo?.message}
-                    />
-                )}
+      </InputResponsiveContainer>
+      {!edit && (
+        <>
+          <InputResponsiveContainer>
+            <Controller
+              control={control}
+              name="fromDate"
+              render={({ field: { value, onChange } }) => (
+                <InputCalendar
+                  label="Desde la fecha*"
+                  maxToday={false}
+                  value={value}
+                  onChange={date => onChange(date)}
+                  isValidField={!errors.fromDate}
+                  hint={errors.fromDate?.message}
                 />
-            </Grid>
+              )}
+            />
+          </InputResponsiveContainer>
+
+          <InputResponsiveContainer>
+            <Controller
+              control={control}
+              name="toDate"
+              render={({ field: { value, onChange } }) => (
+                <InputCalendar
+                  label="Hasta la fecha*"
+                  maxToday={false}
+                  value={value}
+                  onChange={date => onChange(date)}
+                  isValidField={!errors.toDate}
+                  hint={errors.toDate?.message}
+                />
+              )}
+            />
+          </InputResponsiveContainer>
+
+          <InputResponsiveContainer>
+            <Controller
+              control={control}
+              name="reschedulingType"
+              render={({ field: { onChange } }) => (
+                <InputSelect
+                  label="Tipo de programación de pagos*"
+                  options={keyValueAdapter(paymentType, "value", "id")}
+                  setItem={(item: IKeyValue) => {
+                    onChange(item?.value), setselectecPaymentType(item.value);
+                  }}
+                  hint={errors.reschedulingType?.message}
+                  isValidField={!errors.reschedulingType}
+                />
+              )}
+            />
+          </InputResponsiveContainer>
+        </>
+      )}
+      {selectecPaymentType === 2 && (
+        <InputResponsiveContainer>
+          <Controller
+            control={control}
+            name="repaymentsRescheduledTo"
+            render={({ field: { value, onChange } }) => (
+              <InputCalendar
+                label="Reembolso programado para*"
+                maxToday={false}
+                value={value}
+                onChange={date => onChange(date)}
+                isValidField={!errors.repaymentsRescheduledTo}
+                hint={errors.repaymentsRescheduledTo?.message}
+              />
+            )}
+          />
+        </InputResponsiveContainer>
       )}
 
-
-      <Grid>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="description"
           render={({ field: { value, onChange } }) => (
-            <Input
-              label="Descripción"
-              type="text"
-              isValidField={!errors.description}
-              hint={errors.description?.message}
-              value={value}
-              onChange={onChange}
-            />
+            <Input label="Descripción" type="text" isValidField={!errors.description} hint={errors.description?.message} value={value} onChange={onChange} />
           )}
         />
-      </Grid>
-
-      <Grid>
-        <Controller
-          control={control}
-          name="officeIds"
-          render={({ field: { onChange } }) => (
-            <InputSelect
+      </InputResponsiveContainer>
+      {!edit && (
+        <InputResponsiveContainer>
+          <Controller
+            control={control}
+            name="officeIds"
+            render={({ field: { onChange } }) => (
+              <InputSelect
                 label="Seleccionar oficinas que aplican*"
                 withCheckbox
                 options={keyValueAdapter(offices, "name", "id")}
                 setItems={selectedValues => {
-                    console.log("🚀 ~ WorkDaysPage ~ selectedValues:", offices);
-                    setValue("officeIds", selectedValues);
+                  console.log("🚀 ~ WorkDaysPage ~ selectedValues:", offices);
+                  setValue("officeIds", selectedValues);
                 }}
                 hint={errors.officeIds?.message}
                 isValidField={!errors.officeIds}
-            />
-          )}
-        />
-      </Grid>
+              />
+            )}
+          />
+        </InputResponsiveContainer>
+      )}
 
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
         <Button
@@ -238,13 +244,18 @@ export default function CreateHolidayForm() {
           onClick={() => router.push("/administracion/organizacion/administrar-festivos")}
         />
         <Button
-            type="submit"
-            isLoading={isLoading}
-            //disabled={!isValid}
-            size="small"
-            text="Aceptar"
-            variant="primary"
-          />
+          type="submit"
+          isLoading={isLoading}
+          //disabled={!isValid}
+          onClick={() => {
+            if (edit) {
+              editHolidayFunction();
+            }
+          }}
+          size="small"
+          text="Aceptar"
+          variant="primary"
+        />
       </Grid>
     </Grid>
   );
