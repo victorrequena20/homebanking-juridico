@@ -2,10 +2,8 @@
 import React from "react";
 import Wrapper from "@/components/Wrapper";
 import { Stack, Typography } from "@mui/material";
-import Link from "next/link";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
-import { useRouter } from "next/navigation";
 import ConfirmDeleteModal from "@/components/Modals/ConfirmDeleteModal/ConfirmDeleteModal";
 import InputSelect from "@/components/InputSelect";
 import { getCurrencies, updateCurrencies } from "@/services/Core.service";
@@ -19,7 +17,6 @@ export default function ManejoPage() {
   const [currencySelected, setCurrencySelected] = React.useState<any | null>({});
   const [currencyToDelete, setCurrencyToDelete] = React.useState<string>("");
   const [currencies, setCurrencies] = React.useState<any>({});
-  const router = useRouter();
 
   const handleGetCurrencies = async () => {
     setIsLoading(true);
@@ -72,14 +69,16 @@ export default function ManejoPage() {
         ]}
       />
 
-      <Stack sx={{ mt: 5, minWidth: "600px", maxWidth: "600px" }}>
+      <Stack sx={{ mt: 5, minWidth: { xs: "100%", lg: "600px" }, maxWidth: "600px" }}>
         {/* Monedas */}
-        <Stack sx={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <InputSelect
-            label="Moneda*"
-            options={keyValueAdapter(currencies?.currencyOptions, "displayLabel", "code")}
-            setItem={item => setCurrencySelected(item)}
-          />
+        <Stack sx={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", gap: 3 }}>
+          <Stack flex={1}>
+            <InputSelect
+              label="Moneda*"
+              options={keyValueAdapter(currencies?.currencyOptions, "displayLabel", "code")}
+              setItem={item => setCurrencySelected(item)}
+            />
+          </Stack>
           <Button
             size="small"
             variant="primary"

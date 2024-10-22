@@ -1,9 +1,7 @@
 import axios from "axios";
+const API_BASE_URL_QA = "https://bdc-backend-fw-qa.ultrapaynet.com:8044/litecore-provider/api/v1";
 
-// const API_BASE_URL = "https://staging.mifos.io/fineract-provider/api/v1";
-const API_BASE_URL = "https://bdc.ultrapaynet.com/litecore-provider/api/v1";
-// const API_BASE_URL = "http://15.228.246.64:8443/litecore-provider/api/v1";
-// const API_BASE_URL = "http://localhost:8443/litecore-provider/api/v1";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || API_BASE_URL_QA;
 
 const HttpClient = axios.create({
   baseURL: API_BASE_URL,

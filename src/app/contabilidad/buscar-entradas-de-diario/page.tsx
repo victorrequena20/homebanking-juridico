@@ -4,7 +4,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Wrapper from "@/components/Wrapper";
 import { Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { formatSpanishDate } from "@/utilities/common.utility";
+import { formatSpanishDate, getPrevMonthFormattedEsddMMMMyyyy, getTodayFormattedEsddMMMMyyyy } from "@/utilities/common.utility";
 import { getJournalEntries } from "@/services/Core.service";
 import { toast } from "sonner";
 import { Controller, useForm } from "react-hook-form";
@@ -15,6 +15,9 @@ import { getGlAccounts } from "@/services/Accounting.service";
 import InputCalendar from "@/components/InputCalendar";
 import Input from "@/components/Input";
 import { dateFormat } from "@/constants/global";
+import { useRouter } from "next/navigation";
+import { formatAmountB } from "@/utilities/amount.utility";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function BuscarEntradasDeDiarioPage() {
   const [offices, setOffices] = React.useState<any>([]);
@@ -22,6 +25,12 @@ export default function BuscarEntradasDeDiarioPage() {
   const [isLoadingTable, setIsLoadingTable] = React.useState<boolean>(false);
   const [journalEntries, setJournalEntries] = React.useState<any>([]);
   const [glAccounts, setGlAccounts] = React.useState<any>([]);
+  const router = useRouter()
+  const date = new Date()
+  const today = (date.toLocaleString()).split(",")[0]
+  date.setMonth(date.getMonth() - 1)
+  const prevMonth = date.toLocaleString().split(",")[0]
+  
   const {
     control,
     handleSubmit,
@@ -38,32 +47,43 @@ export default function BuscarEntradasDeDiarioPage() {
       field: "entryId",
       headerName: "ID de entrada",
       flex: 1,
+      minWidth: 80,
       valueGetter: (value, row) => `${row?.id || ""}`,
     },
     {
       field: "office",
       headerName: "Oficina",
       flex: 1,
+      minWidth: 130,
       valueGetter: (value, row) => `${row?.officeName || ""} `,
+    },
+    {
+      field: "transactionId",
+      headerName: "Id de transacción",
+      flex: 1,
+      minWidth: 130,
+      valueGetter: (value, row) => `${row?.transactionId || ""} `,
     },
     {
       field: "transactionDate",
       headerName: "Fecha de transacción",
       flex: 1,
+      minWidth: 170,
       valueGetter: (value, row) => `${formatSpanishDate(row?.transactionDate) || ""} `,
     },
     {
       field: "type",
       headerName: "Tipo",
       flex: 1,
+      minWidth: 110,
       valueGetter: (value, row) => `${row?.glAccountType?.value || ""} `,
-      align: "center",
     },
     {
       field: "submittedOnDate",
       headerName: "Enviado el día",
       sortable: false,
       flex: 1,
+      minWidth: 170,
       valueGetter: (value, row) => `${formatSpanishDate(row?.submittedOnDate) || ""} `,
     },
     {
@@ -71,6 +91,7 @@ export default function BuscarEntradasDeDiarioPage() {
       headerName: "Código de cuenta",
       sortable: false,
       flex: 1,
+      minWidth: 170,
       valueGetter: (value, row) => `${formatSpanishDate(row?.glAccountCode) || ""} `,
     },
     {
@@ -78,6 +99,7 @@ export default function BuscarEntradasDeDiarioPage() {
       headerName: "Nombre de la cuenta",
       sortable: false,
       flex: 1,
+      minWidth: 170,
       valueGetter: (value, row) => `${row?.glAccountName || ""} `,
     },
     {
@@ -85,6 +107,7 @@ export default function BuscarEntradasDeDiarioPage() {
       headerName: "Moneda",
       sortable: false,
       flex: 1,
+      minWidth: 80,
       valueGetter: (value, row) => `${row?.currency?.code || ""} `,
     },
     {
@@ -92,14 +115,16 @@ export default function BuscarEntradasDeDiarioPage() {
       headerName: "Débito",
       sortable: false,
       flex: 1,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && row?.amount) || ""} `,
+      minWidth: 80,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "DEBIT" && formatAmountB(row?.amount)) || ""} `,
     },
     {
-      field: "loan",
+      field: "credit",
       headerName: "Crédito",
       sortable: false,
       flex: 1,
-      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && row?.amount) || ""} `,
+      minWidth: 80,
+      valueGetter: (value, row) => `${(row?.entryType?.value === "CREDIT" && formatAmountB(row?.amount)) || ""} `,
     },
   ];
 
@@ -126,17 +151,19 @@ export default function BuscarEntradasDeDiarioPage() {
     }
   }
 
-  React.useEffect(() => {
+  React.useEffect(() => {    
     handleGetJournalEntries({
       ...dateFormat,
       offset: 0,
       limit: -1,
+      orderBy: "id",
+      sortOrder: 'asc',
       officeId: getValues("officeId"),
       glAccountId: getValues("glAccountId"),
       transactionId: getValues("transactionId"),
       manualEntriesOnly: getValues("manualEntriesOnly") === "true",
-      fromDate: getValues("fromDate"),
-      toDate: getValues("toDate"),
+      fromDate: getValues("fromDate") ? getValues("fromDate") : getPrevMonthFormattedEsddMMMMyyyy(),
+      toDate: getValues("toDate") ? getValues("toDate") : getTodayFormattedEsddMMMMyyyy(),
       submittedOnDateFrom: getValues("submittedOnDateFrom"),
       submittedOnDateTo: getValues("submittedOnDateTo"),
     });
@@ -150,6 +177,7 @@ export default function BuscarEntradasDeDiarioPage() {
     watch("submittedOnDateTo"),
     watch("transactionId"),
   ]);
+
 
   React.useEffect(() => {
     (async () => {
@@ -181,36 +209,41 @@ export default function BuscarEntradasDeDiarioPage() {
             flexWrap: "wrap",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="officeId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Oficina"
-                  options={keyValueAdapter(offices, "name", "id")}
-                  setItem={value => onChange(value?.value)}
-                  defaultValue={value}
-                  width="360px"
-                />
-              )}
-            />
-          </Stack>
-          <Stack>
-            <Controller
-              control={control}
-              name="glAccountId"
-              render={({ field: { onChange, value } }) => (
-                <InputSelect
-                  label="Nombre o código de cuenta del libro mayor"
-                  options={keyValueAdapter(glAccounts, "name", "id")}
-                  setItem={value => onChange(value?.value)}
-                  defaultValue={value}
-                  width="360px"
-                />
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="officeId"
+                render={({ field: { onChange, value } }) => (
+                  <InputSelect
+                    label="Oficina"
+                    options={keyValueAdapter(offices, "name", "id")}
+                    setItem={value => onChange(value?.value)}
+                    defaultValue={value}
+                    width={'360px'}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="glAccountId"
+                render={({ field: { onChange, value } }) => (
+                  <InputSelect
+                    label="Nombre o código de cuenta del libro mayor"
+                    options={keyValueAdapter(glAccounts, "name", "id")}
+                    setItem={value => onChange(value?.value)}
+                    defaultValue={value}
+                    width={'360px'}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
@@ -225,11 +258,12 @@ export default function BuscarEntradasDeDiarioPage() {
                   ]}
                   setItem={value => onChange(value?.value)}
                   defaultValue={value}
-                  width="360px"
+                  width={'360px'}
                 />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         {/* ---------- */}
         <Stack
@@ -241,68 +275,79 @@ export default function BuscarEntradasDeDiarioPage() {
             flexWrap: "wrap",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="fromDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar
-                  label="Fecha de transacción desde"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.dateValue?.message}
-                  isValidField={!errors.dateValue}
-                  width="360px"
-                />
-              )}
-            />
-          </Stack>
-          <Stack>
-            <Controller
-              control={control}
-              name="toDate"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width="360px" />
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="fromDate"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar
+                    label="Fecha de transacción desde"
+                    value={value}
+                    onChange={onChange}
+                    hint={errors.dateValue?.message}
+                    isValidField={!errors.dateValue}
+                    width={'360px'}
+                    defaultValue={prevMonth}
+                  />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="toDate"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={'360px'} defaultValue={today}/>
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
               name="transactionId"
               render={({ field: { onChange, value } }) => (
-                <Input label="ID de transacción" type="text" value={value} onChange={onChange} width="360px" />
+                <Input label="ID de transacción" type="text" value={value} onChange={onChange} width={'360px'} />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         {/* ---------- */}
         <Stack
           sx={{
             mb: 4,
-            flexDirection: "row",
+            flexDirection: 'row',
             gap: 3,
             alignItems: "flex-end",
           }}
         >
-          <Stack>
-            <Controller
-              control={control}
-              name="submittedOnDateFrom"
-              render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción desde" value={value} onChange={onChange} width="360px" />
-              )}
-            />
-          </Stack>
+          <InputResponsiveContainer>
+            <Stack>
+              <Controller
+                control={control}
+                name="submittedOnDateFrom"
+                render={({ field: { onChange, value } }) => (
+                  <InputCalendar label="Fecha de transacción desde" value={value} onChange={onChange} width={'360px'} />
+                )}
+              />
+            </Stack>
+          </InputResponsiveContainer>
+          <InputResponsiveContainer>
           <Stack>
             <Controller
               control={control}
               name="toDate"
               render={({ field: { onChange, value } }) => (
-                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width="360px" />
+                <InputCalendar label="Fecha de transacción hasta" value={value} onChange={onChange} width={'360px'} />
               )}
             />
           </Stack>
+          </InputResponsiveContainer>
         </Stack>
         <DataGrid
           rows={journalEntries}
@@ -315,6 +360,15 @@ export default function BuscarEntradasDeDiarioPage() {
               },
             },
           }}
+          sx={{
+            '& .MuiDataGrid-cell:focus': {
+              outline: 'none',
+            },
+            '& .MuiDataGrid-row:hover': {
+              cursor: 'pointer',
+            },
+          }}
+          onRowClick={params => router.push(`/contabilidad/buscar-entradas-de-diario/${params?.row?.transactionId}`)}
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}

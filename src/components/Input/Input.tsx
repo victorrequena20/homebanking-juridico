@@ -16,6 +16,7 @@ export default function Input({
   defaultValue,
   width,
   maxLength,
+  disabled = false,
 }: InputProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
@@ -26,13 +27,13 @@ export default function Input({
   }, [defaultValue]);
 
   return (
-    <Box sx={{ maxWidth: width || "392px" }}>
+    <Box sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "392px" } }}>
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
-      <div
+      <Box
         className={`${styles.container} ${isFocused && styles.focusedInput} ${!isValidField && styles.inputError}`}
-        style={{ width: width || "392px", maxWidth: width || "392px" }}
+        sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
       >
         <input
           type={type === "password" ? (showPassword ? "text" : "password") : type}
@@ -40,12 +41,14 @@ export default function Input({
           className={styles.input}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          disabled={disabled}
           onChange={e => {
             if (onChange) onChange(e);
             setInputValue(e?.target?.value || "");
           }}
           value={inputValue || value || ""}
           maxLength={maxLength}
+          style={{ color: disabled ? "#12141a77" : "#12141a" }}
         />
         {type === "password" && (
           <>
@@ -76,7 +79,7 @@ export default function Input({
             )}
           </>
         )}
-      </div>
+      </Box>
       {hint && (
         <Typography variant="caption" color={isValidField ? "#606778" : "#ea3647"}>
           {hint}

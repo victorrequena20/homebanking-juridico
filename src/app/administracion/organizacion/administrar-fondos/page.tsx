@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Link, Stack } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { getFunds } from "@/services/Funds.service";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
@@ -55,7 +54,7 @@ export default function AdministrarFondos() {
           { title: "Administrar fondos" },
         ]}
       />
-      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2 }}>
+      <Stack sx={{ alignItems: "center", justifyContent: "flex-end", flexDirection: "row", gap: 2, mt: 3 }}>
         <Button
           size="small"
           variant="primary"

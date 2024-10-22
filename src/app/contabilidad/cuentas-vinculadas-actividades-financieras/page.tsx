@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Button from "@/components/Button";
 import Wrapper from "@/components/Wrapper";
@@ -14,6 +14,14 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [financialActivties, setFinancialActivties] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
+  const validatedTypAccount = (typeAccount: string) => {
+    const accountTypes: { [key: string]: string } = {
+      ASSET: "Activo",
+      LIABILITY: "Pasivo",
+      EQUITY: "Patrimonio",
+    };
+    return accountTypes[typeAccount] || typeAccount || "";
+  };
 
   const columns: GridColDef<(typeof financialActivties)[number]>[] = [
     {
@@ -26,7 +34,7 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
       field: "typeAccount",
       headerName: "Tipo de cuenta",
       flex: 1,
-      valueGetter: (value, row) => `${row?.financialActivityData?.mappedGLAccountType || ""} `,
+      valueGetter: (value, row) => `${validatedTypAccount(row?.financialActivityData?.mappedGLAccountType)} `,
     },
     {
       field: "glCode",
@@ -79,26 +87,28 @@ export default function CuentasVinculadasActividadesFinancierasPage() {
           onClick={() => router.push("/contabilidad/cuentas-vinculadas-actividades-financieras/crear")}
         />
       </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={financialActivties}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "700px" }}>
+          <DataGrid
+            sx={{ cursor: "pointer" }}
+            rows={financialActivties}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-          onRowClick={row => {
-            router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${row?.row?.id}`);
-          }}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+            onRowClick={row => {
+              router.push(`/contabilidad/cuentas-vinculadas-actividades-financieras/${row?.row?.id}`);
+            }}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );

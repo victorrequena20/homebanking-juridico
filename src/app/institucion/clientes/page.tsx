@@ -91,26 +91,28 @@ export default function Clients() {
           />
         </Stack>
       </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={clients}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "700px" }}>
+          <DataGrid
+            sx={{ cursor: "pointer" }}
+            rows={clients}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-          onRowClick={params => {
-            router.push(`/institucion/clientes/${params?.row?.id}/general`);
-          }}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+            onRowClick={params => {
+              router.push(`/institucion/clientes/${params?.row?.id}/general`);
+            }}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );

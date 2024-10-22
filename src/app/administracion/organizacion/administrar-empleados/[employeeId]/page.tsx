@@ -51,7 +51,7 @@ export default function EmployeeDetails() {
           Los detalles de este empleado se encuentran debajo.
         </Typography>
       </Stack>
-      <Stack sx={{ mt: 5, minWidth: "600px", maxWidth: "600px" }}>
+      <Stack sx={{ mt: 5, minWidth: { xs: "100%", lg: "600px" }, maxWidth: "600px" }}>
         <Stack
           sx={{
             flexDirection: "row",

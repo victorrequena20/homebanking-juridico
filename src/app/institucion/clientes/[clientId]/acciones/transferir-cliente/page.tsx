@@ -14,6 +14,7 @@ import { dateFormat } from "@/constants/global";
 import { useParams, useRouter } from "next/navigation";
 import { getOffices } from "@/services/Office.service";
 import Input from "@/components/Input";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 const schema = yup.object().shape({
   officeId: yup.mixed().required("Oficina es obligatoria"),
@@ -84,7 +85,7 @@ export default function TransferClientPage() {
         mt={3}
       >
         {/* Offices */}
-        <Grid xs={12}>
+        <InputResponsiveContainer>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
@@ -94,9 +95,9 @@ export default function TransferClientPage() {
               )}
             />
           </Stack>
-        </Grid>
+        </InputResponsiveContainer>
         {/* Cerrado el dia  */}
-        <Grid xs={12}>
+        <InputResponsiveContainer>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
@@ -114,9 +115,9 @@ export default function TransferClientPage() {
               )}
             />
           </Stack>
-        </Grid>
+        </InputResponsiveContainer>
 
-        <Grid xs={12}>
+        <InputResponsiveContainer>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
@@ -124,7 +125,8 @@ export default function TransferClientPage() {
               render={({ field: { onChange, value } }) => <Input label="Nota" type="text" value={value} onChange={onChange} width="100%" />}
             />
           </Stack>
-        </Grid>
+        </InputResponsiveContainer>
+
         {/* Buttons */}
         <Grid md={10}>
           <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "center", columnGap: 3 }}>

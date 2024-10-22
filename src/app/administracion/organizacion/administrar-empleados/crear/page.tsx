@@ -25,7 +25,9 @@ export default function CreateEmployeePage() {
       <Stack sx={{ mt: 3 }}>
         <ButtonBack />
       </Stack>
-      <EmployeeForm />
+      <Stack sx={{ alignItems: "center" }}>
+        <EmployeeForm />
+      </Stack>
     </Wrapper>
   );
 }

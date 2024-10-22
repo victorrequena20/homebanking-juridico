@@ -68,7 +68,7 @@ export default function RenderFormModal({ isOpen = false, setIsOpen, title, chil
             {subtitle}
           </Typography>
         </Stack>
-        <Stack sx={{ mt: 3 }}>{children}</Stack>
+        <Stack sx={{ mt: 3, width: "100%" }}>{children}</Stack>
       </Box>
     </Modal>
   );

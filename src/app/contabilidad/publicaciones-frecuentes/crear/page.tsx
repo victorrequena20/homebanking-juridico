@@ -18,6 +18,7 @@ import { createJournalEntry, getCurrencies, getPaymentTypes } from "@/services/C
 import { toast } from "sonner";
 import { createFrecuentPostingsAdapter } from "@/adapters/accounting/createFrecuentPostings.adapter";
 import { useRouter } from "next/navigation";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 interface IForm {
   accountNumber?: string;
@@ -112,7 +113,7 @@ export default function TransactionForm() {
   return (
     <Wrapper>
       <Breadcrumbs
-        title="Crear publicacion frecuente"
+        title="Crear publicación frecuente"
         items={[
           { title: "Inicio", href: "/dashboard" },
           { title: "Contabilidad", href: "/contabilidad" },
@@ -134,7 +135,7 @@ export default function TransactionForm() {
             rowGap: 3,
             maxWidth: "1000px",
             backgroundColor: "#fff",
-            px: 3,
+            px: { xs: 1.5, sm: 3 },
             py: 6,
             borderRadius: "16px",
             alignItems: "center",
@@ -143,7 +144,7 @@ export default function TransactionForm() {
           component="form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="officeId"
@@ -158,9 +159,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="accountingRule"
@@ -175,9 +176,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="currencyCode"
@@ -192,14 +193,14 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
           {/* Padding */}
-          <Grid item>
+          <InputResponsiveContainer>
             <Stack sx={{ width: "392px" }} />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="debits"
@@ -214,9 +215,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="debitAmount"
@@ -231,9 +232,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="credits"
@@ -248,9 +249,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="creditAmount"
@@ -265,9 +266,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="referenceNumber"
@@ -282,9 +283,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="transactionDate"
@@ -298,9 +299,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="paymentTypeId"
@@ -315,9 +316,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="accountNumber"
@@ -332,9 +333,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="checkNumber"
@@ -349,9 +350,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="routingCode"
@@ -366,9 +367,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="receiptNumber"
@@ -383,9 +384,9 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="bankNumber"
@@ -400,24 +401,17 @@ export default function TransactionForm() {
                 />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
-          <Grid item>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="comments"
               render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Comentarios"
-                  type="text"
-                  value={value}
-                  onChange={onChange}
-                  hint={errors.comments?.message}
-                  isValidField={!errors.comments}
-                />
+                <Input label="Comentarios" type="text" value={value} onChange={onChange} hint={errors.comments?.message} isValidField={!errors.comments} />
               )}
             />
-          </Grid>
+          </InputResponsiveContainer>
 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="center" spacing={3}>

@@ -19,6 +19,7 @@ interface IInputSelectProps {
   defaultValue?: string | number | (string | number)[] | null;
   value?: any;
   width?: string;
+  disabled?: boolean;
 }
 
 export default function InputSelect({
@@ -34,6 +35,7 @@ export default function InputSelect({
   setItems,
   value,
   width,
+  disabled = false,
 }: IInputSelectProps) {
   const [valueSelected, setValueSelected] = React.useState<IKeyValue | null>({ label: "", value: "" });
   const [selectedValues, setSelectedValues] = React.useState<(string | number | undefined)[]>([]);
@@ -72,10 +74,10 @@ export default function InputSelect({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ value:", value);
-    setValueSelected(value);
+    if (value && value.value !== valueSelected?.value) {
+      setValueSelected(value);
+    }
   }, [value]);
 
   useEffect(() => {
@@ -106,10 +108,10 @@ export default function InputSelect({
       <Typography variant="caption" color="#606778" fontWeight="300">
         {label}
       </Typography>
-      <div
+      <Box
         className={`${styles.container} ${isOpen && styles.focusedInput} ${!isValidField && styles.inputError}`}
-        style={{ width: width || "392px", maxWidth: width || "392px" }}
-        onClick={() => setIsOpen(!isOpen)}
+        sx={{ maxWidth: width || "392px", width: { xs: "100%", sm: "100%" } }}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
       >
         <input
           placeholder={placeholder}
@@ -121,7 +123,7 @@ export default function InputSelect({
                 : "Seleccione opciones"
               : value?.label || valueSelected?.label || "Seleccione una opción"
           }
-          style={{ color: value?.label || valueSelected?.label ? "#12141a" : "#606778" }}
+          style={{ color: disabled ? "#12141a77" : value?.label || valueSelected?.label ? "#12141a" : "#606778" }}
           readOnly
         />
         <Box
@@ -135,7 +137,7 @@ export default function InputSelect({
         >
           {isOpen ? <ArrowUpIcon size={20} color="#484848" /> : <ArrowDownIcon size={20} color="#484848" />}
         </Box>
-      </div>
+      </Box>
 
       {hint && (
         <Typography variant="caption" color={isValidField ? "#606778" : "#ea3647"}>
