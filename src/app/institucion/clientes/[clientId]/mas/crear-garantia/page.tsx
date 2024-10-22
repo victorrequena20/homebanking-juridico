@@ -23,7 +23,7 @@ const schema = yup.object().shape({
   quantity: yup.mixed().required(),
 });
 
-export default function createWarranty() {
+export default function CreateWarranty() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [template, setTemplate] = React.useState<any>(null);
   const {
