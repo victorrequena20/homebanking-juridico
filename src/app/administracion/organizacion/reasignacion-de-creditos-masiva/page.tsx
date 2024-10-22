@@ -21,7 +21,7 @@ export default function ReasignacionDeCreditosMasivaPage() {
         ]}
       />
 
-      <Stack sx={{ mt: 5 }}>
+      <Stack sx={{ alignItems: "center" }}>
         <MassiveCreditReallocationForm />
       </Stack>
     </Wrapper>
