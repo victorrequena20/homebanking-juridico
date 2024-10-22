@@ -105,6 +105,7 @@ export default function InputCalendar({
             value={date}
             onChange={calendarProps => {
               const formattedDate = formatDateEsddMMMMyyyy(calendarProps);
+              console.log("🚀 ~ formattedDate:", formattedDate);
               setDate(calendarProps);
               setInputValue(formattedDate);
               onChange && onChange(formattedDate);

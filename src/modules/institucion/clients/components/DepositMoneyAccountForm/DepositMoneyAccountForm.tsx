@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { dateFormat } from "@/constants/global";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 const validationSchema = yup.object().shape({
   transactionDate: yup.date().required("La fecha de transacción es obligatoria").max(new Date(), "La fecha no puede ser futura"),
@@ -53,11 +54,11 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
   }
 
   async function onSubmit(data: any) {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
     const response = await depositTransaction(accountId, {
       ...data,
       ...dateFormat,
+      transactionDate: formatDateEsddMMMMyyyy(data?.transactionDate),
       paymentTypeId: data?.paymentTypeId?.value,
     });
     if (response?.status === 200) {
@@ -90,14 +91,18 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
       }}
     >
       {/* Fecha de transacción */}
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="transactionDate"
           render={({ field: { onChange } }) => (
             <InputCalendar
               label="Fecha de transacción *"
-              onChange={date => onChange(date)}
+              onChange={date => {
+                console.log("🚀 ~ DepositMoneyAccountForm ~ date:", date);
+                onChange(date);
+                setValue("transactionDate", date);
+              }}
               hint={errors.transactionDate?.message}
               isValidField={!errors.transactionDate}
               maxToday
@@ -105,9 +110,9 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Monto */}
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="transactionAmount"
@@ -115,9 +120,9 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
             <Input label="Monto *" type="number" {...field} isValidField={!errors.transactionAmount} hint={errors.transactionAmount?.message} width="100%" />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
       {/* Tipo de pago */}
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -135,9 +140,9 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
       {/* Nota */}
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Stack sx={{ flex: 1 }}>
           <Controller
             control={control}
@@ -145,7 +150,7 @@ export default function DepositMoneyAccountForm({ accountId }: { accountId: stri
             render={({ field: { onChange, value } }) => <Input label="Notas" type="text" value={value} onChange={onChange} width="100%" />}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Buttons */}
       <Grid>
