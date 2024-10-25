@@ -1,11 +1,12 @@
+// TODO:REFACTOR
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, Stack } from "@mui/material";
 import Button from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSelect from "@/components/InputSelect";
 import { IKeyValue } from "@/types/common";
-import { addComission, createCollateralManagement, getTemplateCollateralManagement } from "@/services/Clients.service";
+import { createCollateralManagement, getTemplateCollateralManagement } from "@/services/Clients.service";
 import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
