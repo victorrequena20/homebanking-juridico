@@ -25,7 +25,7 @@ export default function MapeoDeFondos() {
         <ButtonBack />
       </Stack>
 
-      <Stack sx={{ mt: 3 }}>
+      <Stack sx={{ alignItems: "center" }}>
         <FundMapping />
       </Stack>
     </Wrapper>
