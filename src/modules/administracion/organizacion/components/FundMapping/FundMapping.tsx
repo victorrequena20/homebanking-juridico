@@ -439,7 +439,7 @@ export default function FundMapping() {
         </>
       )}
       {/* Botones */}
-      <Grid>
+      <Grid xs={12}>
         <Stack direction="row" justifyContent="center" sx={{ mt: 3, gap: 3 }}>
           <Button text="Cancelar" variant="navigation" onClick={() => console.log("Cancelado")} />
           <Button text="Aceptar" variant="primary" type="submit" disabled={!isValid} />
