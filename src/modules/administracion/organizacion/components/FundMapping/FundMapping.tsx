@@ -210,14 +210,11 @@ export default function FundMapping() {
       </InputResponsiveContainer>
 
       {/* Toggle para "Porcentaje pendiente del Crédito" */}
+
       <InputResponsiveContainer>
         <Stack sx={{ alignItems: "flex-start" }}>
           <Toggle label="Porcentaje pendiente del Crédito" isChecked={isPercentageActive} setIsChecked={setIsPercentageActive} size="small" />
         </Stack>
-      </InputResponsiveContainer>
-      {/* Padding */}
-      <InputResponsiveContainer>
-        <Stack sx={{ width: "392px" }} />
       </InputResponsiveContainer>
 
       {/* Si el toggle "Porcentaje pendiente" está activo */}
@@ -252,10 +249,6 @@ export default function FundMapping() {
 
           {percentageComparisonCondition === "entre" ? (
             <>
-              {/* Padding */}
-              <InputResponsiveContainer>
-                <Stack sx={{ width: "392px" }} />
-              </InputResponsiveContainer>
               <InputResponsiveContainer>
                 <Controller
                   control={control}
@@ -315,11 +308,6 @@ export default function FundMapping() {
         <Stack sx={{ alignItems: "flex-start" }}>
           <Toggle label="Monto pendiente del Crédito" isChecked={isAmountActive} setIsChecked={setIsAmountActive} size="small" />
         </Stack>
-      </InputResponsiveContainer>
-
-      {/* Padding */}
-      <InputResponsiveContainer>
-        <Stack sx={{ width: "392px" }} />
       </InputResponsiveContainer>
 
       {/* Si el toggle "Monto pendiente" está activo */}
