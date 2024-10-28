@@ -72,23 +72,25 @@ export default function RolsPermitions() {
           onClick={() => router.push("/administracion/sistema/roles-permisos/create")}
         />
       </Stack>
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          rows={roles}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "600px" }}>
+          <DataGrid
+            rows={roles}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          onRowClick={(params, event, details) => router.push(`/administracion/sistema/config-tareas-realizador-aprobador`)}
-          pageSizeOptions={[10, 25, 50]}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            onRowClick={(params, event, details) => router.push(`/administracion/sistema/config-tareas-realizador-aprobador`)}
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );
