@@ -10,6 +10,7 @@ import { createPaymentType, updatePaymentType } from "@/services/Core.service";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Toggle from "@/components/Toggle";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 interface IForm {
   name: string;
@@ -85,12 +86,13 @@ export default function CreatePaymentTypeForm({ paymentTypeData }: { paymentType
         py: 6,
         gap: 3,
         mt: 3,
+        flexDirection: "column",
         borderRadius: "16px",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <Grid item sx={{ alignItems: "center", justifyContent: "center" }}>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -108,9 +110,9 @@ export default function CreatePaymentTypeForm({ paymentTypeData }: { paymentType
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="description"
@@ -126,9 +128,9 @@ export default function CreatePaymentTypeForm({ paymentTypeData }: { paymentType
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Controller
           control={control}
           name="position"
@@ -144,13 +146,13 @@ export default function CreatePaymentTypeForm({ paymentTypeData }: { paymentType
             />
           )}
         />
-      </Grid>
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
+      <InputResponsiveContainer>
         <Stack sx={{ alignItems: "flex-start" }}>
           <Toggle label="Es pago en efectivo?" isChecked={isActive} setIsChecked={setIsActive} size="small" />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" gap={3}>
