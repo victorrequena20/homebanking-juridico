@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Wrapper from "@/components/Wrapper";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import Button from "@/components/Button";
 import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import CheckIcon from "@/assets/icons/Checkicon";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import StatusTag from "@/components/Tags/StatusTag";
+import EditIcon from "@/assets/icons/EditIcon";
 
 export default function RolsPermitions() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,6 +36,35 @@ export default function RolsPermitions() {
       headerName: "Estado",
       flex: 1,
       renderCell: params => <StatusTag isActive={!params.row.status} mode="circle" />,
+    },
+    {
+      field: "actions",
+      headerName: "Acciones",
+      flex: 1,
+      renderCell: params => (
+        <Stack sx={{ justifyContent: "center", height: "100%" }}>
+          <Tooltip placement="top" title="Editar">
+            <Box
+              sx={{
+                bgcolor: "var(--primary)",
+                width: "32px",
+                height: "32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                router.push(`/administracion/sistema/roles-permisos/${params.row.id}/page.tsx`);
+              }}
+            >
+              <EditIcon color="#fff" size={20} />
+            </Box>
+          </Tooltip>
+        </Stack>
+      ),
+      align: "center",
     },
   ];
 
@@ -72,7 +102,7 @@ export default function RolsPermitions() {
           onClick={() => router.push("/administracion/sistema/roles-permisos/create")}
         />
       </Stack>
-      <Stack sx={{ mt: 5, width: "100%", overflowX: "auto" }}>
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
         <Box sx={{ minWidth: "600px" }}>
           <DataGrid
             rows={roles}
