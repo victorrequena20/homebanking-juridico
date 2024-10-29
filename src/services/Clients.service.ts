@@ -256,11 +256,9 @@ export const getTemplateUpdateDefaultSavings = async (clientId: string): Promise
   }
 };
 
-
-export const updateDefaultSavings = async (clientId: string, body:{savingsAccountId:number}): Promise<ApiResponse> => {
+export const updateDefaultSavings = async (clientId: string, body: { savingsAccountId: number }): Promise<ApiResponse> => {
   try {
-    
-    const response = await HttpClient.post(`/clients/${clientId}?command=updateSavingsAccount`,body);
+    const response = await HttpClient.post(`/clients/${clientId}?command=updateSavingsAccount`, body);
     return {
       data: response.data,
       status: response.status,
@@ -268,5 +266,17 @@ export const updateDefaultSavings = async (clientId: string, body:{savingsAccoun
   } catch (error) {
     console.error("🚀 ~ updateDefaultSavings ~ error:", error);
     throw error;
+  }
+};
+
+export const getTemplateSeePermanentInstructions = async (clientId: string) => {
+  try {
+    const response = await HttpClient.get(`/standinginstructions/template?fromAccountType=2&fromClientId=${clientId}&fromOfficeId=1`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateSeePermanentInstructions ~ error:", error);
   }
 };
