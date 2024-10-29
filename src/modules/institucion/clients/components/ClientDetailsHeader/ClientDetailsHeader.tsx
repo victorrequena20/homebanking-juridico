@@ -464,7 +464,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       variant="body2"
                       fontWeight="300"
                       onClick={() => {
-                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/encuesta`);
                       }}
                     >
                       Encuesta
@@ -508,7 +508,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       variant="body2"
                       fontWeight="300"
                       onClick={() => {
-                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/reportes-de-pantalla-del-cliente`);
                       }}
                     >
                       Reportes de pantalla del cliente
@@ -530,7 +530,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                       variant="body2"
                       fontWeight="300"
                       onClick={() => {
-                        router.push(`/institucion/clientes/${params.clientId}/acciones/transferir-cliente`);
+                        router.push(`/institucion/clientes/${params.clientId}/acciones/ver-instrucciones-permanentes`);
                       }}
                     >
                       Ver instrucciones permanentes
