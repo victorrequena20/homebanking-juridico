@@ -41,26 +41,31 @@ export default function RolsPermitions() {
       field: "actions",
       headerName: "Acciones",
       flex: 1,
-      renderCell: params => (
-        <Stack sx={{ justifyContent: "center", height: "100%" }}>
-          <Tooltip placement="top" title="Editar">
-            <Box
-              sx={{
-                bgcolor: "var(--primary)",
-                width: "32px",
-                height: "32px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-                cursor: "pointer",
-              }}
-            >
-              <EditIcon color="#fff" size={20} />
-            </Box>
-          </Tooltip>
-        </Stack>
-      ),
+      renderCell: params =>
+        params.row.id !== 1 ? (
+          <Stack sx={{ justifyContent: "center", height: "100%" }}>
+            <Tooltip placement="top" title="Editar">
+              <Box
+                className="edit-icon-container"
+                sx={{
+                  bgcolor: "var(--primary)",
+                  width: "32px",
+                  height: "32px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  router.push(`/administracion/sistema/roles-permisos/${params.row.id}/edit`);
+                }}
+              >
+                <EditIcon color="#fff" size={20} />
+              </Box>
+            </Tooltip>
+          </Stack>
+        ) : null,
       align: "center",
     },
   ];
@@ -114,7 +119,10 @@ export default function RolsPermitions() {
             }}
             disableRowSelectionOnClick
             rowSelection
-            onRowClick={(params, event, details) => router.push(`/administracion/sistema/config-tareas-realizador-aprobador`)}
+            onRowClick={(params, event) => {
+              if ((event.target as HTMLElement).closest(".edit-icon-container")) return;
+              router.push(`/administracion/sistema/config-tareas-realizador-aprobador`);
+            }}
             pageSizeOptions={[10, 25, 50]}
           />
         </Box>
