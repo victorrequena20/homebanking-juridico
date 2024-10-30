@@ -118,7 +118,7 @@ export default function FundMapping() {
               <InputSelect
                 label="Estado del crédito *"
                 multiple
-                options={[]} // Agrega las opciones aquí
+                options={[]}
                 setItem={onChange}
                 value={value}
                 hint={errors.loanStatus?.message}
@@ -177,7 +177,7 @@ export default function FundMapping() {
             render={({ field: { onChange, value } }) => (
               <InputSelect
                 label="Tipo de fecha *"
-                options={[]} // Agrega las opciones aquí
+                options={[]}
                 setItem={onChange}
                 value={value}
                 hint={errors.loanDateOption?.message}
@@ -249,7 +249,7 @@ export default function FundMapping() {
                       onChange(newValue);
                       setPercentageComparisonCondition(String(newValue?.value));
                     }}
-                    value={percentageComparisonCondition} // Valor por defecto
+                    value={percentageComparisonCondition}
                     hint={errors.outStandingAmountPercentageCondition?.message}
                     isValidField={!errors.outStandingAmountPercentageCondition}
                   />
