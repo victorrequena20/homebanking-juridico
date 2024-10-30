@@ -3,18 +3,19 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Grid, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import Input from "@/components/Input";
 import InputSelect from "@/components/InputSelect";
 import InputCalendar from "@/components/InputCalendar";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { getOffices } from "@/services/Office.service";
 import { createCenter, getCentersTemplate } from "@/services/Core.service";
 import { createCenterFormAdapter } from "@/adapters/institution/CreateCenterForm.adapter";
 import { toast } from "sonner";
 import Toggle from "@/components/Toggle";
 import { useRouter } from "next/navigation";
+import Grid from "@mui/material/Unstable_Grid2";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 interface IForm {
   name: string;
@@ -31,7 +32,7 @@ const schema = yup.object().shape({
   staffId: yup.mixed(),
   externalId: yup.string(),
   submittedOnDate: yup.string().required("La fecha de registro es obligatoria"),
-  activationOnDate: yup.string(),
+  activationOnDate: yup.string()
 });
 
 export default function CreateCenterForm() {
@@ -43,17 +44,16 @@ export default function CreateCenterForm() {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm<IForm>({
     resolver: yupResolver(schema),
-    mode: "onChange",
+    mode: "onChange"
   });
   const router = useRouter();
 
   const onSubmit = async (data: IForm) => {
     setIsLoading(true);
     const response = await createCenter(createCenterFormAdapter({ ...data, active: isActive }));
-    console.log("🚀 ~ onSubmit ~ response:", response);
     if (response?.status === 200) {
       toast.success("Centro creado correctamente");
       router.push("/institucion/centros");
@@ -68,9 +68,8 @@ export default function CreateCenterForm() {
       setValue("staffId", "");
       const response = await getCentersTemplate({
         officeId: watch("officeId")?.value,
-        staffInSelectedOfficeOnly: true,
+        staffInSelectedOfficeOnly: true
       });
-      console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setTemplateData(response?.data);
       }
@@ -80,123 +79,117 @@ export default function CreateCenterForm() {
   return (
     <Grid
       container
+      md={12}
       sx={{
         gap: 3,
-        maxWidth: "540px",
+        maxWidth: "1000px",
         backgroundColor: "#fff",
         px: 3,
         py: 6,
         borderRadius: "16px",
         alignItems: "center",
-        justifyContent: "center",
-        mx: "auto",
+        justifyContent: "center"
       }}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Grid item xs={12}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Controller
-            control={control}
-            name="name"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                label="Nombre *"
-                type="text"
-                value={value}
-                onChange={onChange}
-                hint={errors.name?.message}
-                isValidField={!errors.name}
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {/* Nombre */}
+      <InputResponsiveContainer>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, value } }) => (
+            <Input
+              label="Nombre *"
+              type="text"
+              value={value}
+              onChange={onChange}
+              hint={errors.name?.message}
+              isValidField={!errors.name}
+            />
+          )}
+        />
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Controller
-            control={control}
-            name="officeId"
-            render={({ field: { onChange, value } }) => (
-              <InputSelect
-                label="Oficina *"
-                options={keyValueAdapter(templateData?.officeOptions, "name", "id")}
-                setItem={item => onChange(item)}
-                value={value}
-                hint={errors.officeId?.message}
-                isValidField={!errors.officeId}
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {/* Oficina */}
+      <InputResponsiveContainer>
+        <Controller
+          control={control}
+          name="officeId"
+          render={({ field: { onChange, value } }) => (
+            <InputSelect
+              label="Oficina *"
+              options={keyValueAdapter(templateData?.officeOptions, "name", "id")}
+              setItem={item => onChange(item)}
+              value={value}
+              hint={errors.officeId?.message}
+              isValidField={!errors.officeId}
+            />
+          )}
+        />
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Controller
-            control={control}
-            name="staffId"
-            render={({ field: { onChange, value } }) => (
-              <InputSelect
-                label="Asesor"
-                options={keyValueAdapter(templateData?.staffOptions, "displayName", "id")}
-                setItem={item => onChange(item)}
-                value={value}
-                hint={errors.staffId?.message}
-                isValidField={!errors.staffId}
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {/* Asesor */}
+      <InputResponsiveContainer>
+        <Controller
+          control={control}
+          name="staffId"
+          render={({ field: { onChange, value } }) => (
+            <InputSelect
+              label="Asesor"
+              options={keyValueAdapter(templateData?.staffOptions, "displayName", "id")}
+              setItem={item => onChange(item)}
+              value={value}
+              hint={errors.staffId?.message}
+              isValidField={!errors.staffId}
+            />
+          )}
+        />
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Controller
-            control={control}
-            name="externalId"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                label="ID externo"
-                type="text"
-                value={value}
-                onChange={onChange}
-                hint={errors.externalId?.message}
-                isValidField={!errors.externalId}
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {/* External id */}
+      <InputResponsiveContainer>
+        <Controller
+          control={control}
+          name="externalId"
+          render={({ field: { onChange, value } }) => (
+            <Input
+              label="ID externo"
+              type="text"
+              value={value}
+              onChange={onChange}
+              hint={errors.externalId?.message}
+              isValidField={!errors.externalId}
+            />
+          )}
+        />
+      </InputResponsiveContainer>
 
-      <Grid item xs={12}>
-        <Stack sx={{ alignItems: "center" }}>
-          <Controller
-            control={control}
-            name="submittedOnDate"
-            render={({ field: { onChange, value } }) => (
-              <InputCalendar
-                label="Registrado el día *"
-                onChange={date => onChange(date)}
-                value={value}
-                hint={errors.submittedOnDate?.message}
-                isValidField={!errors.submittedOnDate}
-              />
-            )}
-          />
-        </Stack>
-      </Grid>
+      {/* Registrado el dia */}
+      <InputResponsiveContainer>
+        <Controller
+          control={control}
+          name="submittedOnDate"
+          render={({ field: { onChange, value } }) => (
+            <InputCalendar
+              label="Registrado el día *"
+              onChange={date => onChange(date)}
+              value={value}
+              hint={errors.submittedOnDate?.message}
+              isValidField={!errors.submittedOnDate}
+            />
+          )}
+        />
+      </InputResponsiveContainer>
 
-      <Grid item xs={9}>
-        <Stack sx={{ alignItems: "flex-start" }}>
+      <InputResponsiveContainer>
+        <Stack sx={{ alignItems: "flex-start", justifyContent: 'center' }}>
           <Toggle label="Activo" isChecked={isActive} setIsChecked={setIsActive} size="small" />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {isActive && (
-        <Grid item xs={12}>
-          <Stack sx={{ alignItems: "center" }}>
+        <InputResponsiveContainer>
             <Controller
               control={control}
               name="activationOnDate"
@@ -210,11 +203,10 @@ export default function CreateCenterForm() {
                 />
               )}
             />
-          </Stack>
-        </Grid>
+        </InputResponsiveContainer>
       )}
 
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <Stack sx={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 3, mt: 3 }}>
           <Button text="Cancelar" variant="navigation" type="button" />
           <Button
