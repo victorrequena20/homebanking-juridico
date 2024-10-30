@@ -12,7 +12,7 @@ import InputResponsiveContainer from "@/components/InputResponsiveContainer/Inpu
 import Toggle from "@/components/Toggle";
 import React from "react";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { getLoanProducts } from "@/services/Loans.service";
+import { getLoanProducts, getSearchTemplate } from "@/services/Loans.service";
 import { getOffices } from "@/services/Office.service";
 
 interface IForm {
@@ -76,15 +76,11 @@ export default function FundMapping() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const [offices, products] = await Promise.all([getOffices(), getLoanProducts()]);
-
-        if (offices?.status === 200) {
-          setOffices(offices?.data);
-          console.log("Respuesta:::", offices);
-        }
-
-        if (products?.status === 200) {
-          setLoanProducts(products?.data);
+        const template = await getSearchTemplate();
+        console.warn(template);
+        if (template?.status === 200 && template.data) {
+          setOffices(template.data.offices);
+          setLoanProducts(template.data.loanProducts);
         }
       } catch (error) {
         console.error("Error fetching data", error);
