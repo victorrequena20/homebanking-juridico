@@ -8,25 +8,27 @@ import ButtonBack from "@/components/ButtonBack";
 export default function MapeoDeFondos() {
   return (
     <Wrapper>
-      <Breadcrumbs
-        title="Mapeo de fondos"
-        items={[
-          {
-            title: "Inicio",
-            href: "/dashboard",
-          },
-          { title: "Administración" },
-          { title: "Organización", href: "/administracion/organizacion" },
-          { title: "Mapeo de fondos" },
-        ]}
-      />
+      <Stack sx={{ width: "100%" }}>
+        <Breadcrumbs
+          title="Mapeo de fondos"
+          items={[
+            {
+              title: "Inicio",
+              href: "/dashboard",
+            },
+            { title: "Administración" },
+            { title: "Organización", href: "/administracion/organizacion" },
+            { title: "Mapeo de fondos" },
+          ]}
+        />
 
-      <Stack sx={{ mt: 3 }}>
-        <ButtonBack />
-      </Stack>
+        <Stack sx={{ mt: 3 }}>
+          <ButtonBack />
+        </Stack>
 
-      <Stack sx={{ alignItems: "center" }}>
-        <FundMapping />
+        <Stack sx={{ alignItems: "center" }}>
+          <FundMapping />
+        </Stack>
       </Stack>
     </Wrapper>
   );

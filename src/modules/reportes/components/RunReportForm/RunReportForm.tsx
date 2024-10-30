@@ -13,6 +13,7 @@ import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.uti
 import { useParams } from "next/navigation";
 import DownloadIcon from "@/assets/icons/DownloadIcon";
 import Input from "@/components/Input";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function RunReportForm() {
   const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
@@ -77,11 +78,9 @@ export default function RunReportForm() {
       if (paramName === "loanPurposeIdSelectAll") {
         setLoanPurposes(transformArray(response?.data?.data));
       }
-
       if (paramName === "loanOfficerIdSelectAll") {
         setLoanStaffs(transformArray(response?.data?.data));
       }
-
       if (paramName === "loanProductIdSelectAll") {
         setLoanProducts(transformArray(response?.data?.data));
       }
@@ -155,7 +154,7 @@ export default function RunReportForm() {
 
         if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "select") {
           return (
-            <Grid xs={12} key={index}>
+            <InputResponsiveContainer key={index}>
               <Stack>
                 <Controller
                   control={control}
@@ -180,13 +179,11 @@ export default function RunReportForm() {
                       }
                       setItem={(value: IKeyValue) => {
                         onChange(value);
-                        // Pide los oficiales de prestamos cuando se selecciona una oficina
                         if (item.row[parameterNameIndex] === "OfficeIdSelectOne") {
                           (async () => {
                             await handleGetRunReportsOptionsByParamName("loanOfficerIdSelectAll", { R_officeId: value.value });
                           })();
                         }
-                        // Pide los productos cuando se selecciona una moneda
                         if (item.row[parameterNameIndex] === "currencyIdSelectAll") {
                           (async () => {
                             await handleGetRunReportsOptionsByParamName("loanProductIdSelectAll", { R_currencyId: value.value });
@@ -202,13 +199,13 @@ export default function RunReportForm() {
                   )}
                 />
               </Stack>
-            </Grid>
+            </InputResponsiveContainer>
           );
         }
 
         if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "text") {
           return (
-            <Grid item xs={12} key={index}>
+            <InputResponsiveContainer key={index}>
               <Stack>
                 <Controller
                   control={control}
@@ -225,13 +222,13 @@ export default function RunReportForm() {
                   )}
                 />
               </Stack>
-            </Grid>
+            </InputResponsiveContainer>
           );
         }
       })}
 
       {/* Lugares decimales */}
-      <Grid xs={12}>
+      <InputResponsiveContainer>
         <Stack>
           <Controller
             control={control}
@@ -241,26 +238,11 @@ export default function RunReportForm() {
                 label="Lugares decimales *"
                 options={keyValueAdapter(
                   [
-                    {
-                      label: "0",
-                      value: 0,
-                    },
-                    {
-                      label: "1",
-                      value: 1,
-                    },
-                    {
-                      label: "2",
-                      value: 2,
-                    },
-                    {
-                      label: "3",
-                      value: 3,
-                    },
-                    {
-                      label: "4",
-                      value: 4,
-                    },
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                    { label: "2", value: 2 },
+                    { label: "3", value: 3 },
+                    { label: "4", value: 4 },
                   ],
                   "label",
                   "value"
@@ -274,13 +256,12 @@ export default function RunReportForm() {
             )}
           />
         </Stack>
-      </Grid>
+      </InputResponsiveContainer>
 
       {/* Buttons */}
       <Grid xs={12} sx={{ mt: 3 }}>
         <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 2 }}>
           <Button type="button" text="Cancelar" variant="navigation" />
-          {/* <Button type="button" text="Sacar un reporte" variant="primary" /> */}
           <Button type="submit" text="Ejecutar y descargar reporte" variant="primary" isLoading={isLoading} iconLeft icon={<DownloadIcon size={20} />} />
         </Stack>
       </Grid>
