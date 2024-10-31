@@ -76,8 +76,10 @@ export default function WorkDaysPage() {
     mode: "onChange",
   });
   const router = useRouter();
+
   function convertDaysArrayToString(daysArray: string[]): string {
-    const byDayString = daysArray.join(",");
+    const filteredDays = daysArray.filter(day => day !== undefined && day !== null && day !== '');
+    const byDayString = filteredDays.join(",");
     return `FREQ=WEEKLY;INTERVAL=1;BYDAY=${byDayString};`;
   }
 
@@ -140,6 +142,7 @@ export default function WorkDaysPage() {
         <InputSelect
           label="Días laborables"
           withCheckbox
+          multiple
           options={workingDaysOptionsMock}
           setItems={selectedValues => {
             console.log("🚀 ~ WorkDaysPage ~ selectedValues:", selectedValues);
