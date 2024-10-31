@@ -76,11 +76,11 @@ export default function WorkDaysPage() {
     mode: "onChange",
   });
   const router = useRouter();
-
+  
   function convertDaysArrayToString(daysArray: string[]): string {
     const filteredDays = daysArray.filter(day => day !== undefined && day !== null && day !== '');
     const byDayString = filteredDays.join(",");
-    return `FREQ=WEEKLY;INTERVAL=1;BYDAY=${byDayString};`;
+    return `FREQ=WEEKLY;INTERVAL=1;BYDAY=${byDayString}`;
   }
 
   async function onSubmit(data: any) {
