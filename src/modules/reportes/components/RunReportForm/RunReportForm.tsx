@@ -8,36 +8,33 @@ import { Grid, Stack } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Button from "@/components/Button";
-import { getOffices } from "@/services/Office.service";
 import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.utility";
 import { useParams } from "next/navigation";
 import DownloadIcon from "@/assets/icons/DownloadIcon";
 import Input from "@/components/Input";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
+import InputCalendar from "@/components/InputCalendar";
 
 export default function RunReportForm() {
   const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
   const [fullParameterList, setFullParameterList] = React.useState<any>([]);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isLoadingParameters, setIsLoadingParameters] = React.useState<boolean>(false);
-  const [isLoadingOptions, setIsLoadingOptions] = React.useState<boolean>(false);
-  // ----- States for select options -----
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoadingParameters, setIsLoadingParameters] = React.useState(false);
+  const [isLoadingOptions, setIsLoadingOptions] = React.useState(false);
   const [offices, setOffices] = React.useState<any>([]);
   const [currencies, setCurrencies] = React.useState<any>([]);
   const [funds, setFunds] = React.useState<any>([]);
   const [loanPurposes, setLoanPurposes] = React.useState<any>([]);
   const [loanStaffs, setLoanStaffs] = React.useState<any>([]);
   const [loanProducts, setLoanProducts] = React.useState<any>([]);
-  // ---------------------------------------------------------------
+
   const {
     control,
     handleSubmit,
-    reset,
-    setValue,
     getValues,
-    watch,
-    formState: { errors, isValid, dirtyFields, touchedFields },
+    formState: { errors },
   } = useForm<any>({ mode: "onChange" });
+
   const params = useParams();
   const decodeUri = decodeURIComponent(params?.reportName?.toString());
 
@@ -47,42 +44,46 @@ export default function RunReportForm() {
       R_reportListing: `'${decodeUri}'`,
       parameterType: true,
     });
-    console.log("🚀 ~ handleGetFullParameterList ~ response.data:", response?.data);
     if (response?.status === 200) {
-      setFullParameterList(response?.data);
-      setParametersColumnHeaders(response?.data?.columnHeaders);
+      setFullParameterList(response.data);
+      setParametersColumnHeaders(response.data.columnHeaders);
     } else {
-      toast.error("Error al obtener los parametros");
+      toast.error("Error al obtener los parámetros");
     }
     setIsLoadingParameters(false);
   }
 
   async function handleGetRunReportsOptionsByParamName(paramName: string, params?: any) {
     setIsLoadingOptions(true);
-    if (paramName === "loanOfficerIdSelectAll" && getValues("officeId") === undefined) return;
-    if (paramName === "loanProductIdSelectAll" && getValues("currencyId") === undefined) return;
-    if (paramName === "cycleXSelect") return;
-    if (paramName === "cycleYSelect") return;
+    if (
+      (paramName === "loanOfficerIdSelectAll" && !getValues("officeId")) ||
+      (paramName === "loanProductIdSelectAll" && !getValues("currencyId")) ||
+      ["startDateSelect", "endDateSelect", "selectAccount", "cycleXSelect", "cycleYSelect"].includes(paramName)
+    )
+      return;
 
     const response: any = await getRunReportsOptionsByParamName(paramName, { ...params, parameterType: true });
     if (response?.status === 200) {
-      if (paramName === "OfficeIdSelectOne") {
-        setOffices(transformArray(response?.data?.data));
-      }
-      if (paramName === "currencyIdSelectAll") {
-        setCurrencies(transformArray(response?.data?.data));
-      }
-      if (paramName === "fundIdSelectAll") {
-        setFunds(transformArray(response?.data?.data));
-      }
-      if (paramName === "loanPurposeIdSelectAll") {
-        setLoanPurposes(transformArray(response?.data?.data));
-      }
-      if (paramName === "loanOfficerIdSelectAll") {
-        setLoanStaffs(transformArray(response?.data?.data));
-      }
-      if (paramName === "loanProductIdSelectAll") {
-        setLoanProducts(transformArray(response?.data?.data));
+      const data = transformArray(response.data.data);
+      switch (paramName) {
+        case "OfficeIdSelectOne":
+          setOffices(data);
+          break;
+        case "currencyIdSelectAll":
+          setCurrencies(data);
+          break;
+        case "fundIdSelectAll":
+          setFunds(data);
+          break;
+        case "loanPurposeIdSelectAll":
+          setLoanPurposes(data);
+          break;
+        case "loanOfficerIdSelectAll":
+          setLoanStaffs(data);
+          break;
+        case "loanProductIdSelectAll":
+          setLoanProducts(data);
+          break;
       }
     } else {
       toast.error("Error al obtener las oficinas");
@@ -91,7 +92,6 @@ export default function RunReportForm() {
   }
 
   async function launchReport(data: any) {
-    console.log("🚀 ~ launchReport ~ data:", data);
     setIsLoading(true);
     const response = await runReport(decodeUri, {
       R_officeId: data.officeId?.value,
@@ -105,7 +105,7 @@ export default function RunReportForm() {
       decimalChoice: data.decimalPlaces?.value,
     });
     if (response?.status === 200) {
-      const csvContent = await generateCSV(response?.data);
+      const csvContent = await generateCSV(response.data);
       downloadCSV(csvContent, "reporte.csv");
       toast.success("Reporte generado correctamente");
     } else {
@@ -119,12 +119,10 @@ export default function RunReportForm() {
   }, []);
 
   React.useEffect(() => {
-    if (parametersColumnHeaders) {
-      const parameterNameIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_name");
-      fullParameterList?.data?.map((item: any, index: number) => {
-        (async () => {
-          await handleGetRunReportsOptionsByParamName(item.row[parameterNameIndex]);
-        })();
+    if (parametersColumnHeaders.length) {
+      const parameterNameIndex = parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_name");
+      fullParameterList?.data?.forEach((item: any) => {
+        handleGetRunReportsOptionsByParamName(item.row[parameterNameIndex]);
       });
     }
   }, [parametersColumnHeaders]);
@@ -133,68 +131,61 @@ export default function RunReportForm() {
     <Grid
       component="form"
       onSubmit={handleSubmit(launchReport)}
-      sx={{
-        gap: 3,
-        maxWidth: "580px",
-        backgroundColor: "#fff",
-        px: 3,
-        py: 6,
-        borderRadius: "16px",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      sx={{ gap: 3, maxWidth: "580px", backgroundColor: "#fff", px: 3, py: 6, borderRadius: "16px", alignItems: "center", justifyContent: "center" }}
       container
       mt={3}
     >
       {fullParameterList?.data?.map((item: any, index: number) => {
-        const parameterNameIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_name");
-        const parameterVariableIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_variable");
-        const parameterLabelIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_label");
-        const parameterDefaultValueIndex = parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_defaultValue");
+        const parameterDisplayType = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_displayType")];
+        const parameterVariable = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_variable")];
+        const parameterLabel = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_label")];
+        const parameterDefaultValue = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_default")];
 
-        if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "select") {
+        if (parameterDisplayType === "date") {
           return (
             <InputResponsiveContainer key={index}>
               <Stack>
                 <Controller
                   control={control}
-                  name={item.row[parameterVariableIndex]}
+                  name={parameterVariable}
+                  render={({ field: { onChange, value } }) => <InputCalendar label={`${parameterLabel} *`} value={value} onChange={onChange} width="100%" />}
+                />
+              </Stack>
+            </InputResponsiveContainer>
+          );
+        }
+
+        if (parameterDisplayType === "select") {
+          return (
+            <InputResponsiveContainer key={index}>
+              <Stack>
+                <Controller
+                  control={control}
+                  name={parameterVariable}
                   render={({ field: { value, onChange } }) => (
                     <InputSelect
-                      label={item.row[parameterLabelIndex] + " *"}
+                      label={`${parameterLabel} *`}
                       options={
-                        item.row[parameterNameIndex] === "OfficeIdSelectOne"
+                        item.row.includes("OfficeIdSelectOne")
                           ? offices
-                          : item.row[parameterNameIndex] === "currencyIdSelectAll"
+                          : item.row.includes("currencyIdSelectAll")
                           ? currencies
-                          : item.row[parameterNameIndex] === "fundIdSelectAll"
+                          : item.row.includes("fundIdSelectAll")
                           ? funds
-                          : item.row[parameterNameIndex] === "loanPurposeIdSelectAll"
+                          : item.row.includes("loanPurposeIdSelectAll")
                           ? loanPurposes
-                          : item.row[parameterNameIndex] === "loanOfficerIdSelectAll"
+                          : item.row.includes("loanOfficerIdSelectAll")
                           ? loanStaffs
-                          : item.row[parameterNameIndex] === "loanProductIdSelectAll"
+                          : item.row.includes("loanProductIdSelectAll")
                           ? loanProducts
                           : []
                       }
-                      setItem={(value: IKeyValue) => {
-                        onChange(value);
-                        if (item.row[parameterNameIndex] === "OfficeIdSelectOne") {
-                          (async () => {
-                            await handleGetRunReportsOptionsByParamName("loanOfficerIdSelectAll", { R_officeId: value.value });
-                          })();
-                        }
-                        if (item.row[parameterNameIndex] === "currencyIdSelectAll") {
-                          (async () => {
-                            await handleGetRunReportsOptionsByParamName("loanProductIdSelectAll", { R_currencyId: value.value });
-                          })();
-                        }
-                      }}
-                      isValidField={!errors[item.row[parameterNameIndex]]}
-                      hint={errors[item.row[parameterNameIndex]?.message]}
+                      setItem={(value: IKeyValue) => onChange(value)}
+                      isValidField={!errors[parameterVariable]}
+                      hint={errors[parameterVariable]?.message}
                       value={value}
                       width="100%"
-                      defaultValue={item.row[parameterDefaultValueIndex]}
+                      defaultValue={parameterDefaultValue}
                     />
                   )}
                 />
@@ -203,20 +194,20 @@ export default function RunReportForm() {
           );
         }
 
-        if (item.row[parametersColumnHeaders?.findIndex((item: any) => item.columnName === "parameter_displayType")] === "text") {
+        if (parameterDisplayType === "text") {
           return (
             <InputResponsiveContainer key={index}>
               <Stack>
                 <Controller
                   control={control}
-                  name={item.row[parameterVariableIndex]}
+                  name={parameterVariable}
                   render={({ field: { onChange } }) => (
                     <Input
-                      label={item.row[parameterLabelIndex] + " *"}
+                      label={`${parameterLabel} *`}
                       type="text"
                       onChange={onChange}
-                      isValidField={!errors[item.row[parameterNameIndex]]}
-                      hint={errors[item.row[parameterNameIndex]?.message]}
+                      isValidField={!errors[parameterVariable]}
+                      hint={errors[parameterVariable]?.message}
                       width="100%"
                     />
                   )}
@@ -227,7 +218,6 @@ export default function RunReportForm() {
         }
       })}
 
-      {/* Lugares decimales */}
       <InputResponsiveContainer>
         <Stack>
           <Controller
@@ -258,7 +248,6 @@ export default function RunReportForm() {
         </Stack>
       </InputResponsiveContainer>
 
-      {/* Buttons */}
       <Grid xs={12} sx={{ mt: 3 }}>
         <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 2 }}>
           <Button type="button" text="Cancelar" variant="navigation" />
