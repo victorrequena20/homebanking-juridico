@@ -52,7 +52,6 @@ export const createReport = async (data: any) => {
 };
 
 export const runReport = async (reportName: string, params: any) => {
-  alert(reportName);
   try {
     const response = await HttpClient.get(`/runreports/${reportName}`, { params });
     return { data: response.data, status: response.status };

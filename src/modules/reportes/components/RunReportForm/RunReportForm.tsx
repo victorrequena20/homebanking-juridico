@@ -5,7 +5,7 @@ import InputSelect from "@/components/InputSelect";
 import { getRunReportsFullParameterList, getRunReportsOptionsByParamName, runReport } from "@/services/Reports.service";
 import { IKeyValue } from "@/types/common";
 import { Grid, Stack } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import Button from "@/components/Button";
 import { downloadCSV, generateCSV, transformArray } from "@/utilities/common.utility";
@@ -27,16 +27,21 @@ export default function RunReportForm() {
   const [loanPurposes, setLoanPurposes] = React.useState<any>([]);
   const [loanStaffs, setLoanStaffs] = React.useState<any>([]);
   const [loanProducts, setLoanProducts] = React.useState<any>([]);
+  const [savingsAccountSubStatus, setSavingsAccountSubStatus] = React.useState<any>([]);
 
   const {
     control,
     handleSubmit,
     getValues,
     formState: { errors },
+    watch,
   } = useForm<any>({ mode: "onChange" });
-
   const params = useParams();
   const decodeUri = decodeURIComponent(params?.reportName?.toString());
+  const selectedOfficeId = useWatch({ control, name: "officeId" });
+  const selectedCurrencyId = useWatch({ control, name: "currencyId" });
+  const allFields = watch();
+  const isFormComplete = Object.values(allFields).every(value => value !== undefined && value !== null && value !== "");
 
   async function handleGetFullParameterList() {
     setIsLoadingParameters(true);
@@ -44,6 +49,7 @@ export default function RunReportForm() {
       R_reportListing: `'${decodeUri}'`,
       parameterType: true,
     });
+
     if (response?.status === 200) {
       setFullParameterList(response.data);
       setParametersColumnHeaders(response.data.columnHeaders);
@@ -55,14 +61,32 @@ export default function RunReportForm() {
 
   async function handleGetRunReportsOptionsByParamName(paramName: string, params?: any) {
     setIsLoadingOptions(true);
-    if (
-      (paramName === "loanOfficerIdSelectAll" && !getValues("officeId")) ||
-      (paramName === "loanProductIdSelectAll" && !getValues("currencyId")) ||
-      ["startDateSelect", "endDateSelect", "selectAccount", "cycleXSelect", "cycleYSelect"].includes(paramName)
-    )
+
+    if (paramName === "loanOfficerIdSelectAll") {
+      const officeId = getValues("officeId");
+      if (officeId === undefined) {
+        setIsLoadingOptions(false);
+        return;
+      }
+      params = { ...params, R_officeId: officeId.value };
+    }
+
+    if (paramName === "loanProductIdSelectAll") {
+      const currencyId = getValues("currencyId");
+      if (currencyId === undefined) {
+        setIsLoadingOptions(false);
+        return;
+      }
+      params = { ...params, R_currencyId: currencyId.value };
+    }
+
+    if (["startDateSelect", "endDateSelect", "selectAccount", "cycleXSelect", "cycleYSelect"].includes(paramName)) {
+      setIsLoadingOptions(false);
       return;
+    }
 
     const response: any = await getRunReportsOptionsByParamName(paramName, { ...params, parameterType: true });
+
     if (response?.status === 200) {
       const data = transformArray(response.data.data);
       switch (paramName) {
@@ -84,32 +108,51 @@ export default function RunReportForm() {
         case "loanProductIdSelectAll":
           setLoanProducts(data);
           break;
+        case "SavingsAccountSubStatus":
+          setSavingsAccountSubStatus(data);
+          break;
       }
     } else {
-      toast.error("Error al obtener las oficinas");
+      toast.error("Error al obtener los datos");
     }
     setIsLoadingOptions(false);
   }
 
   async function launchReport(data: any) {
+    if (!decodeUri) {
+      toast.error("El nombre del reporte no es válido.");
+      return;
+    }
+
     setIsLoading(true);
-    const response = await runReport(decodeUri, {
-      R_officeId: data.officeId?.value,
-      R_currencyId: data.currencyId?.value,
-      R_fundId: data.fundId?.value,
-      R_loanPurposeId: data.loanPurposeId?.value,
-      R_loanOfficerId: data.loanOfficerId?.value,
-      R_loanProductId: data.loanProductId?.value,
-      R_cycleX: data.cycleX,
-      R_cycleY: data.cycleY,
-      decimalChoice: data.decimalPlaces?.value,
-    });
-    if (response?.status === 200) {
-      const csvContent = await generateCSV(response.data);
-      downloadCSV(csvContent, "reporte.csv");
-      toast.success("Reporte generado correctamente");
-    } else {
-      toast.error("Error al generar el reporte");
+    try {
+      const response = await runReport(decodeUri, {
+        R_officeId: data.officeId?.value,
+        R_currencyId: data.currencyId?.value,
+        R_fundId: data.fundId?.value,
+        R_loanPurposeId: data.loanPurposeId?.value,
+        R_loanOfficerId: data.loanOfficerId?.value,
+        R_loanProductId: data.loanProductId?.value,
+        R_subStatus: data.subStatus?.value,
+        R_cycleX: data.cycleX,
+        R_cycleY: data.cycleY,
+        decimalChoice: data.decimalPlaces?.value,
+      });
+
+      if (response?.status === 200) {
+        if (response.data && response.data.data.length > 0) {
+          const csvContent = await generateCSV(response.data);
+          downloadCSV(csvContent, "reporte.csv");
+          toast.success("Reporte generado correctamente");
+        } else {
+          toast.error("Reporte sin datos generados");
+        }
+      } else {
+        toast.error("Error al generar el reporte");
+      }
+    } catch (error) {
+      console.error("Error al ejecutar el reporte:", error);
+      toast.error("Ocurrió un error al ejecutar el reporte.");
     }
     setIsLoading(false);
   }
@@ -125,7 +168,8 @@ export default function RunReportForm() {
         handleGetRunReportsOptionsByParamName(item.row[parameterNameIndex]);
       });
     }
-  }, [parametersColumnHeaders]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parametersColumnHeaders, selectedOfficeId, selectedCurrencyId]);
 
   return (
     <Grid
@@ -140,6 +184,13 @@ export default function RunReportForm() {
         const parameterVariable = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_variable")];
         const parameterLabel = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_label")];
         const parameterDefaultValue = item.row[parametersColumnHeaders.findIndex((col: any) => col.columnName === "parameter_default")];
+
+        if (
+          (parameterVariable === "loanOfficerIdSelectAll" && (!selectedOfficeId || loanStaffs.length === 0)) ||
+          (parameterVariable === "loanProductIdSelectAll" && (!selectedCurrencyId || loanProducts.length === 0))
+        ) {
+          return null;
+        }
 
         if (parameterDisplayType === "date") {
           return (
@@ -156,6 +207,24 @@ export default function RunReportForm() {
         }
 
         if (parameterDisplayType === "select") {
+          const options = (() => {
+            if (item.row.includes("loanOfficerIdSelectAll")) return loanStaffs;
+            if (item.row.includes("loanProductIdSelectAll")) return loanProducts;
+            return item.row.includes("OfficeIdSelectOne")
+              ? offices
+              : item.row.includes("currencyIdSelectAll")
+              ? currencies
+              : item.row.includes("fundIdSelectAll")
+              ? funds
+              : item.row.includes("loanPurposeIdSelectAll")
+              ? loanPurposes
+              : item.row.includes("SavingsAccountSubStatus")
+              ? savingsAccountSubStatus
+              : [];
+          })();
+
+          if (options.length === 0) return null;
+
           return (
             <InputResponsiveContainer key={index}>
               <Stack>
@@ -165,21 +234,7 @@ export default function RunReportForm() {
                   render={({ field: { value, onChange } }) => (
                     <InputSelect
                       label={`${parameterLabel} *`}
-                      options={
-                        item.row.includes("OfficeIdSelectOne")
-                          ? offices
-                          : item.row.includes("currencyIdSelectAll")
-                          ? currencies
-                          : item.row.includes("fundIdSelectAll")
-                          ? funds
-                          : item.row.includes("loanPurposeIdSelectAll")
-                          ? loanPurposes
-                          : item.row.includes("loanOfficerIdSelectAll")
-                          ? loanStaffs
-                          : item.row.includes("loanProductIdSelectAll")
-                          ? loanProducts
-                          : []
-                      }
+                      options={options}
                       setItem={(value: IKeyValue) => onChange(value)}
                       isValidField={!errors[parameterVariable]}
                       hint={errors[parameterVariable]?.message}
@@ -251,7 +306,15 @@ export default function RunReportForm() {
       <Grid xs={12} sx={{ mt: 3 }}>
         <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 2 }}>
           <Button type="button" text="Cancelar" variant="navigation" />
-          <Button type="submit" text="Ejecutar y descargar reporte" variant="primary" isLoading={isLoading} iconLeft icon={<DownloadIcon size={20} />} />
+          <Button
+            type="submit"
+            text="Ejecutar y descargar reporte"
+            variant="primary"
+            isLoading={isLoading}
+            iconLeft
+            icon={<DownloadIcon size={20} />}
+            disabled={!isFormComplete || Object.keys(errors).length > 0}
+          />
         </Stack>
       </Grid>
     </Grid>
