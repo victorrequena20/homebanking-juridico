@@ -15,6 +15,13 @@ import Input from "@/components/Input";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 import InputCalendar from "@/components/InputCalendar";
 
+function formatDateToDDMMYYYY(date: Date): string {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
 export default function RunReportForm() {
   const [parametersColumnHeaders, setParametersColumnHeaders] = React.useState<any>([]);
   const [fullParameterList, setFullParameterList] = React.useState<any>([]);
@@ -28,6 +35,7 @@ export default function RunReportForm() {
   const [loanStaffs, setLoanStaffs] = React.useState<any>([]);
   const [loanProducts, setLoanProducts] = React.useState<any>([]);
   const [savingsAccountSubStatus, setSavingsAccountSubStatus] = React.useState<any>([]);
+  const [obligDateType, setObligDateType] = React.useState<any>([]);
 
   const {
     control,
@@ -111,6 +119,9 @@ export default function RunReportForm() {
         case "SavingsAccountSubStatus":
           setSavingsAccountSubStatus(data);
           break;
+        case "obligDateTypeSelect":
+          setObligDateType(data);
+          break;
       }
     } else {
       toast.error("Error al obtener los datos");
@@ -126,7 +137,14 @@ export default function RunReportForm() {
 
     setIsLoading(true);
     try {
+      const formattedStartDate = formatDateToDDMMYYYY(new Date(data.startDate));
+      const formattedEndDate = formatDateToDDMMYYYY(new Date(data.endDate));
+      const obligDateTypeValue = data.obligDateType?.value || data.obligDateType;
+
       const response = await runReport(decodeUri, {
+        R_startDate: formattedStartDate,
+        R_endDate: formattedEndDate,
+        R_obligDateType: obligDateTypeValue,
         R_officeId: data.officeId?.value,
         R_currencyId: data.currencyId?.value,
         R_fundId: data.fundId?.value,
@@ -220,6 +238,8 @@ export default function RunReportForm() {
               ? loanPurposes
               : item.row.includes("SavingsAccountSubStatus")
               ? savingsAccountSubStatus
+              : item.row.includes("obligDateTypeSelect")
+              ? obligDateType
               : [];
           })();
 
