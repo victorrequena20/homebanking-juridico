@@ -97,7 +97,6 @@ export default function ReportsAllPage() {
     if (filter === "contabilidad") {
       filteredReports = reports.filter((report: any) => report?.category?.toLowerCase() === "accounting");
     }
-    console.log("🚀 ~ React.useEffect ~ filteredReports:", filteredReports);
     setFilteredReports(filteredReports);
   }, [searchParams.get("filter")]);
 
