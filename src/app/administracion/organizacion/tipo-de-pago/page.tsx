@@ -137,23 +137,25 @@ export default function TipoDePago() {
         />
       </Stack>
 
-      <Stack sx={{ mt: 3 }}>
-        <DataGrid
-          rows={paymentTypes}
-          columns={columns}
-          loading={isLoading}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-                page: 0,
+      <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
+        <Box sx={{ minWidth: "600px" }}>
+          <DataGrid
+            rows={paymentTypes}
+            columns={columns}
+            loading={isLoading}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                  page: 0,
+                },
               },
-            },
-          }}
-          disableRowSelectionOnClick
-          rowSelection
-          pageSizeOptions={[10, 25, 50]}
-        />
+            }}
+            disableRowSelectionOnClick
+            rowSelection
+            pageSizeOptions={[10, 25, 50]}
+          />
+        </Box>
       </Stack>
     </Wrapper>
   );

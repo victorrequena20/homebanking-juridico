@@ -5,67 +5,67 @@ import Button from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSelect from "@/components/InputSelect";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-
-import { assignAndDeallocateAdviser, getTemplateAssignAdviser } from "@/services/Clients.service";
+import InputCalendar from "@/components/InputCalendar";
+import { clientActions, getClientById, getTemplateUpdateDefaultSavings, updateDefaultSavings } from "@/services/Clients.service";
 import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { dateFormat } from "@/constants/global";
 import { useParams, useRouter } from "next/navigation";
+import { getOffices } from "@/services/Office.service";
+import Input from "@/components/Input";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
-import { IKeyValue } from "@/types/common";
 
 const schema = yup.object().shape({
-  adviser: yup.mixed().required("El asesor es obligatorio"),
+  product: yup.mixed().required("Producto pasivo predeterminado es obligatorio"),
 });
 
-export default function AssignAdviser() {
+export default function UpdateDefaultSavings() {
+  const [products, setProducts] = React.useState<any[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [template, setTemplate] = React.useState<any>(null);
   const {
     control,
     handleSubmit,
-    watch,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<any>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  const params: { clientId: string } = useParams();
+  const params = useParams();
   const router = useRouter();
 
-  async function handleGetTemplate() {
-    const response = await getTemplateAssignAdviser(params?.clientId);
-    if (response?.status === 200) {
-      setTemplate(keyValueAdapter(response?.data?.staffOptions, "displayName", "id"));
-    } else {
-      toast.error("Servicio de asesores no disponible");
+  async function handleGetOffices() {
+    try {
+      const response = await getTemplateUpdateDefaultSavings(params?.clientId?.toString());
+      const responseClient = await getClientById(params?.clientId?.toString());
+      if (response?.status === 200) {
+        console.warn(responseClient.data);
+        setProducts(response.data.savingAccountOptions);
+        setValue("product", responseClient.data?.savingsAccountId);
+      }
+    } catch (error) {
+      toast.error("Error al obtener la data");
     }
   }
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-
-    const response = await assignAndDeallocateAdviser(
-      params?.clientId?.toString(),
-      {
-        staffId: watch("adviser").value,
-      },
-      true
-    );
+    console.warn("da", params?.clientId?.toString(), { savingsAccountId: data.product.value });
+    const response = await updateDefaultSavings(params?.clientId?.toString(), { savingsAccountId: data.product.value });
     if (response?.status === 200) {
-      toast.success("Asesor asignado con éxito");
-      router.push(`/institucion/clientes/${params?.clientId}/general`);
+      toast.success("Producto pasivo predeterminado actualizado");
+      router.push(`/institucion/clientes`);
       reset();
     } else {
-      toast.error("Error al asignar el asesor");
+      toast.error("Error al actualizar el producto pasivo predeterminado");
     }
     setIsLoading(false);
   }
 
   React.useEffect(() => {
-    handleGetTemplate();
+    handleGetOffices();
   }, []);
 
   return (
@@ -87,23 +87,20 @@ export default function AssignAdviser() {
         container
         mt={3}
       >
-        {/* Comisión */}
+        {/* Offices */}
         <InputResponsiveContainer>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="adviser"
-              render={({ field: { value, onChange } }) => (
+              name="product"
+              render={({ field: { onChange, value } }) => (
                 <InputSelect
-                  label="Asesor *"
-                  options={template}
-                  setItem={(item: IKeyValue) => {
-                    onChange(item);
-                  }}
-                  value={value}
+                  label="Producto pasivo predeterminado *"
+                  options={keyValueAdapter(products, "accountNo", "id")}
+                  setItem={value => onChange(value)}
                   width="100%"
-                  hint={errors.comission?.message}
-                  isValidField={!errors.comission}
+                  value={value}
+                  defaultValue={value}
                 />
               )}
             />

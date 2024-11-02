@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { getReports } from "@/services/Reports.service";
 import Wrapper from "@/components/Wrapper";
@@ -106,27 +106,29 @@ export default function ReportsAllPage() {
       <Wrapper isLoading={isLoading}>
         <Breadcrumbs title="Reportes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Reportes" }]} />
 
-        <Stack sx={{ mt: 5 }}>
-          <DataGrid
-            sx={{ cursor: "pointer" }}
-            rows={filteredReports}
-            loading={isLoading}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 10,
-                  page: 0,
+        <Stack sx={{ mt: 5, width: "100%", overflowX: "auto" }}>
+          <Box sx={{ minWidth: "600px" }}>
+            <DataGrid
+              sx={{ cursor: "pointer" }}
+              rows={filteredReports}
+              loading={isLoading}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 10,
+                    page: 0,
+                  },
                 },
-              },
-            }}
-            disableRowSelectionOnClick
-            rowSelection
-            onRowClick={params => {
-              router.push(`/reportes/run/${params?.row?.name}?type=${params?.row?.type}&id=${params?.row?.id}`);
-            }}
-            pageSizeOptions={[10, 25, 50]}
-          />
+              }}
+              disableRowSelectionOnClick
+              rowSelection
+              onRowClick={params => {
+                router.push(`/reportes/run/${params?.row?.name}?type=${params?.row?.type}&id=${params?.row?.id}`);
+              }}
+              pageSizeOptions={[10, 25, 50]}
+            />
+          </Box>
         </Stack>
       </Wrapper>
     </Suspense>
