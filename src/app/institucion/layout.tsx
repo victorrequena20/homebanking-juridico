@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 export default function layout({ children }: any) {
   return (
     <Suspense fallback={<Loader size="40" color="#484848" />}>
-      return <AuthenticatedLayout>{children}</AuthenticatedLayout>;
+      <AuthenticatedLayout>{children}</AuthenticatedLayout>;
     </Suspense>
   );
 }
