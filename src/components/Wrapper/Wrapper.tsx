@@ -24,9 +24,7 @@ export default function Wrapper({ children, isLoading }: { children: React.React
         <Box
           sx={{
             maxWidth: {
-              md: "900px",
-              lg: "900px",
-              xl: "1900px",
+              md: "100%",
             },
             height: "100%",
             minHeight: { xs: "100%", md: "auto" },

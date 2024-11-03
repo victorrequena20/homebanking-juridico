@@ -21,7 +21,9 @@ export default function CreateFund() {
       <Stack sx={{ mt: 3 }}>
         <ButtonBack />
       </Stack>
-      <CreateRoleForm />
+      <Stack sx={{ alignItems: "center" }}>
+        <CreateRoleForm />
+      </Stack>
     </Wrapper>
   );
 }

@@ -4,22 +4,19 @@ import { Grid, Stack } from "@mui/material";
 import Button from "@/components/Button";
 import { Controller, useForm } from "react-hook-form";
 import InputSelect from "@/components/InputSelect";
-import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-
-import { assignAndDeallocateAdviser, getTemplateAssignAdviser } from "@/services/Clients.service";
+import { IKeyValue } from "@/types/common";
+import { createCollateralManagement, getTemplateCollateralManagement } from "@/services/Clients.service";
 import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useParams, useRouter } from "next/navigation";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
-import { IKeyValue } from "@/types/common";
 
 const schema = yup.object().shape({
-  adviser: yup.mixed().required("El asesor es obligatorio"),
+  customerScreenReports: yup.mixed().required(),
 });
 
-export default function AssignAdviser() {
+export default function CustomerScreenReports() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [template, setTemplate] = React.useState<any>(null);
   const {
@@ -27,6 +24,7 @@ export default function AssignAdviser() {
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<any>({
     mode: "onChange",
@@ -36,30 +34,33 @@ export default function AssignAdviser() {
   const router = useRouter();
 
   async function handleGetTemplate() {
-    const response = await getTemplateAssignAdviser(params?.clientId);
+    const response = await getTemplateCollateralManagement();
     if (response?.status === 200) {
-      setTemplate(keyValueAdapter(response?.data?.staffOptions, "displayName", "id"));
+      const data = response?.data?.map((item: any) => {
+        return {
+          label: item.name,
+          value: item?.id,
+          ...item,
+        };
+      });
+      //   setTemplate(data);
     } else {
-      toast.error("Servicio de asesores no disponible");
+      toast.error("Servicio de cierre no disponible");
     }
   }
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-
-    const response = await assignAndDeallocateAdviser(
-      params?.clientId?.toString(),
-      {
-        staffId: watch("adviser").value,
-      },
-      true
-    );
+    const response = await createCollateralManagement(params?.clientId?.toString(), {
+      collateralId: data.warranty.id,
+      quantity: data.quantity.toString(),
+    });
     if (response?.status === 200) {
-      toast.success("Asesor asignado con éxito");
+      toast.success("Garantia creada con éxito");
       router.push(`/institucion/clientes/${params?.clientId}/general`);
       reset();
     } else {
-      toast.error("Error al asignar el asesor");
+      toast.error("Error al crear la garantia");
     }
     setIsLoading(false);
   }
@@ -69,13 +70,13 @@ export default function AssignAdviser() {
   }, []);
 
   return (
-    <Grid xs={10.2} sx={{ overflow: "auto", height: "100%" }}>
+    <Grid xs={10.2} sx={{ overflow: "auto", height: "100%", paddingBottom: 15 }}>
       <Grid
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
           gap: 3,
-          maxWidth: "600px",
+          maxWidth: "1000px",
           backgroundColor: "#fff",
           px: 6,
           py: 6,
@@ -83,6 +84,9 @@ export default function AssignAdviser() {
           alignItems: "center",
           justifyContent: "center",
           mx: "auto",
+          mt: 3,
+          columnGap: 3,
+          rowGap: 3,
         }}
         container
         mt={3}
@@ -92,18 +96,18 @@ export default function AssignAdviser() {
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}
-              name="adviser"
+              name="customerScreenReports"
               render={({ field: { value, onChange } }) => (
                 <InputSelect
-                  label="Asesor *"
+                  label="Reportes de pantalla del cliente *"
                   options={template}
                   setItem={(item: IKeyValue) => {
                     onChange(item);
                   }}
                   value={value}
                   width="100%"
-                  hint={errors.comission?.message}
-                  isValidField={!errors.comission}
+                  hint={errors.warranty?.message}
+                  isValidField={!errors.warranty}
                 />
               )}
             />

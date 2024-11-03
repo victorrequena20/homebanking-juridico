@@ -18,6 +18,8 @@ import { schema } from "./yup";
 import { getTodayFormattedEsddMMMMyyyy } from "@/utilities/common.utility";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Grid from "@mui/material/Unstable_Grid2";
+import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
 export default function CreateGroupForm({}: ICreateGroupFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -32,15 +34,14 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
     setValue,
     reset,
     formState: { errors, isValid, dirtyFields },
-    watch,
+    watch
   } = useForm<ICreateGroupForm>({
     resolver: yupResolver(schema),
-    mode: "onChange",
+    mode: "onChange"
   });
 
   async function onSubmit(data: any) {
     setIsLoading(true);
-    console.log("��� ~ onSubmit ~ data:", data);
     const response = await createGroup({
       ...data,
       officeId: data?.officeId?.value,
@@ -48,7 +49,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
       activationDate: getTodayFormattedEsddMMMMyyyy(),
       active: isActive,
       locale: "es",
-      dateFormat: "dd MMMM yyyy",
+      dateFormat: "dd MMMM yyyy"
     });
 
     if (response?.status === 200) {
@@ -63,7 +64,6 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
   React.useEffect(() => {
     (async () => {
       const response = await getOffices();
-      console.log("🚀 ~ response:", response);
       if (response?.status === 200) {
         setOffices(response?.data);
       }
@@ -75,7 +75,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
     (async () => {
       const response = await getGroupsTemplate({
         officeId: watch("officeId")?.value,
-        staffInSelectedOfficeOnly: true,
+        staffInSelectedOfficeOnly: true
       });
       if (response?.status === 200) {
         setStaffs(response?.data?.staffOptions);
@@ -83,14 +83,9 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
     })();
   }, [watch("officeId")]);
 
-  React.useEffect(() => {
-    console.log(watch());
-  }, [watch()]);
-
   return (
-    <Stack
+    <Grid
       sx={{
-        gap: 3,
         maxWidth: "1000px",
         backgroundColor: "#fff",
         px: 3,
@@ -98,13 +93,13 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
         borderRadius: "16px",
         alignItems: "center",
         justifyContent: "center",
-        mx: "auto",
       }}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Stack sx={{ flexDirection: "row", gap: 3 }}>
-        <Stack>
+      <Stack sx={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", gap: 3 }}>
+        {/*Nombre*/}
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="name"
@@ -119,9 +114,9 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
               />
             )}
           />
-        </Stack>
+        </InputResponsiveContainer>
         {isActive ? (
-          <Stack>
+          <InputResponsiveContainer>
             <Controller
               control={control}
               name="externalId"
@@ -136,7 +131,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
                 />
               )}
             />
-          </Stack>
+          </InputResponsiveContainer>
         ) : (
           <Stack sx={{ opacity: 0 }}>
             <Stack sx={{ minWidth: "392px" }} />
@@ -144,8 +139,9 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
         )}
       </Stack>
 
-      <Stack sx={{ flexDirection: "row", gap: 3 }}>
-        <Stack>
+      <Stack sx={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", gap: 3, mt: 3 }}>
+        {/*Oficina*/}
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="officeId"
@@ -160,8 +156,10 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
               />
             )}
           />
-        </Stack>
-        <Stack>
+        </InputResponsiveContainer>
+
+        {/*Asesor*/}
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="staffId"
@@ -176,11 +174,12 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
               />
             )}
           />
-        </Stack>
+        </InputResponsiveContainer>
       </Stack>
 
-      <Stack sx={{ flexDirection: "row", gap: 3 }}>
-        <Stack>
+      <Stack sx={{ flexDirection: "row", justifyContent: "center", flexWrap: "wrap", gap: 3, mt: 3 }}>
+        {/* Registrado el dia */}
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="submittedOnDate"
@@ -194,7 +193,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
               />
             )}
           />
-        </Stack>
+        </InputResponsiveContainer>
         <Stack
           sx={{
             flexDirection: "row",
@@ -203,7 +202,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
             justifyContent: "space-between",
             alignItems: "flex-end",
             borderBottom: "1px solid #cccccc80",
-            pb: 2,
+            pb: 2
           }}
         >
           <Typography variant="body2" fontWeight="400" color="#12141a">
@@ -215,7 +214,7 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
         </Stack>
       </Stack>
 
-      <Stack sx={{ flexDirection: "row", justifyContent: "flex-start", gap: 3, mt: 3 }}>
+      <Stack sx={{ flexDirection: "row", justifyContent: "center", gap: 3, mt: 3 }}>
         <Button
           size="small"
           text="Cancelar"
@@ -225,6 +224,6 @@ export default function CreateGroupForm({}: ICreateGroupFormProps) {
         />
         <Button size="small" text="Aceptar" variant="primary" type="submit" disabled={!isValid} isLoading={isLoading} />
       </Stack>
-    </Stack>
+    </Grid>
   );
 }

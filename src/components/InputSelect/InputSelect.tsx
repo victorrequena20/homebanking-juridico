@@ -16,6 +16,7 @@ interface IInputSelectProps {
   setItems?: (value: any[]) => void;
   options: IKeyValue[];
   withCheckbox?: boolean;
+  multiple?: boolean;
   defaultValue?: string | number | (string | number)[] | null;
   value?: any;
   width?: string;
@@ -29,7 +30,7 @@ export default function InputSelect({
   hint,
   onChange,
   options,
-  withCheckbox = false,
+  multiple = false,
   defaultValue,
   setItem,
   setItems,
@@ -43,13 +44,13 @@ export default function InputSelect({
   const selectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (defaultValue && !withCheckbox) {
+    if (defaultValue && !multiple) {
       const optionDefault = options.find(option => option.value === defaultValue);
       setValueSelected(optionDefault || { label: "", value: "" });
       return;
     }
 
-    if (defaultValue && withCheckbox) {
+    if (defaultValue && multiple) {
       if (Array.isArray(defaultValue)) {
         const selectedOptions = options.map(option => {
           if (defaultValue.includes(option.value)) {
@@ -59,9 +60,8 @@ export default function InputSelect({
         setSelectedValues(selectedOptions);
       }
     }
-  }, [defaultValue, options]);
+  }, [defaultValue, options, multiple]);
 
-  // Cerrar form cuando se hace click a fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
@@ -74,6 +74,7 @@ export default function InputSelect({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   useEffect(() => {
     if (value && value.value !== valueSelected?.value) {
       setValueSelected(value);
@@ -81,7 +82,7 @@ export default function InputSelect({
   }, [value]);
 
   useEffect(() => {
-    if (withCheckbox) {
+    if (multiple) {
       setItems && setItems(selectedValues);
     }
   }, [selectedValues]);
@@ -117,7 +118,7 @@ export default function InputSelect({
           placeholder={placeholder}
           className={styles.input}
           value={
-            withCheckbox
+            multiple
               ? selectedValues.length > 0
                 ? getSelectedLabels()
                 : "Seleccione opciones"
@@ -183,14 +184,14 @@ export default function InputSelect({
                   columnGap: 1.5,
                 }}
                 onClick={() => {
-                  if (!withCheckbox) {
+                  if (!multiple) {
                     setItem && setItem(item);
                     setValueSelected(item);
                     setIsOpen(false);
                   }
                 }}
               >
-                {withCheckbox && (
+                {multiple && (
                   <Checkbox
                     checked={selectedValues.includes(item.value)}
                     onChange={() => handleCheckboxChange(item)}

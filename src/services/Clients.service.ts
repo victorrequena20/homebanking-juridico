@@ -1,3 +1,4 @@
+import { dateFormat } from "@/constants/global";
 import { ApiResponse } from "@/types/common";
 import HttpClient from "@/utilities/HttpClient.utility";
 
@@ -13,7 +14,7 @@ export const getClients = async (params?: any) => {
   }
 };
 
-export const getClientById = async (clientId?: string) => {
+export const getClientById = async (clientId?: string): Promise<ApiResponse> => {
   try {
     const response = await HttpClient.get(`/clients/${clientId}`);
     return {
@@ -22,6 +23,7 @@ export const getClientById = async (clientId?: string) => {
     };
   } catch (error) {
     console.log("🚀 ~ getClientByid ~ error:", error);
+    throw error;
   }
 };
 
@@ -179,8 +181,8 @@ export const getTemplateAddComission = async (id?: string) => {
 
 export const addComission = async (id: string, body: { amount: number; chargeId: number; dateFormat?: string; locale?: string; dueDate: string }) => {
   try {
-    body.locale = "es";
-    body.dateFormat = "dd MMMM yyyy";
+    body.locale = dateFormat.locale;
+    body.dateFormat = dateFormat.dateFormat;
 
     const response = await HttpClient.post(`/clients/${id}/charges`, body);
     return {
@@ -206,7 +208,7 @@ export const getTemplateCollateralManagement = async () => {
 
 export const createCollateralManagement = async (id: string, body: { collateralId: number; quantity: string; locale?: string }) => {
   try {
-    body.locale = "es";
+    body.locale = dateFormat.locale;
     const response = await HttpClient.post(`/clients/${id}/collaterals`, body);
     return {
       data: response.data,
@@ -238,5 +240,43 @@ export const assignAndDeallocateAdviser = async (id: string, body: { staffId: nu
     };
   } catch (error) {
     console.log("🚀 ~ getTemplateAssignAdviser ~ error:", error);
+  }
+};
+
+export const getTemplateUpdateDefaultSavings = async (clientId: string): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.get(`/clients/${clientId}?template=true&staffInSelectedOfficeOnly=true`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ getTemplateUpdateDefaultSavings ~ error:", error);
+    throw error;
+  }
+};
+
+export const updateDefaultSavings = async (clientId: string, body: { savingsAccountId: number }): Promise<ApiResponse> => {
+  try {
+    const response = await HttpClient.post(`/clients/${clientId}?command=updateSavingsAccount`, body);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.error("🚀 ~ updateDefaultSavings ~ error:", error);
+    throw error;
+  }
+};
+
+export const getTemplateSeePermanentInstructions = async (clientId: string) => {
+  try {
+    const response = await HttpClient.get(`/standinginstructions/template?fromAccountType=2&fromClientId=${clientId}&fromOfficeId=1`);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getTemplateSeePermanentInstructions ~ error:", error);
   }
 };

@@ -527,15 +527,15 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
   const isTablet = useMediaQuery("(max-width: 1030px)");
   const isMobile = useMediaQuery("(max-width: 700px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isReady, setIsReady] = useState(false);
-
-  useLayoutEffect(() => {
-    setIsReady(true);
-  }, []);
+  // const [isReady, setIsReady] = useState(false);
+  //
+  // useLayoutEffect(() => {
+  //   setIsReady(true);
+  // }, []);
 
   const toggleDrawer = () => setDrawerOpen(prev => !prev);
 
-  if (!isReady) return null;
+  // if (!isReady) return null;
 
   return (
     <section>

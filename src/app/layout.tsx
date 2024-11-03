@@ -35,23 +35,23 @@ export default function RootLayout({ children }: any) {
       </head>
       <body>
         <div>
-          <Suspense
-            fallback={
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "100vh",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Loader size="40" color="#484848" />
-              </Box>
-            }
-          >
+          {/*<Suspense*/}
+          {/*  fallback={*/}
+          {/*    <Box*/}
+          {/*      sx={{*/}
+          {/*        width: "100%",*/}
+          {/*        height: "100vh",*/}
+          {/*        display: "flex",*/}
+          {/*        justifyContent: "center",*/}
+          {/*        alignItems: "center",*/}
+          {/*      }}*/}
+          {/*    >*/}
+          {/*      <Loader size="40" color="#484848" />*/}
+          {/*    </Box>*/}
+          {/*  }*/}
+          {/*>*/}
             {children}
-          </Suspense>
+          {/*</Suspense>*/}
           <Toaster expand richColors visibleToasts={6} />
         </div>
       </body>

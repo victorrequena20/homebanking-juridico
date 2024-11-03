@@ -29,7 +29,6 @@ export default function AccountingPage() {
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
-          mx: "auto",
           gap: 3,
         }}
       >
