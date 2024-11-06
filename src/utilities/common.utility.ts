@@ -198,3 +198,7 @@ export function downloadCSV(csvContent: string, fileName: string = "output.csv")
     document.body.removeChild(link);
   }
 }
+
+export function formatToPercentage(number:number) {
+  return `${number?.toFixed(2).replace('.', ',')}%`;
+}
