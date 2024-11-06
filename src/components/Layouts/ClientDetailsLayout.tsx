@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, SxProps, Grid, Typography, Stack } from "@mui/material";
+import { Box, SxProps, Grid, Typography, Stack, Button } from "@mui/material";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -47,15 +47,34 @@ const sidebarItemStyles: SxProps = {
   },
 };
 
+const routes = [
+  { label: "General", path: "general" },
+  { label: "Domicilio", path: "domicilio" },
+  { label: "Miembros de la familia", path: "miembros-de-familia" },
+  { label: "Identificaciones", path: "identificaciones" },
+];
+
+const routes2 = [
+  { label: "General", path: "/" },
+  { label: "Transacciones", path: "/transacciones" },
+  { label: "Comisiones", path: "/comisiones" },
+  { label: "Documentos", path: "/documentos" },
+  { label: "Notas", path: "/notas" },
+  { label: "Instrucciones permanentes", path: "/instrucciones-permanentes" },
+];
+
 export default function ClientDetailsLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
-  console.log("🚀 ~ ClientDetailsLayout ~ params:", params);
-  const isGeneralPage = pathname.includes("general");
-  const isDomicilioPage = pathname.includes("domicilio");
-  const isFamilyMembersPage = pathname.includes("miembros-de-familia");
-  const isIdentificacionesPage = pathname.includes("identificaciones");
+
+  const isTypeOfAccountPath = pathname.includes("/cuentas/");
+  const currentRoutes = isTypeOfAccountPath ? routes2 : routes;
+
+  const activePath = currentRoutes
+    .slice()
+    .sort((a, b) => b.path.length - a.path.length)
+    .find(item => pathname.includes(item.path));
 
   return (
     <ClientDetailsProvider>
@@ -104,43 +123,64 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
               </Stack>
             </Stack>
           </Grid>
-          <Grid xs={1.8} sx={{ borderRight: "1px solid #bac3d480", height: "100%", p: 2 }}>
-            <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isGeneralPage ? "#f2f4f7" : "transparent" }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/general`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                General
-              </Typography>
-            </Box>
-            <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isDomicilioPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/domicilio`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Domicilio
-              </Typography>
-            </Box>
-            <Box
-              sx={{ ...sidebarItemStyles, backgroundColor: isFamilyMembersPage ? "#f2f4f7" : "transparent", mt: 1.5 }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/miembros-de-familia`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Miembros de la familia
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                ...sidebarItemStyles,
-                backgroundColor: isIdentificacionesPage ? "#f2f4f7" : "transparent",
-                mt: 1.5,
-              }}
-              onClick={() => router.push(`/institucion/clientes/${params?.clientId}/identificaciones`)}
-            >
-              <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
-                Identificaciones
-              </Typography>
-            </Box>
+
+          <Grid
+            xs={1.8}
+            sx={{
+              borderRight: "1px solid #bac3d480",
+              height: "100%",
+              p: 2,
+              display: { xs: "none", md: "block" },
+            }}
+          >
+            {currentRoutes.map(item => (
+              <Box
+                key={item.path}
+                sx={{
+                  ...sidebarItemStyles,
+                  backgroundColor: activePath?.path === item.path ? "#f2f4f7" : "transparent",
+                  mt: item.label === "Domicilio" ? 1.5 : 0,
+                }}
+                onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+              >
+                <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                  {item.label}
+                </Typography>
+              </Box>
+            ))}
+          </Grid>
+
+          <Grid
+            xs={12}
+            sx={{
+              display: { xs: "block", md: "none" },
+              px: 2,
+              py: 1.5,
+              overflowX: "auto",
+            }}
+          >
+            <Stack direction="row" spacing={2} sx={{ width: "max-content" }}>
+              {currentRoutes.map(item => (
+                <Button
+                  key={item.path}
+                  sx={{
+                    minWidth: "auto",
+                    backgroundColor: activePath?.path === item.path ? "#f2f4f7" : "transparent",
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    "&:hover": {
+                      backgroundColor: "#f2f4f7",
+                    },
+                  }}
+                  onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+                >
+                  <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
+                    {item.label}
+                  </Typography>
+                </Button>
+              ))}
+            </Stack>
           </Grid>
           {children}
         </Grid>
