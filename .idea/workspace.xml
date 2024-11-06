@@ -5,36 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b56d28a-b5d3-4d39-9d27-1f8c2cda9524" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/administracion/sistema/roles-permisos/[roleId]/edit/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/actualizar-ahorros-predeterminados/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/encuesta/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/reportes-de-pantalla-del-cliente/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/ver-instrucciones-permanentes/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/StandingInstructionsForm/StandingInstructionsForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/StandingInstructionsForm/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/StandingInstructionsForm/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/Organization.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/administracion/organizacion/historial-instrucciones-permanentes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/administracion/organizacion/historial-instrucciones-permanentes/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/administracion/organizacion/mapeo-de-fondos/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/administracion/organizacion/mapeo-de-fondos/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/administracion/organizacion/tipo-de-pago/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/administracion/organizacion/tipo-de-pago/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/administracion/sistema/roles-permisos/create/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/administracion/sistema/roles-permisos/create/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/administracion/sistema/roles-permisos/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/administracion/sistema/roles-permisos/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/asignar-asesor/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/acciones/asignar-asesor/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/mas/agregar-comision/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/mas/agregar-comision/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/mas/crear-garantia/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/mas/crear-garantia/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/reportes/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/reportes/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InputSelect/InputSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InputSelect/InputSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/CreatePaymentTypeForm/CreatePaymentTypeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/CreatePaymentTypeForm/CreatePaymentTypeForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/FundMapping/FundMapping.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/FundMapping/FundMapping.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/MassiveCreditReallocationForm/MassiveCreditReallocationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/administracion/organizacion/components/MassiveCreditReallocationForm/MassiveCreditReallocationForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/administracion/sistema/components/CreateRolForm/CreateRoleForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/administracion/sistema/components/CreateRolForm/CreateRoleForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/administracion/sistema/components/CreateRolForm/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/administracion/sistema/components/CreateRolForm/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/institucion/clients/components/ClientDetailsHeader/ClientDetailsHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/institucion/clients/components/ClientDetailsHeader/ClientDetailsHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/reportes/components/RunReportForm/RunReportForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/reportes/components/RunReportForm/RunReportForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Clients.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Clients.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Loans.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Loans.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/Roles.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/Roles.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layouts/Authenticated.layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layouts/Authenticated.layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilities/HttpClient.utility.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/HttpClient.utility.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,21 +26,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Merging staging",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/macbook/Documents/sliscorp/sl-bdc-web/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -88,6 +60,8 @@
       <workItem from="1730405453825" duration="799000" />
       <workItem from="1730408263830" duration="4184000" />
       <workItem from="1730559611410" duration="10000" />
+      <workItem from="1730642236406" duration="2792000" />
+      <workItem from="1730815461257" duration="2525000" />
     </task>
     <servers />
   </component>

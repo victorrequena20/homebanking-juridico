@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Divider, Drawer, Stack, SxProps, Typography, IconButton, useMediaQuery } from "@mui/material";
+import { Box, Divider, Drawer, IconButton, Stack, SxProps, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@/assets/icons/HomeIcon";
 import BankIcon from "@/assets/icons/BankIcon";
@@ -19,7 +19,7 @@ const containerStyles: SxProps = {
   height: "100vh",
   maxHeight: "100vh",
   py: 1,
-  pr: 1,
+  pr: 1
 };
 
 const itemStyles: SxProps = {
@@ -31,8 +31,8 @@ const itemStyles: SxProps = {
   gap: 1.5,
   cursor: "pointer",
   "&:hover": {
-    bgcolor: "hsl(0, 0%, 12%)",
-  },
+    bgcolor: "hsl(0, 0%, 12%)"
+  }
 };
 
 function RenderMenu() {
@@ -62,7 +62,7 @@ function RenderMenu() {
     administrationOrganization: pathname.includes("/administracion/organizacion"),
     administrationSystem: pathname.includes("/administracion/sistema"),
     administrationProducts: pathname.includes("/administracion/productos"),
-    selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios"),
+    selfManagementUserManagement: pathname.includes("/autoservicio/gestion-de-usuarios")
   };
 
   React.useEffect(() => {
@@ -83,6 +83,46 @@ function RenderMenu() {
       <Stack>
         <Stack sx={{ px: 1.5, flexDirection: "row", alignItems: "center" }}>
           <LogoIcon size={20} />
+          <Box
+            sx={{
+              position: "relative",
+              display: "inline-block",
+              padding: "2px 6px", // Tamaño compacto
+              backgroundColor: "#e0e0e0", // Fondo gris claro
+              color: "#333",
+              borderRadius: "4px",
+              fontSize: "8px", // Fuente pequeña
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              overflow: "hidden",
+              boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.15)", // Sombra sutil
+              "&:after": {
+                content: "\"\"",
+                position: "absolute",
+                top: "-20%", // Posicionamiento inicial del reflejo
+                left: "-20%",
+                width: "150%",
+                height: "200%",
+                background: "linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0))", // Efecto de reflejo diagonal
+                transform: "rotate(-20deg)", // Rotación para simular reflejo
+                opacity: 0.4,
+                pointerEvents: "none"
+              }
+            }}
+          >
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "8px", // Tamaño pequeño
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                textShadow: "0px 1px 1px rgba(0, 0, 0, 0.2)",
+                display: "inline-block"
+              }}
+            >
+              Beta
+            </Typography>
+          </Box>
           {/* <Typography variant="body2" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
             Banco Digital de Caracas
             </Typography> */}
@@ -95,8 +135,8 @@ function RenderMenu() {
                 ...itemStyles,
                 bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
                 "& > p": {
-                  color: routeValidations.dashboard ? "#fff" : "#9aa3b8",
-                },
+                  color: routeValidations.dashboard ? "#fff" : "#9aa3b8"
+                }
               }}
             >
               <HomeIcon size={24} color={routeValidations.dashboard ? "#fff" : "#9aa3b8"} />
@@ -111,8 +151,8 @@ function RenderMenu() {
               sx={{
                 ...itemStyles,
                 "& > p": {
-                  color: routeValidations.institution ? "#fff" : "#9aa3b8",
-                },
+                  color: routeValidations.institution ? "#fff" : "#9aa3b8"
+                }
               }}
               onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
             >
@@ -131,8 +171,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.institutionClients ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.institutionClients ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -148,8 +188,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -165,8 +205,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.institutionCenters ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.institutionCenters ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.institutionCenters ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -185,8 +225,8 @@ function RenderMenu() {
                   ...itemStyles,
                   bgcolor: routeValidations.accounting ? "hsl(0, 0%, 12%)" : "transparent",
                   "& > p": {
-                    color: routeValidations.accounting ? "#fff" : "#9aa3b8",
-                  },
+                    color: routeValidations.accounting ? "#fff" : "#9aa3b8"
+                  }
                 }}
               >
                 <ChartSquareIcon size={24} color={routeValidations.accounting ? "#fff" : "#9aa3b8"} />
@@ -203,8 +243,8 @@ function RenderMenu() {
                 ...itemStyles,
                 bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
                 "& > p": {
-                  color: routeValidations.reports ? "#fff" : "#9aa3b8",
-                },
+                  color: routeValidations.reports ? "#fff" : "#9aa3b8"
+                }
               }}
               onClick={() => setShowReportsLinks(!showReportsLinks)}
             >
@@ -223,8 +263,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsAll ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsAll ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsAll ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -240,8 +280,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsClients ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsClients ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsClients ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -257,8 +297,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsLoans ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsLoans ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsLoans ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                   >
                     <Typography variant="body2" fontWeight="200">
@@ -274,8 +314,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsSavings ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsSavings ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsSavings ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/sistema")}
                   >
@@ -292,8 +332,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsFunds ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsFunds ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsFunds ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/productos")}
                   >
@@ -310,8 +350,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.reportsAccounting ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.reportsAccounting ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.reportsAccounting ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/productos")}
                   >
@@ -329,8 +369,8 @@ function RenderMenu() {
               sx={{
                 ...itemStyles,
                 "& > p": {
-                  color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
-                },
+                  color: routeValidations.administrationTab ? "#fff" : "#9aa3b8"
+                }
               }}
               onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
             >
@@ -349,8 +389,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.administrationUsers ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.administrationUsers ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/usuarios")}
                   >
@@ -367,8 +407,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.administrationOrganization ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.administrationOrganization ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/organizacion")}
                   >
@@ -385,8 +425,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.administrationSystem ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.administrationSystem ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/sistema")}
                   >
@@ -403,8 +443,8 @@ function RenderMenu() {
                       px: 2,
                       bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
                       "& > p": {
-                        color: routeValidations.administrationProducts ? "#cad0db" : "#9aa3b8",
-                      },
+                        color: routeValidations.administrationProducts ? "#cad0db" : "#9aa3b8"
+                      }
                     }}
                     onClick={() => router.push("/administracion/productos")}
                   >
@@ -449,8 +489,8 @@ function RenderMenu() {
                 cursor: "pointer",
                 bgcolor: "transparent",
                 "&:hover": {
-                  bgcolor: "hsl(0, 0%, 12%)",
-                },
+                  bgcolor: "hsl(0, 0%, 12%)"
+                }
               }}
               onClick={() => router.push("/configuracion")}
             >
@@ -470,13 +510,13 @@ function RenderMenu() {
             width: "94%",
             mx: "auto",
             "& svg": {
-              display: "none",
+              display: "none"
             },
             "&:hover": {
               "& svg": {
-                display: "block",
-              },
-            },
+                display: "block"
+              }
+            }
           }}
         >
           <Stack sx={{ flexDirection: "row", gap: 2, alignItems: "center" }}>
@@ -485,7 +525,7 @@ function RenderMenu() {
                 width: "36px",
                 height: "36px",
                 borderRadius: "40px",
-                backgroundImage: "linear-gradient(rgb(68, 101, 219) 0%, rgb(122, 218, 231) 100%)",
+                backgroundImage: "linear-gradient(rgb(68, 101, 219) 0%, rgb(122, 218, 231) 100%)"
               }}
             />
             <Stack sx={{ justifyContent: "center" }}>
@@ -507,8 +547,8 @@ function RenderMenu() {
               alignItems: "center",
               justifyContent: "center",
               "&:hover": {
-                bgcolor: "#ffffff10",
-              },
+                bgcolor: "#ffffff10"
+              }
             }}
             onClick={() => {
               localStorage.removeItem("litecoreAuthToken");
@@ -553,8 +593,8 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
             sx={{
               "& .MuiDrawer-paper": {
                 width: { xs: "70vw", md: "30vw" },
-                bgcolor: "var(--darkBg)",
-              },
+                bgcolor: "var(--darkBg)"
+              }
             }}
           >
             <IconButton onClick={toggleDrawer} sx={{ color: "#fff", position: "absolute", right: "0" }}>
@@ -563,7 +603,14 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
             <RenderMenu />
           </Drawer>
         </>
-        <Grid md={1.8} sx={{ bgcolor: "var(--darkBg)", px: 2, pt: 3, pb: 4, height: "100%", display: { xs: "none", md: "block" } }}>
+        <Grid md={1.8} sx={{
+          bgcolor: "var(--darkBg)",
+          px: 2,
+          pt: 3,
+          pb: 4,
+          height: "100%",
+          display: { xs: "none", md: "block" }
+        }}>
           <RenderMenu />
         </Grid>
         {children}
