@@ -1,3 +1,3 @@
-import CreateLoanDetailsForm from "./CreateLoanDetailsForm";
+import CreateLoanDetailsForm from "./CreateLoanDetailsForm/CreateLoanDetailsForm";
 
 export default CreateLoanDetailsForm;
