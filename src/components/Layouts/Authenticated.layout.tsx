@@ -88,33 +88,19 @@ function RenderMenu() {
               position: "relative",
               display: "inline-block",
               padding: "2px 6px", // Tamaño compacto
-              backgroundColor: "#e0e0e0", // Fondo gris claro
-              color: "#333",
+              backgroundColor: "#000", // Fondo gris claro
               borderRadius: "4px",
               fontSize: "8px", // Fuente pequeña
-              fontWeight: "bold",
               textTransform: "uppercase",
               overflow: "hidden",
-              boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.15)", // Sombra sutil
-              "&:after": {
-                content: "\"\"",
-                position: "absolute",
-                top: "-20%", // Posicionamiento inicial del reflejo
-                left: "-20%",
-                width: "150%",
-                height: "200%",
-                background: "linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0))", // Efecto de reflejo diagonal
-                transform: "rotate(-20deg)", // Rotación para simular reflejo
-                opacity: 0.4,
-                pointerEvents: "none"
-              }
+              marginLeft: 1
             }}
           >
             <Typography
               sx={{
-                color: "#333",
+                color: "#fff",
                 fontSize: "8px", // Tamaño pequeño
-                fontWeight: 700,
+                fontWeight: 600,
                 letterSpacing: 0.5,
                 textShadow: "0px 1px 1px rgba(0, 0, 0, 0.2)",
                 display: "inline-block"
@@ -123,9 +109,6 @@ function RenderMenu() {
               Beta
             </Typography>
           </Box>
-          {/* <Typography variant="body2" fontWeight="300" color="#fff" sx={{ ml: 2 }}>
-            Banco Digital de Caracas
-            </Typography> */}
         </Stack>
         <Stack sx={{ mt: 5 }}>
           {/* Dashboard */}

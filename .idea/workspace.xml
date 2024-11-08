@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b56d28a-b5d3-4d39-9d27-1f8c2cda9524" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/general/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/institucion/clientes/[clientId]/general/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Layouts/Authenticated.layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layouts/Authenticated.layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilities/HttpClient.utility.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilities/HttpClient.utility.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layouts/ClientDetailsLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layouts/ClientDetailsLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/institucion/clients/components/ClientDetailsHeader/ClientDetailsHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/institucion/clients/components/ClientDetailsHeader/ClientDetailsHeader.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +63,7 @@
       <workItem from="1730559611410" duration="10000" />
       <workItem from="1730642236406" duration="2792000" />
       <workItem from="1730815461257" duration="2525000" />
+      <workItem from="1730927703198" duration="7700000" />
     </task>
     <servers />
   </component>

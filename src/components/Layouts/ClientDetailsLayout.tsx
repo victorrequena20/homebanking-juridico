@@ -49,9 +49,24 @@ const sidebarItemStyles: SxProps = {
 
 const routes = [
   { label: "General", path: "general" },
-  { label: "Domicilio", path: "domicilio" },
-  { label: "Miembros de la familia", path: "miembros-de-familia" },
-  { label: "Identificaciones", path: "identificaciones" },
+  { label: "Datos personales del cliente", path: "domicilio" },
+  { label: "Domicilio", path: "miembros-de-familia" },
+  { label: "Miembros de la familia", path: "identificaciones" },
+  { label: "Referencias bancarias", path: "identificaciones" },
+  { label: "Referencias personales", path: "identificaciones" },
+  { label: "Referencias personales", path: "identificaciones" },
+  { label: "Representante legal, apoderado y/o autorizado", path: "identificaciones" },
+  { label: "Persona expuesta politicamente", path: "identificaciones" },
+  { label: "Documentos de identidad", path: "identificaciones" },
+  { label: "Información sobre movilización de fondos", path: "identificaciones" },
+  { label: "Motivo de la solicitud del servicio", path: "identificaciones" },
+  { label: "Enviar o recibir fondos del exterior", path: "identificaciones" },
+  { label: "Información economica financiera del cliente", path: "identificaciones" },
+  { label: "Relación de dependencia", path: "identificaciones" },
+  { label: "Negocio propio", path: "identificaciones" },
+  { label: "Fuentes de ingreso del cliente", path: "identificaciones" },
+  { label: "Otros ingresos", path: "identificaciones" },
+  { label: "Notas", path: "identificaciones" },
 ];
 
 const routes2 = [
@@ -139,7 +154,7 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                 sx={{
                   ...sidebarItemStyles,
                   backgroundColor: activePath?.path === item.path ? "#f2f4f7" : "transparent",
-                  mt: item.label === "Domicilio" ? 1.5 : 0,
+                  mt: 0.5,
                 }}
                 onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
               >
