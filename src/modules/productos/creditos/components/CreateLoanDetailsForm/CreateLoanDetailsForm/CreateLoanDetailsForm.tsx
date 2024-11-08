@@ -7,7 +7,7 @@ import InputSelect from "@/components/InputSelect";
 import InputCalendar from "@/components/InputCalendar";
 import Button from "@/components/Button";
 import { keyValueAdapter } from "@/adapters/keyValue.adapter";
-import { CreateLoanContext } from "../../context/CreateLoan.context";
+import { CreateLoanContext } from "../../../context/CreateLoan.context";
 import React, { useContext, useEffect } from "react";
 import Toggle from "@/components/Toggle";
 
@@ -195,7 +195,7 @@ export default function CreateLoanDetailsForm() {
           name="description"
           render={({ field: { onChange, value } }) => (
             <Input
-              label="Descripcion"
+              label="Descripción"
               type="text"
               value={value}
               onChange={e => {

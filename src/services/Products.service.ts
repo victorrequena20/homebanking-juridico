@@ -108,3 +108,30 @@ export const getTaxesGroups = async () => {
 };
 
 // ----- Administrar configuraciones de impuestos start -----
+
+// ------- Productos pasivo -----------------
+
+export const getProductsPassives = async () => {
+  try {
+    const response = await HttpClient.get("/savingsproducts");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getProductsPassives ~ error:", error);
+  }
+};
+
+export const getProductPassiveInfoById = async (loanId: number, params: any) => {
+  try {
+    const response = await HttpClient.get(`/savingsproducts/${loanId}?template=false`, { params });
+    console.log("🚀 ~ getProductPassiveInfoById ~ response:", response);
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getProductPassiveInfoById ~ error:", error);
+  }
+};
