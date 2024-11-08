@@ -1,6 +1,11 @@
 import AuthenticatedLayout from "@/components/Layouts/Authenticated.layout";
-import React from "react";
+import Loader from "@/components/Loader";
+import React, { Suspense } from "react";
 
 export default function layout({ children }: any) {
-  return <AuthenticatedLayout>{children}</AuthenticatedLayout>;
+  return (
+    <Suspense fallback={<Loader size="40" color="#484848" />}>
+      <AuthenticatedLayout>{children}</AuthenticatedLayout>;
+    </Suspense>
+  );
 }

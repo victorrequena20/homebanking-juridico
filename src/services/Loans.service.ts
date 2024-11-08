@@ -34,6 +34,18 @@ export const getLoanProductsTemplate = async () => {
   }
 };
 
+export const getSearchTemplate = async () => {
+  try {
+    const response = await HttpClient.get("/search/template");
+    return {
+      data: response.data,
+      status: response.status,
+    };
+  } catch (error) {
+    console.log("🚀 ~ getSearchTemplate ~ error:", error);
+  }
+};
+
 export const getLoanInfoById = async (loanId: number, params: any) => {
   try {
     const response = await HttpClient.get(`/loanproducts/${loanId}`, { params });

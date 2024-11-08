@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import { ICreateRolForm } from "./types";
@@ -13,8 +13,14 @@ import { createRole } from "@/services/Roles.service";
 import { schema } from "./yup";
 import InputResponsiveContainer from "@/components/InputResponsiveContainer/InputResponsiveContainer";
 
-export default function CreateRoleForm() {
+interface CreateRoleFormProps {
+  roleData?: ICreateRolForm;
+}
+
+export default function CreateRoleForm({ roleData }: CreateRoleFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const router = useRouter();
+
   const {
     control,
     handleSubmit,
@@ -23,55 +29,71 @@ export default function CreateRoleForm() {
   } = useForm<ICreateRolForm>({
     resolver: yupResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      name: "",
+      description: "",
+    },
   });
-  const router = useRouter();
+
+  useEffect(() => {
+    if (roleData) {
+      reset({
+        name: roleData.name,
+        description: roleData.description,
+      });
+    }
+  }, [roleData, reset]);
 
   const onSubmit = async (data: ICreateRolForm) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setIsLoading(true);
-    const response = await createRole(data);
+    const response = await createRole(data, roleData?.id);
     if (response?.status) {
-      toast.success("Rol creado con éxito!", {
-        cancel: true,
-      });
+      toast.success(`Rol ${roleData ? "actualizado" : "creado"} con éxito!`, { cancel: true });
       router.push("/administracion/sistema/roles-permisos/");
       reset();
+    } else {
+      toast.error(`Error al ${roleData ? "actualizar" : "crear"} el rol`);
     }
     setIsLoading(false);
   };
 
   return (
     <Grid
-      container
       component="form"
-      xs={12}
+      onSubmit={handleSubmit(onSubmit)}
       sx={{
         gap: 3,
-        maxWidth: "1000px",
+        maxWidth: "600px",
         backgroundColor: "#fff",
-        px: 3,
+        px: 6,
         py: 6,
         borderRadius: "16px",
         alignItems: "center",
         justifyContent: "center",
-        mt: 3,
         mx: "auto",
       }}
-      onSubmit={handleSubmit(onSubmit)}
+      container
+      mt={3}
     >
-      <InputResponsiveContainer>
-        <Stack>
+      <Stack sx={{ gap: 3, mt: 3 }}>
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="name"
             render={({ field: { value, onChange } }) => (
-              <Input label="Nombre*" type="text" isValidField={!errors.name} hint={errors.name?.message} value={value} onChange={onChange} />
+              <Input
+                label="Nombre*"
+                type="text"
+                isValidField={!errors.name}
+                hint={errors.name?.message}
+                value={value}
+                onChange={onChange}
+                disabled={!!roleData}
+              />
             )}
           />
-        </Stack>
-      </InputResponsiveContainer>
-      <InputResponsiveContainer>
-        <Stack>
+        </InputResponsiveContainer>
+        <InputResponsiveContainer>
           <Controller
             control={control}
             name="description"
@@ -79,22 +101,15 @@ export default function CreateRoleForm() {
               <Input label="Descripción*" type="text" isValidField={!errors.description} hint={errors.description?.message} value={value} onChange={onChange} />
             )}
           />
-        </Stack>
-      </InputResponsiveContainer>
+        </InputResponsiveContainer>
 
-      <Grid xs={12}>
-        <Stack direction="row" justifyContent="center" sx={{ mt: 3, gap: 3 }}>
-          <Button type="button" size="small" text="Cancelar" variant="navigation" onClick={() => router.push("/administracion/sistema/roles-permisos/")} />
-          <Button
-            type="submit"
-            isLoading={isLoading}
-            disabled={!isValid || Object.keys(dirtyFields).length < 2}
-            size="small"
-            text="Aceptar"
-            variant="primary"
-          />
-        </Stack>
-      </Grid>
+        <Grid md={12}>
+          <Stack sx={{ width: "100%", flexDirection: "row", justifyContent: "center", columnGap: 3 }}>
+            <Button type="button" size="small" text="Cancelar" variant="navigation" onClick={() => router.push("/administracion/sistema/roles-permisos/")} />
+            <Button type="submit" isLoading={isLoading} disabled={!isValid} size="small" text="Aceptar" variant="primary" />
+          </Stack>
+        </Grid>
+      </Stack>
     </Grid>
   );
 }

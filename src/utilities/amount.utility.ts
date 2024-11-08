@@ -64,10 +64,10 @@ export function formatAmount(value: any) {
 
 export function formatAmount2(formattedValue: any) {
   // Eliminar puntos de separación de miles
-  let numericValue = formattedValue.replace(/\./g, "");
+  let numericValue = formattedValue?.replace(/\./g, "");
 
   // Reemplazar la coma por un punto decimal
-  numericValue = numericValue.replace(/,/g, ".");
+  numericValue = numericValue?.replace(/,/g, ".");
 
   // Convertir la cadena resultante a un número
   return parseFloat(numericValue);
