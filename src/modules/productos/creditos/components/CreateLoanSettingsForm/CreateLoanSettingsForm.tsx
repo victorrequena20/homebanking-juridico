@@ -253,9 +253,7 @@ export default function CreateLoanSettingForm() {
       <SectionTextSeparator label="Calendario de pagos" />
 
       <Grid item xs={12}>
-        <Stack
-          sx={{ flexDirection: "row", gap: 3, justifyContent: "center", alignItems: "flex-end", flexWrap: "wrap" }}
-        >
+        <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "center", alignItems: "flex-end", flexWrap: "wrap" }}>
           {/* Tipo de calendario de prestamo */}
           <Stack sx={{ flex: 1 }}>
             <Controller
@@ -417,9 +415,7 @@ export default function CreateLoanSettingForm() {
       </Grid>
 
       <Grid item xs={12} sx={{ mt: 1 }}>
-        <Stack
-          sx={{ flexDirection: "row", gap: 3, justifyContent: "center", alignItems: "flex-end", flexWrap: "wrap" }}
-        >
+        <Stack sx={{ flexDirection: "row", gap: 3, justifyContent: "center", alignItems: "flex-end", flexWrap: "wrap" }}>
           <Stack sx={{ flex: 1 }}>
             <Controller
               control={control}

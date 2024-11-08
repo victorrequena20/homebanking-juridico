@@ -19,10 +19,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 export default function AdministrationProductsPage() {
   return (
     <Wrapper>
-      <Breadcrumbs
-        title="Productos"
-        items={[{ title: "Inicio", href: "/auth/login" }, { title: "Administración" }, { title: "Productos" }]}
-      />
+      <Breadcrumbs title="Productos" items={[{ title: "Inicio", href: "/auth/login" }, { title: "Administración" }, { title: "Productos" }]} />
       <Stack
         sx={{
           border: "1px solid transparent",
@@ -41,6 +38,12 @@ export default function AdministrationProductsPage() {
           subtitle="Agregar un nuevo producto de crédito o modificar o desactivar un producto de crédito."
           path="/administracion/productos/productos-de-credito"
           icon={<OfficesIcon size={28} color="#153075" />}
+        />
+        <IntermediateMenuItem
+          title="Productos pasivos"
+          subtitle="Agregar nuevo producto pasivo o modificar o desactivar producto pasivo."
+          path="/administracion/productos/productos-pasivos"
+          icon={<SettingsIcon size={28} color="#153075" />}
         />
         {/* <IntermediateMenuItem
           title="Mezcla de productos"
@@ -115,7 +118,21 @@ export default function AdministrationProductsPage() {
             px: 2,
             py: 3,
           }}
-        ></Stack>
+        />
+        <Stack
+          sx={{
+            display: "flex",
+            flex: 1,
+            width: "100%",
+            minWidth: "340px",
+            maxWidth: "340px",
+            height: "80px",
+            maxHeight: "80px",
+            opacity: 0,
+            px: 2,
+            py: 3,
+          }}
+        />
       </Stack>
     </Wrapper>
   );
