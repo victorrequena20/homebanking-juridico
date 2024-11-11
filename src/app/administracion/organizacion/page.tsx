@@ -162,6 +162,20 @@ export default function AdministrationOrganizationPage() {
             py: 3,
           }}
         ></Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            flex: 1,
+            width: "100%",
+            minWidth: "340px",
+            maxWidth: "340px",
+            height: "80px",
+            maxHeight: "80px",
+            opacity: 0,
+            px: 2,
+            py: 3,
+          }}
+        ></Stack>
         {/* <IntermediateMenuItem
           title="Importación masiva"
           subtitle="Importación masiva de datos mediante plantillas de hojas de cálculo excel para clientes, oficinas, etc."

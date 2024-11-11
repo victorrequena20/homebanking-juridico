@@ -205,7 +205,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   Número de teléfono:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {"0412-15-4757"}
+                  {clientData?.mobileNo}
                 </Typography>
               </Stack>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>

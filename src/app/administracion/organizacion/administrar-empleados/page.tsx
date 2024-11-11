@@ -15,7 +15,6 @@ export default function AdministrarEmpleados() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [employees, setEmployees] = React.useState<any>([{ id: 1 }]);
   const router = useRouter();
-
   React.useEffect(() => {
     (async () => {
       setIsLoading(true);

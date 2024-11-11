@@ -4,7 +4,7 @@ import Loader from "@/components/Loader";
 
 export default function layout({ children }: any) {
   return (
-    <Suspense fallback={<Loader size="40" color="#484848" />}>
+    <Suspense fallback={<AuthenticatedLayout>{children}</AuthenticatedLayout>}>
       <AuthenticatedLayout>{children}</AuthenticatedLayout>;
     </Suspense>
   );

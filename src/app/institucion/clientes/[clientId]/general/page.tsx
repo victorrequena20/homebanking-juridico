@@ -233,7 +233,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
               <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
                 <Stack sx={{ justifyContent: "center" }}>
                   <Typography variant="body1" color="var(--secondaryText)">
-                    Cuentas de ahorro
+                    Productos pasivos
                   </Typography>
                 </Stack>
 
