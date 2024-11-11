@@ -1,61 +1,37 @@
 "use client";
 import React from "react";
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
-import { useAccountData } from "../layout";
 import { formatSpanishDate } from "@/utilities/common.utility";
 import { formatAmountB } from "@/utilities/amount.utility";
 import { Stack, Typography } from "@mui/material";
+import { getDocumentsById } from "@/services/AccountDetails.service";
 
-export default function Transactions() {
-  const accountData = useAccountData();
-  const transactions = accountData?.transactions;
+export default function Documents({ params }: { params: { accountId: string } }) {
+  const [documents, setDocuments] = React.useState<any>([]);
 
-  const columns: GridColDef<(typeof transactions)[number]>[] = [
+  const columns: GridColDef<(typeof documents)[number]>[] = [
     {
-      field: "entryId",
-      headerName: "Id",
+      field: "name",
+      headerName: "Nombre",
       flex: 1,
-      valueGetter: (value, row) => `${row?.id || ""}`,
-      minWidth: 80,
-      maxWidth: 100
-    },
-    {
-      field: "transactionDate",
-      headerName: "Fecha de transacción",
-      flex: 1,
-      valueGetter: (value, row) => `${formatSpanishDate(row?.date) || ""} `,
+      valueGetter: (value, row) => `${row.name || ""} `,
       minWidth: 200,
     },
     {
-      field: "transactionType",
-      headerName: "Tipo de transacción",
+      field: "description",
+      headerName: "Descripción",
       flex: 1,
       sortable: false,
       minWidth: 160,
-      valueGetter: (value, row) => `${row?.typeOfTransfer === "deposit" ? "Depósito" : ""} `,
+      valueGetter: (value, row) => `${row?.description || ""} `,
     },
     {
-      field: "debit",
-      headerName: "Débito",
+      field: "fileName",
+      headerName: "Nombre del archivo",
       flex: 1,
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.debit) || "N/A"} `,
-    },
-    {
-      field: "credit",
-      headerName: "Crédito",
-      flex: 1,
-      sortable: false,
-      minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.amount) || ""} `,
-    },
-    {
-      field: "runningBalance",
-      headerName: "Saldo",
-      sortable: false,
-      minWidth: 120,
-      valueGetter: (value, row) => `${formatAmountB(row?.runningBalance) || ""} `,
+      valueGetter: (value, row) => `${row?.fileName || ""} `,
     },
     {
       field: "actions",
@@ -66,20 +42,31 @@ export default function Transactions() {
     },
   ];
 
+  async function getDocuments() {
+    await getDocumentsById(params.accountId).then(response => {
+      console.log("🚀 ~ getDocuments", response.data);
+      setDocuments(response.data);
+    });
+  }
+
   const showDetails = async (e: GridRowParams) => {
     console.log(e);
   };
 
+  React.useEffect(() => {
+    getDocuments();
+  }, []);
+
   return (
-    <Stack mt={4} mx={{xs: 2, md: 6}} mb={15}>
+    <Stack mt={4} mx={{ xs: 2, md: 6 }} mb={15}>
       <Stack sx={{ justifyContent: "center" }} mb={4}>
         <Typography variant="body1" color="var(--secondaryText)">
-          Todas las transacciones
+          Documentos
         </Typography>
       </Stack>
       <Stack bgcolor={"white"} minWidth={300}>
         <DataGrid
-          rows={transactions}
+          rows={documents}
           columns={columns}
           initialState={{
             pagination: {
@@ -97,7 +84,7 @@ export default function Transactions() {
               cursor: "pointer",
             },
             "& .MuiDataGrid-overlayWrapper": {
-              height: '100px'
+              height: "100px",
             },
           }}
           onRowClick={e => showDetails(e)}
@@ -105,7 +92,7 @@ export default function Transactions() {
           rowSelection
           pageSizeOptions={[10, 25, 50]}
           localeText={{
-            noRowsLabel: "No hay datos disponibles",
+            noRowsLabel: "No hay documentos",
           }}
         />
       </Stack>

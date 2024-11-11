@@ -6,56 +6,73 @@ import { formatSpanishDate } from "@/utilities/common.utility";
 import { formatAmountB } from "@/utilities/amount.utility";
 import { Stack, Typography } from "@mui/material";
 
-export default function Transactions() {
+export default function Commissions() {
   const accountData = useAccountData();
-  const transactions = accountData?.transactions;
+  const commissions:any[] = [];
 
-  const columns: GridColDef<(typeof transactions)[number]>[] = [
+  const columns: GridColDef<(typeof commissions)[number]>[] = [
     {
-      field: "entryId",
-      headerName: "Id",
+      field: "name",
+      headerName: "Nombre",
       flex: 1,
-      valueGetter: (value, row) => `${row?.id || ""}`,
-      minWidth: 80,
-      maxWidth: 100
-    },
-    {
-      field: "transactionDate",
-      headerName: "Fecha de transacción",
-      flex: 1,
-      valueGetter: (value, row) => `${formatSpanishDate(row?.date) || ""} `,
+      valueGetter: (value, row) => `${row.name || ""} `,
       minWidth: 200,
     },
     {
-      field: "transactionType",
-      headerName: "Tipo de transacción",
+      field: "commissionType",
+      headerName: "Tipo de comisión",
       flex: 1,
       sortable: false,
       minWidth: 160,
-      valueGetter: (value, row) => `${row?.typeOfTransfer === "deposit" ? "Depósito" : ""} `,
+      valueGetter: (value, row) => `${row?.commissionType || ""} `,
     },
     {
-      field: "debit",
-      headerName: "Débito",
+      field: "expiredDate",
+      headerName: "Pago vencido en",
       flex: 1,
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.debit) || "N/A"} `,
+      valueGetter: (value, row) => `${row?.expiredDate || ""} `,
     },
     {
-      field: "credit",
-      headerName: "Crédito",
+      field: "dueFrom",
+      headerName: "Vencimiento a partir de",
       flex: 1,
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.amount) || ""} `,
+      valueGetter: (value, row) => `${row?.dueFrom || ""} `,
     },
     {
-      field: "runningBalance",
-      headerName: "Saldo",
+      field: "repeat",
+      headerName: "Se repite (M/d)",
+      flex: 1,
       sortable: false,
-      minWidth: 120,
-      valueGetter: (value, row) => `${formatAmountB(row?.runningBalance) || ""} `,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.repeat || ""} `,
+    },
+    {
+      field: "pending",
+      headerName: "Pendiente",
+      flex: 1,
+      sortable: false,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.pending || ""} `,
+    },
+    {
+      field: "paid",
+      headerName: "Pagado",
+      flex: 1,
+      sortable: false,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.paid || ""} `,
+    },
+    {
+      field: "resigned",
+      headerName: "Renunciado",
+      flex: 1,
+      sortable: false,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.resigned || ""} `,
     },
     {
       field: "actions",
@@ -74,12 +91,12 @@ export default function Transactions() {
     <Stack mt={4} mx={{xs: 2, md: 6}} mb={15}>
       <Stack sx={{ justifyContent: "center" }} mb={4}>
         <Typography variant="body1" color="var(--secondaryText)">
-          Todas las transacciones
+          Comisiones
         </Typography>
       </Stack>
       <Stack bgcolor={"white"} minWidth={300}>
         <DataGrid
-          rows={transactions}
+          rows={commissions}
           columns={columns}
           initialState={{
             pagination: {

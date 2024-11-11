@@ -6,56 +6,57 @@ import { formatSpanishDate } from "@/utilities/common.utility";
 import { formatAmountB } from "@/utilities/amount.utility";
 import { Stack, Typography } from "@mui/material";
 
-export default function Transactions() {
+export default function StandingInstructions() {
   const accountData = useAccountData();
-  const transactions = accountData?.transactions;
+  const standingInstructions:any[] = [];
 
-  const columns: GridColDef<(typeof transactions)[number]>[] = [
+  const columns: GridColDef<(typeof standingInstructions)[number]>[] = [
     {
-      field: "entryId",
-      headerName: "Id",
+      field: "client",
+      headerName: "Cliente",
       flex: 1,
-      valueGetter: (value, row) => `${row?.id || ""}`,
-      minWidth: 80,
-      maxWidth: 100
-    },
-    {
-      field: "transactionDate",
-      headerName: "Fecha de transacción",
-      flex: 1,
-      valueGetter: (value, row) => `${formatSpanishDate(row?.date) || ""} `,
+      valueGetter: (value, row) => `${row.client || ""} `,
       minWidth: 200,
     },
     {
-      field: "transactionType",
-      headerName: "Tipo de transacción",
+      field: "fromAccount",
+      headerName: "Desde la cuenta",
       flex: 1,
       sortable: false,
       minWidth: 160,
-      valueGetter: (value, row) => `${row?.typeOfTransfer === "deposit" ? "Depósito" : ""} `,
+      valueGetter: (value, row) => `${row?.fromAccount || ""} `,
     },
     {
-      field: "debit",
-      headerName: "Débito",
+      field: "Beneficiary",
+      headerName: "Beneficiario",
       flex: 1,
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.debit) || "N/A"} `,
+      valueGetter: (value, row) => `${row?.beneficiary || ""} `,
     },
     {
-      field: "credit",
-      headerName: "Crédito",
+      field: "toAccount",
+      headerName: "A la cuenta",
       flex: 1,
       sortable: false,
       minWidth: 80,
-      valueGetter: (value, row) => `${formatAmountB(row?.amount) || ""} `,
+      valueGetter: (value, row) => `${row?.toAccount || ""} `,
     },
     {
-      field: "runningBalance",
-      headerName: "Saldo",
+      field: "amount",
+      headerName: "Monto",
+      flex: 1,
       sortable: false,
-      minWidth: 120,
-      valueGetter: (value, row) => `${formatAmountB(row?.runningBalance) || ""} `,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.amount || ""} `,
+    },
+    {
+      field: "validity",
+      headerName: "Validez",
+      flex: 1,
+      sortable: false,
+      minWidth: 80,
+      valueGetter: (value, row) => `${row?.validity || ""} `,
     },
     {
       field: "actions",
@@ -74,12 +75,12 @@ export default function Transactions() {
     <Stack mt={4} mx={{xs: 2, md: 6}} mb={15}>
       <Stack sx={{ justifyContent: "center" }} mb={4}>
         <Typography variant="body1" color="var(--secondaryText)">
-          Todas las transacciones
+          Todas las instrucciones permanentes
         </Typography>
       </Stack>
       <Stack bgcolor={"white"} minWidth={300}>
         <DataGrid
-          rows={transactions}
+          rows={standingInstructions}
           columns={columns}
           initialState={{
             pagination: {
@@ -100,13 +101,13 @@ export default function Transactions() {
               height: '100px'
             },
           }}
-          onRowClick={e => showDetails(e)}
           disableRowSelectionOnClick
           rowSelection
           pageSizeOptions={[10, 25, 50]}
           localeText={{
             noRowsLabel: "No hay datos disponibles",
           }}
+          onRowClick={e => showDetails(e)}
         />
       </Stack>
     </Stack>

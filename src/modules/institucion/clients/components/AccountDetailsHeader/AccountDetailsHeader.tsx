@@ -3,6 +3,10 @@ import { Box, Stack, Typography, SxProps } from "@mui/material";
 import Button from "@/components/Button";
 import { useParams, useRouter } from "next/navigation";
 import ArrowUpIcon from "@/assets/icons/ArrowUpIcon";
+import LockIcon from "@/assets/icons/LockIcon";
+import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
+import PercentageSquareIcon from "@/assets/icons/PercentageSquareIcon";
+import PlusIcon from "@/assets/icons/PlusIcon";
 
 interface AccountDetailsHeaderProps {
   accountData: any;
@@ -81,7 +85,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
         }}
       >
         <Stack sx={{ flex: 1 }}>
-          <Stack sx={{ flexDirection: { xs: "column", sm: "row" }, gap: {xs: 2, md: 20} }}>
+          <Stack sx={{ flexDirection: { xs: "column", sm: "row" }, gap: { xs: 2, md: 20 } }}>
             <Stack sx={{ gap: 1.5, py: 1 }}>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
@@ -159,9 +163,94 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                       Depósito
                     </Typography>
                   </Stack>
+                  <Stack sx={listItemStyles}>
+                    <LockIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Bloquear depósitos
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles}>
+                    <ArrowDownIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Retiro
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles}>
+                    <LockIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Bloquear retiros
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles}>
+                    <LockIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Bloquear cuenta
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles}>
+                    <LockIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Monto retenido
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles}>
+                    <PercentageSquareIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Calcular interés
+                    </Typography>
+                  </Stack>
+                  <Stack sx={listItemStyles} onMouseEnter={() => setShowMoreList(true)} onMouseLeave={() => setShowMoreList(false)}>
+                    <PlusIcon color={"#000"} size={20} />
+                    <Typography variant="body2" fontWeight="300">
+                      Más
+                    </Typography>
+                  </Stack>
                   {/* Más acciones */}
                 </Box>
               )}
+              {/* Secondary list actions */}
+              <Box
+                className="second-list"
+                sx={{
+                  display: showMoreList ? "block" : "none",
+                  position: "absolute",
+                  top: "195px",
+                  right: "240px",
+                  width: "180px",
+                  bgcolor: "#fff",
+                  borderRadius: 2,
+                  boxShadow: "0px 8px 16px 0px #2636990A",
+                  zIndex: 1,
+                }}
+                onMouseEnter={() => setShowActionsList(true)}
+                onMouseLeave={() => setShowActionsList(false)}
+              >
+                <Stack sx={listItemStyles}>
+                  <Typography variant="body2" fontWeight="300">
+                    Publicar interés
+                  </Typography>
+                </Stack>
+                <Stack sx={listItemStyles}>
+                  <Typography variant="body2" fontWeight="300">
+                    Agregar cargo
+                  </Typography>
+                </Stack>
+                <Stack sx={listItemStyles}>
+                  <Typography variant="body2" fontWeight="300">
+                    Cerrar
+                  </Typography>
+                </Stack>
+                <Stack sx={listItemStyles}>
+                  <Typography variant="body2" fontWeight="300">
+                    Transferir fondos
+                  </Typography>
+                </Stack>
+                <Stack sx={listItemStyles}>
+                  <Typography variant="body2" fontWeight="300">
+                    Asignar asesor
+                  </Typography>
+                </Stack>
+              </Box>
             </Box>
           </Box>
         </Stack>
