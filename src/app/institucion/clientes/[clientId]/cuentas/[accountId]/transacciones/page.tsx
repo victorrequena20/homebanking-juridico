@@ -79,7 +79,7 @@ export default function Transactions() {
       </Stack>
       <Stack bgcolor={"white"} minWidth={300}>
         <DataGrid
-          rows={transactions}
+          rows={transactions || []}
           columns={columns}
           initialState={{
             pagination: {

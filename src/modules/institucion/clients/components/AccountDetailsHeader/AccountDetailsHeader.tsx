@@ -123,7 +123,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   Saldo actual:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {accountData?.currency.code} {accountData?.summary.accountBalance}
+                  {accountData?.currency?.code} {accountData?.summary?.accountBalance}
                 </Typography>
               </Stack>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -131,7 +131,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   Saldo disponible:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {accountData?.currency?.code} {accountData?.summary.availableBalance}
+                  {accountData?.currency?.code} {accountData?.summary?.availableBalance}
                 </Typography>
               </Stack>
             </Stack>
