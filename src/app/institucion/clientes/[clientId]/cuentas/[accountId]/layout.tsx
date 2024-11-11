@@ -23,14 +23,12 @@ export default function CuentasLayout({ children, params }: { children: React.Re
 
   async function getAccountData() {
     await getAccountById(params.accountId).then(response => {
-      console.log(response.data);
       setAccountData(response.data);
     });
   }
 
   React.useEffect(() => {
     getAccountData();
-    console.log(params);
   }, []);
 
   return (
