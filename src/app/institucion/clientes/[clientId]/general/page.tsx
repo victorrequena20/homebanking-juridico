@@ -252,8 +252,10 @@ export default function ClientDetails({ params }: { params: { clientId: string }
                       }}
                       disableRowSelectionOnClick
                       rowSelection
-                      onRowClick={table => {
-                        router.push(`/institucion/clientes/${params?.clientId}/cuentas/${table?.row.id}`);
+                      onCellClick={cell => {
+                        if (cell.field !== 'actions') {
+                          router.push(`/institucion/clientes/${params?.clientId}/cuentas/${cell?.row.id}`);
+                        }
                       }}
                       pageSizeOptions={[10, 25, 50]}
                     />

@@ -202,3 +202,17 @@ export function downloadCSV(csvContent: string, fileName: string = "output.csv")
 export function formatToPercentage(number:number) {
   return `${number?.toFixed(2).replace('.', ',')}%`;
 }
+
+export function translator(word: string){
+  const dictionary:any = {
+    "withdrawal": "Retiro",
+    "deposit": "Depósito",
+    "balance": "Saldo",
+    "transaction": "Transacción",
+    "interest posting": "Intereses",
+    "savings account": "Ahorros",
+    "head office": "Principal"
+  };
+
+  return dictionary[word?.toLowerCase()] || word;
+}
