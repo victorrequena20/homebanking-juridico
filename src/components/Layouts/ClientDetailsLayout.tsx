@@ -6,6 +6,11 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import ClientDetailsProvider from "@/modules/institucion/clients/context/ClientDetails/ClientDetails.provider";
 
+interface Route {
+  label: string;
+  path: string;
+}
+
 const containerStyles: SxProps = {
   position: "absolute",
   top: 0,
@@ -47,29 +52,28 @@ const sidebarItemStyles: SxProps = {
   },
 };
 
-const routes = [
+const routes: Route[] = [
   { label: "General", path: "general" },
-  { label: "Datos personales del cliente", path: "domicilio" },
-  { label: "Domicilio", path: "miembros-de-familia" },
-  { label: "Miembros de la familia", path: "identificaciones" },
-  { label: "Referencias bancarias", path: "identificaciones" },
-  { label: "Referencias personales", path: "identificaciones" },
-  { label: "Referencias personales", path: "identificaciones" },
-  { label: "Representante legal, apoderado y/o autorizado", path: "identificaciones" },
-  { label: "Persona expuesta politicamente", path: "identificaciones" },
-  { label: "Documentos de identidad", path: "identificaciones" },
-  { label: "Información sobre movilización de fondos", path: "identificaciones" },
-  { label: "Motivo de la solicitud del servicio", path: "identificaciones" },
-  { label: "Enviar o recibir fondos del exterior", path: "identificaciones" },
-  { label: "Información economica financiera del cliente", path: "identificaciones" },
-  { label: "Relación de dependencia", path: "identificaciones" },
-  { label: "Negocio propio", path: "identificaciones" },
-  { label: "Fuentes de ingreso del cliente", path: "identificaciones" },
-  { label: "Otros ingresos", path: "identificaciones" },
-  { label: "Notas", path: "identificaciones" },
+  { label: "Datos personales del cliente", path: "datos-personales" },
+  { label: "Domicilio", path: "domicilio" },
+  { label: "Miembros de la familia", path: "miembros-de-familia" },
+  { label: "Referencias bancarias", path: "referencias-bancarias" },
+  { label: "Referencias personales", path: "referencias-personales" },
+  { label: "Representante legal, apoderado y/o autorizado", path: "representante-legal" },
+  { label: "Persona expuesta políticamente", path: "persona-expuesta" },
+  { label: "Documentos de identidad", path: "documentos-identidad" },
+  { label: "Información sobre movilización de fondos", path: "informacion-movilizacion-fondos" },
+  { label: "Motivo de la solicitud del servicio", path: "motivo-solicitud" },
+  { label: "Enviar o recibir fondos del exterior", path: "enviar-recibir-fondos" },
+  { label: "Información economica financiera del cliente", path: "informacion-economica" },
+  { label: "Relación de dependencia", path: "relacion-dependencia" },
+  { label: "Negocio propio", path: "negocio-propio" },
+  { label: "Fuentes de ingreso del cliente", path: "fuentes-ingreso" },
+  { label: "Otros ingresos", path: "otros-ingresos" },
+  { label: "Notas", path: "notas" },
 ];
 
-const routes2 = [
+const routes2: Route[] = [
   { label: "General", path: "/" },
   { label: "Transacciones", path: "/transacciones" },
   { label: "Comisiones", path: "/comisiones" },
@@ -82,9 +86,14 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
+  const [currentRoutes, setCurrentRoutes] = React.useState<Route[]>([]);
+  const [isTypeOfAccountPath, setIsTypeOfAccountPath] = React.useState(false);
 
-  const isTypeOfAccountPath = pathname.includes("/cuentas/");
-  const currentRoutes = isTypeOfAccountPath ? routes2 : routes;
+  React.useEffect(() => {
+    setIsTypeOfAccountPath(pathname.includes("/cuentas"))
+    const route = pathname.includes("/cuentas") ? routes2 : routes
+    setCurrentRoutes(route);
+  }, [pathname])
 
   const activePath = currentRoutes
     .slice()
@@ -144,8 +153,12 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
             sx={{
               borderRight: "1px solid #bac3d480",
               height: "100%",
-              p: 2,
+              px: 2,
+              pt: 2,
+              pb: 6,
               display: { xs: "none", md: "block" },
+              overflowY: "auto",
+              maxHeight: "calc(100vh - 64px)",
             }}
           >
             {currentRoutes.map(item => (

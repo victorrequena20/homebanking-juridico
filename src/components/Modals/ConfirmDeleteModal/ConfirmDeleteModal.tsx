@@ -32,6 +32,8 @@ export default function ConfirmDeleteModal({
   buttonActionCallback,
   buttonType = "normal",
   buttonText = "Borrar",
+  icon = <TrashIcon size={20} color="#fff" />,
+  confirmText = "Eliminar"
 }: ConfirmDeleteModalProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -70,7 +72,7 @@ export default function ConfirmDeleteModal({
           </Box>
         </Tooltip>
       ) : (
-        <Button iconLeft icon={<TrashIcon size={20} color="#fff" />} size="small" text={buttonText} variant="warning-red" onClick={handleOpen} />
+        <Button iconLeft icon={icon} size="small" text={buttonText} variant="warning-red" onClick={handleOpen} />
       )}
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
@@ -87,7 +89,7 @@ export default function ConfirmDeleteModal({
             }}
           >
             <Button iconLeft size="small" text="Cancelar" variant="navigation" onClick={handleClose} />
-            <Button iconLeft size="small" text="Eliminar" variant="warning-red" onClick={handleAction} isLoading={isLoading} />
+            <Button iconLeft size="small" text={confirmText} variant="warning-red" onClick={handleAction} isLoading={isLoading} />
           </Box>
         </Box>
       </Modal>
