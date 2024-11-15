@@ -1,7 +1,8 @@
 "use client";
+import Loader from "@/components/Loader";
 import AccountDetailsHeader from "@/modules/institucion/clients/components/AccountDetailsHeader";
 import { getAccountById } from "@/services/AccountDetails.service";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import React, { createContext, useContext } from "react";
 
 const AccountDataContext = createContext<AccountData | null>(null);
@@ -20,31 +21,41 @@ export const useAccountData = () => {
 
 export default function CuentasLayout({ children, params }: { children: React.ReactNode; params: { accountId: string } }) {
   const [accountData, setAccountData] = React.useState<AccountData | null>(null);
-
   async function getAccountData() {
     await getAccountById(params.accountId).then(response => {
-      console.log(response.data);
       setAccountData(response.data);
     });
   }
 
   React.useEffect(() => {
     getAccountData();
-    console.log(params);
-  }, []);
+  }, [params.accountId]);
 
   return (
     <AccountDataContext.Provider value={accountData}>
-      {accountData ? (
-        <>
-          <Grid xs={10.2} sx={{ overflow: "auto", height: "100%", maxWidth: "100vw", flexBasis: "100%" }}>
+      <Grid xs={10.2} sx={{ overflow: "auto", height: "100%", maxWidth: "100vw", flexBasis: "100%" }}>
+        {accountData ? (
+          <>
             <AccountDetailsHeader accountData={accountData} />
             {children}
-          </Grid>
-        </>
-      ) : (
-        <></>
-      )}
+          </>
+        ) : (
+          <Box
+            sx={{
+              maxWidth: {
+                md: "100%",
+              },
+              height: "100%",
+              minHeight: { xs: "100%", md: "auto" },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Loader size="40" color="#484848" />
+          </Box>
+        )}
+      </Grid>
     </AccountDataContext.Provider>
   );
 }

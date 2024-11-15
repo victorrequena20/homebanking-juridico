@@ -3,6 +3,10 @@ import { Box, Stack, Typography, SxProps } from "@mui/material";
 import Button from "@/components/Button";
 import { useParams, useRouter } from "next/navigation";
 import ArrowUpIcon from "@/assets/icons/ArrowUpIcon";
+import LockIcon from "@/assets/icons/LockIcon";
+import ArrowDownIcon from "@/assets/icons/ArrowDownIcon";
+import PercentageSquareIcon from "@/assets/icons/PercentageSquareIcon";
+import PlusIcon from "@/assets/icons/PlusIcon";
 
 interface AccountDetailsHeaderProps {
   accountData: any;
@@ -12,7 +16,6 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
   const [showMoreList, setShowMoreList] = useState<boolean>(false);
   const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
-  const [showActionsList, setShowActionsList] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement | null>(null);
   const params = useParams();
   const router = useRouter();
@@ -60,6 +63,71 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
     },
   };
 
+  const actions = [
+    {
+      label: "Depósito",
+      icon: <ArrowUpIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear depósitos",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Retiro",
+      icon: <ArrowDownIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear retiros",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear cuenta",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Monto retenido",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Calcular interés",
+      icon: <PercentageSquareIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+  ];
+
+  const secondaryActions = [
+    {
+      label: "Publicar interés",
+      action: () => action(),
+    },
+    {
+      label: "Agregar cargo",
+      action: () => action(),
+    },
+    {
+      label: "Cerrar",
+      action: () => action(),
+    },
+    {
+      label: "Transferir fondos",
+      action: () => action(),
+    },
+    {
+      label: "Asignar asesor",
+      action: () => action(),
+    },
+  ];
+
+  const action = () => {
+    console.log("action");
+  };
+
   return (
     <Stack
       sx={{
@@ -81,7 +149,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
         }}
       >
         <Stack sx={{ flex: 1 }}>
-          <Stack sx={{ flexDirection: { xs: "column", sm: "row" }, gap: {xs: 2, md: 20} }}>
+          <Stack sx={{ flexDirection: { xs: "column", sm: "row" }, gap: { xs: 2, md: 20 } }}>
             <Stack sx={{ gap: 1.5, py: 1 }}>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
@@ -119,7 +187,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   Saldo actual:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {accountData?.currency.code} {accountData?.summary.accountBalance}
+                  {accountData?.currency?.code} {accountData?.summary?.accountBalance}
                 </Typography>
               </Stack>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
@@ -127,7 +195,7 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   Saldo disponible:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {accountData?.currency?.code} {accountData?.summary.availableBalance}
+                  {accountData?.currency?.code} {accountData?.summary?.availableBalance}
                 </Typography>
               </Stack>
             </Stack>
@@ -153,15 +221,68 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   }}
                 >
                   {/* Lista de acciones */}
-                  <Stack sx={listItemStyles}>
-                    <ArrowUpIcon color={"#000"} size={20} />
+                  {actions.map((action, index) => (
+                    <Stack
+                      sx={listItemStyles}
+                      key={index}
+                      onClick={() => {
+                        action.action();
+                        toggleListVisibility();
+                      }}
+                    >
+                      {action.icon && action.icon}
+                      <Typography variant="body2" fontWeight="300">
+                        {action?.label}
+                      </Typography>
+                    </Stack>
+                  ))}
+                  <Stack sx={listItemStyles} onMouseEnter={() => setShowMoreList(true)} onMouseLeave={() => setShowMoreList(false)}>
+                    <PlusIcon color={"#000"} size={20} />
                     <Typography variant="body2" fontWeight="300">
-                      Depósito
+                      Más
                     </Typography>
                   </Stack>
                   {/* Más acciones */}
                 </Box>
               )}
+              {/* Secondary list actions */}
+              <Stack
+                sx={{
+                  display: showMoreList ? "block" : "none",
+                  position: "absolute",
+                  top: "195px",
+                  right: "230px",
+                  paddingRight: "10px",
+                  zIndex: 1,
+                }}
+                onMouseEnter={() => setShowMoreList(true)}
+                onMouseLeave={() => setShowMoreList(false)}
+              >
+                <Box
+                  className="second-list"
+                  sx={{
+                    width: "180px",
+                    bgcolor: "#fff",
+                    borderRadius: 2,
+                    boxShadow: "0px 8px 16px 0px #2636990A",
+                  }}
+                >
+                  {secondaryActions.map((action, index) => (
+                    <Stack
+                      sx={listItemStyles}
+                      key={index}
+                      onClick={() => {
+                        action.action();
+                        toggleListVisibility();
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        {action.label}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Box>
+              </Stack>
             </Box>
           </Box>
         </Stack>
