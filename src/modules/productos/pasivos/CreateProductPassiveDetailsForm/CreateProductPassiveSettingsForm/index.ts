@@ -1,3 +1,3 @@
-import CreateLoanSettingsForm from "./CreateLoanSettingsForm";
+import CreateLoanSettingsForm from "./CreateProductPassiveSettingsForm";
 
 export default CreateLoanSettingsForm;
