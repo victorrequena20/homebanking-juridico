@@ -1,3 +1,3 @@
-import CreateLoanConditionsForm from "./CreateLoanConditionsForm";
+import CreateLoanConditionsForm from "./CreateProductPassiveConditionsForm";
 
 export default CreateLoanConditionsForm;

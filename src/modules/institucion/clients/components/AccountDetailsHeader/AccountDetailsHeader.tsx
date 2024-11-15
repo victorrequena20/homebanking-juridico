@@ -16,7 +16,6 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
   const [showMoreList, setShowMoreList] = useState<boolean>(false);
   const [isLoadingActivation, setIsLoadingActivation] = useState<boolean>(false);
   const [isListVisible, setIsListVisible] = useState<boolean>(false);
-  const [showActionsList, setShowActionsList] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement | null>(null);
   const params = useParams();
   const router = useRouter();
@@ -62,6 +61,71 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
     "&:hover": {
       bgcolor: "#f2f4f760",
     },
+  };
+
+  const actions = [
+    {
+      label: "Depósito",
+      icon: <ArrowUpIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear depósitos",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Retiro",
+      icon: <ArrowDownIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear retiros",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Bloquear cuenta",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Monto retenido",
+      icon: <LockIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+    {
+      label: "Calcular interés",
+      icon: <PercentageSquareIcon color={"#000"} size={20} />,
+      action: () => action(),
+    },
+  ];
+
+  const secondaryActions = [
+    {
+      label: "Publicar interés",
+      action: () => action(),
+    },
+    {
+      label: "Agregar cargo",
+      action: () => action(),
+    },
+    {
+      label: "Cerrar",
+      action: () => action(),
+    },
+    {
+      label: "Transferir fondos",
+      action: () => action(),
+    },
+    {
+      label: "Asignar asesor",
+      action: () => action(),
+    },
+  ];
+
+  const action = () => {
+    console.log("action");
   };
 
   return (
@@ -157,48 +221,21 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                   }}
                 >
                   {/* Lista de acciones */}
-                  <Stack sx={listItemStyles}>
-                    <ArrowUpIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Depósito
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <LockIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Bloquear depósitos
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <ArrowDownIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Retiro
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <LockIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Bloquear retiros
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <LockIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Bloquear cuenta
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <LockIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Monto retenido
-                    </Typography>
-                  </Stack>
-                  <Stack sx={listItemStyles}>
-                    <PercentageSquareIcon color={"#000"} size={20} />
-                    <Typography variant="body2" fontWeight="300">
-                      Calcular interés
-                    </Typography>
-                  </Stack>
+                  {actions.map((action, index) => (
+                    <Stack
+                      sx={listItemStyles}
+                      key={index}
+                      onClick={() => {
+                        action.action();
+                        toggleListVisibility();
+                      }}
+                    >
+                      {action.icon && action.icon}
+                      <Typography variant="body2" fontWeight="300">
+                        {action?.label}
+                      </Typography>
+                    </Stack>
+                  ))}
                   <Stack sx={listItemStyles} onMouseEnter={() => setShowMoreList(true)} onMouseLeave={() => setShowMoreList(false)}>
                     <PlusIcon color={"#000"} size={20} />
                     <Typography variant="body2" fontWeight="300">
@@ -209,48 +246,43 @@ export default function AccountDetailsHeader({ accountData }: AccountDetailsHead
                 </Box>
               )}
               {/* Secondary list actions */}
-              <Box
-                className="second-list"
+              <Stack
                 sx={{
                   display: showMoreList ? "block" : "none",
                   position: "absolute",
                   top: "195px",
-                  right: "240px",
-                  width: "180px",
-                  bgcolor: "#fff",
-                  borderRadius: 2,
-                  boxShadow: "0px 8px 16px 0px #2636990A",
+                  right: "230px",
+                  paddingRight: "10px",
                   zIndex: 1,
                 }}
-                onMouseEnter={() => setShowActionsList(true)}
-                onMouseLeave={() => setShowActionsList(false)}
+                onMouseEnter={() => setShowMoreList(true)}
+                onMouseLeave={() => setShowMoreList(false)}
               >
-                <Stack sx={listItemStyles}>
-                  <Typography variant="body2" fontWeight="300">
-                    Publicar interés
-                  </Typography>
-                </Stack>
-                <Stack sx={listItemStyles}>
-                  <Typography variant="body2" fontWeight="300">
-                    Agregar cargo
-                  </Typography>
-                </Stack>
-                <Stack sx={listItemStyles}>
-                  <Typography variant="body2" fontWeight="300">
-                    Cerrar
-                  </Typography>
-                </Stack>
-                <Stack sx={listItemStyles}>
-                  <Typography variant="body2" fontWeight="300">
-                    Transferir fondos
-                  </Typography>
-                </Stack>
-                <Stack sx={listItemStyles}>
-                  <Typography variant="body2" fontWeight="300">
-                    Asignar asesor
-                  </Typography>
-                </Stack>
-              </Box>
+                <Box
+                  className="second-list"
+                  sx={{
+                    width: "180px",
+                    bgcolor: "#fff",
+                    borderRadius: 2,
+                    boxShadow: "0px 8px 16px 0px #2636990A",
+                  }}
+                >
+                  {secondaryActions.map((action, index) => (
+                    <Stack
+                      sx={listItemStyles}
+                      key={index}
+                      onClick={() => {
+                        action.action();
+                        toggleListVisibility();
+                      }}
+                    >
+                      <Typography variant="body2" fontWeight="300">
+                        {action.label}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Box>
+              </Stack>
             </Box>
           </Box>
         </Stack>

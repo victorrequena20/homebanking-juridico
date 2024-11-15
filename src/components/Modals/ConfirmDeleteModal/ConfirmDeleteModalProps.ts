@@ -5,5 +5,5 @@ export interface ConfirmDeleteModalProps {
   buttonType?: "normal" | "action";
   buttonText?: string;
   confirmText?: string;
-  icon: any
+  icon?: any
 }
