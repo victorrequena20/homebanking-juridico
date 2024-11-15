@@ -5,14 +5,16 @@ import { useAccountData } from "../layout";
 import { formatSpanishDate, translator } from "@/utilities/common.utility";
 import { formatAmountB } from "@/utilities/amount.utility";
 import { Stack, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import DetailsModal from "./components/detailsModal";
 import { undoDepositById } from "@/services/AccountDetails.service";
 import DropDownMenu from "@/components/DropDownMenu/DropDownMenu";
 import ConfirmModal from "@/components/Modals/ConfirmModal";
+import Button from "@/components/Button";
 
 export default function Transactions() {
   const router = useRouter()
+  const pathname = usePathname()
   const accountData = useAccountData();
   const transactions = accountData?.transactions;
   const [showDetail, setShowDetail] = React.useState(false);
@@ -131,10 +133,11 @@ export default function Transactions() {
 
   return (
     <Stack mt={4} mx={{ xs: 2, md: 6 }} mb={15}>
-      <Stack sx={{ justifyContent: "center" }} mb={4}>
+      <Stack sx={{ display: 'flex', justifyContent: "space-between", flexDirection: "row" }} mb={4}>
         <Typography variant="body1" color="var(--secondaryText)">
           Todas las transacciones
         </Typography>
+        <Button size="small" text="Exportar" onClick={() => router.push(`${pathname}/exportar`)} />
       </Stack>
       <Stack bgcolor={"white"} minWidth={300}>
         <DataGrid
