@@ -103,7 +103,7 @@ export default function DashboardPage() {
       <Stack sx={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
         <Stack className="fade-in-bottom">
           <Typography variant="h4" fontWeight="500">
-            Hola, Litecore
+            Hola
           </Typography>
           <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
             Accede al historial completo de actividades bancarias aquí.
@@ -194,16 +194,8 @@ export default function DashboardPage() {
               </Typography>
               <QuickNavItem path="/institucion/clientes" title="Clientes" subtitle="Visualizar clientes del sistema." />
               <QuickNavItem path="/reportes" title="Reportes" subtitle="Visualizar reportes del sistema." />
-              <QuickNavItem
-                path="/administracion/usuarios"
-                title="Usuarios"
-                subtitle="Visualizar usuarios del sistema."
-              />
-              <QuickNavItem
-                path="/administracion/organizacion/administrar-oficinas"
-                title="Oficinas"
-                subtitle="Visualizar oficinas del sistema."
-              />
+              <QuickNavItem path="/administracion/usuarios" title="Usuarios" subtitle="Visualizar usuarios del sistema." />
+              <QuickNavItem path="/administracion/organizacion/administrar-oficinas" title="Oficinas" subtitle="Visualizar oficinas del sistema." />
             </Stack>
           </Stack>
           <Stack>
@@ -223,12 +215,7 @@ export default function DashboardPage() {
                 borderRadius: "8px",
               }}
             >
-              <Typography
-                sx={{ alignSelf: "flex-start" }}
-                fontWeight="400"
-                variant="body2"
-                color="var(--secondaryText)"
-              >
+              <Typography sx={{ alignSelf: "flex-start" }} fontWeight="400" variant="body2" color="var(--secondaryText)">
                 Monto Pendiente / Desembolsado
               </Typography>
               <PieChart />

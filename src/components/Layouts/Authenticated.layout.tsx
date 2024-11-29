@@ -14,12 +14,10 @@ import Link from "next/link";
 import LogoIcon from "@/assets/icons/LogoIcon";
 
 const containerStyles: SxProps = {
-  backgroundColor: "hsl(0, 0%, 10%)",
+  backgroundColor: "#001F3F",
   width: "100%",
   height: "100vh",
   maxHeight: "100vh",
-  py: 1,
-  pr: 1,
 };
 
 const itemStyles: SxProps = {
@@ -31,7 +29,7 @@ const itemStyles: SxProps = {
   gap: 1.5,
   cursor: "pointer",
   "&:hover": {
-    bgcolor: "hsl(0, 0%, 12%)",
+    backgroundColor: "#f2f4f7",
   },
 };
 
@@ -82,7 +80,7 @@ function RenderMenu() {
   return (
     <Stack sx={{ justifyContent: "space-between", height: "100%" }}>
       <Stack>
-        <Stack sx={{ px: 1.5, flexDirection: "row", alignItems: "center" }}>
+        {/* <Stack sx={{ px: 1.5, flexDirection: "row", alignItems: "center" }}>
           <LogoIcon size={20} />
           <Box
             sx={{
@@ -110,8 +108,8 @@ function RenderMenu() {
               Beta
             </Typography>
           </Box>
-        </Stack>
-        <Stack sx={{ mt: 5 }}>
+        </Stack> */}
+        <Stack sx={{ mt: 0 }}>
           {/* Dashboard */}
           <Link href="/dashboard">
             <Box
@@ -207,13 +205,13 @@ function RenderMenu() {
               <Box
                 sx={{
                   ...itemStyles,
-                  bgcolor: routeValidations.accounting ? "hsl(0, 0%, 12%)" : "transparent",
+                  bgcolor: routeValidations.accounting ? "#f2f4f7" : "transparent",
                   "& > p": {
-                    color: routeValidations.accounting ? "#fff" : "#9aa3b8",
+                    color: routeValidations.accounting ? "#000" : "#ccc",
                   },
                 }}
               >
-                <ChartSquareIcon size={24} color={routeValidations.accounting ? "#fff" : "#9aa3b8"} />
+                <ChartSquareIcon size={24} color={routeValidations.accounting ? "#000" : "#ccc"} />
                 <Typography variant="body2" fontWeight="200">
                   Pagos a Proveedores
                 </Typography>
@@ -226,14 +224,14 @@ function RenderMenu() {
               <Box
                 sx={{
                   ...itemStyles,
-                  bgcolor: routeValidations.flowSuccess ? "hsl(0, 0%, 12%)" : "transparent",
+                  bgcolor: routeValidations.flowSuccess ? "#f2f4f7" : "transparent",
                   "& > p": {
-                    color: routeValidations.flowSuccess ? "#fff" : "#9aa3b8",
+                    color: routeValidations.flowSuccess ? "#000" : "#ccc",
                   },
                 }}
                 // onClick={() => setShowReportsLinks(!showReportsLinks)}
               >
-                <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
+                <ReportIcon size={24} color={routeValidations.flowSuccess ? "#000" : "#ccc"} />
                 <Typography variant="body2" fontWeight="200">
                   Flujo de aprobación
                 </Typography>
@@ -246,12 +244,13 @@ function RenderMenu() {
               <Box
                 sx={{
                   ...itemStyles,
+                  bgcolor: routeValidations.reports ? "#f2f4f7" : "transparent",
                   "& > p": {
-                    color: routeValidations.reports ? "#fff" : "#9aa3b8",
+                    color: routeValidations.reports ? "#000" : "#ccc",
                   },
                 }}
               >
-                <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
+                <PersonHexagonalIcon size={24} color={routeValidations.reports ? "#000" : "#ccc"} />
                 <Typography variant="body2" fontWeight="200">
                   Reportes y Conciliación
                 </Typography>
@@ -264,12 +263,12 @@ function RenderMenu() {
               sx={{
                 ...itemStyles,
                 "& > p": {
-                  color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
+                  color: routeValidations.administrationTab ? "#000" : "#ccc",
                 },
               }}
             >
-              <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
-              <Typography variant="body2" fontWeight="200">
+              <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#000" : "#ccc"} />
+              <Typography variant="body2" fontWeight="200" color={routeValidations.administrationTab ? "#000" : "#ccc"}>
                 Atención al Cliente y Soporte
               </Typography>
             </Box>
@@ -424,7 +423,7 @@ function RenderMenu() {
             />
             <Stack sx={{ justifyContent: "center" }}>
               <Typography fontSize="14px" color="#CAD0Db" fontWeight="300">
-                Litecore
+                Juridico
               </Typography>
               <Typography fontSize="12px" color="#9AA3B8" fontWeight="300">
                 Administrador
@@ -487,7 +486,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
             sx={{
               "& .MuiDrawer-paper": {
                 width: { xs: "70vw", md: "30vw" },
-                bgcolor: "var(--darkBg)",
+                // bgcolor: "var(--darkBg)",
               },
             }}
           >
@@ -500,7 +499,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
         <Grid
           md={1.8}
           sx={{
-            bgcolor: "var(--darkBg)",
+            // bgcolor: "var(--darkBg)",
             px: 2,
             pt: 3,
             pb: 4,

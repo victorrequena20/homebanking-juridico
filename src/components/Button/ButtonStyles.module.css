@@ -14,7 +14,7 @@
 
 .btn-primary {
   color: #f3f3f3;
-  background-color: #153075;
+  background-color: #000000;
   &:hover {
     filter: brightness(1.2);
   }

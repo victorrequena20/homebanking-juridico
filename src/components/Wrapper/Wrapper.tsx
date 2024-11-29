@@ -10,8 +10,8 @@ export default function Wrapper({ children, isLoading }: { children: React.React
       xs={12}
       md={10.2}
       sx={{
-        bgcolor: "#FAFAFA",
-        borderRadius: "24px",
+        bgcolor: "#FFF",
+        // borderRadius: "24px",
         pt: { xs: 3, md: 1 },
         maxHeight: "100%",
         minHeight: { xs: "100%", md: "auto" },

@@ -20,7 +20,7 @@ const containerStyles: SxProps = {
   width: "100%",
   height: "100%",
   maxHeight: "100vh",
-  backgroundColor: "var(--darkBg)",
+  // backgroundColor: "var(--darkBg)",
   overflow: "auto",
   overflowX: "hidden",
   maxWidth: "100vw",
@@ -30,10 +30,10 @@ const gridContainerStyles: SxProps = {
   width: "100%",
   height: "100%",
   bgcolor: "#FAFAFA",
-  borderTop: "8px solid var(--darkBg)",
-  borderBottom: "8px solid var(--darkBg)",
-  borderLeft: "8px solid var(--darkBg)",
-  borderRight: "8px solid var(--darkBg)",
+  // borderTop: "8px solid var(--darkBg)",
+  // borderBottom: "8px solid var(--darkBg)",
+  // borderLeft: "8px solid var(--darkBg)",
+  // borderRight: "8px solid var(--darkBg)",
   borderRadius: "32px",
   overflow: "hidden",
   maxWidth: "100vw",
@@ -90,10 +90,10 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
   const [isTypeOfAccountPath, setIsTypeOfAccountPath] = React.useState(false);
 
   React.useEffect(() => {
-    setIsTypeOfAccountPath(pathname.includes("/cuentas"))
-    const route = pathname.includes("/cuentas") ? routes2 : routes
+    setIsTypeOfAccountPath(pathname.includes("/cuentas"));
+    const route = pathname.includes("/cuentas") ? routes2 : routes;
     setCurrentRoutes(route);
-  }, [pathname])
+  }, [pathname]);
 
   const activePath = currentRoutes
     .slice()
@@ -124,12 +124,10 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   alignItems: "flex-start",
                 }}
               >
-                <Breadcrumbs
-                  items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-                />
+                <Breadcrumbs items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
                 <Box
                   sx={{
-                    backgroundColor: "var(--darkBg)",
+                    // backgroundColor: "var(--darkBg)",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -169,7 +167,9 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   backgroundColor: activePath?.path === item.path ? "#f2f4f7" : "transparent",
                   mt: 0.5,
                 }}
-                onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+                onClick={() =>
+                  router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ""}/${item.path}`)
+                }
               >
                 <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
                   {item.label}
@@ -201,7 +201,9 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                       backgroundColor: "#f2f4f7",
                     },
                   }}
-                  onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+                  onClick={() =>
+                    router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ""}/${item.path}`)
+                  }
                 >
                   <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
                     {item.label}
