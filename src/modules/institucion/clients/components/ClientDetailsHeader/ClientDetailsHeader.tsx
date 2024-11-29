@@ -162,14 +162,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   {clientData?.displayName}
                 </Typography>
               </Stack>
-              <Stack sx={{ flexDirection: "row", gap: 1 }}>
-                <Typography variant="body2" color="var(--secondaryText)">
-                  Oficina:
-                </Typography>
-                <Typography variant="body2" color="var(--text)">
-                  {clientData?.officeName}
-                </Typography>
-              </Stack>
+
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
                   Documento:
@@ -178,36 +171,8 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   {clientData?.externalId}
                 </Typography>
               </Stack>
-              {clientData?.timeline?.activatedOnDate && (
-                <Stack sx={{ flexDirection: "row", gap: 1 }}>
-                  <Typography variant="body2" color="var(--secondaryText)">
-                    Fecha de activación:
-                  </Typography>
-                  <Typography variant="body2" color="var(--text)">
-                    {formatSpanishDate(clientData?.timeline?.activatedOnDate)}
-                  </Typography>
-                </Stack>
-              )}
-              {clientData?.loanOfficer && (
-                <Stack sx={{ flexDirection: "row", gap: 1 }}>
-                  <Typography variant="body2" color="var(--secondaryText)">
-                    Asesor:
-                  </Typography>
-                  <Typography variant="body2" color="var(--text)">
-                    {clientData?.loanOfficer}
-                  </Typography>
-                </Stack>
-              )}
             </Stack>
-            <Stack sx={{ pl: 6, gap: 1.5, pt: 3 }}>
-              <Stack sx={{ flexDirection: "row", gap: 1 }}>
-                <Typography variant="body2" color="var(--secondaryText)">
-                  Número de teléfono:
-                </Typography>
-                <Typography variant="body2" color="var(--text)">
-                  {clientData?.mobileNo}
-                </Typography>
-              </Stack>
+            <Stack sx={{ pl: 6, gap: 1.5 }}>
               <Stack sx={{ flexDirection: "row", gap: 1 }}>
                 <Typography variant="body2" color="var(--secondaryText)">
                   Correo electrónico:
@@ -237,7 +202,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
             )}
             {/* <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" /> */}
             <Box sx={{ position: "relative" }} ref={listRef}>
-              <Button variant="standard" text="Acciones" buttonList onClick={toggleListVisibility} />
+              <Button variant="standard" text="Pagar nómina" />
               {isListVisible && (
                 <Box
                   sx={{

@@ -37,6 +37,7 @@ const itemStyles: SxProps = {
 
 function RenderMenu() {
   const [showInstitutionLinks, setShowInstitutionLinks] = React.useState(false);
+  const [showPayMenus, setShowPayMenus] = React.useState(false);
   const [showAdministrationLinks, setShowAdministrationLinks] = React.useState(false);
   const [showReportsLinks, setShowReportsLinks] = React.useState(false);
   const router = useRouter();
@@ -113,94 +114,61 @@ function RenderMenu() {
         </Stack>
         <Stack sx={{ mt: 5 }}>
           {/* Dashboard */}
-          <Link href="/dashboard">
-            <Box
-              sx={{
-                ...itemStyles,
-                bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
-                "& > p": {
-                  color: routeValidations.dashboard ? "#fff" : "#9aa3b8",
-                },
-              }}
-            >
-              <HomeIcon size={24} color={routeValidations.dashboard ? "#fff" : "#9aa3b8"} />
-              <Typography variant="body2" fontWeight="200">
-                Gestión de Pagos Masivos
-              </Typography>
-            </Box>
-          </Link>
+          <Box
+            sx={{
+              ...itemStyles,
+              bgcolor: routeValidations.dashboard ? "hsl(0, 0%, 12%)" : "transparent",
+              "& > p": {
+                color: routeValidations.dashboard ? "#fff" : "#9aa3b8",
+              },
+            }}
+            onClick={() => setShowPayMenus(!showPayMenus)}
+          >
+            <HomeIcon size={24} color={routeValidations.dashboard ? "#fff" : "#9aa3b8"} />
+            <Typography variant="body2" fontWeight="200">
+              Nominas
+            </Typography>
+          </Box>
+          {showPayMenus && (
+            <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
+              <Link href={"/institucion/clientes"}>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
+                    "& > p": {
+                      color: routeValidations.institutionClients ? "#cad0db" : "#9aa3b8",
+                    },
+                  }}
+                >
+                  <Typography variant="body2" fontWeight="200">
+                    Pagos de Nómina
+                  </Typography>
+                </Box>
+              </Link>
+              <Link href={"/institucion/grupos"}>
+                <Box
+                  sx={{
+                    borderRadius: "8px",
+                    py: 1,
+                    px: 2,
+                    bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
+                    "& > p": {
+                      color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8",
+                    },
+                  }}
+                >
+                  <Typography variant="body2" fontWeight="200">
+                    Gestión de pagos masivos
+                  </Typography>
+                </Box>
+              </Link>
+            </Stack>
+          )}
           {/* Institucion */}
-          <Stack sx={{ mt: 2 }}>
-            <Box
-              sx={{
-                ...itemStyles,
-                "& > p": {
-                  color: routeValidations.institution ? "#fff" : "#9aa3b8",
-                },
-              }}
-              onClick={() => setShowInstitutionLinks(!showInstitutionLinks)}
-            >
-              <BankIcon size={24} color={routeValidations.institution ? "#fff" : "#9aa3b8"} />
-              <Typography variant="body2" fontWeight="200">
-                Pagos de Nómina
-              </Typography>
-            </Box>
-            {showInstitutionLinks && (
-              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-                <Link href={"/institucion/clientes"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionClients ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.institutionClients ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Clientes
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/institucion/grupos"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Grupos
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/institucion/centros"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.institutionCenters ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.institutionCenters ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Centros
-                    </Typography>
-                  </Box>
-                </Link>
-              </Stack>
-            )}
-          </Stack>
+
           {/* Pagos a Proveedores */}
           <Link href="/contabilidad">
             <Stack sx={{ mt: 2 }}>

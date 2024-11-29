@@ -11,6 +11,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import StatusTag from "@/components/Tags/StatusTag";
 import { toast } from "sonner";
 import AccountNumberCell from "@/modules/institucion/clients/components/AccountNumberCell";
+import { users } from "@/constants/global";
+import { formatAmountB } from "@/utilities/amount.utility";
 
 export default function Clients() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -36,40 +38,34 @@ export default function Clients() {
       flex: 1,
       valueGetter: (value, row) => `${row.externalId || ""} `,
     },
-    {
-      field: "status",
-      headerName: "Estado",
-      flex: 1,
-      renderCell: params => <StatusTag isActive={params?.row?.status} statusVariant={params?.row?.statusAll?.value} />,
-      align: "center",
-    },
+
     {
       field: "office",
-      headerName: "Oficina",
+      headerName: "Nomina",
       sortable: false,
       flex: 1,
-      valueGetter: (value, row) => `${row.office || ""} `,
+      valueGetter: (value, row) => `${formatAmountB(row.nomina) || ""} `,
     },
   ];
 
   async function handleGetClients() {
-    setIsLoading(true);
-    const response = await getClients({ orderBy: "id" });
-    const data = response?.data?.pageItems;
-    const clientsData = data.map((el: any) => {
-      return {
-        id: el?.id,
-        name: el?.firstname ? `${el?.firstname} ${el?.lastname}` : el?.displayName,
-        displayName: el?.displayName,
-        accountNumber: el?.accountNo,
-        externalId: el?.externalId,
-        status: el?.active,
-        statusAll: el.status,
-        office: el?.officeName,
-      };
-    });
-    setClients(clientsData?.reverse());
-    setIsLoading(false);
+    // setIsLoading(true);
+    // const response = await getClients({ orderBy: "id" });
+    // const data = response?.data?.pageItems;
+    // const clientsData = data.map((el: any) => {
+    //   return {
+    //     id: el?.id,
+    //     name: el?.firstname ? `${el?.firstname} ${el?.lastname}` : el?.displayName,
+    //     displayName: el?.displayName,
+    //     accountNumber: el?.accountNo,
+    //     externalId: el?.externalId,
+    //     status: el?.active,
+    //     statusAll: el.status,
+    //     office: el?.officeName,
+    //   };
+    // });
+    setClients(users);
+    // setIsLoading(false);
   }
 
   React.useEffect(() => {
@@ -77,19 +73,10 @@ export default function Clients() {
   }, []);
   return (
     <Wrapper isLoading={isLoading}>
-      <Breadcrumbs title="Clientes" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
+      <Breadcrumbs title="Pago de nómina" items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
 
       <Stack sx={{ flexDirection: "row", justifyContent: "flex-end", mt: 2 }}>
-        <Stack sx={{ alignItems: "flex-end" }}>
-          <Button
-            iconLeft
-            icon={<PlusIcon size={20} color="#fff" />}
-            size="small"
-            variant="primary"
-            text="Crear cliente"
-            onClick={() => router.push("/institucion/clientes/crear")}
-          />
-        </Stack>
+        <Stack sx={{ alignItems: "flex-end" }}></Stack>
       </Stack>
       <Stack sx={{ mt: 3, width: "100%", overflowX: "auto" }}>
         <Box sx={{ minWidth: "700px" }}>

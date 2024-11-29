@@ -52,26 +52,7 @@ const sidebarItemStyles: SxProps = {
   },
 };
 
-const routes: Route[] = [
-  { label: "General", path: "general" },
-  { label: "Datos personales del cliente", path: "datos-personales" },
-  { label: "Domicilio", path: "domicilio" },
-  { label: "Miembros de la familia", path: "miembros-de-familia" },
-  { label: "Referencias bancarias", path: "referencias-bancarias" },
-  { label: "Referencias personales", path: "referencias-personales" },
-  { label: "Representante legal, apoderado y/o autorizado", path: "representante-legal" },
-  { label: "Persona expuesta políticamente", path: "persona-expuesta" },
-  { label: "Documentos de identidad", path: "documentos-identidad" },
-  { label: "Información sobre movilización de fondos", path: "informacion-movilizacion-fondos" },
-  { label: "Motivo de la solicitud del servicio", path: "motivo-solicitud" },
-  { label: "Enviar o recibir fondos del exterior", path: "enviar-recibir-fondos" },
-  { label: "Información economica financiera del cliente", path: "informacion-economica" },
-  { label: "Relación de dependencia", path: "relacion-dependencia" },
-  { label: "Negocio propio", path: "negocio-propio" },
-  { label: "Fuentes de ingreso del cliente", path: "fuentes-ingreso" },
-  { label: "Otros ingresos", path: "otros-ingresos" },
-  { label: "Notas", path: "notas" },
-];
+const routes: Route[] = [{ label: "General", path: "general" }];
 
 const routes2: Route[] = [
   { label: "General", path: "/" },
@@ -90,10 +71,10 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
   const [isTypeOfAccountPath, setIsTypeOfAccountPath] = React.useState(false);
 
   React.useEffect(() => {
-    setIsTypeOfAccountPath(pathname.includes("/cuentas"))
-    const route = pathname.includes("/cuentas") ? routes2 : routes
+    setIsTypeOfAccountPath(pathname.includes("/cuentas"));
+    const route = pathname.includes("/cuentas") ? routes2 : routes;
     setCurrentRoutes(route);
-  }, [pathname])
+  }, [pathname]);
 
   const activePath = currentRoutes
     .slice()
@@ -124,9 +105,7 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   alignItems: "flex-start",
                 }}
               >
-                <Breadcrumbs
-                  items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]}
-                />
+                <Breadcrumbs items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
                 <Box
                   sx={{
                     backgroundColor: "var(--darkBg)",
@@ -169,7 +148,9 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                   backgroundColor: activePath?.path === item.path ? "#f2f4f7" : "transparent",
                   mt: 0.5,
                 }}
-                onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+                onClick={() =>
+                  router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ""}/${item.path}`)
+                }
               >
                 <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
                   {item.label}
@@ -201,7 +182,9 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                       backgroundColor: "#f2f4f7",
                     },
                   }}
-                  onClick={() => router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ''}/${item.path}`)}
+                  onClick={() =>
+                    router.push(`/institucion/clientes/${params?.clientId}${isTypeOfAccountPath ? `/cuentas/${params?.accountId}` : ""}/${item.path}`)
+                  }
                 >
                   <Typography variant="caption" fontWeight="400" color="var(--secondaryText)">
                     {item.label}

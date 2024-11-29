@@ -131,71 +131,18 @@ export default function ClientDetails({ params }: { params: { clientId: string }
       flex: 1,
       valueGetter: (value, row) => `${row?.accountNo || ""}`,
     },
-    {
-      field: "savingsProduct",
-      headerName: "Producto de ahorro",
-      flex: 1,
-      valueGetter: (value, row) => `${row?.productName || ""} `,
-    },
-    {
-      field: "lastActive",
-      headerName: "Último activo",
-      flex: 1,
-      valueGetter: (value, row) => `${formatSpanishDate(row?.lastActiveTransactionDate) || ""} `,
-    },
+
     {
       field: "balance",
-      headerName: "Saldo",
+      headerName: "Nómina",
       flex: 1,
       valueGetter: (value, row) => `${row?.accountBalance || ""} `,
     },
     {
-      field: "actions",
-      headerName: "Acciones",
+      field: "lastActive",
+      headerName: "Fechas",
       flex: 1,
-      renderCell: params => (
-        <Stack sx={{ justifyContent: "center", height: "100%" }}>
-          <Stack sx={{ flexDirection: "row", gap: 2 }}>
-            <Box
-              sx={{
-                bgcolor: "var(--primary)",
-                width: "32px",
-                height: "32px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                setAccountIdToDeposit(params?.row?.id);
-                setShowDepositModal(true);
-              }}
-            >
-              <ArrowCircleSendIcon color="#fff" size={20} />
-            </Box>
-            <Box
-              sx={{
-                bgcolor: "var(--primary)",
-                width: "32px",
-                height: "32px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                setAccountIdToWithdraw(params?.row?.id);
-                setShowWithdrawalModal(true);
-              }}
-            >
-              <ArrowCircleReceiveIcon color="#fff" size={20} />
-            </Box>
-          </Stack>
-        </Stack>
-      ),
-      align: "center",
+      valueGetter: (value, row) => `${formatSpanishDate(row?.lastActiveTransactionDate) || ""} `,
     },
   ];
 
@@ -233,7 +180,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
               <Stack sx={{ maxWidth: "100%", mt: 5, px: 10 }}>
                 <Stack sx={{ justifyContent: "center" }}>
                   <Typography variant="body1" color="var(--secondaryText)">
-                    Productos pasivos
+                    Pagos de nómina
                   </Typography>
                 </Stack>
 
@@ -253,7 +200,7 @@ export default function ClientDetails({ params }: { params: { clientId: string }
                       disableRowSelectionOnClick
                       rowSelection
                       onCellClick={cell => {
-                        if (cell.field !== 'actions') {
+                        if (cell.field !== "actions") {
                           router.push(`/institucion/clientes/${params?.clientId}/cuentas/${cell?.row.id}`);
                         }
                       }}
