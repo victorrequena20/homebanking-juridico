@@ -11,7 +11,7 @@ import PlusIcon from "@/assets/icons/PlusIcon";
 import { useRouter } from "next/navigation";
 import { deleteGlAccount, getGlAccountsTemplateById, updateGlAccount } from "@/services/Accounting.service";
 import { toast } from "sonner";
-import { reports } from "@/constants/global";
+import { reportsData } from "@/constants/global";
 
 export default function AccountDetailPage({ params }: { params: any }) {
   const [isDisabled, setIsDisabled] = React.useState<boolean>(true);
@@ -33,7 +33,7 @@ export default function AccountDetailPage({ params }: { params: any }) {
   }
 
   function handleDeleteUser() {
-    const response = reports.find(item => item.id == params?.reportName);
+    const response = reportsData.find(item => item.name == params?.reportName);
   }
 
   async function handleDeactivateAccount() {
@@ -48,8 +48,8 @@ export default function AccountDetailPage({ params }: { params: any }) {
 
   React.useEffect(() => {
     handleGetTemplateById();
-    console.warn(params?.reportName);
-    const response = reports.find(item => item.id == params?.reportName);
+    const decodeUri = decodeURIComponent(params?.reportName?.toString());
+    const response = reportsData.find(item => item.name == decodeUri);
     setData(response);
   }, []);
 
@@ -67,56 +67,95 @@ export default function AccountDetailPage({ params }: { params: any }) {
           }}
         >
           <Typography variant="body2" fontWeight="400">
-            Detalles del reporte
+            Detalles del flujo de aprobación
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
           <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
-            Fecha
+            Nombre
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            {data?.fecha}
+            {data?.name}
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
           <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
-            Cliente
+            Tipo de flujo de aprobación
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            {data?.cliente}
+            {data?.type}
           </Typography>
         </Stack>
         <Stack sx={detailRowStyles}>
           <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
-            Monto
+            Categoria
           </Typography>
           <Typography variant="body2" fontWeight="400">
-            Bs. {data?.monto}
+            {data?.category}
+          </Typography>
+        </Stack>
+        <Stack sx={detailRowStyles}>
+          <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
+            Activo
+          </Typography>
+          <Typography variant="body2" fontWeight="400">
+            {data?.active ? "Sí" : "No"}
           </Typography>
         </Stack>
 
-        {/* Activación / desactivación */}
-        {!data?.fechaConciliacion ? (
-          <Stack sx={detailRowWithAction}>
-            <Typography variant="body2" fontWeight="400" color="#12141a">
-              Conciliar
+        {data?.steps?.length > 0 && (
+          <Stack sx={{ mt: 3 }}>
+            <Typography variant="body2" fontWeight="300" color="var(--secondaryText)" sx={{ mb: 2 }}>
+              Pasos del flujo de aprobación
             </Typography>
-            <Button
-              text={!data?.active ? "Conciliar" : "Desactivar"}
-              variant={!data?.active ? "success" : "warning-red"}
-              onClick={() => handleDeactivateAccount()}
-            />
-          </Stack>
-        ) : (
-          <Stack sx={detailRowStyles}>
-            <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
-              Fecha de concialición
-            </Typography>
-            <Typography variant="body2" fontWeight="400">
-              {data?.fechaConciliacion}
-            </Typography>
+            {data?.steps.map((step: any, index: number) => (
+              <Stack
+                key={index}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{
+                  p: 2,
+                  mb: 1,
+                  border: "1px solid var(--lightGray)",
+                  borderRadius: "8px",
+                  backgroundColor: "var(--lightBackground)",
+                }}
+              >
+                <Typography variant="body2" fontWeight="400">
+                  Paso {index + 1}
+                </Typography>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
+                    Rol: {step.role}
+                  </Typography>
+                  <Typography variant="body2" fontWeight="300" color="var(--secondaryText)">
+                    Nivel: {step.level}
+                  </Typography>
+                </Stack>
+              </Stack>
+            ))}
           </Stack>
         )}
+
+        {/* Activación / desactivación */}
+        <Stack sx={detailRowWithAction}>
+          <Typography variant="body2" fontWeight="400" color="#12141a">
+            {!data?.active ? "Activar" : "Desactivar"} flujo de aprobación
+          </Typography>
+          <Button
+            text={!data?.active ? "Activar" : "Desactivar"}
+            variant={!data?.active ? "success" : "warning-red"}
+            onClick={() => handleDeactivateAccount()}
+          />
+        </Stack>
+        {/* Eliminar */}
+        <Stack sx={detailRowWithAction}>
+          <Typography variant="body2" fontWeight="400" color="#12141a">
+            Eliminar flujo de aprobación
+          </Typography>
+          <ConfirmDeleteModal title="¿Estás seguro de que deseas eliminar esta cuenta?" actionCallback={handleDeleteUser} />
+        </Stack>
       </Stack>
     </Wrapper>
   );

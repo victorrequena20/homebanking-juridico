@@ -51,6 +51,7 @@ function RenderMenu() {
     institutionCenters: pathname.includes("/institucion/centros"),
     accounting: pathname.includes("/contabilidad"),
     reports: pathname === "/reportes",
+    flowSuccess: pathname === "/flujo-de-aprobacion",
     reportsAll: pathname.includes("/reportes") && searchParams.get("filter") === "todos",
     reportsClients: pathname.includes("/reportes") && searchParams.get("filter") === "clientes",
     reportsLoans: pathname.includes("/reportes") && searchParams.get("filter") === "creditos",
@@ -221,239 +222,41 @@ function RenderMenu() {
           </Link>
           {/*  Autorizaciones y Seguridad */}
           <Stack sx={{ mt: 2 }}>
-            <Box
-              sx={{
-                ...itemStyles,
-                bgcolor: routeValidations.reports ? "hsl(0, 0%, 12%)" : "transparent",
-                "& > p": {
-                  color: routeValidations.reports ? "#fff" : "#9aa3b8",
-                },
-              }}
-              onClick={() => setShowReportsLinks(!showReportsLinks)}
-            >
-              <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
-              <Typography variant="body2" fontWeight="200">
-                Autorizaciones y Seguridad
-              </Typography>
-            </Box>
-            {showReportsLinks && (
-              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-                <Link href={"/reportes?filter=todos"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsAll ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsAll ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Todos
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/reportes?filter=clientes"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsClients ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsClients ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Clientes
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/reportes?filter=creditos"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsLoans ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsLoans ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Créditos
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/reportes?filter=ahorros"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsSavings ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsSavings ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/sistema")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Ahorros
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/reportes?filter=fondos"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsFunds ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsFunds ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/productos")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Fondos
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/reportes?filter=contabilidad"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.reportsAccounting ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.reportsAccounting ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/productos")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Contabilidad
-                    </Typography>
-                  </Box>
-                </Link>
-              </Stack>
-            )}
+            <Link href={"/flujo-de-aprobacion?filter=todos"}>
+              <Box
+                sx={{
+                  ...itemStyles,
+                  bgcolor: routeValidations.flowSuccess ? "hsl(0, 0%, 12%)" : "transparent",
+                  "& > p": {
+                    color: routeValidations.flowSuccess ? "#fff" : "#9aa3b8",
+                  },
+                }}
+                // onClick={() => setShowReportsLinks(!showReportsLinks)}
+              >
+                <ReportIcon size={24} color={routeValidations.reports ? "#fff" : "#9aa3b8"} />
+                <Typography variant="body2" fontWeight="200">
+                  Flujo de aprobación
+                </Typography>
+              </Box>
+            </Link>
           </Stack>
           {/* Reportes y Conciliación */}
           <Stack sx={{ mt: 2, cursor: "pointer" }}>
-            <Box
-              sx={{
-                ...itemStyles,
-                "& > p": {
-                  color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
-                },
-              }}
-              onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
-            >
-              <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
-              <Typography variant="body2" fontWeight="200">
-                Reportes y Conciliación
-              </Typography>
-            </Box>
-            {showAdministrationLinks && (
-              <Stack sx={{ mt: 1, pl: 4, cursor: "pointer" }}>
-                <Link href={"/administracion/usuarios"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationUsers ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.administrationUsers ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/usuarios")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Usuarios
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/administracion/organizacion"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationOrganization ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.administrationOrganization ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/organizacion")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Organización
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/administracion/sistema"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationSystem ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.administrationSystem ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/sistema")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Sistema
-                    </Typography>
-                  </Box>
-                </Link>
-                <Link href={"/administracion/productos"}>
-                  <Box
-                    sx={{
-                      borderRadius: "8px",
-                      py: 1,
-                      px: 2,
-                      bgcolor: routeValidations.administrationProducts ? "hsl(0, 0%, 12%)" : "transparent",
-                      "& > p": {
-                        color: routeValidations.administrationProducts ? "#cad0db" : "#9aa3b8",
-                      },
-                    }}
-                    onClick={() => router.push("/administracion/productos")}
-                  >
-                    <Typography variant="body2" fontWeight="200">
-                      Productos
-                    </Typography>
-                  </Box>
-                </Link>
-                {/* <Box
-        sx={{
-          borderRadius: "8px",
-          py: 1,
-          px: 2,
-          bgcolor: routeValidations.plantillas ? "hsl(0, 0%, 12%)" : "transparent",
-          "& > p": {
-            color: routeValidations.plantillas ? "#fff" : "#9aa3b8",
-          },
-        }}
-        onClick={() => router.push("/administracion/plantillas")}
-      >
-        <Typography variant="body2" fontWeight="200" color="#fff">
-          Plantillas
-        </Typography>
-      </Box> */}
-              </Stack>
-            )}
+            <Link href={"/reportes"}>
+              <Box
+                sx={{
+                  ...itemStyles,
+                  "& > p": {
+                    color: routeValidations.reports ? "#fff" : "#9aa3b8",
+                  },
+                }}
+              >
+                <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
+                <Typography variant="body2" fontWeight="200">
+                  Reportes y Conciliación
+                </Typography>
+              </Box>
+            </Link>
           </Stack>
           {/* Atención al Cliente y Soporte */}
           <Stack sx={{ mt: 2, cursor: "pointer" }}>
@@ -464,7 +267,6 @@ function RenderMenu() {
                   color: routeValidations.administrationTab ? "#fff" : "#9aa3b8",
                 },
               }}
-              onClick={() => setShowAdministrationLinks(!showAdministrationLinks)}
             >
               <PersonHexagonalIcon size={24} color={routeValidations.administrationTab ? "#fff" : "#9aa3b8"} />
               <Typography variant="body2" fontWeight="200">

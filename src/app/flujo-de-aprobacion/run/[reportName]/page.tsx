@@ -4,17 +4,18 @@ import Wrapper from "@/components/Wrapper";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Stack } from "@mui/material";
 import ButtonBack from "@/components/ButtonBack";
-import RunReportForm from "@/modules/reportes/components/RunReportForm";
 import { useParams } from "next/navigation";
-import { reports } from "@/constants/global";
+import RunReportForm from "@/modules/flujo-de-aprobacion/components/RunReportForm";
+
 export default function RunReportsPage() {
   const params = useParams();
   const decodeUri = decodeURIComponent(params?.reportName?.toString());
+  console.warn(params);
   return (
     <Wrapper>
       <Breadcrumbs
-        title={`Reportes -> ${reports?.find(item => item.id?.toString() == params?.reportName)?.fecha}`}
-        items={[{ title: "Inicio", href: "/dashboard" }, { title: `Reportes -> ${decodeUri}` }]}
+        title={`Flujos de Aprobación -> ${decodeUri}`}
+        items={[{ title: "Inicio", href: "/dashboard" }, { title: `Flujos de Aprobación -> ${decodeUri}` }]}
       />
 
       <Stack sx={{ mt: 3 }}>
