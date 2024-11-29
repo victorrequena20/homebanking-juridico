@@ -178,7 +178,7 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
                   Correo electrónico:
                 </Typography>
                 <Typography variant="body2" color="var(--text)">
-                  {"requenade@gmail.com"}
+                  {clientData.displayName + "@gmail.com"}
                 </Typography>
               </Stack>
             </Stack>
@@ -186,23 +186,9 @@ export default function ClientDetailsHeader({ clientData, getClientData }: Clien
         </Stack>
         <Stack>
           <Box sx={{ gap: 3, display: "flex" }}>
-            {clientData?.status?.value !== "Active" && (
-              <Button
-                variant="success"
-                iconLeft
-                icon={<PersonHexagonalIcon color={"#fff"} size={26} />}
-                text="Activar cliente"
-                onClick={handleActivationUser}
-                asyncAction
-                isLoading={isLoadingActivation}
-              />
-            )}
-            {clientData?.status?.value === "Pending" && (
-              <ConfirmDeleteModal actionCallback={handleDeleteClient} title="¿Estás seguro de que deseas borrar este cliente?" />
-            )}
             {/* <Button variant="standard" iconLeft icon={<EditIcon color={"#fff"} size={20} />} text="Editar cliente" /> */}
             <Box sx={{ position: "relative" }} ref={listRef}>
-              <Button variant="standard" text="Pagar nómina" />
+              <Button text="Pagar nómina" variant="success" />
               {isListVisible && (
                 <Box
                   sx={{

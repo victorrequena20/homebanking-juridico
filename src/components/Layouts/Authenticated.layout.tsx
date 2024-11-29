@@ -47,6 +47,7 @@ function RenderMenu() {
     institution: pathname.includes("/institucion"),
     institutionClients: pathname.includes("/institucion/clientes"),
     institutionGroups: pathname.includes("/institucion/grupos"),
+    payMasivos: pathname === "/gestion-de-pagos-masivos",
     institutionCenters: pathname.includes("/institucion/centros"),
     accounting: pathname.includes("/contabilidad"),
     reports: pathname === "/reportes",
@@ -146,15 +147,15 @@ function RenderMenu() {
                   </Typography>
                 </Box>
               </Link>
-              <Link href={"/institucion/grupos"}>
+              <Link href={"/gestion-de-pagos-masivos"}>
                 <Box
                   sx={{
                     borderRadius: "8px",
                     py: 1,
                     px: 2,
-                    bgcolor: routeValidations.institutionGroups ? "hsl(0, 0%, 12%)" : "transparent",
+                    bgcolor: routeValidations.payMasivos ? "hsl(0, 0%, 12%)" : "transparent",
                     "& > p": {
-                      color: routeValidations.institutionGroups ? "#cad0db" : "#9aa3b8",
+                      color: routeValidations.payMasivos ? "#cad0db" : "#9aa3b8",
                     },
                   }}
                 >

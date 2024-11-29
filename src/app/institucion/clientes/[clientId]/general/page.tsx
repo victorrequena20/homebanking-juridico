@@ -17,6 +17,7 @@ import ClientDetailsHeader from "@/modules/institucion/clients/components/Client
 import RenderFormModal from "@/components/Modals/RenderFormModal";
 import DepositMoneyAccountForm from "@/modules/institucion/clients/components/DepositMoneyAccountForm";
 import WithdrawalMoneyAccountForm from "@/modules/institucion/clients/components/WithdrawalMoneyAccountForm";
+import { savingsAccounts2, users } from "@/constants/global";
 
 export default function ClientDetails({ params }: { params: { clientId: string } }) {
   const [showDepositModal, setShowDepositModal] = React.useState(false);
@@ -139,28 +140,21 @@ export default function ClientDetails({ params }: { params: { clientId: string }
       valueGetter: (value, row) => `${row?.accountBalance || ""} `,
     },
     {
-      field: "lastActive",
+      field: "lastActiveTransactionDate",
       headerName: "Fechas",
       flex: 1,
-      valueGetter: (value, row) => `${formatSpanishDate(row?.lastActiveTransactionDate) || ""} `,
+      valueGetter: (value, row) => `${row?.lastActiveTransactionDate || ""} `,
     },
   ];
 
   async function getClientData() {
-    const response = await getClientById(params?.clientId);
-    if (response?.status === 200) {
-      setClientData(response?.data);
-    }
+    const response = await users[params?.clientId as any];
+
+    setClientData(response);
   }
 
   async function handleGetAccounts() {
-    const response = await getAccountsById(params?.clientId);
-    console.log("🚀 ~ handleGetAccounts ~ response:", response);
-    if (response?.status === 200) {
-      setAccounts(response?.data);
-      setLoanAccounts(response?.data?.loanAccounts || []);
-      setSavingsAccounts(response?.data?.savingsAccounts || []);
-    }
+    setSavingsAccounts(savingsAccounts2 || []);
   }
 
   React.useEffect(() => {
