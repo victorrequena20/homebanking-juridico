@@ -4,7 +4,7 @@
   margin: 0;
   /* font-family: "Nunito Sans", sans-serif !important; */
   /* font-family: "Work Sans", sans-serif !important; */
-  font-family: "Inter", sans-serif !important;
+  font-family: "IBM Plex Sans", sans-serif;
   text-decoration: none;
   scrollbar-width: auto;
   scrollbar-color: #bac3d4;
@@ -25,11 +25,11 @@ a {
   cursor: pointer;
 }
 :root {
-  --primary: #153075;
+  --primary: #37306b;
   --text: #12141a;
   --secondaryText: #606778;
-  --darkBg: hsl(0, 0%, 10%);
-  --secondaryBg: #f2f4f7;
+  --darkBg: #f2f4f7;
+  --secondaryBg: #fff;
   --primaryGreen: #0b845c;
 }
 
@@ -57,7 +57,7 @@ p {
   color: #7b8499 !important;
   font-size: 12px !important;
   font-weight: 200 !important;
-  font-family: "Inter", sans-serif !important;
+  font-family: "IBM Plex Sans", sans-serif;
   border-width: 0 !important;
   border: none !important;
   border-color: transparent !important;

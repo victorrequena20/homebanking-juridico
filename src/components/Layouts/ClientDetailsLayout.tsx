@@ -20,7 +20,7 @@ const containerStyles: SxProps = {
   width: "100%",
   height: "100%",
   maxHeight: "100vh",
-  backgroundColor: "var(--darkBg)",
+  // backgroundColor: "var(--darkBg)",
   overflow: "auto",
   overflowX: "hidden",
   maxWidth: "100vw",
@@ -30,10 +30,10 @@ const gridContainerStyles: SxProps = {
   width: "100%",
   height: "100%",
   bgcolor: "#FAFAFA",
-  borderTop: "8px solid var(--darkBg)",
-  borderBottom: "8px solid var(--darkBg)",
-  borderLeft: "8px solid var(--darkBg)",
-  borderRight: "8px solid var(--darkBg)",
+  // borderTop: "8px solid var(--darkBg)",
+  // borderBottom: "8px solid var(--darkBg)",
+  // borderLeft: "8px solid var(--darkBg)",
+  // borderRight: "8px solid var(--darkBg)",
   borderRadius: "32px",
   overflow: "hidden",
   maxWidth: "100vw",
@@ -108,7 +108,7 @@ export default function ClientDetailsLayout({ children }: { children: React.Reac
                 <Breadcrumbs items={[{ title: "Inicio", href: "/dashboard" }, { title: "Institución" }, { title: "Clientes" }]} />
                 <Box
                   sx={{
-                    backgroundColor: "var(--darkBg)",
+                    // backgroundColor: "var(--darkBg)",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
